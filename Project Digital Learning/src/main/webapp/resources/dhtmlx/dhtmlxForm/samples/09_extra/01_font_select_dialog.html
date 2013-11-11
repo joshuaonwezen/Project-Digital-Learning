@@ -1,0 +1,481 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>Font Select Dialog</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="featured" content="yes"><meta name="title" content="Samples" />
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<link rel="icon" href="../common/favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="../common/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="../common/css/style.css" type="text/css" media="screen" />
+
+	</head>
+	<body onload="doOnLoad();">
+        <div class="header">
+            <a class="logo" href="http://www.dhtmlx.com" title="DHTMLX homepage"></a>
+            <div class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</div>
+            <div class="search-field">
+                <form action="http://docs.dhtmlx.com/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><input class="button" type="submit" value=""><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>
+            </div>
+            <div class="buttons">
+                <a class="doc_inact" href="../../../docsExplorer/index.html" title="DHTMLX Documentation homepage"></a>
+                <a class="sample"></a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="navigation-div">
+                <a href="../../../docsExplorer/samples.html" class="navigation"><img src="../common/icons/file.gif" alt="" >All components</a>
+                <div class="arrow"></div>
+                <a href="../index.html" class="navigation"><img height="22" src="../common/icons/form.gif" alt="" >dhtmlxForm</a>
+                <div class="arrow"></div>
+                <a href="./index.html" class="navigation"><img src="../common/icons/none.gif" alt="" >Extra</a>
+            </div>
+            <div style="display:block;">
+                <h3>Font Select Dialog</h3>
+            </div>
+            <div class="navigation-div">
+                <a href="#code" class="navigation view-source"><img src="../common/icons/source.gif" alt="" >View page source</a>
+            </div>
+            <link rel="stylesheet" type="text/css" href="../../codebase/skins/dhtmlxform_dhx_skyblue.css">
+	<link rel="stylesheet" type="text/css" href="../../../dhtmlxWindows/codebase/dhtmlxwindows.css">
+	<link rel="stylesheet" type="text/css" href="../../../dhtmlxWindows/codebase/skins/dhtmlxwindows_dhx_skyblue.css">
+	<script src="../../codebase/dhtmlxcommon.js"></script>
+	<script src="../../../dhtmlxWindows/codebase/dhtmlxcontainer.js"></script>
+	<script src="../../../dhtmlxWindows/codebase/dhtmlxwindows.js"></script>
+	<script src="../../codebase/dhtmlxform.js"></script>
+	<script src="../../codebase/ext/dhtmlxform_item_container.js"></script>
+	<style>
+		div#vp {
+			height: 600px;
+			border: 1px solid #cecece;
+		}
+		.dhtmlx_skin_dhx_skyblue div.dhtmlx_wins_icon {
+			display: none;
+		}
+		.dhtmlx_skin_dhx_skyblue div.dhtmlx_window_active div.dhtmlx_wins_title {
+			padding-left: 10px;
+		}
+	</style>
+	<script>
+		var myForm, formData;
+		var dhxWins, w1;
+		function doOnLoad() {
+			formData = [
+				{type: "settings", position: "label-top", labelWidth: "auto", inputWidth: 120, blockOffset: 12},
+				{type: "block", inputWidth: "auto", list:[
+					{type: "settings", offsetTop: 8},
+					{type: "input", label: "Font:"},
+					{type: "newcolumn"},
+					{type: "input", label: "Font Style:", offsetLeft: 5},
+					{type: "newcolumn"},
+					{type: "input", label: "Size:", offsetLeft: 5, labelWidth: 78, inputWidth: 70}
+				]},
+				{type: "block", inputWidth: "auto", list:[
+					{type: "settings", offsetTop: 2},
+					{type: "select", name: "sel_font", label: "", options:[
+						{value: "Arial", text: "Arial"},
+						{value: "Arial Black", text: "Arial Black"},
+						{value: "Calibri", text: "Calibri"},
+						{value: "Comic Sans MS", text: "Comic Sans MS"},
+						{value: "Consolas", text: "Consolas"},
+						{value: "Courier New", text: "Courier New"},
+						{value: "Georgia", text: "Georgia"},
+						{value: "Impact", text: "Impact"},
+						{value: "Lucida Console", text: "Lucida Console"},
+						{value: "Lucida Sans Unicode", text: "Lucida Sans Unicode"},
+						{value: "Microsoft Sans Serif", text: "Microsoft Sans Serif"},
+						{value: "Segoe Print", text: "Segoe Print"},
+						{value: "Segoe Script", text: "Segoe Script"},
+						{value: "Segoe UI", text: "Segoe UI"},
+						{value: "Symbol", text: "Symbol"},
+						{value: "Tahoma", text: "Tahoma"},
+						{value: "Times New Roman", text: "Times New Roman"},
+						{value: "Trebuchet MS", text: "Trebuchet MS"},
+						{value: "Verdana", text: "Verdana"}
+					]},
+					{type: "newcolumn"},
+					{type: "select", name: "sel_type", label: "", offsetLeft: 5, options:[
+						{value: "regular", text: "Regular"},
+						{value: "italic", text: "Italic"},
+						{value: "bold", text: "Bold"},
+						{value: "bold italic", text: "Bold Italic"}
+					]},
+					{type: "newcolumn"},
+					{type: "select", name: "sel_size", label: "", offsetLeft: 5, inputWidth: 70, options:[
+						{value: "8", text: "8"},
+						{value: "9", text: "9"},
+						{value: "10", text: "10"},
+						{value: "11", text: "11"},
+						{value: "12", text: "12"},
+						{value: "14", text: "14"},
+						{value: "16", text: "16"},
+						{value: "18", text: "18"},
+						{value: "20", text: "20"}
+					]}
+				]},
+				{type: "block", inputWidth: "auto", list:[
+					
+					{type: "fieldset", label: "Effects", inputWidth: 122, offsetTop: 5, list:[
+						{type: "checkbox", label: "Strikeout", position: "label-right"},
+						{type: "checkbox", label: "Underline", position: "label-right"},
+						{type: "select", label: "Color:", position: "label-top", inputWidth: 76, offsetTop: 5, options:[
+							{value: "black", text: "Black"}
+						]}
+					]},
+					{type: "newcolumn"},
+					{type: "block", inputWidth: "auto", blockOffset: 0, list:[
+						{type: "fieldset", inputWidth:  198, label: "Sample", offsetTop: 5, offsetLeft: 5, list:[
+							{type: "container", name: "sample", inputWidth: "auto", inputHeight: 48}
+						]},
+						{type: "select", label: "Script:", position: "label-top", inputWidth: 198, offsetTop: 5, offsetLeft: 5, options:[
+							{value: "western", text: "Western"}
+						]}
+					]}
+					
+				]},
+				{type: "block", inputWidth: "auto", list: [
+					{type: "settings", offsetTop: 10},
+					{type: "button", value: "Ok", offsetLeft: 84},
+					{type: "newcolumn"},
+					{type: "button", value: "Cancel"}
+				]}
+				
+			];
+			
+			// init windows
+			dhxWins = new dhtmlXWindows();
+			dhxWins.setImagePath("../../../dhtmlxWindows/codebase/imgs/");
+			dhxWins.enableAutoViewport(false);
+			dhxWins.attachViewportTo("vp");
+			w1 = dhxWins.createWindow("w1", 10, 10, 380, 350);
+			w1.setText("Font");
+			w1.clearIcon();
+			w1.denyResize();
+			w1.denyPark();
+			w1.button("minmax1").hide();
+			w1.button("park").hide();
+			w1.button("help").show();
+			
+			
+			myForm = w1.attachForm(formData);
+			
+			// change select size
+			for (var a in {sel_font:1,sel_type:1,sel_size:1}) myForm.getSelect(a).size = 7;
+			
+			// configure sample block
+			myForm.getContainer("sample").innerHTML = "<div style='border: 1px solid #ddd; width: 153px;height: 35px;text-align:center;line-height:33px;'>AaBbXxYy</div>";
+			
+			// adjust window
+			myForm.adjustParentSize();
+		}
+	</script>
+
+
+	<div id="vp"></div>
+			
+			
+         </div>
+    <div style="clear:both;"></div>
+    <div class="source">
+        <div class="teg">Source</div>
+        <div class="code" id="code">
+		<div class="hl-main"><pre><span class="hl-brackets">&lt;</span><span class="hl-reserved">link</span><span class="hl-code"> </span><span class="hl-var">rel</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">stylesheet</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">type</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">text/css</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">href</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/skins/dhtmlxform_dhx_skyblue.css</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">link</span><span class="hl-code"> </span><span class="hl-var">rel</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">stylesheet</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">type</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">text/css</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">href</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../../dhtmlxWindows/codebase/dhtmlxwindows.css</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">link</span><span class="hl-code"> </span><span class="hl-var">rel</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">stylesheet</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">type</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">text/css</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">href</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../../dhtmlxWindows/codebase/skins/dhtmlxwindows_dhx_skyblue.css</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code"> </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/dhtmlxcommon.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code"> </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../../dhtmlxWindows/codebase/dhtmlxcontainer.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code"> </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../../dhtmlxWindows/codebase/dhtmlxwindows.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code"> </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/dhtmlxform.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code"> </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/ext/dhtmlxform_item_container.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">style</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+        div#vp {
+            height: 600px;
+            border: 1px solid #cecece;
+        }
+        .dhtmlx_skin_dhx_skyblue div.dhtmlx_wins_icon {
+            display: none;
+        }
+        .dhtmlx_skin_dhx_skyblue div.dhtmlx_window_active div.dhtmlx_wins_title {
+            padding-left: 10px;
+        }
+    </span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">style</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code"><div class="hl-main"><pre><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">myForm</span><span class="hl-code">,
+</span><span class="hl-identifier">formData</span><span class="hl-code">;
+</span><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">dhxWins</span><span class="hl-code">,
+</span><span class="hl-identifier">w1</span><span class="hl-code">;
+</span><span class="hl-reserved">function</span><span class="hl-code"> </span><span class="hl-identifier">doOnLoad</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+    </span><span class="hl-identifier">formData</span><span class="hl-code"> = </span><span class="hl-brackets">[</span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">settings</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">position</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">label-top</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">labelWidth</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">auto</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-number">120</span><span class="hl-code">,
+        </span><span class="hl-identifier">blockOffset</span><span class="hl-code">: </span><span class="hl-number">12</span><span class="hl-code">
+    </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">block</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">auto</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">list</span><span class="hl-code">: </span><span class="hl-brackets">[</span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">settings</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">offsetTop</span><span class="hl-code">: </span><span class="hl-number">8</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">input</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Font:</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">newcolumn</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">input</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Font Style:</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">offsetLeft</span><span class="hl-code">: </span><span class="hl-number">5</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">newcolumn</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">input</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Size:</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">offsetLeft</span><span class="hl-code">: </span><span class="hl-number">5</span><span class="hl-code">,
+            </span><span class="hl-identifier">labelWidth</span><span class="hl-code">: </span><span class="hl-number">78</span><span class="hl-code">,
+            </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-number">70</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-brackets">]</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">block</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">auto</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">list</span><span class="hl-code">: </span><span class="hl-brackets">[</span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">settings</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">offsetTop</span><span class="hl-code">: </span><span class="hl-number">2</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">select</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">name</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">sel_font</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">options</span><span class="hl-code">: </span><span class="hl-brackets">[</span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Arial</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Arial</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Arial Black</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Arial Black</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Calibri</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Calibri</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Comic Sans MS</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Comic Sans MS</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Consolas</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Consolas</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Courier New</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Courier New</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Georgia</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Georgia</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Impact</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Impact</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Lucida Console</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Lucida Console</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Lucida Sans Unicode</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Lucida Sans Unicode</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Microsoft Sans Serif</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Microsoft Sans Serif</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Segoe Print</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Segoe Print</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Segoe Script</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Segoe Script</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Segoe UI</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Segoe UI</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Symbol</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Symbol</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Tahoma</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Tahoma</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Times New Roman</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Times New Roman</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Trebuchet MS</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Trebuchet MS</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Verdana</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Verdana</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-brackets">]</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">newcolumn</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">select</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">name</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">sel_type</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">offsetLeft</span><span class="hl-code">: </span><span class="hl-number">5</span><span class="hl-code">,
+            </span><span class="hl-identifier">options</span><span class="hl-code">: </span><span class="hl-brackets">[</span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">regular</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Regular</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">italic</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Italic</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">bold</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Bold</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">bold italic</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Bold Italic</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-brackets">]</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">newcolumn</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">select</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">name</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">sel_size</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">offsetLeft</span><span class="hl-code">: </span><span class="hl-number">5</span><span class="hl-code">,
+            </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-number">70</span><span class="hl-code">,
+            </span><span class="hl-identifier">options</span><span class="hl-code">: </span><span class="hl-brackets">[</span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">8</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">8</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">9</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">9</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">10</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">10</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">11</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">11</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">12</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">12</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">14</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">14</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">16</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">16</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">18</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">18</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">20</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">20</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-brackets">]</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-brackets">]</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">block</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">auto</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">list</span><span class="hl-code">: </span><span class="hl-brackets">[</span><span class="hl-code">
+</span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">fieldset</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Effects</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-number">122</span><span class="hl-code">,
+            </span><span class="hl-identifier">offsetTop</span><span class="hl-code">: </span><span class="hl-number">5</span><span class="hl-code">,
+            </span><span class="hl-identifier">list</span><span class="hl-code">: </span><span class="hl-brackets">[</span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">checkbox</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Strikeout</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">position</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">label-right</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">checkbox</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Underline</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">position</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">label-right</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">select</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Color:</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">position</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">label-top</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-number">76</span><span class="hl-code">,
+                </span><span class="hl-identifier">offsetTop</span><span class="hl-code">: </span><span class="hl-number">5</span><span class="hl-code">,
+                </span><span class="hl-identifier">options</span><span class="hl-code">: </span><span class="hl-brackets">[</span><span class="hl-brackets">{</span><span class="hl-code">
+                    </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">black</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                    </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Black</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                </span><span class="hl-brackets">}</span><span class="hl-brackets">]</span><span class="hl-code">
+                </span><span class="hl-brackets">}</span><span class="hl-brackets">]</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">newcolumn</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">block</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">auto</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">blockOffset</span><span class="hl-code">: </span><span class="hl-number">0</span><span class="hl-code">,
+            </span><span class="hl-identifier">list</span><span class="hl-code">: </span><span class="hl-brackets">[</span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">fieldset</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-number">198</span><span class="hl-code">,
+                </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Sample</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">offsetTop</span><span class="hl-code">: </span><span class="hl-number">5</span><span class="hl-code">,
+                </span><span class="hl-identifier">offsetLeft</span><span class="hl-code">: </span><span class="hl-number">5</span><span class="hl-code">,
+                </span><span class="hl-identifier">list</span><span class="hl-code">: </span><span class="hl-brackets">[</span><span class="hl-brackets">{</span><span class="hl-code">
+                    </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">container</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                    </span><span class="hl-identifier">name</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">sample</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                    </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">auto</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                    </span><span class="hl-identifier">inputHeight</span><span class="hl-code">: </span><span class="hl-number">48</span><span class="hl-code">
+                </span><span class="hl-brackets">}</span><span class="hl-brackets">]</span><span class="hl-code">
+                </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">select</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Script:</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">position</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">label-top</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-number">198</span><span class="hl-code">,
+                </span><span class="hl-identifier">offsetTop</span><span class="hl-code">: </span><span class="hl-number">5</span><span class="hl-code">,
+                </span><span class="hl-identifier">offsetLeft</span><span class="hl-code">: </span><span class="hl-number">5</span><span class="hl-code">,
+                </span><span class="hl-identifier">options</span><span class="hl-code">: </span><span class="hl-brackets">[</span><span class="hl-brackets">{</span><span class="hl-code">
+                    </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">western</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+                    </span><span class="hl-identifier">text</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Western</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                </span><span class="hl-brackets">}</span><span class="hl-brackets">]</span><span class="hl-code">
+                </span><span class="hl-brackets">}</span><span class="hl-brackets">]</span><span class="hl-code">
+            </span><span class="hl-brackets">}</span><span class="hl-code">
+</span><span class="hl-brackets">]</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">block</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">auto</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">list</span><span class="hl-code">: </span><span class="hl-brackets">[</span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">settings</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">offsetTop</span><span class="hl-code">: </span><span class="hl-number">10</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">button</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Ok</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">offsetLeft</span><span class="hl-code">: </span><span class="hl-number">84</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">newcolumn</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">button</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Cancel</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-brackets">]</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">
+</span><span class="hl-brackets">]</span><span class="hl-code">;
+ 
+    </span><span class="hl-comment">//</span><span class="hl-comment"> init windows</span><span class="hl-comment"></span><span class="hl-code">
+    </span><span class="hl-identifier">dhxWins</span><span class="hl-code"> = </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-identifier">dhtmlXWindows</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">dhxWins</span><span class="hl-code">.</span><span class="hl-identifier">setImagePath</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../../dhtmlxWindows/codebase/imgs/</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">dhxWins</span><span class="hl-code">.</span><span class="hl-identifier">enableAutoViewport</span><span class="hl-brackets">(</span><span class="hl-reserved">false</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">dhxWins</span><span class="hl-code">.</span><span class="hl-identifier">attachViewportTo</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">vp</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">w1</span><span class="hl-code"> = </span><span class="hl-identifier">dhxWins</span><span class="hl-code">.</span><span class="hl-identifier">createWindow</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">w1</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-number">10</span><span class="hl-code">, </span><span class="hl-number">10</span><span class="hl-code">, </span><span class="hl-number">380</span><span class="hl-code">, </span><span class="hl-number">350</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">w1</span><span class="hl-code">.</span><span class="hl-identifier">setText</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">Font</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">w1</span><span class="hl-code">.</span><span class="hl-identifier">clearIcon</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">w1</span><span class="hl-code">.</span><span class="hl-identifier">denyResize</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">w1</span><span class="hl-code">.</span><span class="hl-identifier">denyPark</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">w1</span><span class="hl-code">.</span><span class="hl-identifier">button</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">minmax1</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">.</span><span class="hl-identifier">hide</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">w1</span><span class="hl-code">.</span><span class="hl-identifier">button</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">park</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">.</span><span class="hl-identifier">hide</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">w1</span><span class="hl-code">.</span><span class="hl-identifier">button</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">help</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">.</span><span class="hl-identifier">show</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+ 
+    </span><span class="hl-identifier">myForm</span><span class="hl-code"> = </span><span class="hl-identifier">w1</span><span class="hl-code">.</span><span class="hl-identifier">attachForm</span><span class="hl-brackets">(</span><span class="hl-identifier">formData</span><span class="hl-brackets">)</span><span class="hl-code">;
+ 
+    </span><span class="hl-comment">//</span><span class="hl-comment"> change select size</span><span class="hl-comment"></span><span class="hl-code">
+    </span><span class="hl-reserved">for</span><span class="hl-code"> </span><span class="hl-brackets">(</span><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">a</span><span class="hl-code"> </span><span class="hl-reserved">in</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">sel_font</span><span class="hl-code">: </span><span class="hl-number">1</span><span class="hl-code">,
+        </span><span class="hl-identifier">sel_type</span><span class="hl-code">: </span><span class="hl-number">1</span><span class="hl-code">,
+        </span><span class="hl-identifier">sel_size</span><span class="hl-code">: </span><span class="hl-number">1</span><span class="hl-code">
+    </span><span class="hl-brackets">}</span><span class="hl-brackets">)</span><span class="hl-code">
+        </span><span class="hl-identifier">myForm</span><span class="hl-code">.</span><span class="hl-identifier">getSelect</span><span class="hl-brackets">(</span><span class="hl-identifier">a</span><span class="hl-brackets">)</span><span class="hl-code">.</span><span class="hl-identifier">size</span><span class="hl-code"> = </span><span class="hl-number">7</span><span class="hl-code">;
+ 
+    </span><span class="hl-comment">//</span><span class="hl-comment"> configure sample block</span><span class="hl-comment"></span><span class="hl-code">
+    </span><span class="hl-identifier">myForm</span><span class="hl-code">.</span><span class="hl-identifier">getContainer</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">sample</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">.</span><span class="hl-identifier">innerHTML</span><span class="hl-code"> = </span><span class="hl-quotes">&quot;</span><span class="hl-string">&lt;div style='border: 1px solid #ddd; width: 153px;height: 35px;text-align:center;line-height:33px;'&gt;AaBbXxYy&lt;/div&gt;</span><span class="hl-quotes">&quot;</span><span class="hl-code">;
+ 
+    </span><span class="hl-comment">//</span><span class="hl-comment"> adjust window</span><span class="hl-comment"></span><span class="hl-code">
+    </span><span class="hl-identifier">myForm</span><span class="hl-code">.</span><span class="hl-identifier">adjustParentSize</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-brackets">}</span></pre></div></span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+ 
+ 
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">div</span><span class="hl-code"> </span><span class="hl-var">id</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">vp</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">div</span><span class="hl-brackets">&gt;</span></pre></div>
+        </div>
+    <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright &copy; 1998-2012 DHTMLX LTD.<br />All rights reserved.</div>
+    </div>
+	</body>
+</html>

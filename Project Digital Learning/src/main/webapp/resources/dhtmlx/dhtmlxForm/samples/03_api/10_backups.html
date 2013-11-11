@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>Backups</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="featured" content="yes"><meta name="title" content="Samples" />
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<link rel="icon" href="../common/favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="../common/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="../common/css/style.css" type="text/css" media="screen" />
+
+	</head>
+	<body onload="doOnLoad();">
+        <div class="header">
+            <a class="logo" href="http://www.dhtmlx.com" title="DHTMLX homepage"></a>
+            <div class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</div>
+            <div class="search-field">
+                <form action="http://docs.dhtmlx.com/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><input class="button" type="submit" value=""><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>
+            </div>
+            <div class="buttons">
+                <a class="doc_inact" href="../../../docsExplorer/index.html" title="DHTMLX Documentation homepage"></a>
+                <a class="sample"></a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="navigation-div">
+                <a href="../../../docsExplorer/samples.html" class="navigation"><img src="../common/icons/file.gif" alt="" >All components</a>
+                <div class="arrow"></div>
+                <a href="../index.html" class="navigation"><img height="22" src="../common/icons/form.gif" alt="" >dhtmlxForm</a>
+                <div class="arrow"></div>
+                <a href="./index.html" class="navigation"><img src="../common/icons/none.gif" alt="" >API</a>
+            </div>
+            <div style="display:block;">
+                <h3>Backups</h3>
+            </div>
+            <div class="navigation-div">
+                <a href="#code" class="navigation view-source"><img src="../common/icons/source.gif" alt="" >View page source</a>
+            </div>
+            <link rel="stylesheet" type="text/css" href="../../codebase/skins/dhtmlxform_dhx_skyblue.css">
+	<link rel="stylesheet" type="text/css" href="../../../dhtmlxTabbar/codebase/dhtmlxtabbar.css">
+	<script src="../../codebase/dhtmlxcommon.js"></script>
+	<script src="../../../dhtmlxTabbar/codebase/dhtmlxcontainer.js"></script>
+	<script src="../../../dhtmlxTabbar/codebase/dhtmlxtabbar.js"></script>
+	<script src="../../codebase/dhtmlxform.js"></script>
+	<script src="../../codebase/ext/dhtmlxform_backup.js"></script>
+	<style>
+		div#tabbar {
+			position: relative;
+			width: 340px;
+			height: 170px;
+			margin-top: 50px;
+			margin-left: 30px;
+		}
+		div#form {
+			position: absolute;
+			top: 45px;
+			left: 0px;
+			overflow: hidden;
+			background-color: #ffffff;
+			z-index: 2;
+		}
+		.dhx_tabbar_zone_top .dhx_tab_element {
+			-moz-user-select: none;
+		}
+	</style>
+	<script>
+		var myForm, formData, dhxTabbar
+		
+		// init values for form, will loaded on demoand and then deleted
+		var initValues = {
+			"a1": { name: "Patrik O'Brain", addr: "22 Acacia Avenue", mail:"patrik@mailme.com"},
+			"a2": { name: "Michael Staminsky", addr: "19 Elm Street", mail:"michael@mailme.com"},
+			"a3": { name: "Lisa Walsh", addr: "13 Jan Street", mail:"lisa@mailme.com"},
+		};
+		
+		// here backup ids will stored
+		var backupIds = {};
+		
+		function doOnLoad() {
+			formData = [
+				{type: "block", offsetLeft: 12, list: [
+					{type: "settings", position: "label-left", labelWidth: 110, inputWidth: 150},
+					{type: "input", name: "name", label: "Full Name", value: ""},
+					{type: "input", name: "addr", label: "Address", value: ""},
+					{type: "input", name: "mail", label: "Email", value: ""}
+				]}
+			];
+			dhxTabbar = new dhtmlXTabBar("tabbar");
+			dhxTabbar.setImagePath("../../../dhtmlxTabbar/codebase/imgs/");
+			dhxTabbar.setSkin("dhx_skyblue");
+			dhxTabbar.addTab("a1", "Tab 1", 70);
+			dhxTabbar.addTab("a2", "Tab 2", 70);
+			dhxTabbar.addTab("a3", "Tab 3", 70);
+			dhxTabbar.enableContentZone(0);
+			
+			myForm = new dhtmlXForm("form", formData);
+			
+			dhxTabbar.attachEvent("onSelect", function(to, from){
+				
+				// save backup for current active tab
+				if (from != null) {
+					backupIds[from] = myForm.saveBackup();
+				}
+				
+				// check if tab opened first time load init values into form otherwise load backup
+				if (initValues[to] != null) {
+					myForm.setFormData(initValues[to]);
+					initValues[to] = null;
+					delete initValues[to];
+				} else {
+					myForm.restoreBackup(backupIds[to]);
+					myForm.clearBackup(backupIds[to]);
+				}
+				
+				return true;
+			});
+			
+			dhxTabbar.setTabActive("a1");
+		}
+	</script>
+
+
+	<div>Single form used to keep several datasets</div>
+	<div id="tabbar">
+		<div id="form"></div>
+	</div>
+			
+			
+         </div>
+    <div style="clear:both;"></div>
+    <div class="source">
+        <div class="teg">Source</div>
+        <div class="code" id="code">
+		<div class="hl-main"><pre><span class="hl-brackets">&lt;</span><span class="hl-reserved">link</span><span class="hl-code"> </span><span class="hl-var">rel</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">stylesheet</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">type</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">text/css</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">href</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/skins/dhtmlxform_dhx_skyblue.css</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">link</span><span class="hl-code"> </span><span class="hl-var">rel</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">stylesheet</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">type</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">text/css</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">href</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../../dhtmlxTabbar/codebase/dhtmlxtabbar.css</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code"> </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/dhtmlxcommon.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code"> </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../../dhtmlxTabbar/codebase/dhtmlxcontainer.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code"> </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../../dhtmlxTabbar/codebase/dhtmlxtabbar.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code"> </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/dhtmlxform.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code"> </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/ext/dhtmlxform_backup.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">style</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+        div#tabbar {
+            position: relative;
+            width: 340px;
+            height: 170px;
+            margin-top: 50px;
+            margin-left: 30px;
+        }
+        div#form {
+            position: absolute;
+            top: 45px;
+            left: 0px;
+            overflow: hidden;
+            background-color: #ffffff;
+            z-index: 2;
+        }
+        .dhx_tabbar_zone_top .dhx_tab_element {
+            -moz-user-select: none;
+        }
+    </span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">style</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code"><div class="hl-main"><pre><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">myForm</span><span class="hl-code">,
+</span><span class="hl-identifier">formData</span><span class="hl-code">,
+</span><span class="hl-identifier">dhxTabbar</span><span class="hl-code">
+ 
+</span><span class="hl-comment">//</span><span class="hl-comment"> init values for form, will loaded on demoand and then deleted</span><span class="hl-comment"></span><span class="hl-code">
+</span><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">initValues</span><span class="hl-code"> = </span><span class="hl-brackets">{</span><span class="hl-code">
+    </span><span class="hl-quotes">&quot;</span><span class="hl-string">a1</span><span class="hl-quotes">&quot;</span><span class="hl-code">: </span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">name</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Patrik O'Brain</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">addr</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">22 Acacia Avenue</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">mail</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">patrik@mailme.com</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+    </span><span class="hl-brackets">}</span><span class="hl-code">,
+    </span><span class="hl-quotes">&quot;</span><span class="hl-string">a2</span><span class="hl-quotes">&quot;</span><span class="hl-code">: </span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">name</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Michael Staminsky</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">addr</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">19 Elm Street</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">mail</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">michael@mailme.com</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+    </span><span class="hl-brackets">}</span><span class="hl-code">,
+    </span><span class="hl-quotes">&quot;</span><span class="hl-string">a3</span><span class="hl-quotes">&quot;</span><span class="hl-code">: </span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">name</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Lisa Walsh</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">addr</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">13 Jan Street</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">mail</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">lisa@mailme.com</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+    </span><span class="hl-brackets">}</span><span class="hl-code">,
+    </span><span class="hl-brackets">}</span><span class="hl-code">;
+ 
+</span><span class="hl-comment">//</span><span class="hl-comment"> here backup ids will stored</span><span class="hl-comment"></span><span class="hl-code">
+</span><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">backupIds</span><span class="hl-code"> = </span><span class="hl-brackets">{</span><span class="hl-brackets">}</span><span class="hl-code">;
+ 
+</span><span class="hl-reserved">function</span><span class="hl-code"> </span><span class="hl-identifier">doOnLoad</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+    </span><span class="hl-identifier">formData</span><span class="hl-code"> = </span><span class="hl-brackets">[</span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">block</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">offsetLeft</span><span class="hl-code">: </span><span class="hl-number">12</span><span class="hl-code">,
+        </span><span class="hl-identifier">list</span><span class="hl-code">: </span><span class="hl-brackets">[</span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">settings</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">position</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">label-left</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">labelWidth</span><span class="hl-code">: </span><span class="hl-number">110</span><span class="hl-code">,
+            </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-number">150</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">input</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">name</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">name</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Full Name</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">input</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">name</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">addr</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Address</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">input</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">name</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">mail</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Email</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-brackets">]</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-brackets">]</span><span class="hl-code">;
+    </span><span class="hl-identifier">dhxTabbar</span><span class="hl-code"> = </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-identifier">dhtmlXTabBar</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">tabbar</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">dhxTabbar</span><span class="hl-code">.</span><span class="hl-identifier">setImagePath</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../../dhtmlxTabbar/codebase/imgs/</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">dhxTabbar</span><span class="hl-code">.</span><span class="hl-identifier">setSkin</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">dhx_skyblue</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">dhxTabbar</span><span class="hl-code">.</span><span class="hl-identifier">addTab</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">a1</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Tab 1</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-number">70</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">dhxTabbar</span><span class="hl-code">.</span><span class="hl-identifier">addTab</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">a2</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Tab 2</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-number">70</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">dhxTabbar</span><span class="hl-code">.</span><span class="hl-identifier">addTab</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">a3</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Tab 3</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-number">70</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">dhxTabbar</span><span class="hl-code">.</span><span class="hl-identifier">enableContentZone</span><span class="hl-brackets">(</span><span class="hl-number">0</span><span class="hl-brackets">)</span><span class="hl-code">;
+ 
+    </span><span class="hl-identifier">myForm</span><span class="hl-code"> = </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-identifier">dhtmlXForm</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">form</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-identifier">formData</span><span class="hl-brackets">)</span><span class="hl-code">;
+ 
+    </span><span class="hl-identifier">dhxTabbar</span><span class="hl-code">.</span><span class="hl-identifier">attachEvent</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">onSelect</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-reserved">function</span><span class="hl-brackets">(</span><span class="hl-identifier">to</span><span class="hl-code">, </span><span class="hl-identifier">from</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+ 
+        </span><span class="hl-comment">//</span><span class="hl-comment"> save backup for current active tab</span><span class="hl-comment"></span><span class="hl-code">
+        </span><span class="hl-reserved">if</span><span class="hl-code"> </span><span class="hl-brackets">(</span><span class="hl-identifier">from</span><span class="hl-code"> != </span><span class="hl-reserved">null</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">backupIds</span><span class="hl-brackets">[</span><span class="hl-identifier">from</span><span class="hl-brackets">]</span><span class="hl-code"> = </span><span class="hl-identifier">myForm</span><span class="hl-code">.</span><span class="hl-identifier">saveBackup</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+        </span><span class="hl-brackets">}</span><span class="hl-code">
+ 
+        </span><span class="hl-comment">//</span><span class="hl-comment"> check if tab opened first time load init values into form otherwise load backup</span><span class="hl-comment"></span><span class="hl-code">
+        </span><span class="hl-reserved">if</span><span class="hl-code"> </span><span class="hl-brackets">(</span><span class="hl-identifier">initValues</span><span class="hl-brackets">[</span><span class="hl-identifier">to</span><span class="hl-brackets">]</span><span class="hl-code"> != </span><span class="hl-reserved">null</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">myForm</span><span class="hl-code">.</span><span class="hl-identifier">setFormData</span><span class="hl-brackets">(</span><span class="hl-identifier">initValues</span><span class="hl-brackets">[</span><span class="hl-identifier">to</span><span class="hl-brackets">]</span><span class="hl-brackets">)</span><span class="hl-code">;
+            </span><span class="hl-identifier">initValues</span><span class="hl-brackets">[</span><span class="hl-identifier">to</span><span class="hl-brackets">]</span><span class="hl-code"> = </span><span class="hl-reserved">null</span><span class="hl-code">;
+            </span><span class="hl-reserved">delete</span><span class="hl-code"> </span><span class="hl-identifier">initValues</span><span class="hl-brackets">[</span><span class="hl-identifier">to</span><span class="hl-brackets">]</span><span class="hl-code">;
+        </span><span class="hl-brackets">}</span><span class="hl-code"> </span><span class="hl-reserved">else</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">myForm</span><span class="hl-code">.</span><span class="hl-identifier">restoreBackup</span><span class="hl-brackets">(</span><span class="hl-identifier">backupIds</span><span class="hl-brackets">[</span><span class="hl-identifier">to</span><span class="hl-brackets">]</span><span class="hl-brackets">)</span><span class="hl-code">;
+            </span><span class="hl-identifier">myForm</span><span class="hl-code">.</span><span class="hl-identifier">clearBackup</span><span class="hl-brackets">(</span><span class="hl-identifier">backupIds</span><span class="hl-brackets">[</span><span class="hl-identifier">to</span><span class="hl-brackets">]</span><span class="hl-brackets">)</span><span class="hl-code">;
+        </span><span class="hl-brackets">}</span><span class="hl-code">
+ 
+        </span><span class="hl-reserved">return</span><span class="hl-code"> </span><span class="hl-reserved">true</span><span class="hl-code">;
+    </span><span class="hl-brackets">}</span><span class="hl-brackets">)</span><span class="hl-code">;
+ 
+    </span><span class="hl-identifier">dhxTabbar</span><span class="hl-code">.</span><span class="hl-identifier">setTabActive</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">a1</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-brackets">}</span></pre></div></span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+ 
+ 
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">div</span><span class="hl-brackets">&gt;</span><span class="hl-code">Single form used to keep several datasets</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">div</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">div</span><span class="hl-code"> </span><span class="hl-var">id</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">tabbar</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">div</span><span class="hl-code"> </span><span class="hl-var">id</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">form</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">div</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">div</span><span class="hl-brackets">&gt;</span></pre></div>
+        </div>
+    <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright &copy; 1998-2012 DHTMLX LTD.<br />All rights reserved.</div>
+    </div>
+	</body>
+</html>

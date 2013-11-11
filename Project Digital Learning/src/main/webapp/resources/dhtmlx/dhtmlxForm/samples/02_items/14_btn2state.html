@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>Button 2-State</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="featured" content="yes"><meta name="title" content="Samples" />
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<link rel="icon" href="../common/favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="../common/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="../common/css/style.css" type="text/css" media="screen" />
+
+	</head>
+	<body onload="doOnLoad();">
+        <div class="header">
+            <a class="logo" href="http://www.dhtmlx.com" title="DHTMLX homepage"></a>
+            <div class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</div>
+            <div class="search-field">
+                <form action="http://docs.dhtmlx.com/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><input class="button" type="submit" value=""><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>
+            </div>
+            <div class="buttons">
+                <a class="doc_inact" href="../../../docsExplorer/index.html" title="DHTMLX Documentation homepage"></a>
+                <a class="sample"></a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="navigation-div">
+                <a href="../../../docsExplorer/samples.html" class="navigation"><img src="../common/icons/file.gif" alt="" >All components</a>
+                <div class="arrow"></div>
+                <a href="../index.html" class="navigation"><img height="22" src="../common/icons/form.gif" alt="" >dhtmlxForm</a>
+                <div class="arrow"></div>
+                <a href="./index.html" class="navigation"><img src="../common/icons/none.gif" alt="" >Items</a>
+            </div>
+            <div style="display:block;">
+                <h3>Button 2-State</h3>
+            </div>
+            <div class="navigation-div">
+                <a href="#code" class="navigation view-source"><img src="../common/icons/source.gif" alt="" >View page source</a>
+            </div>
+            <link rel="stylesheet" type="text/css" href="../../codebase/skins/dhtmlxform_dhx_skyblue.css">
+	<script src="../../codebase/dhtmlxcommon.js"></script>
+	<script src="../../codebase/dhtmlxform.js"></script>
+	<script src="../../codebase/ext/dhtmlxform_item_btn2state.js"></script>
+	<style>
+		/* toggle-style checkbox */
+		/* enabled, not checked */
+		.dhxform_obj_dhx_skyblue div.dhxform_img.btn2state_0 {
+			background-image: url("imgs/toggle_off.png");
+			width: 42px;
+			height: 20px;
+		}
+		/* enabled, checked */
+		.dhxform_obj_dhx_skyblue div.dhxform_img.btn2state_1 {
+			background-image: url("imgs/toggle_on.png");
+			width: 42px;
+			height: 20px;
+		}
+		/* disabled, not checked */
+		.dhxform_obj_dhx_skyblue div.disabled div.dhxform_img.btn2state_0 {
+			background-image: url("imgs/toggle_off_dis.png");
+			width: 42px;
+			height: 20px;
+		}
+		/* disabled, checked */
+		.dhxform_obj_dhx_skyblue div.disabled div.dhxform_img.btn2state_1 {
+			background-image: url("imgs/toggle_on_dis.png");
+			width: 42px;
+			height: 20px;
+		}
+		
+		/* star-style checkbox */
+		/* enabled, not checked */
+		.dhxform_obj_dhx_skyblue div.dhxform_img.star_0 {
+			background-image: url("imgs/star_off.png");
+			width: 19px;
+			height: 19px;
+		}
+		/* enabled, checked */
+		.dhxform_obj_dhx_skyblue div.dhxform_img.star_1 {
+			background-image: url("imgs/star_on.png");
+			width: 19px;
+			height: 19px;
+		}
+		/* disabled, not checked */
+		.dhxform_obj_dhx_skyblue div.disabled div.dhxform_img.star_0 {
+			background-image: url("imgs/star_off_dis.png");
+			width: 19px;
+			height: 19px;
+		}
+		/* disabled, checked */
+		.dhxform_obj_dhx_skyblue div.disabled div.dhxform_img.star_1 {
+			background-image: url("imgs/star_on_dis.png");
+			width: 19px;
+			height: 19px;
+		}
+		
+		/* common */
+		/* fix label align a bit */
+		.dhxform_obj_dhx_skyblue div.dhxform_item_label_right div.dhxform_label div.dhxform_label_nav_link {
+			padding-top: 2px;
+		}
+	</style>
+	<script>
+		var myForm, formData;
+		function doOnLoad() {
+			formData = [
+				{type: "settings", position: "label-right", inputWidth: 42, inputHeight: 20},
+				{type: "label", label: "Toggle-style checkbox"},
+				{type: "btn2state", name: "a", value: "ctrl", label: "Switch to rectangular selection while Ctrl is pressed", checked: true},
+				{type: "btn2state", name: "b", value: "mops", label: "Advanced Mouse Operations", list:[
+					{type: "btn2state", label: "Drag-n-drop in text area"},
+					{type: "btn2state", label: "Double-click drag joins non-alphanumeric characters"},
+					{type: "btn2state", label: "Quick copy using middle mouse button", checked: true}
+				]},
+				{type: "label", label: "Star-style checkboxes", offsetTop: 20},
+				{type: "btn2state", cssName: "star", inputWidth: 17, inputHeight: 19, label: "Highlight current line", checked: true},
+				{type: "btn2state", cssName: "star", inputWidth: 17, inputHeight: 19, label: "Show marker position", checked: true},
+				{type: "btn2state", cssName: "star", inputWidth: 17, inputHeight: 19, label: "Show structure scope"},
+				{type: "btn2state", cssName: "star", inputWidth: 17, inputHeight: 19, label: "Show gutter", list:[
+					{type: "btn2state", cssName: "star", inputWidth: 17, inputHeight: 19, label: "Line numbers", checked: true},
+					{type: "btn2state", cssName: "star", inputWidth: 17, inputHeight: 19, label: "Line selection area"},
+					{type: "btn2state", cssName: "star", inputWidth: 17, inputHeight: 19, label: "Code Folding"}
+				]}
+			];
+			myForm = new dhtmlXForm("myForm", formData);
+		}
+	</script>
+
+
+	<div id="myForm" style="height:450px;"></div>
+			
+			
+         </div>
+    <div style="clear:both;"></div>
+    <div class="source">
+        <div class="teg">Source</div>
+        <div class="code" id="code">
+		<div class="hl-main"><pre><span class="hl-brackets">&lt;</span><span class="hl-reserved">link</span><span class="hl-code"> </span><span class="hl-var">rel</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">stylesheet</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">type</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">text/css</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">href</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/skins/dhtmlxform_dhx_skyblue.css</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code"> </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/dhtmlxcommon.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code"> </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/dhtmlxform.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code"> </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/ext/dhtmlxform_item_btn2state.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">style</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+        /* toggle-style checkbox */
+        /* enabled, not checked */
+        .dhxform_obj_dhx_skyblue div.dhxform_img.btn2state_0 {
+            background-image: url(&quot;imgs/toggle_off.png&quot;);
+            width: 42px;
+            height: 20px;
+        }
+        /* enabled, checked */
+        .dhxform_obj_dhx_skyblue div.dhxform_img.btn2state_1 {
+            background-image: url(&quot;imgs/toggle_on.png&quot;);
+            width: 42px;
+            height: 20px;
+        }
+        /* disabled, not checked */
+        .dhxform_obj_dhx_skyblue div.disabled div.dhxform_img.btn2state_0 {
+            background-image: url(&quot;imgs/toggle_off_dis.png&quot;);
+            width: 42px;
+            height: 20px;
+        }
+        /* disabled, checked */
+        .dhxform_obj_dhx_skyblue div.disabled div.dhxform_img.btn2state_1 {
+            background-image: url(&quot;imgs/toggle_on_dis.png&quot;);
+            width: 42px;
+            height: 20px;
+        }
+        
+        /* star-style checkbox */
+        /* enabled, not checked */
+        .dhxform_obj_dhx_skyblue div.dhxform_img.star_0 {
+            background-image: url(&quot;imgs/star_off.png&quot;);
+            width: 19px;
+            height: 19px;
+        }
+        /* enabled, checked */
+        .dhxform_obj_dhx_skyblue div.dhxform_img.star_1 {
+            background-image: url(&quot;imgs/star_on.png&quot;);
+            width: 19px;
+            height: 19px;
+        }
+        /* disabled, not checked */
+        .dhxform_obj_dhx_skyblue div.disabled div.dhxform_img.star_0 {
+            background-image: url(&quot;imgs/star_off_dis.png&quot;);
+            width: 19px;
+            height: 19px;
+        }
+        /* disabled, checked */
+        .dhxform_obj_dhx_skyblue div.disabled div.dhxform_img.star_1 {
+            background-image: url(&quot;imgs/star_on_dis.png&quot;);
+            width: 19px;
+            height: 19px;
+        }
+        
+        /* common */
+        /* fix label align a bit */
+        .dhxform_obj_dhx_skyblue div.dhxform_item_label_right div.dhxform_label div.dhxform_label_nav_link {
+            padding-top: 2px;
+        }
+    </span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">style</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code"><div class="hl-main"><pre><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">myForm</span><span class="hl-code">,
+</span><span class="hl-identifier">formData</span><span class="hl-code">;
+</span><span class="hl-reserved">function</span><span class="hl-code"> </span><span class="hl-identifier">doOnLoad</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+    </span><span class="hl-identifier">formData</span><span class="hl-code"> = </span><span class="hl-brackets">[</span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">settings</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">position</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">label-right</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-number">42</span><span class="hl-code">,
+        </span><span class="hl-identifier">inputHeight</span><span class="hl-code">: </span><span class="hl-number">20</span><span class="hl-code">
+    </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">label</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Toggle-style checkbox</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+    </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">btn2state</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">name</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">a</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">ctrl</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Switch to rectangular selection while Ctrl is pressed</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">checked</span><span class="hl-code">: </span><span class="hl-reserved">true</span><span class="hl-code">
+    </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">btn2state</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">name</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">b</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">value</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">mops</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Advanced Mouse Operations</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">list</span><span class="hl-code">: </span><span class="hl-brackets">[</span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">btn2state</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Drag-n-drop in text area</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">btn2state</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Double-click drag joins non-alphanumeric characters</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">btn2state</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Quick copy using middle mouse button</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">checked</span><span class="hl-code">: </span><span class="hl-reserved">true</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-brackets">]</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">label</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Star-style checkboxes</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">offsetTop</span><span class="hl-code">: </span><span class="hl-number">20</span><span class="hl-code">
+    </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">btn2state</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">cssName</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">star</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-number">17</span><span class="hl-code">,
+        </span><span class="hl-identifier">inputHeight</span><span class="hl-code">: </span><span class="hl-number">19</span><span class="hl-code">,
+        </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Highlight current line</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">checked</span><span class="hl-code">: </span><span class="hl-reserved">true</span><span class="hl-code">
+    </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">btn2state</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">cssName</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">star</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-number">17</span><span class="hl-code">,
+        </span><span class="hl-identifier">inputHeight</span><span class="hl-code">: </span><span class="hl-number">19</span><span class="hl-code">,
+        </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Show marker position</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">checked</span><span class="hl-code">: </span><span class="hl-reserved">true</span><span class="hl-code">
+    </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">btn2state</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">cssName</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">star</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-number">17</span><span class="hl-code">,
+        </span><span class="hl-identifier">inputHeight</span><span class="hl-code">: </span><span class="hl-number">19</span><span class="hl-code">,
+        </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Show structure scope</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+    </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">btn2state</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">cssName</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">star</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-number">17</span><span class="hl-code">,
+        </span><span class="hl-identifier">inputHeight</span><span class="hl-code">: </span><span class="hl-number">19</span><span class="hl-code">,
+        </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Show gutter</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+        </span><span class="hl-identifier">list</span><span class="hl-code">: </span><span class="hl-brackets">[</span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">btn2state</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">cssName</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">star</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-number">17</span><span class="hl-code">,
+            </span><span class="hl-identifier">inputHeight</span><span class="hl-code">: </span><span class="hl-number">19</span><span class="hl-code">,
+            </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Line numbers</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">checked</span><span class="hl-code">: </span><span class="hl-reserved">true</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">btn2state</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">cssName</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">star</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-number">17</span><span class="hl-code">,
+            </span><span class="hl-identifier">inputHeight</span><span class="hl-code">: </span><span class="hl-number">19</span><span class="hl-code">,
+            </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Line selection area</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">, </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-identifier">type</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">btn2state</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">cssName</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">star</span><span class="hl-quotes">&quot;</span><span class="hl-code">,
+            </span><span class="hl-identifier">inputWidth</span><span class="hl-code">: </span><span class="hl-number">17</span><span class="hl-code">,
+            </span><span class="hl-identifier">inputHeight</span><span class="hl-code">: </span><span class="hl-number">19</span><span class="hl-code">,
+            </span><span class="hl-reserved">label</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">Code Folding</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-brackets">]</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-brackets">]</span><span class="hl-code">;
+    </span><span class="hl-identifier">myForm</span><span class="hl-code"> = </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-identifier">dhtmlXForm</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">myForm</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-identifier">formData</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-brackets">}</span></pre></div></span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+ 
+ 
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">div</span><span class="hl-code"> </span><span class="hl-var">id</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">myForm</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">style</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">height:450px;</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">div</span><span class="hl-brackets">&gt;</span></pre></div>
+        </div>
+    <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright &copy; 1998-2012 DHTMLX LTD.<br />All rights reserved.</div>
+    </div>
+	</body>
+</html>

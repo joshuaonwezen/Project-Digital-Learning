@@ -5,57 +5,87 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ *
+ * @author wesley
+ */
 @Entity
-public class User implements Serializable {
-
+public class User implements Serializable{
+    
     @Id
     @GeneratedValue
-    private String userName;
-    private String firstName;
-    private String lastName;
-    private String password;
-    private String userRole;
+    private int userId;
+    private String username, firstname, lastname, emailAddress, position, password;
+    private boolean isAdmin;
     
-    
-    public User() {
+    public User(){
+        
     }
-
-
-
-    public User(String userName, String firstName, String lastName, String password, String userRole) {
-        this.userName=userName;
-        this.firstName=firstName;
-        this.lastName=lastName;
+    
+    public User(String username, String firstname, String lastname, String emailAddress, String position, String password, boolean isAdmin){
+        this.username=username;
+        this.firstname=firstname;
+        this.lastname=lastname;
+        this.emailAddress=emailAddress;
+        this.position=position;
         this.password=password;
-        this.userRole=userRole;
+        this.isAdmin=isAdmin;
+    }
+    
+    public int getUserId() {
+        return userId;
     }
 
-    /* Getters en setters voor de verschillende attributen van het Model */
-
-
-    public String getFirstName() {
-        return firstName;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public void setFirstName(String firstName) {
-       
-        this.firstName = firstName;
+    public String getUsername() {
+        return username;
     }
 
-    public String getLastName() {
-        return lastName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public String getUserName() {
-        return userName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public boolean isIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     public String getPassword() {
@@ -65,13 +95,4 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
-    }
-
 }

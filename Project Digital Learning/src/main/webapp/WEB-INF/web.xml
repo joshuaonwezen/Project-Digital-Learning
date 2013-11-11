@@ -1,47 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>GebruikersController</servlet-name>
-        <servlet-class>controllers.GebruikerController</servlet-class>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>controller.LoginController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>IndexController</servlet-name>
-        <servlet-class>controllers.IndexController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>GebruikerWijziging</servlet-name>
-        <servlet-class>controllers.GebruikerWijzigController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>GebruikerVerwijderen</servlet-name>
-        <servlet-class>controllers.GebruikerVerwijderController</servlet-class>
+        <servlet-name>ManageUserController</servlet-name>
+        <servlet-class>controller.ManageUserController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>GebruikersController</servlet-name>
-        <url-pattern>/gebruikers</url-pattern>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+        <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/homepage</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>IndexController</servlet-name>
-        <url-pattern>/index</url-pattern>
+        <servlet-name>ManageUserController</servlet-name>
+        <url-pattern>/users</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>GebruikerWijziging</servlet-name>
-        <url-pattern>/gebruikers/nieuw</url-pattern>
+        <servlet-name>ManageUserController</servlet-name>
+        <url-pattern>/users/edit</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>GebruikerWijziging</servlet-name>
-        <url-pattern>/gebruikers/wijzig</url-pattern>
+        <servlet-name>ManageUserController</servlet-name>
+        <url-pattern>/users/new</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>GebruikerVerwijderen</servlet-name>
-        <url-pattern>/gebruikers/verwijder</url-pattern>
+        <servlet-name>ManageUserController</servlet-name>
+        <url-pattern>/users/delete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
 </web-app>
