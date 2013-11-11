@@ -15,28 +15,28 @@ public class GenericValidator {
     /**
      * Patterns that are used over again (names, addresses, zip codes etc.)
      */
-    public static enum Patterns{
-        REGULAR_TEXT("[a-zA-Z]{1,100}");
+    public static enum Regex{
+        ABC("[a-zA-Z]{1,100}"),
+        ABC_SPACING_ALLOWED("[a-zA-Z][a-zA-Z\\s]{1,100}");
         
-        private String pattern;
+        private String regex;
         
-        Patterns(String pattern){
-            this.pattern = pattern;
+        Regex(String regex){
+            this.regex = regex;
         }
-        public String getPattern(){
-            return pattern;
+        public String getRegex(){
+            return regex;
         }
     }
     
     /**
      * Check to see if an input matches a particular pattern
      * @param input         input to check for
-     * @param p             the pattern that must be used
+     * @param regex         the pattern that must be used
      * @return              true or false depending on match
      */
-    public static boolean isValid(String input, Patterns p){
-        Pattern pattern = Pattern.compile(p.getPattern());
-        System.out.println("the item to match is: " + input);
+    public static boolean isValid(String input, Regex regex){
+        Pattern pattern = Pattern.compile(regex.getRegex());
         Matcher matcher = pattern.matcher(input);
         return matcher.matches();
     }

@@ -13,19 +13,19 @@
         <meta name="viewport" content="width=device-width">
 
         <!-- DHTMLX General -->
-        <script src="/PDL/resources/dhtmlx/dhtmlxTabbar/codebase/dhtmlxcommon.js"></script>
+        <script src="resources/dhtmlx/dhtmlxTabbar/codebase/dhtmlxcommon.js"></script>
         <!-- DHTMLX Tabbar -->
-        <link rel="stylesheet" type="text/css" href="/PDL/resources/dhtmlx/dhtmlxTabbar/codebase/dhtmlxtabbar.css">
-        <script src="/PDL/resources/dhtmlx/dhtmlxTabbar/codebase/dhtmlxtabbar.js"></script>
-        <script src="/PDL/resources/dhtmlx/dhtmlxTabbar/codebase/dhtmlxtabbar_start.js"></script>
+        <link rel="stylesheet" type="text/css" href="resources/dhtmlx/dhtmlxTabbar/codebase/dhtmlxtabbar.css">
+        <script src="resources/dhtmlx/dhtmlxTabbar/codebase/dhtmlxtabbar.js"></script>
+        <script src="resources/dhtmlx/dhtmlxTabbar/codebase/dhtmlxtabbar_start.js"></script>
         <!-- DHTMLX Grid -->
-        <link rel="stylesheet" type="text/css" href="/PDL/resources/dhtmlx/dhtmlxGrid/codebase/dhtmlxgrid.css">
-        <script src="/PDL/resources/dhtmlx/dhtmlxGrid/codebase/dhtmlxgrid.js"></script>        
-        <script src="/PDL/resources/dhtmlx/dhtmlxGrid/codebase/dhtmlxgridcell.js"></script>  
-        <script src="/PDL/resources/dhtmlx/dhtmlxGrid/codebase/ext/dhtmlxgrid_start.js"></script>
+        <link rel="stylesheet" type="text/css" href="resources/dhtmlx/dhtmlxGrid/codebase/dhtmlxgrid.css">
+        <script src="resources/dhtmlx/dhtmlxGrid/codebase/dhtmlxgrid.js"></script>        
+        <script src="resources/dhtmlx/dhtmlxGrid/codebase/dhtmlxgridcell.js"></script>  
+        <script src="resources/dhtmlx/dhtmlxGrid/codebase/ext/dhtmlxgrid_start.js"></script>
         <!-- DHTMLX Menu -->
-        <script src="/PDL/resources/dhtmlx/dhtmlxMenu/codebase/dhtmlxmenu.js"></script>
-        <script src="/PDL/resources/dhtmlx/dhtmlxMenu/codebase/ext/dhtmlxmenu_ext.js"></script>
+        <script src="resources/dhtmlx/dhtmlxMenu/codebase/dhtmlxmenu.js"></script>
+        <script src="resources/dhtmlx/dhtmlxMenu/codebase/ext/dhtmlxmenu_ext.js"></script>
     </head>
     <body>
         <div id="usersGrid"></div>
@@ -34,17 +34,17 @@
             
             //contextual menu settings for grid
             usersMenu = new dhtmlXMenuObject();
-            usersMenu.setIconsPath("/PDL/resources/dhtmlx/dhtmlxMenu/samples/common/images/");
+            usersMenu.setIconsPath("resources/dhtmlx/dhtmlxMenu/samples/common/images/");
             usersMenu.setSkin('dhx_terrace');
             usersMenu.renderAsContextMenu();
             usersMenu.attachEvent("onClick", onButtonClick);
-            usersMenu.loadXML("/PDL/resources/dhtmlx/dhtmlxMenu/structures/users.xml");
+            usersMenu.loadXML("resources/dhtmlx/dhtmlxMenu/structures/users.xml");
             
             //grid settings
             usersGrid = new dhtmlXGridObject('usersGrid');
             usersGrid.enableAutoHeight(true);
             usersGrid.enableAutoWidth(true);
-            usersGrid.setImagePath("/PDL/resources/dhtmlx/dhtmlxGrid/codebase/imgs/");
+            usersGrid.setImagePath("resources/dhtmlx/dhtmlxGrid/codebase/imgs/");
             usersGrid.setSkin('dhx_terrace');
             usersGrid.enableContextMenu(usersMenu);
             usersGrid.setHeader("Employee ID, Username, First Name, Last Name, E-mail address, Position, Admin");
@@ -66,8 +66,8 @@
             var users = new Array();
 
             <c:forEach var='user' items='${users}'>
-            var row = ['${user.userId}', '${user.username}', '${user.firstname}', '${user.lastname}', '${user.emailAddress}', '${user.position}', '${user.isAdmin}'];
-            users.push(row);
+                var row = ['${user.userId}', '${user.username}', '${user.firstname}', '${user.lastname}', '${user.emailAddress}', '${user.position}', '${user.isAdmin}'];
+                users.push(row);
             </c:forEach>
 
             //set data in grid
@@ -122,9 +122,9 @@
         <script>
             tabbar = new dhtmlXTabBar("tabbar", "top");
             tabbar.setSkin('dhx_terrace');
-            tabbar.setImagePath("/PDL/resources/dhtmlx/dhtmlxTabbar/codebase/imgs/");
+            tabbar.setImagePath("resources/dhtmlx/dhtmlxTabbar/codebase/imgs/");
             //we load our tabbar from an xml file (because it works best)
-            tabbar.loadXML("/PDL/resources/dhtmlx/dhtmlxTabbar/structures/admin.xml", function() {
+            tabbar.loadXML("resources/dhtmlx/dhtmlxTabbar/structures/admin.xml", function() {
                 tabbar.setTabActive("t1");
                 tabbar.setContent('t1', 'usersGrid');
             });

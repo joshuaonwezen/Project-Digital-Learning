@@ -12,9 +12,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Log in</title>
         <!-- DHTMLX Form -->
-        <link rel="stylesheet" type="text/css" href="/PDL/resources/dhtmlx/dhtmlxForm/codebase/skins/dhtmlxform_dhx_terrace.css">
-        <script src="/PDL/resources/dhtmlx/dhtmlxForm/codebase/dhtmlxcommon.js"></script>
-        <script src="/PDL/resources/dhtmlx/dhtmlxForm/codebase/dhtmlxform.js"></script>
+        <link rel="stylesheet" type="text/css" href="resources/dhtmlx/dhtmlxForm/codebase/skins/dhtmlxform_dhx_terrace.css">
+        <script src="resources/dhtmlx/dhtmlxForm/codebase/dhtmlxcommon.js"></script>
+        <script src="resources/dhtmlx/dhtmlxForm/codebase/dhtmlxform.js"></script>
     </head>
     <body>
     <c:if test="${errors != null}">

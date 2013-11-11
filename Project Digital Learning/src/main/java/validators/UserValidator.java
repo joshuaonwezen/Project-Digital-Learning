@@ -7,7 +7,7 @@ package validators;
 import java.util.ArrayList;
 import java.util.List;
 import models.UserForm;
-import validators.GenericValidator.Patterns;
+import validators.GenericValidator.Regex;
 
 public class UserValidator {
 
@@ -18,7 +18,7 @@ public class UserValidator {
             errors.add("Name may not be empty");
         }
         else{
-            if (!GenericValidator.isValid(userForm.getUsername(), Patterns.REGULAR_TEXT)){
+            if (!GenericValidator.isValid(userForm.getUsername(), Regex.ABC)){
                 errors.add("Name: must contain at least one character");
             }
         }
@@ -26,7 +26,7 @@ public class UserValidator {
             errors.add("First Name may not be empty");
         }
         else{
-            if (!GenericValidator.isValid(userForm.getFirstname(), Patterns.REGULAR_TEXT)){
+            if (!GenericValidator.isValid(userForm.getFirstname(), Regex.ABC)){
                 errors.add("First Name: must contain at least one character");
             }
         }
@@ -34,7 +34,7 @@ public class UserValidator {
             errors.add("Last Name may not be empty");
         }
         else{
-            if (!GenericValidator.isValid(userForm.getLastname(), Patterns.REGULAR_TEXT)){
+            if (!GenericValidator.isValid(userForm.getLastname(), Regex.ABC)){
                 errors.add("Last Name: must contain at least one character");
             }
         }
@@ -45,7 +45,7 @@ public class UserValidator {
             errors.add("Position may not be empty");
         }
         else{
-            if (!GenericValidator.isValid(userForm.getPosition(), Patterns.REGULAR_TEXT)){
+            if (!GenericValidator.isValid(userForm.getPosition(), Regex.ABC_SPACING_ALLOWED)){
                 errors.add("Position: must contain at least one character");
             }
         }

@@ -16,7 +16,7 @@
         <h1>Homepage Navigation</h1>
         <!-- show admin buttons -->
         <c:if test="${isAdmin == true}">
-            <a href="users.jsp">User management</a></br>
+            <a href="/Project Digital Learning/users">User management</a></br>
         </c:if>
             <a href="#">Courses</a></br>
             <a href="#">Usershit</a></br>

@@ -15,6 +15,7 @@ import models.User;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import services.HibernateUtil;
 
 /**
@@ -23,6 +24,9 @@ import services.HibernateUtil;
  */
 public class LoginController extends HttpServlet {
 
+    
+    private static final boolean DEBUG = true; //wanneer true dan hoef je niet iedere keer opnieuw in te loggen
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -60,12 +64,48 @@ public class LoginController extends HttpServlet {
         
         System.out.println("POST action: " + action);
         
-        if (action.equals("login") && !request.getParameter("username").trim().isEmpty()){
+        if (DEBUG){
+            //maak een admin user aan (als we die nog niet hebben) ter debug
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "from User  where username = ?";
+            List result = session.createQuery(hql)
+            .setString(0, request.getParameter("administrator"))
+            .list();
+            session.close();
+            
+            //er bestaat nog geen administrator: maak aan
+            if (result.isEmpty()){
+                    session = HibernateUtil.getSessionFactory().openSession();
+                    Transaction tx = session.beginTransaction();
+
+                    User user = new User();
+                    user.setUsername("admin");
+                    user.setFirstname("Jan");
+                    user.setLastname("Klaassen");
+                    user.setEmailAddress("j.klaassen@demo.nl");
+                    user.setPosition("IT Manager");
+                    //password = admin
+                    user.setPassword("21232f297a57a5a743894a0e4a801fc3");
+                    user.setIsAdmin(true);
+
+                    session.save(user);
+                    tx.commit();
+                    session.close();
+                    
+                    request.setAttribute("userId", user.getUserId());
+                    request.setAttribute("username", user.getUsername());
+                    request.setAttribute("isAdmin", user.isIsAdmin());
+                    
+                    redirect(request, response, "/homepage.jsp");
+            }
+        }
+        else if (action.equals("login") && !request.getParameter("username").trim().isEmpty()){
             Session session = HibernateUtil.getSessionFactory().openSession();
             String hql = "from User  where username = ?";
             List result = session.createQuery(hql)
             .setString(0, request.getParameter("username"))
             .list();
+            session.close();
             
             //als de list leeg is dan is de username zoiezo fout
             List<String> errors = new ArrayList<String>();
@@ -102,23 +142,8 @@ public class LoginController extends HttpServlet {
                         redirect(request, response, "/homepage.jsp");
                     }
                 }
-                
-                
-                
-                
-                
-                
-                
-                
             }
-            
-            
-            
         }
-        
-        
-        
-        
     }
 
     private void redirect(HttpServletRequest request, HttpServletResponse response, String address) 
