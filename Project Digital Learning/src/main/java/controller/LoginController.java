@@ -16,8 +16,8 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import services.HibernateUtil;
-
+import service.HibernateUtil;
+//import services.HibernateUtil;
 /**
  *
  * @author wesley

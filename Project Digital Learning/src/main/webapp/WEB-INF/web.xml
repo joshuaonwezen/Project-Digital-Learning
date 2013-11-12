@@ -32,6 +32,82 @@
         <servlet-name>ManageUserController</servlet-name>
         <url-pattern>/users/delete</url-pattern>
     </servlet-mapping>
+    
+    <!-- GebruikerController -->
+    <servlet>
+        <servlet-name>GebruikerController</servlet-name>
+        <servlet-class>controllers.GebruikerController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GebruikerController</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    
+    <!--work experience-->
+    <servlet>
+        <servlet-name>WorkWijziging</servlet-name>
+        <servlet-class>controller.WorkWijzigController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>WorkWijziging</servlet-name>
+        <url-pattern>/work/nieuw</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WorkWijziging</servlet-name>
+        <url-pattern>/work/wijzig</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>WorkVerwijderen</servlet-name>
+        <servlet-class>controller.WorkVerwijderController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>WorkVerwijderen</servlet-name>
+        <url-pattern>/work/verwijder</url-pattern>
+    </servlet-mapping>
+    
+    <!-- project experience-->
+    <servlet>
+        <servlet-name>ProjectWijziging</servlet-name>
+        <servlet-class>controller.ProjectWijzigController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProjectWijziging</servlet-name>
+        <url-pattern>/project/nieuw</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProjectWijziging</servlet-name>
+        <url-pattern>/project/wijzig</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ProjectVerwijderen</servlet-name>
+        <servlet-class>controller.ProjectVerwijderController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProjectVerwijderen</servlet-name>
+        <url-pattern>/project/verwijder</url-pattern>
+    </servlet-mapping>
+    
+    <!-- skill-->
+    <servlet>
+        <servlet-name>SkillWijzigen</servlet-name>
+        <servlet-class>controller.SkillWijzigController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SkillWijzigen</servlet-name>
+        <url-pattern>/skill/nieuw</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SkillWijzigen</servlet-name>
+        <url-pattern>/skill/wijzig</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SkillVerwijderen</servlet-name>
+        <servlet-class>controller.SkillVerwijderController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SkillVerwijderen</servlet-name>
+        <url-pattern>/skill/verwijder</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

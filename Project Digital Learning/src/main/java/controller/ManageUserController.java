@@ -12,7 +12,8 @@ import models.UserForm;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import services.HibernateUtil;
+import service.HibernateUtil;
+//import services.HibernateUtil;
 import validators.UserValidator;
 
 /**

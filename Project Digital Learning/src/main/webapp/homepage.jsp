@@ -20,6 +20,7 @@
         </c:if>
             <a href="#">Courses</a></br>
             <a href="#">Usershit</a></br>
+            <a href="profile">Profile</a>
 
 
 
