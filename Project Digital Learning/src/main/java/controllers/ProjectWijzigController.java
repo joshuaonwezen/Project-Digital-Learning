@@ -1,22 +1,22 @@
-package controller;
+package controllers;
 
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import models.Work;
 import models.User;
+import models.Project;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import service.HibernateUtil;
+import services.HibernateUtil;
 //import services.HibernateUtil;
 
-public class WorkWijzigController extends HttpServlet {
+public class ProjectWijzigController extends HttpServlet {
 
-    private static String titelNieuw = "New work experience";
-    private static String titelWijzig = "Edit work experience";
+    private static String titelNieuw = "New project experience";
+    private static String titelWijzig = "Edit project experience";
 
     /* HTTP GET request */
     @Override
@@ -26,26 +26,26 @@ public class WorkWijzigController extends HttpServlet {
         /* start session */
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        
+
         /* User information */
-        List<User> tempWork = new LinkedList();
+        List<User> tempProject = new LinkedList();
         // Zet de session in een variabele
         Criteria criteria = session.createCriteria(User.class);
-        tempWork = criteria.list();
-        request.setAttribute("workList", tempWork);
+        tempProject = criteria.list();
+        request.setAttribute("projectList", tempProject);
 
         if (request.getParameter("id") != null) {
             // If ID is present, retrieve information.
-            long workId = Long.parseLong(request.getParameter("id"));
-            request.setAttribute("id", workId);
-            
-            Work managedWork = (Work) session.load(Work.class, workId);
+            long projectId = Long.parseLong(request.getParameter("id"));
+            request.setAttribute("id", projectId);
 
-            request.setAttribute("fromYear", managedWork.getFromYear());
-            request.setAttribute("tillYear", managedWork.getTillYear());
-            request.setAttribute("name", managedWork.getName());
-            request.setAttribute("profession", managedWork.getProfession());
-            request.setAttribute("description", managedWork.getDescription());
+            Project managedProject = (Project) session.load(Project.class, projectId);
+
+            request.setAttribute("fromYear", managedProject.getFromYear());
+            request.setAttribute("tillYear", managedProject.getTillYear());
+            request.setAttribute("name", managedProject.getName());
+            request.setAttribute("profession", managedProject.getProfession());
+            request.setAttribute("description", managedProject.getProfession());
 
             doorsturen(request, response, titelWijzig); //Stuurt door naar de Wijzig gebruiker pagina.
         } else {
@@ -58,48 +58,48 @@ public class WorkWijzigController extends HttpServlet {
             throws IOException, ServletException {
         String dispatchUrl = null;
 
-        boolean isWorkUpdate = request.getParameter("id") != null;
+        boolean isProjectUpdate = request.getParameter("id") != null;
 
-        if (isWorkUpdate) {
+        if (isProjectUpdate) {
             //nieuwe code:
-            long workId = Long.parseLong(request.getParameter("id"));
+            long projectId = Long.parseLong(request.getParameter("id"));
 
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             Transaction tx = session.beginTransaction();
-            Work managedWork = (Work) session.load(Work.class, workId);
+            Project managedProject = (Project) session.load(Project.class, projectId);
 
-            managedWork.setFromYear(Integer.parseInt(request.getParameter("fromYear")));
-            managedWork.setTillYear(Integer.parseInt(request.getParameter("tillYear")));
-            managedWork.setName(request.getParameter("name"));
-            managedWork.setProfession(request.getParameter("profession"));
-            managedWork.setDescription(request.getParameter("description"));
+            managedProject.setFromYear(Integer.parseInt(request.getParameter("fromYear")));
+            managedProject.setTillYear(Integer.parseInt(request.getParameter("tillYear")));
+            managedProject.setName(request.getParameter("name"));
+            managedProject.setProfession(request.getParameter("profession"));
+            managedProject.setDescription(request.getParameter("description"));
 
             User user = new User();
             user.setUserId(Integer.parseInt(request.getParameter("user")));
-            managedWork.setUser(user);
+            managedProject.setUser(user);
 
-            session.update(managedWork);
+            session.update(managedProject);
 
             tx.commit();
 
         } else {
-            Work work = new Work();
+            Project project = new Project();
 
-            work.setFromYear(Integer.parseInt(request.getParameter("fromYear")));
-            work.setTillYear(Integer.parseInt(request.getParameter("tillYear")));
-            work.setName(request.getParameter("name"));
-            work.setProfession(request.getParameter("profession"));
-            work.setDescription(request.getParameter("description"));
+            project.setFromYear(Integer.parseInt(request.getParameter("fromYear")));
+            project.setTillYear(Integer.parseInt(request.getParameter("tillYear")));
+            project.setName(request.getParameter("name"));
+            project.setProfession(request.getParameter("profession"));
+            project.setDescription(request.getParameter("description"));
 
             User user = new User();
             user.setUserId(Integer.parseInt(request.getParameter("user")));
-            work.setUser(user);
+            project.setUser(user);
 
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
             Transaction tx = session.beginTransaction();
 
-            session.save(work);
+            session.save(project);
 
             tx.commit();
 
@@ -122,19 +122,19 @@ public class WorkWijzigController extends HttpServlet {
         request.setAttribute("paginaTitel", titel);
 
         // Stuur het resultaat van gebruiker_wijzigen.jsp terug naar de client
-        String address = "/work_wijzigen.jsp";
+        String address = "/project_wijzigen.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(address);
         dispatcher.forward(request, response);
     }
 
     /**
-     * Maakt een Work object aan de hand van de parameters uit het http request.
+     * Maakt een Project object aan de hand van de parameters uit het http request.
      */
-    private Work getProductFromRequest(HttpServletRequest request) {
-        Work p = new Work();
+    private Project getProductFromRequest(HttpServletRequest request) {
+        Project p = new Project();
 
         if (request.getParameter("id") != null && !request.getParameter("id").isEmpty()) {
-            p.setWorkNumber(Long.parseLong(request.getParameter("id")));
+            p.setProjectNumber(Long.parseLong(request.getParameter("id")));
         }
         if (request.getParameter("fromYear") != null) {
             p.setFromYear(Integer.parseInt(request.getParameter("fromYear")));
@@ -151,7 +151,7 @@ public class WorkWijzigController extends HttpServlet {
         if (request.getParameter("description") != null) {
             p.setDescription(request.getParameter("description"));
         }
-        
+
         return p;
     }
 

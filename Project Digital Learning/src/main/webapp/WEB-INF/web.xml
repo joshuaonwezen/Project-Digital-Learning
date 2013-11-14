@@ -2,15 +2,15 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>LoginController</servlet-name>
-        <servlet-class>controller.LoginController</servlet-class>
+        <servlet-class>controllers.LoginController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ManageUserController</servlet-name>
-        <servlet-class>controller.ManageUserController</servlet-class>
+        <servlet-class>controllers.ManageUserController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Debug</servlet-name>
-        <servlet-class>controller.DebugController</servlet-class>
+        <servlet-class>controllers.DebugController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -48,7 +48,7 @@
     <!--work experience-->
     <servlet>
         <servlet-name>WorkWijziging</servlet-name>
-        <servlet-class>controller.WorkWijzigController</servlet-class>
+        <servlet-class>controllers.WorkWijzigController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>WorkWijziging</servlet-name>
@@ -60,7 +60,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>WorkVerwijderen</servlet-name>
-        <servlet-class>controller.WorkVerwijderController</servlet-class>
+        <servlet-class>controllers.WorkVerwijderController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>WorkVerwijderen</servlet-name>
@@ -69,7 +69,7 @@
     <!-- project experience-->
     <servlet>
         <servlet-name>ProjectWijziging</servlet-name>
-        <servlet-class>controller.ProjectWijzigController</servlet-class>
+        <servlet-class>controllers.ProjectWijzigController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ProjectWijziging</servlet-name>
@@ -81,7 +81,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>ProjectVerwijderen</servlet-name>
-        <servlet-class>controller.ProjectVerwijderController</servlet-class>
+        <servlet-class>controllers.ProjectVerwijderController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ProjectVerwijderen</servlet-name>
@@ -90,7 +90,7 @@
     <!-- skill-->
     <servlet>
         <servlet-name>SkillWijzigen</servlet-name>
-        <servlet-class>controller.SkillWijzigController</servlet-class>
+        <servlet-class>controllers.SkillWijzigController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SkillWijzigen</servlet-name>
@@ -102,7 +102,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>SkillVerwijderen</servlet-name>
-        <servlet-class>controller.SkillVerwijderController</servlet-class>
+        <servlet-class>controllers.SkillVerwijderController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SkillVerwijderen</servlet-name>

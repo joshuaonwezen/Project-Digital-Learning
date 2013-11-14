@@ -1,4 +1,4 @@
-package controller;
+package controllers;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -11,7 +11,7 @@ import models.Skill;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import service.HibernateUtil;
+import services.HibernateUtil;
 //import services.HibernateUtil;
 
 public class SkillWijzigController extends HttpServlet {

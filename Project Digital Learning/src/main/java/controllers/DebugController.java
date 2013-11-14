@@ -1,4 +1,4 @@
-package controller;
+package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -60,7 +60,7 @@ public class DebugController extends HttpServlet {
         if (action.equals("createAdminUser")) {
             //maak een admin user aan
             //now create an user from the read line
-            Session session = service.HibernateUtil.getSessionFactory().openSession();
+            Session session = services.HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
 
             User user = new User();

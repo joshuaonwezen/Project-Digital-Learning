@@ -43,7 +43,7 @@ public class Datamining {
                 String[] user_line = line.split(delimiter);
 
                 //now create an user from the read line
-                Session session = service.HibernateUtil.getSessionFactory().openSession();
+                Session session = services.HibernateUtil.getSessionFactory().openSession();
                 Transaction tx = session.beginTransaction();
 
                 User user = new User();

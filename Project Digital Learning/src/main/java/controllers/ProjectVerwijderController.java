@@ -1,15 +1,16 @@
-package controller;
+package controllers;
 
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import models.Work;
+import models.Project;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import service.HibernateUtil;
+//import service.HibernateUtil;
+import services.HibernateUtil;
 //import services.HibernateUtil;
 
-public class WorkVerwijderController extends HttpServlet {
+public class ProjectVerwijderController extends HttpServlet {
     /* HTTP GET request */
 
     @Override
@@ -21,11 +22,11 @@ public class WorkVerwijderController extends HttpServlet {
             long id = Long.parseLong(request.getParameter("id"));
             
             
-            long workId = Long.parseLong(request.getParameter("id"));
+            long projectId = Long.parseLong(request.getParameter("id"));
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             Transaction tx = session.beginTransaction();
-            Work managedWork = (Work) session.load(Work.class, workId);
-            session.delete(managedWork);
+            Project managedProject = (Project) session.load(Project.class, projectId);
+            session.delete(managedProject);
 
             tx.commit();
 

@@ -1,4 +1,4 @@
-package controller;
+package controllers;
 
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import models.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import service.HibernateUtil;
+import services.HibernateUtil;
 import validators.GenericValidator;
 //import services.HibernateUtil;
 /**

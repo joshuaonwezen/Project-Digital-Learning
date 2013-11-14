@@ -1,4 +1,4 @@
-package controller;
+package controllers;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -11,7 +11,7 @@ import models.User;
 import models.Work;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import service.HibernateUtil;
+import services.HibernateUtil;
 //import services.HibernateUtil;
 
 public class GebruikerController extends HttpServlet {

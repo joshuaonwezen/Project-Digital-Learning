@@ -1,15 +1,15 @@
-package controller;
+package controllers;
 
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import models.Skill;
+import models.Work;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import service.HibernateUtil;
+import services.HibernateUtil;
 //import services.HibernateUtil;
 
-public class SkillVerwijderController extends HttpServlet {
+public class WorkVerwijderController extends HttpServlet {
     /* HTTP GET request */
 
     @Override
@@ -21,11 +21,11 @@ public class SkillVerwijderController extends HttpServlet {
             long id = Long.parseLong(request.getParameter("id"));
             
             
-            long skillId = Long.parseLong(request.getParameter("id"));
+            long workId = Long.parseLong(request.getParameter("id"));
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             Transaction tx = session.beginTransaction();
-            Skill managedSkill = (Skill) session.load(Skill.class, skillId);
-            session.delete(managedSkill);
+            Work managedWork = (Work) session.load(Work.class, workId);
+            session.delete(managedWork);
 
             tx.commit();
 
