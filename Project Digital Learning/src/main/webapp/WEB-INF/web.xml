@@ -8,11 +8,15 @@
         <servlet-name>ManageUserController</servlet-name>
         <servlet-class>controller.ManageUserController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Debug</servlet-name>
+        <servlet-class>controller.DebugController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
-        <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/homepage</url-pattern>
     </servlet-mapping>
@@ -32,7 +36,6 @@
         <servlet-name>ManageUserController</servlet-name>
         <url-pattern>/users/delete</url-pattern>
     </servlet-mapping>
-    
     <!-- GebruikerController -->
     <servlet>
         <servlet-name>GebruikerController</servlet-name>
@@ -42,7 +45,6 @@
         <servlet-name>GebruikerController</servlet-name>
         <url-pattern>/profile</url-pattern>
     </servlet-mapping>
-    
     <!--work experience-->
     <servlet>
         <servlet-name>WorkWijziging</servlet-name>
@@ -64,7 +66,6 @@
         <servlet-name>WorkVerwijderen</servlet-name>
         <url-pattern>/work/verwijder</url-pattern>
     </servlet-mapping>
-    
     <!-- project experience-->
     <servlet>
         <servlet-name>ProjectWijziging</servlet-name>
@@ -86,7 +87,6 @@
         <servlet-name>ProjectVerwijderen</servlet-name>
         <url-pattern>/project/verwijder</url-pattern>
     </servlet-mapping>
-    
     <!-- skill-->
     <servlet>
         <servlet-name>SkillWijzigen</servlet-name>
@@ -107,6 +107,18 @@
     <servlet-mapping>
         <servlet-name>SkillVerwijderen</servlet-name>
         <url-pattern>/skill/verwijder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Debug</servlet-name>
+        <url-pattern>/Debug</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Debug</servlet-name>
+        <url-pattern>/mineUserData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Debug</servlet-name>
+        <url-pattern>/createAdminUser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
