@@ -1,6 +1,7 @@
 package models;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,11 +13,16 @@ public class Project implements Serializable {
     @Id
     @GeneratedValue
 
-    private long projectNumber;
+    private long projectId;
+    @Column(columnDefinition="int(4)")
     private int fromYear;
+    @Column(columnDefinition="int(4)")
     private int tillYear;
+    @Column(columnDefinition="varchar(25)")
     private String name;
+    @Column(columnDefinition="varchar(25)")
     private String profession;
+    @Column(columnDefinition="varchar(300)")
     private String description;
 
     @ManyToOne
@@ -25,8 +31,8 @@ public class Project implements Serializable {
     public Project() {
     }
 
-    public Project(long projectNumber, int fromYear, int tillYear, String name, String profession, String description) {
-        this.setProjectNumber(projectNumber);
+    public Project(long projectId, int fromYear, int tillYear, String name, String profession, String description) {
+        this.setProjectId(projectId);
         this.setFromYear(fromYear);
         this.setTillYear(tillYear);
         this.setName(name);
@@ -35,16 +41,16 @@ public class Project implements Serializable {
     }
 
     /* Getters en setters voor de verschillende attributen van het Model */
-    public long getProjectNumber() {
-        return projectNumber;
+    public long getProjectId() {
+        return projectId;
     }
 
-    public void setProjectNumber(long projectNumber) {
-        if (projectNumber < 1) {
+    public void setProjectId(long projectId) {
+        if (projectId < 1) {
             throw new IllegalArgumentException(
-                    "Work number may not be negative, value = " + projectNumber);
+                    "Work number may not be negative, value = " + projectId);
         }
-        this.projectNumber = projectNumber;
+        this.projectId = projectId;
     }
 
     /**

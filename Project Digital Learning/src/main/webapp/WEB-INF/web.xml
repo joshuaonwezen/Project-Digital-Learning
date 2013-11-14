@@ -36,78 +36,67 @@
         <servlet-name>ManageUserController</servlet-name>
         <url-pattern>/users/delete</url-pattern>
     </servlet-mapping>
-    <!-- GebruikerController -->
+    <!-- ProfileHolder -->
     <servlet>
-        <servlet-name>GebruikerController</servlet-name>
-        <servlet-class>controllers.GebruikerController</servlet-class>
+        <servlet-name>ProfileHolder</servlet-name>
+        <servlet-class>controllers.ProfileHolder</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>GebruikerController</servlet-name>
+        <servlet-name>ProfileHolder</servlet-name>
         <url-pattern>/profile</url-pattern>
     </servlet-mapping>
     <!--work experience-->
     <servlet>
-        <servlet-name>WorkWijziging</servlet-name>
-        <servlet-class>controllers.WorkWijzigController</servlet-class>
+        <servlet-name>ManageWork</servlet-name>
+        <servlet-class>controllers.ManageWorkController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>WorkWijziging</servlet-name>
-        <url-pattern>/work/nieuw</url-pattern>
+        <servlet-name>ManageWork</servlet-name>
+        <url-pattern>/work/edit</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>WorkWijziging</servlet-name>
-        <url-pattern>/work/wijzig</url-pattern>
+        <servlet-name>ManageWork</servlet-name>
+        <url-pattern>/work/new</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>WorkVerwijderen</servlet-name>
-        <servlet-class>controllers.WorkVerwijderController</servlet-class>
-    </servlet>
     <servlet-mapping>
-        <servlet-name>WorkVerwijderen</servlet-name>
-        <url-pattern>/work/verwijder</url-pattern>
+        <servlet-name>ManageWork</servlet-name>
+        <url-pattern>/work/delete</url-pattern>
     </servlet-mapping>
     <!-- project experience-->
     <servlet>
-        <servlet-name>ProjectWijziging</servlet-name>
-        <servlet-class>controllers.ProjectWijzigController</servlet-class>
+        <servlet-name>ManageProject</servlet-name>
+        <servlet-class>controllers.ManageProjectController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ProjectWijziging</servlet-name>
-        <url-pattern>/project/nieuw</url-pattern>
+        <servlet-name>ManageProject</servlet-name>
+        <url-pattern>/project/edit</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ProjectWijziging</servlet-name>
-        <url-pattern>/project/wijzig</url-pattern>
+        <servlet-name>ManageProject</servlet-name>
+        <url-pattern>/project/new</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>ProjectVerwijderen</servlet-name>
-        <servlet-class>controllers.ProjectVerwijderController</servlet-class>
-    </servlet>
     <servlet-mapping>
-        <servlet-name>ProjectVerwijderen</servlet-name>
-        <url-pattern>/project/verwijder</url-pattern>
+        <servlet-name>ManageProject</servlet-name>
+        <url-pattern>/project/delete</url-pattern>
     </servlet-mapping>
     <!-- skill-->
     <servlet>
-        <servlet-name>SkillWijzigen</servlet-name>
-        <servlet-class>controllers.SkillWijzigController</servlet-class>
+        <servlet-name>ManageSkill</servlet-name>
+        <servlet-class>controllers.ManageSkillController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>SkillWijzigen</servlet-name>
-        <url-pattern>/skill/nieuw</url-pattern>
+        <servlet-name>ManageSkill</servlet-name>
+        <url-pattern>/skill/edit</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SkillWijzigen</servlet-name>
-        <url-pattern>/skill/wijzig</url-pattern>
+        <servlet-name>ManageSkill</servlet-name>
+        <url-pattern>/skill/new</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>SkillVerwijderen</servlet-name>
-        <servlet-class>controllers.SkillVerwijderController</servlet-class>
-    </servlet>
     <servlet-mapping>
-        <servlet-name>SkillVerwijderen</servlet-name>
-        <url-pattern>/skill/verwijder</url-pattern>
+        <servlet-name>ManageSkill</servlet-name>
+        <url-pattern>/skill/delete</url-pattern>
     </servlet-mapping>
+    <!--debug-->
     <servlet-mapping>
         <servlet-name>Debug</servlet-name>
         <url-pattern>/Debug</url-pattern>

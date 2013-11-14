@@ -15,6 +15,11 @@
                 <td>
                     <input type="text" name="search" value="search..">
                 </td>
+                <td>
+                    <p>
+                        <a href="users">Users</a>
+                    </p>
+                </td>
             </tr>
         </table>
     </div>
@@ -47,7 +52,7 @@
                                     <tr>
                                         <td></td>
                                         <td>
-                                            <a href="profile/wijzig?id=${tempGebruiker.userId}">Edit profile</a>
+                                            <a href="users/edit?id=${tempGebruiker.userId}">Edit profile</a>
                                         </td>
                                     </tr>
                                 </table>
@@ -80,15 +85,15 @@
                                 ${tempWork.description}
                             </td>
                             <td>
-                                <a href="work/wijzig?id=${tempWork.workNumber}">edit</a> |
+                                <a href="work/edit?id=${tempWork.workId}">edit</a> |
                                 <a href="javascript:if(confirm('Weet u het zeker dat u deze item wil verwijderen?'))
-                                   window.location='work/verwijder?id=${tempWork.workNumber}';">x</a>
+                                   window.location='work/delete?id=${tempWork.workId}';">x</a>
                             </td>
                         </tr>
                     </c:forEach>
                 </table>
                 <p>
-                    <a href="work/nieuw">+</a>
+                    <a href="work/edit?userId="">+</a>
                 </p>
             </div>
             <div class="container">
@@ -111,15 +116,15 @@
                                 ${tempProject.description}
                             </td>
                             <td>
-                                <a href="project/wijzig?id=${tempProject.projectNumber}">edit</a> |
+                                <a href="project/edit?id=${tempProject.projectId}">edit</a> |
                                 <a href="javascript:if(confirm('Weet u het zeker dat u deze item wil verwijderen?'))
-                                   window.location='project/verwijder?id=${tempProject.projectNumber}';">x</a>
+                                   window.location='project/delete?id=${tempProject.projectId}';">x</a>
                             </td>
                         </tr>
                     </c:forEach>
                 </table>
                 <p>
-                    <a href="project/nieuw">+</a>
+                    <a href="project/edit?userId=">+</a>
                 </p>
             </div>
         </div>
@@ -142,26 +147,21 @@
                                 Level: ${tempSkill.level}
                             </td>
                             <td>
-                                <a href="skill/wijzig?id=${tempSkill.skillNumber}">edit</a> |
+                                <a href="skill/edit?id=${tempSkill.skillId}">edit</a> |
                                 <a href="javascript:if(confirm('Weet u het zeker dat u deze item wil verwijderen?'))
-                                   window.location='skill/verwijder?id=${tempSkill.skillNumber}';">x</a>
+                                   window.location='skill/delete?id=${tempSkill.skillId}';">x</a>
                             </td>
                         </tr>
                     </c:forEach>
                 </table>
                 <p>
-                    <a href="skill/nieuw">+</a>
+                    <a href="skill/edit?userId=">+</a>
                 </p>
             </div>
         </div>
     </div>
     <div id="footer">
-        <p>
-            <a href="profile/nieuw">Maak nieuwe gebruiker aan</a>
-        </p>
-        <p>
-            <a href="index">Terug naar de index</a>
-        </p>
+
     </div>
 </body>
 </html>

@@ -31,7 +31,7 @@
         <div id="usersGrid"></div>
         <br>
         <script>
-            
+
             //contextual menu settings for grid
             usersMenu = new dhtmlXMenuObject();
             usersMenu.setIconsPath("resources/dhtmlx/dhtmlxMenu/samples/common/images/");
@@ -39,7 +39,7 @@
             usersMenu.renderAsContextMenu();
             usersMenu.attachEvent("onClick", onButtonClick);
             usersMenu.loadXML("resources/dhtmlx/dhtmlxMenu/structures/users.xml");
-            
+
             //grid settings
             usersGrid = new dhtmlXGridObject('usersGrid');
             usersGrid.enableAutoHeight(true);
@@ -66,56 +66,67 @@
             var users = new Array();
 
             <c:forEach var='user' items='${users}'>
-                var row = ['${user.userId}', '${user.username}', '${user.firstname}', '${user.lastname}', '${user.emailAddress}', '${user.position}', '${user.isAdmin}'];
-                users.push(row);
+            var row = ['${user.userId}', '${user.username}', '${user.firstname}', '${user.lastname}', '${user.emailAddress}', '${user.position}', '${user.isAdmin}'];
+            users.push(row);
             </c:forEach>
 
             //set data in grid
             usersGrid.parse(users, "jsarray");
-            
+
             //event handling for contextual menu
             function onButtonClick(menuitemId) {
                 var data = usersGrid.contextID.split("_");
                 var rowIndex = data[0];
                 var columnIndex = data[1];
-                
-                switch(menuitemId){
+
+                switch (menuitemId) {
                     case "new":
                         openUserWindow(null);
                         break;
+                    case "view":
+                        openUserProfile(usersGrid.cells(rowIndex, 0).getValue());
+                        break;
                     case "edit":
-                        openUserWindow(usersGrid.cells(rowIndex,0).getValue());
+                        openUserWindow(usersGrid.cells(rowIndex, 0).getValue());
                         break;
                     case "delete":
-                        deleteUser(usersGrid.cells(rowIndex,0).getValue());
+                        deleteUser(usersGrid.cells(rowIndex, 0).getValue());
                         break;
                 }
             }
             //variables for the sizes and location (center) of a popup
             var popupWidth = 800;
             var popupHeight = 500;
-            var popupLeft = (screen.width/2)-(popupWidth/2);
-            var popupTop = (screen.height/2)-(popupHeight/2);
-                
+            var popupLeft = (screen.width / 2) - (popupWidth / 2);
+            var popupTop = (screen.height / 2) - (popupHeight / 2);
+
+            // view profile
+            function openUserProfile(userId) {
+                var uri = "profile";
+                window.open(uri, "menubar=no" +
+                        ",width=" + popupWidth + ",height=" + popupHeight +
+                        ",top=" + popupTop + ",left=" + popupLeft);
+            }
+
             //window for creating/editing a user
-            function openUserWindow(userId){
+            function openUserWindow(userId) {
                 var uri = "users/edit?userId=";
                 //edit a user
-                if (userId !== null){
+                if (userId !== null) {
                     uri += userId;
                 }
-                    
+
                 //now open a new window for creating/editing a user
-                window.open(uri, "_blank", "menubar=no" + 
-                    ",width=" + popupWidth + ",height=" + popupHeight + 
-                    ",top=" + popupTop + ",left=" + popupLeft);
+                window.open(uri, "_blank", "menubar=no" +
+                        ",width=" + popupWidth + ",height=" + popupHeight +
+                        ",top=" + popupTop + ",left=" + popupLeft);
             }
-            
-            function deleteUser(userId){
-                if(confirm('Weet u het zeker dat u deze gebruiker wil verwijderen?'))
-                    window.location='users/delete?userId=' + userId;
+
+            function deleteUser(userId) {
+                if (confirm('Weet u het zeker dat u deze gebruiker wil verwijderen?'))
+                    window.location = 'users/delete?userId=' + userId;
             }
-        
+
         </script>         
 
         <div id="tabbar"></div>

@@ -1,6 +1,7 @@
 package models;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,9 +13,12 @@ public class Skill implements Serializable {
     @Id
     @GeneratedValue
 
-    private long skillNumber;
+    private long skillId;
+    @Column(columnDefinition = "varchar(25)")
     private String name;
+    @Column(columnDefinition = "varchar(25)")
     private String level;
+    @Column(columnDefinition = "varchar(250)")
     private String description;
 
     @ManyToOne
@@ -23,23 +27,23 @@ public class Skill implements Serializable {
     public Skill() {
     }
 
-    public Skill(long projectNumber, String name, String level) {
-        this.setSkillNumber(skillNumber);
+    public Skill(long skillId, String name, String level) {
+        this.setSkillId(skillId);
         this.setName(name);
         this.setLevel(level);
     }
 
     /* Getters en setters voor de verschillende attributen van het Model */
-    public long getSkillNumber() {
-        return skillNumber;
+    public long getSkillId() {
+        return skillId;
     }
 
-    public void setSkillNumber(long skillNumber) {
-        if (skillNumber < 1) {
+    public void setSkillId(long skillId) {
+        if (skillId < 1) {
             throw new IllegalArgumentException(
-                    "Work number may not be negative, value = " + skillNumber);
+                    "Work number may not be negative, value = " + skillId);
         }
-        this.skillNumber = skillNumber;
+        this.skillId = skillId;
     }
 
     /**

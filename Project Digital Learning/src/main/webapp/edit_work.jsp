@@ -6,30 +6,27 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-        <title>${paginaTitel}</title>
+        <title>${update == true ? 'Edit' : 'Create'} Work Experience</title>
         <link href="/WEBappMVCMavenSolution/style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <h2>${paginaTitel}</h2>
+        <h2>${update == true ? 'Edit' : 'Create'} Work Experience</h2>
         <c:if test="${errors != null}">
             <!-- Mochten er errors zijn, dan worden ze hier getoond -->
             <p>${errors}</p>
         </c:if>
         <c:choose>
             <c:when test="${id == null}">
-                <!-- Als er geen id is meegegeven, ga je een product toevoegen -->
-                <form id="nieuweWork" action="nieuw" method="post">
+                <form id="newWork" action="new" method="post">
                 </c:when>
                 <c:otherwise>
-                    <!-- Anders ga je een experience wijzigen -->
-                    <form id="wijzigenWork" action="wijzig" method="post">
+                    <form id="editWork" action="edit" method="post">
                     </c:otherwise>
                 </c:choose>
-                <p>
-                    <c:if test="${id != null}">
-                        <!-- Het id wordt meegestuurd, om te bepalen welke gebruiker je gaat wijzigen -->
-                        <input type="hidden" name="id" id="id" value="${id}"></input>
-                    </c:if>
+                <c:if test="${id != null}">
+                    <!-- Het id wordt meegestuurd -->
+                    <input type="hidden" name="id" id="id" value="${id}"></input>
+                </c:if>
                 <table border="0">
                     <tr>
                         <td>
@@ -77,14 +74,13 @@
                         </td>
                         <td>
                             <select id="user" name="user" >
-                                <c:forEach var="tempProject" items="${projectList}">
-                                    <option value="${tempProject.userId}">${tempProject.firstname} ${tempProject.lastname}</option>
+                                <c:forEach var="tempWork" items="${workList}">
+                                    <option value="${tempWork.userId}">${tempWork.firstname} ${tempWork.lastname}</option>
                                 </c:forEach>
                             </select>
                         </td>
                     </tr>
                 </table>
-                </p>
                 <p>
                     <input class="submit" type="submit" value="Verzenden">
                 </p>

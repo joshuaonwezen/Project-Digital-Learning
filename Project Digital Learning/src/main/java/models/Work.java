@@ -13,7 +13,7 @@ public class Work implements Serializable {
     @Id
     @GeneratedValue
 
-    private long workNumber;
+    private long workId;
     @Column(columnDefinition="int(4)")
     private int fromYear;
     @Column(columnDefinition="int(4)")
@@ -31,8 +31,8 @@ public class Work implements Serializable {
     public Work() {
     }
 
-    public Work(long workNumber, int fromYear, int tillYear, String name, String profession, String description) {
-        this.setWorkNumber(workNumber);
+    public Work(long workId, int fromYear, int tillYear, String name, String profession, String description) {
+        this.setWorkId(workId);
         this.setFromYear(fromYear);
         this.setTillYear(tillYear);
         this.setName(name);
@@ -41,16 +41,16 @@ public class Work implements Serializable {
     }
 
     /* Getters en setters voor de verschillende attributen van het Model */
-    public long getWorkNumber() {
-        return workNumber;
+    public long getWorkId() {
+        return workId;
     }
 
-    public void setWorkNumber(long workNumber) {
-        if (workNumber < 1) {
+    public void setWorkId(long workId) {
+        if (workId < 1) {
             throw new IllegalArgumentException(
-                    "Work number may not be negative, value = " + workNumber);
+                    "Work number may not be negative, value = " + workId);
         }
-        this.workNumber = workNumber;
+        this.workId = workId;
     }
 
     /**

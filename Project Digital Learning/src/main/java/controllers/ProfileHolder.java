@@ -14,7 +14,7 @@ import org.hibernate.Session;
 import services.HibernateUtil;
 //import services.HibernateUtil;
 
-public class GebruikerController extends HttpServlet {
+public class ProfileHolder extends HttpServlet {
 
     /* HTTP GET request */
     @Override
@@ -42,7 +42,7 @@ public class GebruikerController extends HttpServlet {
         // Zet de session in een variable
         Criteria criteriaWork = session.createCriteria(Work.class);
         tempWork = criteriaWork.list();
-        // Zet de lijst met gebruikers en het totaal aantal gebruikers op het request
+        // Zet de lijst met work en het totaal aantal work op het request
         request.setAttribute("workList", tempWork);
         request.setAttribute("aantalWork", tempWork.size());
         
@@ -51,7 +51,7 @@ public class GebruikerController extends HttpServlet {
         // Zet de session in een variable
         Criteria criteriaProject = session.createCriteria(Project.class);
         tempProject = criteriaProject.list();
-        // Zet de lijst met gebruikers en het totaal aantal gebruikers op het request
+        // Zet de lijst met project en het totaal aantal project op het request
         request.setAttribute("projectList", tempProject);
         request.setAttribute("aantalProjects", tempProject.size());
         
@@ -60,7 +60,7 @@ public class GebruikerController extends HttpServlet {
         // Zet de session in een variable
         Criteria criteriaSkill = session.createCriteria(Skill.class);
         tempSkill = criteriaSkill.list();
-        // Zet de lijst met gebruikers en het totaal aantal gebruikers op het request
+        // Zet de lijst met skill en het totaal aantal skill op het request
         request.setAttribute("skillList", tempSkill);
         request.setAttribute("aantalSkills", tempSkill.size());
 
