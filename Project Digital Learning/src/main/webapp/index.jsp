@@ -13,9 +13,19 @@
         <title>Log in</title>
         <!-- DHTMLX Form -->
         <link rel="stylesheet" type="text/css" href="resources/dhtmlx/dhtmlxForm/codebase/skins/dhtmlxform_dhx_terrace.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/">
         <script src="resources/dhtmlx/dhtmlxForm/codebase/dhtmlxcommon.js"></script>
         <script src="resources/dhtmlx/dhtmlxForm/codebase/dhtmlxform.js"></script>
     </head>
+     <div class="Header">       
+        <ul>
+            <li><a class="button" href="#home">Home</a></li>
+            <li><a class="button" href="#news">My Profile</a></li>
+            <li><a class="button" href="#contact">Courses</a></li>
+            <li><a class="button" href="#about">Find</a></li>
+            <li><a class="button" href="#about">LogOut</a></li>
+        </ul>
+      </div>
     <body>
     <c:if test="${errors != null}">
         <!-- Mochten er foutmeldingen zijn, dan worden ze hier getoond -->
