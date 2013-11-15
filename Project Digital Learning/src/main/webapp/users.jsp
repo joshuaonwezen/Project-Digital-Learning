@@ -102,7 +102,12 @@
 
             // view profile
             function openUserProfile(userId) {
-                var uri = "profile";
+                var uri = "profile?id=";
+                //edit a user
+                if (userId !== null) {
+                    uri += userId;
+                }
+                
                 window.open(uri, "menubar=no" +
                         ",width=" + popupWidth + ",height=" + popupHeight +
                         ",top=" + popupTop + ",left=" + popupLeft);

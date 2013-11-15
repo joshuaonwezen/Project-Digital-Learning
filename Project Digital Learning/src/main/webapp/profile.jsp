@@ -26,44 +26,32 @@
     <div id="main">
         <div id="main_left">
             <div class="container">
-                <c:choose>
-                    <c:when test="${tempGebruiker.size() != 0}">
-                        <!-- Wanneer er gebruikers opgeslagen zijn, worden ze hier getoond -->
-                        <c:forEach var="tempGebruiker" items="${userList}">
-                            <!-- Per gebruiker wordt nu een rij aangemaakt met daarin zijn gegevens -->
-                            <div id="main_inner_left">
-                                <!--<img src="$tempGebruiker.imageURL}" width="150" height="150">-->
-                            </div>
-                            <div id="main_inner_right">
-                                <table border="0">
-                                    <tr>
-                                        <td>
-                                            ${tempGebruiker.firstname} ${tempGebruiker.lastname}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            E-mail: 
-                                        </td>
-                                        <td>
-                                            ${tempGebruiker.emailAddress}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            <a href="users/edit?id=${tempGebruiker.userId}">Edit profile</a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
-                        <!-- Als er geen gebruikers zijn, wordt deze melding getoond -->
-                        Er zijn geen gebruikers gevonden.
-                    </c:otherwise>
-                </c:choose>
+                <div id="main_inner_left">
+                    <!--<img src="$tempGebruiker.imageURL}" width="150" height="150">-->
+                </div>
+                <div id="main_inner_right">
+                    <table border="0">
+                        <tr>
+                            <td>
+                                ${firstname} ${lastname}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                E-mail: 
+                            </td>
+                            <td>
+                                ${emailAddress}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <a href="users/edit?id=${userId}">Edit profile</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="container">
                 <h3>Work Experience</h3>

@@ -11,6 +11,7 @@ import models.User;
 import models.Work;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import services.HibernateUtil;
 //import services.HibernateUtil;
 
@@ -21,22 +22,23 @@ public class ProfileHolder extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        String dispatchUrl = null;
-        
         /* create session */
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
 
-        /* User information */
-        List<User> tempGebruiker = new LinkedList();
-        // Zet de session in een variabele        
-        Criteria criteria = session.createCriteria(User.class);
-        tempGebruiker = criteria.list();
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        String dispatchUrl = null;
+
+        User tempGebruiker = (User) session.load(User.class, id);
         // Zet de lijst met gebruikers en het totaal aantal gebruikers op het request
-        request.setAttribute("userList", tempGebruiker);
-        request.setAttribute("aantalGebruikers", tempGebruiker.size());
+        request.setAttribute("firstname", tempGebruiker.getFirstname());
+        request.setAttribute("lastname", tempGebruiker.getLastname());
+        request.setAttribute("emailAddress", tempGebruiker.getEmailAddress());
+        request.setAttribute("userId", tempGebruiker.getUserId());
         
-        
+
+
         /* Work experience */
         List<Work> tempWork = new LinkedList();
         // Zet de session in een variable
@@ -45,7 +47,7 @@ public class ProfileHolder extends HttpServlet {
         // Zet de lijst met work en het totaal aantal work op het request
         request.setAttribute("workList", tempWork);
         request.setAttribute("aantalWork", tempWork.size());
-        
+
         /* Project experience */
         List<Project> tempProject = new LinkedList();
         // Zet de session in een variable
@@ -54,7 +56,7 @@ public class ProfileHolder extends HttpServlet {
         // Zet de lijst met project en het totaal aantal project op het request
         request.setAttribute("projectList", tempProject);
         request.setAttribute("aantalProjects", tempProject.size());
-        
+
         /* Skill  */
         List<Skill> tempSkill = new LinkedList();
         // Zet de session in een variable
@@ -64,7 +66,6 @@ public class ProfileHolder extends HttpServlet {
         request.setAttribute("skillList", tempSkill);
         request.setAttribute("aantalSkills", tempSkill.size());
 
-        
         /* stuur door naar */
         dispatchUrl = "/profile.jsp";
 
