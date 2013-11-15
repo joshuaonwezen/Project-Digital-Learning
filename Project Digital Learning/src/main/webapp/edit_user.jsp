@@ -11,6 +11,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="resources/css/style.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>${update == true ? 'Edit' : 'Create'} User</title>
 
@@ -20,6 +21,17 @@
         <script src="../resources/dhtmlx/dhtmlxForm/codebase/dhtmlxform.js"></script>
     </head>
     <body>
+        <div class="Header">
+        <ul>
+            <li><a class="button" href="homepage.jsp">Home</a></li>
+            <li><a class="button" href="#profile">My Profile</a></li>
+            <li><a class="button" href="#courses">Courses</a></li>
+             <c:if test="${isAdmin == true}">
+            <li><a class="button" href="users.jsp">User List</a></li>
+             </c:if>
+            <li><a class="button" href="index.jsp">LogOut</a></li>
+        </ul>
+        </div>
         <h1>
             ${update == true ? 'Edit' : 'Create'} User
             <hr width="50%" align="left"/>

@@ -17,13 +17,9 @@
         <script src="resources/dhtmlx/dhtmlxForm/codebase/dhtmlxcommon.js"></script>
         <script src="resources/dhtmlx/dhtmlxForm/codebase/dhtmlxform.js"></script>
     </head>
-     <div class="Header">
+        <div class="Header">
         <ul>
-            <li><a class="button" href="#home">Home</a></li>
-            <li><a class="button" href="#news">My Profile</a></li>
-            <li><a class="button" href="#contact">Courses</a></li>
-            <li><a class="button" href="#about">Find</a></li>
-            <li><a class="button" href="#about">LogOut</a></li>
+            <li><a class="button" href="index.jsp">Login</a></li>
         </ul>
         </div>
       </div>
@@ -34,6 +30,7 @@
             <p><font color="red">"${error}"</font></p>
         </c:forEach>
     </c:if>
+    <div class="loginform">
     <form id="login" action="login" method="post">
         <div id="form_container" style="width:300px;height:200px;"></div>
 
@@ -63,5 +60,6 @@
             });
         </script>
     </form>
+    </div>
 </body>
 </html>

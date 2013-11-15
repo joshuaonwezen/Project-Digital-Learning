@@ -133,6 +133,10 @@ li {
     background-repeat:no-repeat;
     padding-bottom:1px;
 }
+.loginform{
+    padding-top:5%;
+    padding-left:44%;
+}
 .button {
     font-family:century gothic, arial sans-serif;
     padding: 8px 15px;

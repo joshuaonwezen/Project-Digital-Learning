@@ -5,11 +5,22 @@
 
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="resources/css/style.css">
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
         <title>${update == true ? 'Edit' : 'Create'} Skill</title>
-        <link href="/WEBappMVCMavenSolution/style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
+        <div class="Header">
+        <ul>
+            <li><a class="button" href="homepage.jsp">Home</a></li>
+            <li><a class="button" href="#profile">My Profile</a></li>
+            <li><a class="button" href="#courses">Courses</a></li>
+             <c:if test="${isAdmin == true}">
+            <li><a class="button" href="users.jsp">User List</a></li>
+             </c:if>
+            <li><a class="button" href="index.jsp">LogOut</a></li>
+        </ul>
+        </div>
         <h2>${update == true ? 'Edit' : 'Create'} Skill</h2>
         <c:if test="${errors != null}">
             <!-- Mochten er errors zijn, dan worden ze hier getoond -->

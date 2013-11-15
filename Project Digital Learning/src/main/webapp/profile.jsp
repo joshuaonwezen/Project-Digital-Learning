@@ -6,6 +6,17 @@
     <link href="resources/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+        <div class="Header">
+        <ul>
+            <li><a class="button" href="homepage.jsp">Home</a></li>
+            <li><a class="button" href="#profile">My Profile</a></li>
+            <li><a class="button" href="#courses">Courses</a></li>
+             <c:if test="${isAdmin == true}">
+            <li><a class="button" href="users.jsp">User List</a></li>
+             </c:if>
+            <li><a class="button" href="index.jsp">LogOut</a></li>
+        </ul>
+        </div>
     <div id="header">
         <table border="0">
             <tr>

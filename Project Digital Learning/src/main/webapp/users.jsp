@@ -10,6 +10,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="resources/css/style.css">
         <title>Management</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
@@ -30,6 +31,15 @@
         <script src="resources/dhtmlx/dhtmlxMenu/codebase/ext/dhtmlxmenu_ext.js"></script>
     </head>
     <body>
+        <div class="Header">
+        <ul>
+            <li><a class="button" href="homepage.jsp">Home</a></li>
+            <li><a class="button" href="#profile">My Profile</a></li>
+            <li><a class="button" href="#courses">Courses</a></li>
+            <li><a class="button" href="users.jsp">User List</a></li>
+            <li><a class="button" href="index.jsp">LogOut</a></li>
+        </ul>
+        </div>
         <div id="usersGrid"></div>
         <br>
         <script>
