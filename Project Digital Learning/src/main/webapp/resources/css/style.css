@@ -6,19 +6,17 @@ html
 {
     width: 100%;
     height: 100%;
-    background: #090708;
+    background-color:#dfebf5;
 }
 body
 {
-    width: 80%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     font-family: "lucida sans", arial, sans-serif;
     padding: 0px;
     margin-top: 0px;
     font-size: .78em;
-    color: #5D5D5D;
-    background: #ffffff;
 }
 p
 {
@@ -67,8 +65,8 @@ h6
 }
 #header
 {
-    width: 80%;
-    height: 150px;
+    width: 100%;
+    height: 90px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -131,33 +129,15 @@ li {
     word-spacing: 0px;
 }
 .Header{
-    background: rgb(57,59,61);
-    padding-top:15px;
-    padding-bottom:20px;
-    background-image: -moz-radial-gradient(left top, circle farthest-corner, #393B3D 50%, #474A4D 100%);
-
+    background: rgb(45,47,49);
+    padding-top:1px;
+    padding-bottom:1px;
 }
 div.Main{
     background:#D8DCEB;
     box-sizing: border-box;
     height:100%;
     
-}
-.Afeed{
-    font-family:century gothic, arial sans-serif;
-    width:164px;
-    height:25px;
-    background: #4479BA;
-    color: #FFF;
-    text-decoration: none;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    border: solid 1px #20538D;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
-    -webkit-box-shadow: inset 0 1px 0 rgba(215, 235, 245, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
-   box-shadow: 1px 1px 1px #000000;
 }
 
 
