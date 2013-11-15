@@ -22,9 +22,9 @@
       </div>
       <body>
           <div align="center" style="padding-top:5%;">
-          Je kan alleen met een InfoSupport account inloggen.
+          You can only log in with an InfoSupport account.
           <br><br>
-          Nog geen account? <br>Neem dan contact op met de administrator:<br>
+          No account yet? <br>Contact the InfoSupport admin:<br>
           admin@infosupport.com
           </div>
       </body>

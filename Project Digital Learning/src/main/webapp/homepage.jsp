@@ -36,7 +36,8 @@
             <a href="#">Usershit</a></br>
             <a href="profile">Profile</a>
 
-
+            <br><br>
+            Logged in as: ${username}
 
 
 
