@@ -2,12 +2,14 @@
 <%@page contentType="text/html" pageEncoding="windows-1252"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
+<link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
+<link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="resources/css/style.css">
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-        <title>${update == true ? 'Edit' : 'Create'} Work Experience</title>
+        <title>${update == true ? 'Edit' : 'Create'} Work Experience - Info Support</title>
     </head>
     <body>
         <div class="Header">

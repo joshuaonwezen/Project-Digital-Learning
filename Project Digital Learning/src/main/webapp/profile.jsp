@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
+<link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 <head>
     <meta charset="UTF-8">
-    <title>Profile</title>
+    <title>Profile - Info Support</title>
     <link href="resources/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>

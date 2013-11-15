@@ -8,10 +8,12 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
+<link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="resources/css/style.css">
-        <title>Management</title>
+        <title>Management - Info Support</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
 

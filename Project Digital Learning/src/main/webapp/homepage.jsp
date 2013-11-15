@@ -6,12 +6,14 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
+<link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 <!DOCTYPE html>
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="resources/css/style.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Homepage</title>
+        <title>Home - Info Support</title>
     </head>
     <body>
         <div class="Header">

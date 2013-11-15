@@ -1,10 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
+<link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Log in</title>
+        <title>Information - Info Support</title>
         <!-- DHTMLX Form -->
         <link rel="stylesheet" type="text/css" href="resources/dhtmlx/dhtmlxForm/codebase/skins/dhtmlxform_dhx_terrace.css">
         <link rel="stylesheet" type="text/css" href="resources/css/style.css">
