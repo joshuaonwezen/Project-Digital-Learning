@@ -19,7 +19,6 @@
     </head>
      <div class="Header">
         <ul>
-            <li><img src="resources/images/Logo.png" /></li>
             <li><a class="button" href="#home">Home</a></li>
             <li><a class="button" href="#news">My Profile</a></li>
             <li><a class="button" href="#contact">Courses</a></li>
