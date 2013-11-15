@@ -29,13 +29,6 @@
         </div>
         <h1>Homepage Navigation</h1>
         <!-- show admin buttons -->
-        <c:if test="${isAdmin == true}">
-            <a href="/Project Digital Learning/users">User management</a></br>
-        </c:if>
-            <a href="#">Courses</a></br>
-            <a href="#">Usershit</a></br>
-            <a href="profile">Profile</a>
-
             <br><br>
             Logged in as: ${username}
 

@@ -97,6 +97,7 @@ public class LoginController extends HttpServlet {
                     else{
                         request.getSession().setAttribute("username", user.getUsername());
                         request.getSession().setAttribute("userId", user.getUserId());
+                        request.getSession().setAttribute("isAdmin", user.isIsAdmin());
                         request.setAttribute("userId", user.getUserId());
                         request.setAttribute("username", user.getUsername());
                         request.setAttribute("isAdmin", user.isIsAdmin());
