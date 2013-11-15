@@ -85,7 +85,7 @@ public class LoginController extends HttpServlet {
                 }
                 else{
                     //password gaan vergelijken
-                    String md5 = md5(request.getParameter("password"));
+                    String md5 = User.md5(request.getParameter("password"));
                     
                     if (!user.getPassword().equals(md5)){
                         errors.add("Username or password incorrect");
@@ -109,25 +109,5 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException{
         RequestDispatcher dispatcher = request.getRequestDispatcher(address);
         dispatcher.forward(request, response);
-    }
-    /**
-     * Maakt een MD5-hash van een String
-     * @param password      De password String die moet worden geconvert naar een MD5 hash
-     * @return              MD5-hash in String formaat
-     */
-    public static String md5(String password){
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] array = md.digest(password.getBytes());
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < array.length; ++i) {
-                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
-            }
-            return sb.toString();
-        } 
-        catch (java.security.NoSuchAlgorithmException e) {
-            //todo
-        }
-        return null;
     }
 }

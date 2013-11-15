@@ -24,7 +24,7 @@ public class CourseValidator {
             errors.add("Name may not be empty");
         }
         else{
-            if (!GenericValidator.isValid(courseForm.getCourseName(), Regex.ABC)){
+            if (!GenericValidator.isValid(courseForm.getCourseName(), Regex.REGULAR_ABC)){
                 errors.add("Name: must contain at least one character");
             }
         }
@@ -32,7 +32,7 @@ public class CourseValidator {
             errors.add("Course Discription may not be empty");
         }
         else{
-            if (!GenericValidator.isValid(courseForm.getCourseDiscription(), Regex.ABC)){
+            if (!GenericValidator.isValid(courseForm.getCourseDiscription(), Regex.REGULAR_ABC)){
                 errors.add("Course Discription: must contain at least one character");
             }
         }
@@ -40,7 +40,7 @@ public class CourseValidator {
             errors.add("Course Level may not be empty");
         }
         else{
-            if (!GenericValidator.isValid(courseForm.getCourseLevel(), Regex.ABC)){
+            if (!GenericValidator.isValid(courseForm.getCourseLevel(), Regex.REGULAR_ABC)){
                 errors.add("Course Level: must contain at least one character");
             }
         }
@@ -50,7 +50,7 @@ public class CourseValidator {
             errors.add("Course Skills may not be empty");
         }
         else{
-            if (!GenericValidator.isValid(courseForm.getCourseSkills(), Regex.ABC_SPACING_ALLOWED)){
+            if (!GenericValidator.isValid(courseForm.getCourseSkills(), Regex.REGULAR_ABC_SPACING_ALLOWED)){
                 errors.add("Course Skills: must contain at least one character");
             }
         }

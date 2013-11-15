@@ -15,18 +15,18 @@ public class UserValidator {
 
     public List<String> validate(UserForm userForm) {
         if (GenericValidator.isEmpty(userForm.getUsername())){
-            errors.add("Name may not be empty");
+            errors.add("Username may not be empty");
         }
         else{
-            if (!GenericValidator.isValid(userForm.getUsername(), Regex.ABC)){
-                errors.add("Name: must contain at least one character");
+            if (!GenericValidator.isValid(userForm.getUsername(), Regex.REGULAR_ABC)){
+                errors.add("Username: must contain at least one character and no spaces or special characters are allowed");
             }
         }
         if (GenericValidator.isEmpty(userForm.getFirstname())){
             errors.add("First Name may not be empty");
         }
         else{
-            if (!GenericValidator.isValid(userForm.getFirstname(), Regex.ABC)){
+            if (!GenericValidator.isValid(userForm.getFirstname(), Regex.REGULAR)){
                 errors.add("First Name: must contain at least one character");
             }
         }
@@ -34,7 +34,7 @@ public class UserValidator {
             errors.add("Last Name may not be empty");
         }
         else{
-            if (!GenericValidator.isValid(userForm.getLastname(), Regex.ABC)){
+            if (!GenericValidator.isValid(userForm.getLastname(), Regex.REGULAR)){
                 errors.add("Last Name: must contain at least one character");
             }
         }
@@ -45,8 +45,16 @@ public class UserValidator {
             errors.add("Position may not be empty");
         }
         else{
-            if (!GenericValidator.isValid(userForm.getPosition(), Regex.ABC_SPACING_ALLOWED)){
+            if (!GenericValidator.isValid(userForm.getPosition(), Regex.REGULAR)){
                 errors.add("Position: must contain at least one character");
+            }
+        }
+        if (GenericValidator.isEmpty(userForm.getPassword())){
+            errors.add("Password may not be empty");
+        }
+        else{
+            if (!GenericValidator.isValid(userForm.getPassword(), Regex.REGULAR)){
+                errors.add("Password: must contain at least one character");
             }
         }
         return errors;
