@@ -16,8 +16,11 @@ public class GenericValidator {
      * Patterns that are used over again (names, addresses, zip codes etc.)
      */
     public static enum Regex{
-        ABC("[a-zA-Z]{1,100}"),
-        ABC_SPACING_ALLOWED("[a-zA-Z][a-zA-Z\\s]{1,100}");
+        REGULAR(".{1,100}"),
+        REGULAR_ABC("[a-zA-Z]{1,100}"),
+        REGULAR_ABC_SPACING_ALLOWED("[a-zA-Z][a-zA-Z\\s]{1,100}"),
+        PASSWORD(".{7,50}");
+        
         
         private String regex;
         

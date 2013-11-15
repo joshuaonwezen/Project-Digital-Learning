@@ -2,6 +2,8 @@
     Document   : users
     Created on : Nov 4, 2013, 1:03:00 PM
     Author     : wesley
+    
+    Todo       : grid moet scrollbaar zijn
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -139,6 +141,7 @@
             tabbar = new dhtmlXTabBar("tabbar", "top");
             tabbar.setSkin('dhx_terrace');
             tabbar.setImagePath("resources/dhtmlx/dhtmlxTabbar/codebase/imgs/");
+            
             //we load our tabbar from an xml file (because it works best)
             tabbar.loadXML("resources/dhtmlx/dhtmlxTabbar/structures/admin.xml", function() {
                 tabbar.setTabActive("t1");

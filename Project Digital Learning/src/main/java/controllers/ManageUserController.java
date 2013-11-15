@@ -19,6 +19,9 @@ import validators.UserValidator;
 /**
  *
  * @author wesley
+ * 
+ * @todo password strength
+ * @todo velden moeten ingevuld blijven wanneer de secundaire validatie niet passed (bijv. username)
  */
 public class ManageUserController extends HttpServlet {
 
@@ -87,6 +90,7 @@ public class ManageUserController extends HttpServlet {
                 request.setAttribute("emailAddress", managedUser.getEmailAddress());
                 request.setAttribute("position", managedUser.getPosition());
                 request.setAttribute("isAdmin", managedUser.isIsAdmin());
+                request.setAttribute("password", managedUser.getPassword());
                 session.close();
                 
                 //geef aan dat we gaan updaten
@@ -144,9 +148,35 @@ public class ManageUserController extends HttpServlet {
             userForm.setLastname(request.getParameter("lastname"));
             userForm.setEmailAddress(request.getParameter("emailAddress"));
             userForm.setPosition(request.getParameter("position"));
+            userForm.setPassword(User.md5(request.getParameter("password")));
             
             UserValidator validator = new UserValidator();
             List<String> errors = validator.validate(userForm);
+            
+            //daarnaast doen we een extra test of de username al bestaat, deze moet uniek zijn
+            if (action.equals("new") || action.equals("edit")){
+                Session session = HibernateUtil.getSessionFactory().openSession();
+                String hql = "from User  where username = ?";
+                List result = session.createQuery(hql)
+                .setString(0, request.getParameter("username"))
+                .list();
+                session.close();
+                
+                if (action.equals("new") && !result.isEmpty()){
+                    errors.add("Username already exists");
+                }
+                else{
+                    //hier kijken we of de username onder het editen is veranderd (en nog wel uniek is)
+                    if (!result.isEmpty()){
+                        User user = (User)result.get(0);
+                        if (request.getParameter("username").equals(user.getUsername())){
+                            if (Integer.parseInt(request.getParameter("userId")) != user.getUserId()){
+                                errors.add("Username already exists");
+                            }
+                        }
+                    }
+                }
+            }
             
             //wanneer we geen errors hebben kunnen we een user gaan bewerken of toevoegen
             if (errors.isEmpty()) {
@@ -164,6 +194,7 @@ public class ManageUserController extends HttpServlet {
                     user.setEmailAddress(request.getParameter("emailAddress"));
                     user.setPosition(request.getParameter("position"));
                     user.setIsAdmin((request.getParameter("isAdmin") != null ? true : false));
+                    user.setPassword(User.md5(request.getParameter("password")));
 
                     session.save(user);
                     tx.commit();
@@ -187,6 +218,11 @@ public class ManageUserController extends HttpServlet {
                     managedUser.setPosition(request.getParameter("position"));
                     managedUser.setIsAdmin((request.getParameter("isAdmin") != null ? true : false));
 
+                    //kijk of het wachtwoord veranderd is
+                    if (!managedUser.getPassword().equals(User.md5(request.getParameter("password")))){
+                        managedUser.setPassword(User.md5(request.getParameter("password")));
+                    }
+                    
                     session.saveOrUpdate(managedUser);
                     tx.commit();
                     session.close();
