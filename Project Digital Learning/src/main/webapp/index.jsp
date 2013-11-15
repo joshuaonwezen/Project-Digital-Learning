@@ -20,17 +20,18 @@
         <div class="Header">
         <ul>
             <li><a class="button" href="index.jsp">Login</a></li>
+            <li><a class="button" href="information.jsp">Information</a></li>
         </ul>
         </div>
       </div>
     <body>
+    <div class="loginform">
     <c:if test="${errors != null}">
         <!-- Mochten er foutmeldingen zijn, dan worden ze hier getoond -->
         <c:forEach var="error" items="${errors}">
             <p><font color="red">"${error}"</font></p>
         </c:forEach>
     </c:if>
-    <div class="loginform">
     <form id="login" action="login" method="post">
         <div id="form_container" style="width:300px;height:200px;"></div>
 
