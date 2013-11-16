@@ -57,14 +57,9 @@ public class ManageUserController extends HttpServlet {
         String action = uri.substring(uri.lastIndexOf("/") + 1);
         
         System.out.println("GET action: " + action);
-        
-        //overzicht tonen met alle users
-        if (action.equals("users")){
-            setUsersOnRequest(request);
-            redirect(request, response, "users.jsp");
-        }
+
         //wijzigen of aanmaken van een user
-        else if (action.equals("edit")){
+        if (action.equals("edit")){
             boolean isUpdate=false;
             
             //extract userId
@@ -114,7 +109,7 @@ public class ManageUserController extends HttpServlet {
             tx.commit();
             session.close();
             
-            redirect(request, response, "../users");
+            response.sendRedirect("../management");
         }
     }
 
@@ -135,13 +130,8 @@ public class ManageUserController extends HttpServlet {
         
         System.out.println("POST action: " + action);
         
-        //overzicht tonen met alle users
-        if (action.equals("users")){
-            setUsersOnRequest(request);
-            redirect(request, response, "users.jsp");
-        }
         //we moeten eerst een formvalidate doen als we een user gaan bewerken of toevoegen
-        else if (action.equals("new") || action.equals("edit")){
+        if (action.equals("new") || action.equals("edit")){
             UserForm userForm = new UserForm();
             userForm.setUsername(request.getParameter("username"));
             userForm.setFirstname(request.getParameter("firstname"));
@@ -241,17 +231,6 @@ public class ManageUserController extends HttpServlet {
                 redirect(request, response, "/edit_user.jsp");
             }
         }
-    }
-    
-    private void setUsersOnRequest(HttpServletRequest request){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = session.beginTransaction();
-        Criteria criteria = session.createCriteria(User.class);
-        List<User> users = criteria.list();
-        session.close();
-        
-        request.setAttribute("users", users);
-        request.setAttribute("usersSize", users.size());
     }
         
     private void redirect(HttpServletRequest request, HttpServletResponse response, String address) 

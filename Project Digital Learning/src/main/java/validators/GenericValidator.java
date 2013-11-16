@@ -17,6 +17,7 @@ public class GenericValidator {
      */
     public static enum Regex{
         REGULAR(".{1,100}"),
+        REGULAR_LARGE(".{1,250}"),
         REGULAR_ABC("[a-zA-Z]{1,100}"),
         REGULAR_ABC_SPACING_ALLOWED("[a-zA-Z][a-zA-Z\\s]{1,100}"),
         PASSWORD(".{7,50}");

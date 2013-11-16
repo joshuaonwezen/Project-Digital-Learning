@@ -5,6 +5,7 @@
 
     Todo       : pagina moet worden gesloten en onderliggende pagina moet worden gerefreshed
                  wanneer er successvol opgeslagen is
+    Todo       : maximum character limiet moet er komen op de input velden
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,27 +14,14 @@
 <link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="resources/css/style.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>${update == true ? 'Edit' : 'Create'} User - Info Support</title>
-
         <!-- DHTMLX Form -->
         <link rel="stylesheet" type="text/css" href="../resources/dhtmlx/dhtmlxForm/codebase/skins/dhtmlxform_dhx_terrace.css">
         <script src="../resources/dhtmlx/dhtmlxForm/codebase/dhtmlxcommon.js"></script>
         <script src="../resources/dhtmlx/dhtmlxForm/codebase/dhtmlxform.js"></script>
+        <title>${update == true ? 'Edit' : 'Create'} User - Info Support</title>
     </head>
     <body>
-        <div class="Header">
-        <ul>
-            <li><a class="button" href="homepage.jsp">Home</a></li>
-            <li><a class="button" href="#profile">My Profile</a></li>
-            <li><a class="button" href="#courses">Courses</a></li>
-             <c:if test="${isAdmin == true}">
-            <li><a class="button" href="users.jsp">User List</a></li>
-             </c:if>
-            <li><a class="button" href="index.jsp">LogOut</a></li>
-        </ul>
-        </div>
         <h1>
             ${update == true ? 'Edit' : 'Create'} User
             <hr width="50%" align="left"/>

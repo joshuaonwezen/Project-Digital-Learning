@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package models;
 
 /**
@@ -12,19 +6,19 @@ package models;
  */
 public class CourseForm {
     
-    private String courseId, courseName, courseDiscription, courseLevel, courseSkills;
-    
+    private String courseId, name, description, image, level, owner;
     
     public CourseForm(){
         
     }
     
-    public CourseForm(String courseId, String courseName, String courseDiscription, String courseLevel, String courseSkills){
-        this.courseId=courseId;
-        this.courseName=courseName;
-        this.courseDiscription=courseDiscription;
-        this.courseLevel=courseLevel;
-        this.courseSkills=courseSkills;
+    public CourseForm(String courseId, String name, String description, String image, String level, String owner){
+        this.courseId = courseId;
+        this.name = name;
+        this.description = description;
+        this.image = image;
+        this.level = level;
+        this.owner = owner;
     }
 
     public String getCourseId() {
@@ -35,39 +29,43 @@ public class CourseForm {
         this.courseId = courseId;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public String getName() {
+        return name;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCourseDiscription() {
-        return courseDiscription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCourseDiscription(String courseDiscription) {
-        this.courseDiscription = courseDiscription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getCourseLevel() {
-        return courseLevel;
+    public String getImage() {
+        return image;
     }
 
-    public void setCourseLevel(String courseLevel) {
-        this.courseLevel = courseLevel;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public String getCourseSkills() {
-        return courseSkills;
+    public String getLevel() {
+        return level;
     }
 
-    public void setCourseSkills(String courseSkills) {
-        this.courseSkills = courseSkills;
+    public void setLevel(String level) {
+        this.level = level;
     }
-    
-    
-    
-    
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
 }

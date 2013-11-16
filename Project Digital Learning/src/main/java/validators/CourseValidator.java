@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package validators;
 
 /**
@@ -20,38 +14,36 @@ public class CourseValidator {
     List<String> errors = new ArrayList<String>();
 
     public List<String> validate(CourseForm courseForm) {
-        if (GenericValidator.isEmpty(courseForm.getCourseName())){
+        if (GenericValidator.isEmpty(courseForm.getName())){
             errors.add("Name may not be empty");
         }
         else{
-            if (!GenericValidator.isValid(courseForm.getCourseName(), Regex.REGULAR_ABC)){
+            if (!GenericValidator.isValid(courseForm.getName(), Regex.REGULAR)){
                 errors.add("Name: must contain at least one character");
             }
         }
-        if (GenericValidator.isEmpty(courseForm.getCourseDiscription())){
-            errors.add("Course Discription may not be empty");
+        if (GenericValidator.isEmpty(courseForm.getDescription())){
+            errors.add("Description may not be empty");
         }
         else{
-            if (!GenericValidator.isValid(courseForm.getCourseDiscription(), Regex.REGULAR_ABC)){
-                errors.add("Course Discription: must contain at least one character");
+            if (!GenericValidator.isValid(courseForm.getDescription(), Regex.REGULAR_LARGE)){
+                errors.add("Description: must contain at least one character");
             }
         }
-        if (GenericValidator.isEmpty(courseForm.getCourseLevel())){
-            errors.add("Course Level may not be empty");
+        if (GenericValidator.isEmpty(courseForm.getLevel())){
+            errors.add("Level may not be empty");
         }
         else{
-            if (!GenericValidator.isValid(courseForm.getCourseLevel(), Regex.REGULAR_ABC)){
-                errors.add("Course Level: must contain at least one character");
+            if (!GenericValidator.isValid(courseForm.getLevel(), Regex.REGULAR)){
+                errors.add("Username: must contain at least one character and no spaces or special characters are allowed");
             }
         }
-    
-        
-        if (GenericValidator.isEmpty(courseForm.getCourseSkills())){
-            errors.add("Course Skills may not be empty");
+        if (GenericValidator.isEmpty(courseForm.getOwner())){
+            errors.add("Owner may not be empty");
         }
         else{
-            if (!GenericValidator.isValid(courseForm.getCourseSkills(), Regex.REGULAR_ABC_SPACING_ALLOWED)){
-                errors.add("Course Skills: must contain at least one character");
+            if (!GenericValidator.isValid(courseForm.getOwner(), Regex.REGULAR)){
+                errors.add("Username: must contain at least one character and no spaces or special characters are allowed");
             }
         }
         return errors;

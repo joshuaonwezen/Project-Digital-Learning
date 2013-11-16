@@ -17,6 +17,7 @@ public class User implements Serializable{
     @GeneratedValue
     private int userId;
     private String username, firstname, lastname, emailAddress, position, password;
+    private String fullName;
     private boolean isAdmin;
     
     public User(){
@@ -31,6 +32,7 @@ public class User implements Serializable{
         this.position=position;
         this.password=password;
         this.isAdmin=isAdmin;
+        fullName = firstname + " " + lastname;
     }
     
     public int getUserId() {
@@ -95,6 +97,10 @@ public class User implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+    public String getFullName(){
+        return fullName;
     }
     
     /**
