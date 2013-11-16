@@ -336,6 +336,8 @@
                 tabbar.setContent('t1', 'usersGrid');
                 tabbar.setContent('t2', 'coursesGrid');
                 tabbar.setContent('t3', 'newsGrid');
+                
+                tabbar.disableTab('t3');
             });
         </script>
     </body>
