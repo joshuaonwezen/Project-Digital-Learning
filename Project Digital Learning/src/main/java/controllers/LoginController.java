@@ -95,12 +95,9 @@ public class LoginController extends HttpServlet {
                     }
                     //login is goed
                     else{
-                        request.getSession().setAttribute("username", user.getUsername());
-                        request.getSession().setAttribute("userId", user.getUserId());
-                        request.getSession().setAttribute("isAdmin", user.isIsAdmin());
-                        request.setAttribute("userId", user.getUserId());
-                        request.setAttribute("username", user.getUsername());
-                        request.setAttribute("isAdmin", user.isIsAdmin());
+                        request.getSession().setAttribute("loggedInUsername", user.getUsername());
+                        request.getSession().setAttribute("loggedInUserId", user.getUserId());
+                        request.getSession().setAttribute("loggedInIsAdmin", user.isIsAdmin());
                         
                         redirect(request, response, "/homepage.jsp");
                     }

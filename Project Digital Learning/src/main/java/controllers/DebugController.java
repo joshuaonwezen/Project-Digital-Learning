@@ -86,6 +86,13 @@ public class DebugController extends HttpServlet {
             
             dm.mineUsers(amount);
         }
+        else if (action.equals("mineCourseData")){
+            int amount = Integer.parseInt(request.getParameter("amount"));
+            
+            Datamining dm = new Datamining();
+            
+            dm.mineCourses(amount);
+        }
     }
 
     /**

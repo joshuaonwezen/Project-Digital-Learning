@@ -21,8 +21,8 @@
             <li><a class="button" href="homepage.jsp">Home</a></li>
             <li><a class="button" href="#profile">My Profile</a></li>
             <li><a class="button" href="#courses">Courses</a></li>
-             <c:if test="${isAdmin == true}">
-            <li><a class="button" href="users.jsp">User List</a></li>
+             <c:if test="${loggedInIsAdmin == true}">
+            <li><a class="button" href="/Project Digital Learning/management">Management</a></li>
              </c:if>
             <li><a class="button" href="index.jsp">LogOut</a></li>
         </ul>
@@ -30,7 +30,7 @@
         <h1>Homepage Navigation</h1>
         <!-- show admin buttons -->
             <br><br>
-            Logged in as: ${username}
+            Logged in as: ${loggedInUsername}
 
 
 
