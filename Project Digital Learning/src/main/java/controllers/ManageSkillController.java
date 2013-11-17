@@ -84,7 +84,7 @@ public class ManageSkillController extends HttpServlet {
 
             tx.commit();
 
-            response.sendRedirect("../profile");
+            response.sendRedirect("../profile?id=" + request.getParameter("user"));
         }
     }
 
@@ -131,7 +131,7 @@ public class ManageSkillController extends HttpServlet {
             tx.commit();
             session.close();
         }
-        response.sendRedirect("../profile");
+        response.sendRedirect("../profile?id=" + request.getParameter("user"));
     }
 
     private void redirect(HttpServletRequest request, HttpServletResponse response, String address)

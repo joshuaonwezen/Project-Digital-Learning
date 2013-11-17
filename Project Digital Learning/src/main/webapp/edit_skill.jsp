@@ -12,17 +12,6 @@
         <title>${update == true ? 'Edit' : 'Create'} Skill - Info Support</title>
     </head>
     <body>
-        <div class="Header">
-        <ul>
-            <li><a class="button" href="homepage.jsp">Home</a></li>
-            <li><a class="button" href="#profile">My Profile</a></li>
-            <li><a class="button" href="#courses">Courses</a></li>
-             <c:if test="${isAdmin == true}">
-            <li><a class="button" href="users.jsp">User List</a></li>
-             </c:if>
-            <li><a class="button" href="index.jsp">LogOut</a></li>
-        </ul>
-        </div>
         <h2>${update == true ? 'Edit' : 'Create'} Skill</h2>
         <c:if test="${errors != null}">
             <!-- Mochten er errors zijn, dan worden ze hier getoond -->
@@ -63,20 +52,21 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="userId">User</label>
+                            <label for="userId"></label>
                         </td>
                         <td>
-                            <select id="user" name="user" >
-                                <c:forEach var="tempSkill" items="${skillList}">
-                                    <option value="${tempSkill.userId}">${tempSkill.firstname} ${tempSkill.lastname}</option>
-                                </c:forEach>
-                            </select>
+                            <input type="hidden" id="user" name="user" value="${loggedInUserId}"></input>
                         </td>
                     </tr>
                 </table>
                 <p>
-                    <input class="submit" type="submit" value="Verzenden">
+                    <input class="submit" type="submit" value="Save">
                 </p>
             </form>
+            <p>
+                <a href="/Project%20Digital%20Learning/profile?id=${loggedInUserId}">
+                    <button>Cancel</button>
+                </a>
+            </p>
     </body>
 </html>

@@ -17,20 +17,22 @@
     </head>
     <body>
         <div class="Header">
-        <ul>
-            <li><a class="button" href="homepage.jsp">Home</a></li>
-            <li><a class="button" href="#profile">My Profile</a></li>
-            <li><a class="button" href="#courses">Courses</a></li>
-             <c:if test="${loggedInIsAdmin == true}">
-            <li><a class="button" href="/Project Digital Learning/management">Management</a></li>
-             </c:if>
-            <li><a class="button" href="index.jsp">LogOut</a></li>
-        </ul>
+            <ul>
+                <li><a class="button" href="homepage.jsp">Home</a></li>
+                    <c:if test="${loggedInIsAdmin == false}">
+                    <li><a class="button" href="/Project%20Digital%20Learning/profile?id=${loggedInUserId}">My Profile</a></li>
+                    </c:if>
+                <li><a class="button" href="#courses">Courses</a></li>
+                    <c:if test="${loggedInIsAdmin == true}">
+                    <li><a class="button" href="/Project Digital Learning/management">Management</a></li>
+                    </c:if>
+                <li><a class="button" href="index.jsp">LogOut</a></li>
+            </ul>
         </div>
         <h1>Homepage Navigation</h1>
         <!-- show admin buttons -->
-            <br><br>
-            Logged in as: ${loggedInUsername}
+        <br><br>
+        Logged in as: ${loggedInUsername}
 
 
 

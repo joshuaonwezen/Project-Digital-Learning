@@ -8,17 +8,19 @@
     <link href="resources/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-        <div class="Header">
+    <div class="Header">
         <ul>
             <li><a class="button" href="homepage.jsp">Home</a></li>
-            <li><a class="button" href="#profile">My Profile</a></li>
+                <c:if test="${loggedInIsAdmin == false}">
+                <li><a class="button" href="/Project%20Digital%20Learning/profile?id=${loggedInUserId}">My Profile</a></li>
+                </c:if>
             <li><a class="button" href="#courses">Courses</a></li>
-            <c:if test="${loggedInIsAdmin == true}">
-            <li><a class="button" href="/Project Digital Learning/management">Management</a></li>
-             </c:if>
+                <c:if test="${loggedInIsAdmin == true}">
+                <li><a class="button" href="/Project Digital Learning/management">Management</a></li>
+                </c:if>
             <li><a class="button" href="index.jsp">LogOut</a></li>
         </ul>
-        </div>
+    </div>
     <div id="header">
         <table border="0">
             <tr>
@@ -59,9 +61,13 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td>
-                                <a href="users/edit?id=${userId}">Edit profile</a>
-                            </td>
+                            <c:if test="${loggedInUserId == userId}">
+                                <td>
+                                    <a href="users/edit?id=${userId}">
+                                        <button>Edit</button>
+                                    </a>
+                                </td>
+                            </c:if>
                         </tr>
                     </table>
                 </div>
@@ -85,17 +91,29 @@
                             <td>
                                 ${tempWork.description}
                             </td>
-                            <td>
-                                <a href="work/edit?id=${tempWork.workId}">edit</a> |
-                                <a href="javascript:if(confirm('Weet u het zeker dat u deze item wil verwijderen?'))
-                                   window.location='work/delete?id=${tempWork.workId}';">x</a>
-                            </td>
+                            <c:if test="${loggedInUserId == userId}">
+                                <td>
+                                    <a href="work/edit?id=${tempWork.workId}">
+                                        <button>Edit</button>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:if(confirm('Delete?'))
+                                   window.location='work/delete?id=${tempWork.workId}';">
+                                        <button>x</button>
+                                    </a>
+                                </td>
+                            </c:if>
                         </tr>
                     </c:forEach>
                 </table>
-                <p>
-                    <a href="work/edit?userId="">+</a>
-                </p>
+                <c:if test="${loggedInUserId == userId}">
+                    <p>
+                        <a href="work/edit?userId=">
+                            <button>+</button>
+                        </a>
+                    </p>
+                </c:if>
             </div>
             <div class="container">
                 <h3>Projects</h3>
@@ -116,17 +134,29 @@
                             <td>
                                 ${tempProject.description}
                             </td>
-                            <td>
-                                <a href="project/edit?id=${tempProject.projectId}">edit</a> |
-                                <a href="javascript:if(confirm('Weet u het zeker dat u deze item wil verwijderen?'))
-                                   window.location='project/delete?id=${tempProject.projectId}';">x</a>
-                            </td>
+                            <c:if test="${loggedInUserId == userId}">
+                                <td>
+                                    <a href="project/edit?id=${tempProject.projectId}">
+                                        <button>Edit</button>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:if(confirm('Delete?'))
+                                   window.location='project/delete?id=${tempProject.projectId}';">
+                                        <button>x</button>
+                                    </a>
+                                </td>
+                            </c:if>
                         </tr>
                     </c:forEach>
                 </table>
-                <p>
-                    <a href="project/edit?userId=">+</a>
-                </p>
+                <c:if test="${loggedInUserId == userId}">
+                    <p>
+                        <a href="project/edit?userId=">
+                            <button>+</button>
+                        </a>
+                    </p>
+                </c:if>
             </div>
         </div>
         <div id="main_right">
@@ -147,17 +177,29 @@
                             <td>
                                 Level: ${tempSkill.level}
                             </td>
-                            <td>
-                                <a href="skill/edit?id=${tempSkill.skillId}">edit</a> |
-                                <a href="javascript:if(confirm('Weet u het zeker dat u deze item wil verwijderen?'))
-                                   window.location='skill/delete?id=${tempSkill.skillId}';">x</a>
-                            </td>
+                            <c:if test="${loggedInUserId == userId}">
+                                <td>
+                                    <a href="skill/edit?id=${tempSkill.skillId}">
+                                        <button>Edit</button>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:if(confirm('Delete?'))
+                                   window.location='skill/delete?id=${tempSkill.skillId}';">
+                                        <button>x</button>
+                                    </a>
+                                </td>
+                            </c:if>
                         </tr>
                     </c:forEach>
                 </table>
-                <p>
-                    <a href="skill/edit?userId=">+</a>
-                </p>
+                <c:if test="${loggedInUserId == userId}">
+                    <p>
+                        <a href="skill/edit?userId=">
+                            <button>+</button>
+                        </a>
+                    </p>
+                </c:if>
             </div>
         </div>
     </div>

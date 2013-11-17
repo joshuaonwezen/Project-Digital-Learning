@@ -87,7 +87,7 @@ public class ManageWorkController extends HttpServlet {
 
             tx.commit();
 
-            response.sendRedirect("../users");
+            response.sendRedirect("../profile?id=" + request.getParameter("user"));
         }
     }
 
