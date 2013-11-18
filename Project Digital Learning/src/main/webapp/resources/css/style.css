@@ -63,6 +63,15 @@ h6
 { 
     color: #362C20;
 }
+h7
+{ 
+    font: normal 80% 'century gothic', arial, sans-serif;
+}
+h8
+{ 
+    font: normal 80% 'century gothic', arial, sans-serif;
+    margin-right:20px;
+}
 #header
 {
     width: 100%;
