@@ -8,70 +8,78 @@
     <link href="resources/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div class="Header">
-        <ul>
-            <li><a class="button" href="homepage.jsp">Home</a></li>
-                <c:if test="${loggedInIsAdmin == false}">
-                <li><a class="button" href="/Project%20Digital%20Learning/profile?id=${loggedInUserId}">My Profile</a></li>
-                </c:if>
-            <li><a class="button" href="#courses">Courses</a></li>
-                <c:if test="${loggedInIsAdmin == true}">
-                <li><a class="button" href="/Project Digital Learning/management">Management</a></li>
-                </c:if>
-            <li><a class="button" href="index.jsp">LogOut</a></li>
-        </ul>
-    </div>
     <div id="header">
-        <table border="0">
-            <tr>
-                <td>
-                    <h2>Profile</h2>
-                </td>
-                <td>
-                    <input type="text" name="search" value="search..">
-                </td>
-                <td>
-                    <p>
-                        <a href="users">Users</a>
-                    </p>
-                </td>
-            </tr>
-        </table>
+        <div id="header_logo">
+            <img src="resources/images/Logo.png">
+        </div>
+        <div id="header_nav">
+            <ul>
+                <li><a href="homepage.jsp">Home</a></li>
+                <li><a href="#courses">Courses</a></li>
+                    <c:if test="${loggedInIsAdmin == true}">
+                    <li><a href="/Project Digital Learning/management">Management</a></li>
+                    </c:if>
+                    <c:if test="${loggedInIsAdmin == false}">
+                    <li><a href="/Project%20Digital%20Learning/profile?id=${loggedInUserId}">My Profile</a></li>
+                    </c:if>
+                <li>
+                    <a href="#">Settings</a>
+                    <ul>
+                        <li><a href="#">Account Settings</a></li>
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#">Report a Problem</a></li>
+                        <li><a href="index.jsp">Log Out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
     <div id="main">
         <div id="main_left">
             <div class="container">
-                <div id="main_inner_left">
-                    <!--<img src="$tempGebruiker.imageURL}" width="150" height="150">-->
+                <h2 style="margin-left: 20px;">
+                    ${loggedInUsername}
+                </h2>
+                <div class="container_left">
+                    <img id="profileImage" src="$tempGebruiker.imageURL}">
                 </div>
-                <div id="main_inner_right">
-                    <table border="0">
-                        <tr>
-                            <td>
-                                ${firstname} ${lastname}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                E-mail: 
-                            </td>
-                            <td>
-                                ${emailAddress}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
+                <div class="container_right">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="tableTitle">bio</td>
+                                <td class="rowName">name</td>
+                                <td class="rowInfo">${firstname} ${lastname}</td>
+                            </tr>
+                            <tr>
+                                <td class="tableTitle"></td>
+                                <td class="rowName">e-mail</td>
+                                <td class="rowInfo">${emailAddress}</td>
+                            </tr>
+                            <tr>
+                                <td class="tableTitle"></td>
+                                <td class="rowName">age</td>
+                                <td class="rowInfo">${age}</td>
+                            </tr>
+                            <tr>
+                                <td class="tableTitle"></td>
+                                <td class="rowName">position</td>
+                                <td class="rowInfo">${position}</td>
+                            </tr>
                             <c:if test="${loggedInUserId == userId}">
-                                <td>
-                                    <a href="users/edit?id=${userId}">
-                                        <button>Edit</button>
-                                    </a>
-                                </td>
+                                <tr>        
+                                    <td>
+                                        <a href="users/edit?id=${userId}">
+                                            <button>Edit</button>
+                                        </a>
+                                    </td>
+                                </tr>
                             </c:if>
-                        </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
+
             <div class="container">
                 <h3>Work Experience</h3>
                 <table border="0">
@@ -99,7 +107,7 @@
                                 </td>
                                 <td>
                                     <a href="javascript:if(confirm('Delete?'))
-                                   window.location='work/delete?id=${tempWork.workId}';">
+                                       window.location='work/delete?id=${tempWork.workId}';">
                                         <button>x</button>
                                     </a>
                                 </td>
@@ -142,7 +150,7 @@
                                 </td>
                                 <td>
                                     <a href="javascript:if(confirm('Delete?'))
-                                   window.location='project/delete?id=${tempProject.projectId}';">
+                                       window.location='project/delete?id=${tempProject.projectId}';">
                                         <button>x</button>
                                     </a>
                                 </td>
@@ -185,7 +193,7 @@
                                 </td>
                                 <td>
                                     <a href="javascript:if(confirm('Delete?'))
-                                   window.location='skill/delete?id=${tempSkill.skillId}';">
+                                       window.location='skill/delete?id=${tempSkill.skillId}';">
                                         <button>x</button>
                                     </a>
                                 </td>
@@ -202,9 +210,6 @@
                 </c:if>
             </div>
         </div>
-    </div>
-    <div id="footer">
-
     </div>
 </body>
 </html>

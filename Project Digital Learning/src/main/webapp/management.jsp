@@ -35,18 +35,31 @@
     </head>
     <body>
         <!-- Navigation -->
-        <div class="Header">
-            <ul>
-                <li><a class="button" href="homepage.jsp">Home</a></li>
-                    <c:if test="${loggedInIsAdmin == false}">
-                    <li><a class="button" href="/Project%20Digital%20Learning/profile?id=${loggedInUserId}">My Profile</a></li>
-                    </c:if>
-                <li><a class="button" href="#courses">Courses</a></li>
-                    <c:if test="${isAdmin == true}">
-                    <li><a class="button" href="/Project Digital Learning/management">Management</a></li>
-                    </c:if>
-                <li><a class="button" href="index.jsp">LogOut</a></li>
-            </ul>
+        <div id="header">
+            <div id="header_logo">
+                <img src="resources/images/Logo.png">
+            </div>
+            <div id="header_nav">
+                <ul>
+                    <li><a href="homepage.jsp">Home</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                        <c:if test="${loggedInIsAdmin == true}">
+                        <li><a href="/Project Digital Learning/management">Management</a></li>
+                        </c:if>
+                        <c:if test="${loggedInIsAdmin == false}">
+                        <li><a href="/Project%20Digital%20Learning/profile?id=${loggedInUserId}">My Profile</a></li>
+                        </c:if>
+                    <li>
+                        <a href="#">Settings</a>
+                        <ul>
+                            <li><a href="#">Account Settings</a></li>
+                            <li><a href="#">Help</a></li>
+                            <li><a href="#">Report a Problem</a></li>
+                            <li><a href="index.jsp">Log Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
         <!--Navigation End -->
         <div id="usersGrid"></div>
