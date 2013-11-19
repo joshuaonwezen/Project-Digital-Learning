@@ -124,6 +124,49 @@
                 </c:if>
             </div>
             <div class="container">
+                <h3>Education</h3>
+                <table border="0">
+                    <c:forEach var="tempEducation" items="${educationList}">
+                        <tr>
+                            <td>
+                                ${tempEducation.fromYear}-${tempProject.tillYear}
+                            </td>
+                            <td>
+                                ${tempEducation.name}
+                            </td>
+                            <td>
+                                ${tempEducation.profession}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                ${tempEducation.description}
+                            </td>
+                            <c:if test="${loggedInUserId == userId}">
+                                <td>
+                                    <a href="education/edit?id=${tempEducation.educationId}">
+                                        <button>Edit</button>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:if(confirm('Delete?'))
+                                       window.location='education/delete?id=${tempEducation.educationId}';">
+                                        <button>x</button>
+                                    </a>
+                                </td>
+                            </c:if>
+                        </tr>
+                    </c:forEach>
+                </table>
+                <c:if test="${loggedInUserId == userId}">
+                    <p>
+                        <a href="education/edit?userId=">
+                            <button>+</button>
+                        </a>
+                    </p>
+                </c:if>
+            </div>
+            <div class="container">
                 <h3>Projects</h3>
                 <table border="0">
                     <c:forEach var="tempProject" items="${projectList}">
