@@ -197,6 +197,7 @@ ul li
     -moz-border-radius: 3px;
     border-radius: 3px;
     border: solid 1px #20538D;
+    z-index: 10; 
 }
 ul li:hover 
 {
