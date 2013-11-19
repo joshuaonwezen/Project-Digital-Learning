@@ -185,7 +185,7 @@ ul li
     display: inline-block;
     margin-right: -4px;
     position: relative;
-    padding: 15px 20px;
+    //padding: 15px 20px;
     background: #4479BA;
     cursor: pointer;
     -webkit-transition: all 0.2s;
@@ -198,6 +198,10 @@ ul li
     border-radius: 3px;
     border: solid 1px #20538D;
     z-index: 10; 
+}
+ul li a {
+    padding: 15px 20px;
+    display:block;
 }
 ul li:hover 
 {
@@ -233,6 +237,7 @@ ul li:hover ul {
     opacity: 1;
     visibility: visible;
 }
+
 /*
 End author: Shahin Mokhtar
 */

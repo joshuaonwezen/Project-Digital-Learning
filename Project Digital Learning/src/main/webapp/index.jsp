@@ -30,7 +30,6 @@
                         <a href="#">Settings</a>
                         <ul>
                             <li><a class="button" href="information.jsp">Information</a></li>
-                            <li><a href="index.jsp">Log Out</a></li>
                         </ul>
                     </li>
                 </ul>

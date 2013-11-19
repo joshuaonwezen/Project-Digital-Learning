@@ -78,7 +78,7 @@ public class ManageProjectController extends HttpServlet {
             session.delete(project);
 
             tx.commit();
-            response.sendRedirect("../profile?id=" );
+            response.sendRedirect("../profile?id=");
         }
     }
 
