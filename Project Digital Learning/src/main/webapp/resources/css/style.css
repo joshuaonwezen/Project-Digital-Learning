@@ -1,181 +1,302 @@
 /*
 Author: Shahin Mokhtar
 */
-
-html
-{
+ html {
     width: 100%;
     height: 100%;
     background-color:#dfebf5;
 }
-body
-{
+body {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    font-family: "lucida sans", arial, sans-serif;
+    font-family:"lucida sans", arial, sans-serif;
     padding: 0px;
     margin-top: 0px;
     font-size: .78em;
 }
-p
-{
+a {
+    text-decoration: none;
+    color: white;
+}
+p {
     margin: 5px;
     padding: 1px 1px 16px 0px;
     line-height: 1.7em;
 }
-
-h1, h2, h3, h4, h5, h6 
-{ 
-    font: normal 179% 'century gothic', arial, sans-serif;
+h1, h2, h3, h4, h5, h6 {
+    font: normal 179%'century gothic', arial, sans-serif;
     color: #43423F;
     margin: 0 0 15px 0;
     padding: 15px 0 5px 0;
 }
-
-h2
-{ 
-    font: normal 170% 'century gothic', arial, sans-serif;
+h2 {
+    font: normal 170%'century gothic', arial, sans-serif;
     color: #0AB6F6;
 }
-
-h3
-{ 
-    font: normal 125% 'century gothic', arial, sans-serif;
+h3 {
+    font: normal 125%'century gothic', arial, sans-serif;
     margin-left: 20px;
 }
-
-h4, h5, h6
-{ 
+h4, h5, h6 {
     margin: 0;
     padding: 0 0 5px 0;
     font: normal 120% arial, sans-serif;
     color: #0AB6F6;
 }
-
-h5, h6
-{ 
+h5, h6 {
     font: italic 95% arial, sans-serif;
     color: #888;
 }
-
-h6
-{ 
+h6 {
     color: #362C20;
 }
-#header
-{
+h7 {
+    font: normal 80%'century gothic', arial, sans-serif;
+}
+h8 {
+    font: normal 80%'century gothic', arial, sans-serif;
+    margin-right:20px;
+}
+#header {
+    padding: 0;
+    margin: 0;
+    height: 100px;
     width: 100%;
-    height: 90px;
+    background-color: #2D2F31;
+    margin-bottom: 25px;
+}
+#header_logo {
+    margin-top: 25px;
+    float: left;
+    margin-left: 50px;
+}
+#header_nav {
+    margin-top: 20px;
+    float: left;
+    margin-left: 100px;
+}
+#main {
+    width: 1000px;
+    height: auto;
     margin-left: auto;
     margin-right: auto;
 }
-#main
-{
-    width: 80%;
-    height:500px;
+#main_left {
+    width: 700px;
+    height: auto;
+    float: left;
+}
+.box {
+    width: 650px;
     margin-left: auto;
     margin-right: auto;
 }
-#main_left
-{
-    width: 60%;
+.box_left {
+    width: 550px;
     float: left;
 }
-#main_inner_left
-{
-    width: auto;
-    float: left;
+.box_right {
+    width: 100px;
+    float: right;
 }
-#main_inner_right
-{
-    width: auto;
-    margin-left: 250px;
-}
-#main_right
-{
-    width: 35%;
+#main_right {
+    width: 290px;
     float: right;
     margin-left: 10px;
 }
-#footer
-{
+.boxRight {
+    width: 240px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.boxRight_left {
+    width: 160px;
+    float: left;
+}
+.boxRight_right {
+    width: 80px;
+    float: right;
+}
+.rightButton {
+    float: right;
+}
+.container {
+    overflow: hidden;
+    height: auto;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #888;
+    margin-bottom: 20px;
+}
+.container_left {
+    float: left;
+}
+.container_right {
+    float: right;
+    margin-right: 100px;
+}
+#footer {
     width: 80%;
     height:100px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 40px;
 }
-.container
-{
-    height: 150px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #888;
+table {
+    width: 300px;
+}
+.tableTitle {
+    width: 50px;
+    color: #8C8681;
+    font-style: italic;
+}
+.rowName {
+    width: 50px;
+    color: #424A59;
+}
+.rowInfo {
+    width: 200px;
+    color: #424A59;
+}
+.top {
+    margin-bottom: 5px;
+}
+.bottom {
+    margin-bottom: 15px;
+}
+.marginTiny {
+    margin-left: 0px;
+}
+.marginSmall {
+    margin-left: 25px;
+}
+.marginBig {
+    margin-left: 93px;
+}
+#profileImage {
+    width: 200px;
+    height: 200px;
+    margin-left: 20px;
     margin-bottom: 20px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: #FFF;
 }
-/*
-End author: Shahin Mokhtar
-*/
-ul{
-    list-style-type:none;
-    margin:45px 1px 40px 0px;
-    text-align:center;
-    word-spacing: 30px;
+// navigation 
+ul {
+    text-align: left;
+    display: inline;
+    padding: 15px 4px 17px 0;
+    list-style: none;
 }
-li {
-    display:inline;
-    word-spacing: 0px;
-}
-.Header{
-    padding-top:1px;
-    background-image: url('../images/Logo_Background.png');
-    background-repeat:no-repeat;
-    padding-bottom:1px;
-}
-.loginform{
-    padding-top:5%;
-    padding-left:44%;
-}
-.button {
-    font-family:century gothic, arial sans-serif;
-    padding: 8px 15px;
+ul li {
+    font-family:'century gothic', arial, sans-serif;
+    color: #fff;
+    display: inline-block;
+    margin-right: -4px;
+    position: relative;
+    //padding: 15px 20px;
     background: #4479BA;
-    color: #FFF;
-    text-decoration: none;
+    cursor: pointer;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
     border: solid 1px #20538D;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
-    -webkit-box-shadow: inset 0 1px 0 rgba(215, 235, 245, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
-   box-shadow: 1px 1px 1px #000000;
+    z-index: 10;
 }
-.buttonLO{
-    font-family:tahoma;
-    padding: 8px 15px;
+ul li a {
+    padding: 15px 20px;
+    display:block;
+}
+ul li:hover {
+    background: #3E6FAB;
+    color: #fff;
+}
+ul li ul {
+    padding: 0;
+    position: absolute;
+    top: 48px;
+    left: 0;
+    width: 150px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transiton: opacity 0.2s;
+    -moz-transition: opacity 0.2s;
+    -ms-transition: opacity 0.2s;
+    -o-transition: opacity 0.2s;
+    -transition: opacity 0.2s;
+}
+ul li ul li {
     background: #4479BA;
-    color: #FFF;
-    text-decoration: none;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    border: solid 1px #20538D;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
-    -webkit-box-shadow: inset 0 1px 0 rgba(215, 235, 245, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
-   box-shadow: 1px 1px 1px #000000;
- 
+    display: block;
+    color: #fff;
+}
+ul li:hover ul {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+.hidden {
+    display: none;
+}
+.unhidden {
+    display: block;
+}
+/*
+End author: Shahin Mokhtar
+*/
+ .loginform {
+    padding-top:5%;
+    padding-left:44%;
+}
 
+.box-level{
+        font: normal 100% 'century gothic', arial, sans-serif;        
+        text-align:right;
+        margin-right: 10px;
 }
-.button:hover {
-    background: #426C9B;
-    border: solid 1px #2A4E77;
-    text-decoration: none;
-    box-shadow: 2px 1px 2px #000000;
-   
+.box-name{
+        font: normal 125% 'century gothic', arial, sans-serif;
+        margin-left: 20px;
+        
 }
-.button:focus {
-    text-decoration:underline;
+
+.box-owner{
+        font: normal 100% 'century gothic', arial, sans-serif;        
+        text-align:left;
+        margin-left: 20px;
+}
+.box-image{
+    width:100px;
+    height:100px;
+}
+.box-image img{
+    height:auto;
+    width:auto;
+    float:left;
+}
+
+.box-course {
+        
+        background-repeat:no-repeat;
+	width:60%;
+        height:250px;
+	background:#FFF;
+	margin:50px auto;
+        }
+        
+.effect1{
+	-webkit-box-shadow: 0 10px 6px -6px #777;
+	   -moz-box-shadow: 0 10px 6px -6px #777;
+	        box-shadow: 0 10px 6px -6px #777;
 }

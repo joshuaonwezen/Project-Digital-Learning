@@ -13,18 +13,28 @@
         <script src="resources/dhtmlx/dhtmlxForm/codebase/dhtmlxcommon.js"></script>
         <script src="resources/dhtmlx/dhtmlxForm/codebase/dhtmlxform.js"></script>
     </head>
-        <div class="Header">
-        <ul>
-            <li><a class="button" href="index.jsp">Login</a></li>
-            <li><a class="button" href="information.jsp">Information</a></li>
-        </ul>
+    <body>
+        <div id="header">
+            <div id="header_logo">
+                <img src="resources/images/Logo.png">
+            </div>
+            <div id="header_nav">
+                <ul>
+                    <li>
+                        <a href="#">Settings</a>
+                        <ul>
+                            <li><a class="button" href="information.jsp">Information</a></li>
+                            <li><a href="index.jsp">Log In</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
-      <body>
-          <div align="center" style="padding-top:5%;">
-          You can only log in with an InfoSupport account.
-          <br><br>
-          No account yet? <br>Contact the InfoSupport admin:<br>
-          admin@infosupport.com
-          </div>
-      </body>
+        <div align="center" style="padding-top:5%;">
+            You can only log in with an InfoSupport account.
+            <br><br>
+            No account yet? <br>Contact the InfoSupport admin:<br>
+            admin@infosupport.com
+        </div>
+    </body>
+</html>

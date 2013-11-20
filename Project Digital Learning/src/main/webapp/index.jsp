@@ -19,50 +19,58 @@
         <script src="resources/dhtmlx/dhtmlxForm/codebase/dhtmlxcommon.js"></script>
         <script src="resources/dhtmlx/dhtmlxForm/codebase/dhtmlxform.js"></script>
     </head>
-        <div class="Header">
-        <ul>
-            <li><a class="button" href="index.jsp">Login</a></li>
-            <li><a class="button" href="information.jsp">Information</a></li>
-        </ul>
-        </div>
-      </div>
     <body>
-    <div class="loginform">
-    <c:if test="${errors != null}">
-        <!-- Mochten er foutmeldingen zijn, dan worden ze hier getoond -->
-        <c:forEach var="error" items="${errors}">
-            <p><font color="red">"${error}"</font></p>
-        </c:forEach>
-    </c:if>
-    <form id="login" action="login" method="post">
-        <div id="form_container" style="width:300px;height:200px;"></div>
+        <div id="header">
+            <div id="header_logo">
+                <img src="resources/images/Logo.png">
+            </div>
+            <div id="header_nav">
+                <ul>
+                    <li>
+                        <a href="#">Settings</a>
+                        <ul>
+                            <li><a class="button" href="information.jsp">Information</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="loginform">
+            <c:if test="${errors != null}">
+                <!-- Mochten er foutmeldingen zijn, dan worden ze hier getoond -->
+                <c:forEach var="error" items="${errors}">
+                    <p><font color="red">"${error}"</font></p>
+                    </c:forEach>
+                </c:if>
+            <form id="login" action="login" method="post">
+                <div id="form_container" style="width:300px;height:200px;"></div>
 
-        <script>
-            var userForm, formData;
+                <script>
+                    var userForm, formData;
 
-            //json format structure: we use this to initialize our form
-            formStructure = [
-                {type: "settings", position: "label-top"},
-                {type: "block", width: 500, list: [
-                        {type: "input", name: 'username', label: 'Username', width: 200, required: true},
-                        {type: "password", name: "password", label: "Password", width: 200, offsetTop: 10, required: true},
-                        {type: "button", name: "login", value: "Login", offsetTop: 20}
-                    ]}
-            ];
+                    //json format structure: we use this to initialize our form
+                    formStructure = [
+                        {type: "settings", position: "label-top"},
+                        {type: "block", width: 500, list: [
+                                {type: "input", name: 'username', label: 'Username', width: 200, required: true},
+                                {type: "password", name: "password", label: "Password", width: 200, offsetTop: 10, required: true},
+                                {type: "button", name: "login", value: "Login", offsetTop: 20}
+                            ]}
+                    ];
 
-            loginForm = new dhtmlXForm("form_container", formStructure);
-            loginForm.enableLiveValidation(true);
-            loginForm.attachEvent("onButtonClick", function(id) {
-                switch (id) {
-                    case 'login':
-                        if (loginForm.validate()) {
-                            document.forms[0].submit();
+                    loginForm = new dhtmlXForm("form_container", formStructure);
+                    loginForm.enableLiveValidation(true);
+                    loginForm.attachEvent("onButtonClick", function(id) {
+                        switch (id) {
+                            case 'login':
+                                if (loginForm.validate()) {
+                                    document.forms[0].submit();
+                                }
+                                break;
                         }
-                        break;
-                }
-            });
-        </script>
-    </form>
-    </div>
-</body>
+                    });
+                </script>
+            </form>
+        </div>
+    </body>
 </html>

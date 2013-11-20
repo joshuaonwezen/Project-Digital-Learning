@@ -16,22 +16,65 @@
         <title>Home - Info Support</title>
     </head>
     <body>
-        <div class="Header">
-        <ul>
-            <li><a class="button" href="homepage.jsp">Home</a></li>
-            <li><a class="button" href="#profile">My Profile</a></li>
-            <li><a class="button" href="#courses">Courses</a></li>
-             <c:if test="${loggedInIsAdmin == true}">
-            <li><a class="button" href="/Project Digital Learning/management">Management</a></li>
-             </c:if>
-            <li><a class="button" href="index.jsp">LogOut</a></li>
-        </ul>
+        <div id="header">
+            <div id="header_logo">
+                <img src="resources/images/Logo.png">
+            </div>
+            <div id="header_nav">
+                <ul>
+                    <li><a href="homepage.jsp">Home</a></li>
+                    <li><a href="/PDL/courses">Courses</a></li>
+                        <c:if test="${loggedInIsAdmin == true}">
+                        <li><a href="/Project Digital Learning/management">Management</a></li>
+                        </c:if>
+                        <li><a href="/Project%20Digital%20Learning/profile?id=${loggedInUserId}">My Profile</a></li>
+                    <li>
+                        <a href="#">Settings</a>
+                        <ul>
+                            <li><a href="#">Help</a></li>
+                            <li><a href="#">Report a Problem</a></li>
+                            <li><a href="index.jsp">Log Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <h1>Homepage Navigation</h1>
-        <!-- show admin buttons -->
-            <br><br>
-            Logged in as: ${loggedInUsername}
-
+        <!-- Profile Information -->
+        <div class="ProfileInformation">
+            <table>
+                <tr class="ProfilePictureHomepage"><td><input type="image" src="resources/images/users_icon.png"</td></tr>
+                <tr class="ProfileNameHomepage"><td>${loggedInUsername}</td></tr>
+                <c:if test="${loggedInIsAdmin == true}">
+                    <tr class="ProfileRoleHomepage"><td>Admin</td></tr>
+                </c:if>
+                    <tr class="ChatIconHomepage"><td><input type="image" src="resources/images/ChatIconHomepage.png"></td></tr>
+            </table>
+        </div>    
+        <!-- Activity Feed -->
+        <div class="ActivityFeed">
+        <table>
+            <tr>
+                <td colspan="3" class="ActivityFeedtable">Activity Feed</th>
+            </tr>
+            <tr class="messageHeader">
+                <td class="ifRead">Read</td>
+                <td>Sent by</td>
+                <td colspan="2" class="messagefeed">Message</td>
+            </tr>
+            <c:forEach var="tempActivity" items="${activity}" begin="1" end="5">           
+            <tr class="showMessages">
+              <c:if test="${tempActivity.activityOpened == false}">
+                <td><input type="image" src="resources/images/ifNotReadbutton.png"</td>
+              </c:if>
+                <td>${tempActivity.sender}</td>
+                <td>${tempActivity.message}</td>
+                <td class="gotoMessage">
+                    <input type="image" src="resources/images/gotoMessage.png" href="Project%20Digital%20Learning/activity/message?id=${tempActivity.activityId}';">
+                </td>
+            </tr>
+          </c:forEach>
+        </table>
+        </div>
 
 
 

@@ -33,12 +33,6 @@ public class ManageProjectController extends HttpServlet {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        /* User information */
-        List<User> tempProject = new LinkedList();
-        // Put session into variable criteria
-        Criteria criteria = session.createCriteria(User.class);
-        tempProject = criteria.list();
-        request.setAttribute("projectList", tempProject);
 
         /* Get action */
         String uri = request.getRequestURI();
@@ -78,15 +72,13 @@ public class ManageProjectController extends HttpServlet {
             redirect(request, response, "/edit_project.jsp");
         } // Delete
         else if (action.equals("delete")) {
-
             long projectId = Long.parseLong(request.getParameter("id"));
             Transaction tx = session.beginTransaction();
             Project project = (Project) session.load(Project.class, projectId);
             session.delete(project);
 
             tx.commit();
-
-            response.sendRedirect("../profile");
+            response.sendRedirect("../profile?id=");
         }
     }
 
@@ -139,7 +131,7 @@ public class ManageProjectController extends HttpServlet {
             tx.commit();
             session.close();
         }
-        response.sendRedirect("../profile");
+        response.sendRedirect("../profile?id=" + request.getParameter("user"));
     }
 
     private void redirect(HttpServletRequest request, HttpServletResponse response, String address)

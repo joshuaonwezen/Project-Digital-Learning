@@ -128,6 +128,23 @@
         <servlet-name>ManageSkill</servlet-name>
         <url-pattern>/skill/delete</url-pattern>
     </servlet-mapping>
+    <!-- education-->
+    <servlet>
+        <servlet-name>ManageEducation</servlet-name>
+        <servlet-class>controllers.ManageEducationController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManageEducation</servlet-name>
+        <url-pattern>/education/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageEducation</servlet-name>
+        <url-pattern>/education/new</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageEducation</servlet-name>
+        <url-pattern>/education/delete</url-pattern>
+    </servlet-mapping>
     <!--debug-->
     <servlet>
         <servlet-name>Debug</servlet-name>

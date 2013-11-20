@@ -99,6 +99,11 @@ public class ManageCourseController extends HttpServlet {
             
             response.sendRedirect("../management");
         }
+        else if (action.equals("courses")) {
+            //set alle courses op de request
+            setCoursesOnRequest(request);                        
+            redirect(request, response, "/courses.jsp");
+        }
     }
 
     /**
@@ -188,6 +193,17 @@ public class ManageCourseController extends HttpServlet {
                 redirect(request, response, "/edit_course.jsp");
             }
         }
+    }
+    
+    private void setCoursesOnRequest(HttpServletRequest request){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        Criteria criteria = session.createCriteria(Course.class);
+        List<Course> courses = criteria.list();
+        session.close();
+        System.out.println("the courses: " + courses.size() + "items");
+        request.setAttribute("courses", courses);
+        request.setAttribute("coursesSize", courses.size());
     }
     
     private String getSelectedOption(HttpServletRequest request, String selectElement){
