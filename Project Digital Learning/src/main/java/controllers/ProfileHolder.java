@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import models.Education;
 import models.Project;
 import models.Skill;
 import models.User;
@@ -61,6 +62,15 @@ public class ProfileHolder extends HttpServlet {
             // Zet de lijst met skill en het totaal aantal skill op het request
             request.setAttribute("skillList", tempSkill);
             request.setAttribute("aantalSkills", tempSkill.size());
+            
+            /* Education  */
+            List<Education> tempEducation = new LinkedList();
+            // Zet de session in een variable
+            Query queryEducation = session.createQuery("from Education where user_userId = " + id);
+            tempEducation = queryEducation.list();
+            // Zet de lijst met skill en het totaal aantal skill op het request
+            request.setAttribute("educationList", tempEducation);
+            request.setAttribute("aantalEducation", tempEducation.size());
 
             /* stuur door naar */
             dispatchUrl = "/profile.jsp";

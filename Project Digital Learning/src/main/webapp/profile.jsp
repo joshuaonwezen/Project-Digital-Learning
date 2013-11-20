@@ -6,6 +6,15 @@
     <meta charset="UTF-8">
     <title>Profile - Info Support</title>
     <link href="resources/css/style.css" rel="stylesheet" type="text/css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <style type="text/css">
+        .hidden {
+            display: none;
+        }
+        .unhidden {
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <div id="header">
@@ -19,13 +28,11 @@
                     <c:if test="${loggedInIsAdmin == true}">
                     <li><a href="/Project Digital Learning/management">Management</a></li>
                     </c:if>
-                    <c:if test="${loggedInIsAdmin == false}">
                     <li><a href="/Project%20Digital%20Learning/profile?id=${loggedInUserId}">My Profile</a></li>
-                    </c:if>
                 <li>
                     <a href="#">Settings</a>
                     <ul>
-                        <li><a href="#">Account Settings</a></li>
+                        <li><a>Toggle Edit Mode</a></li>
                         <li><a href="#">Help</a></li>
                         <li><a href="#">Report a Problem</a></li>
                         <li><a href="index.jsp">Log Out</a></li>
@@ -37,6 +44,13 @@
     <div id="main">
         <div id="main_left">
             <div class="container">
+                <div class="hidden rightButton">
+                        <c:if test="${loggedInUserId == userId}">
+                            <a href="users/edit?id=${userId}">
+                                <button>Edit</button>
+                            </a>
+                        </c:if>
+                    </div>
                 <h2 style="margin-left: 20px;">
                     ${loggedInUsername}
                 </h2>
@@ -66,150 +80,126 @@
                                 <td class="rowName">position</td>
                                 <td class="rowInfo">${position}</td>
                             </tr>
-                            <c:if test="${loggedInUserId == userId}">
-                                <tr>        
-                                    <td>
-                                        <a href="users/edit?id=${userId}">
-                                            <button>Edit</button>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </c:if>
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <div class="container">
-                <h3>Work Experience</h3>
-                <table border="0">
-                    <c:forEach var="tempWork" items="${workList}">
-                        <tr>
-                            <td>
-                                ${tempWork.fromYear}-${tempWork.tillYear}
-                            </td>
-                            <td>
-                                ${tempWork.name}
-                            </td>
-                            <td>
-                                ${tempWork.profession}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                ${tempWork.description}
-                            </td>
-                            <c:if test="${loggedInUserId == userId}">
-                                <td>
+                <div class="hidden rightButton">
+                    <c:if test="${loggedInUserId == userId}">
+                        <a href="project/edit?userId=">
+                            <button>+</button>
+                        </a>
+                    </c:if>
+                </div>
+                <h3>Projects</h3>
+                <c:forEach var="tempWork" items="${workList}">
+                    <div class="box">
+                        <div class="box_left">
+                            <div class="top">
+                                <span class="marginTiny">${tempWork.fromYear} - ${tempProject.tillYear}</span>
+                                <span class="marginSmall">${tempWork.name}</span>
+                                <span class="marginSmall">${tempWork.profession}</span>
+                            </div>
+                            <div class="bottom">
+                                <span class="marginBig">${tempWork.description}</span>
+                            </div>
+                        </div>
+                        <div class="box_right">
+                            <div class="hidden">
+                                <c:if test="${loggedInUserId == userId}">
                                     <a href="work/edit?id=${tempWork.workId}">
                                         <button>Edit</button>
                                     </a>
-                                </td>
-                                <td>
                                     <a href="javascript:if(confirm('Delete?'))
                                        window.location='work/delete?id=${tempWork.workId}';">
                                         <button>x</button>
                                     </a>
-                                </td>
-                            </c:if>
-                        </tr>
-                    </c:forEach>
-                </table>
-                <c:if test="${loggedInUserId == userId}">
-                    <p>
-                        <a href="work/edit?userId=">
+                                </c:if>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+
+            <div class="container">
+                <div class="hidden rightButton">
+                    <c:if test="${loggedInUserId == userId}">
+                        <a href="education/edit?userId=">
                             <button>+</button>
                         </a>
-                    </p>
-                </c:if>
-            </div>
-            <div class="container">
+                    </c:if>
+                </div>
                 <h3>Education</h3>
-                <table border="0">
-                    <c:forEach var="tempEducation" items="${educationList}">
-                        <tr>
-                            <td>
-                                ${tempEducation.fromYear}-${tempProject.tillYear}
-                            </td>
-                            <td>
-                                ${tempEducation.name}
-                            </td>
-                            <td>
-                                ${tempEducation.profession}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                ${tempEducation.description}
-                            </td>
-                            <c:if test="${loggedInUserId == userId}">
-                                <td>
+                <c:forEach var="tempEducation" items="${educationList}">
+                    <div class="box">
+                        <div class="box_left">
+                            <div class="top">
+                                <span class="marginTiny">${tempEducation.fromYear} - ${tempEducation.tillYear}</span>
+                                <span class="marginSmall">${tempEducation.name}</span>
+                                <span class="marginSmall">${tempEducation.profession}</span>
+                            </div>
+                            <div class="bottom">
+                                <span class="marginBig">${tempEducation.description}</span>
+                            </div>
+                        </div>
+                        <div class="box_right">
+                            <div class="hidden">
+                                <c:if test="${loggedInUserId == userId}">
                                     <a href="education/edit?id=${tempEducation.educationId}">
                                         <button>Edit</button>
                                     </a>
-                                </td>
-                                <td>
                                     <a href="javascript:if(confirm('Delete?'))
                                        window.location='education/delete?id=${tempEducation.educationId}';">
                                         <button>x</button>
                                     </a>
-                                </td>
-                            </c:if>
-                        </tr>
-                    </c:forEach>
-                </table>
-                <c:if test="${loggedInUserId == userId}">
-                    <p>
-                        <a href="education/edit?userId=">
+                                </c:if>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+
+            <div class="container">
+                <div class="hidden rightButton">
+                    <c:if test="${loggedInUserId == userId}">
+                        <a href="project/edit?userId=">
                             <button>+</button>
                         </a>
-                    </p>
-                </c:if>
-            </div>
-            <div class="container">
+                    </c:if>
+                </div>
                 <h3>Projects</h3>
-                <table border="0">
-                    <c:forEach var="tempProject" items="${projectList}">
-                        <tr>
-                            <td>
-                                ${tempProject.fromYear}-${tempProject.tillYear}
-                            </td>
-                            <td>
-                                ${tempProject.name}
-                            </td>
-                            <td>
-                                ${tempProject.profession}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                ${tempProject.description}
-                            </td>
-                            <c:if test="${loggedInUserId == userId}">
-                                <td>
+                <c:forEach var="tempProject" items="${projectList}">
+                    <div class="box">
+                        <div class="box_left">
+                            <div class="top">
+                                <span class="marginTiny">${tempProject.fromYear} - ${tempProject.tillYear}</span>
+                                <span class="marginSmall">${tempProject.name}</span>
+                                <span class="marginSmall">${tempProject.profession}</span>
+                            </div>
+                            <div class="bottom">
+                                <span class="marginBig">${tempProject.description}</span>
+                            </div>
+                        </div>
+                        <div class="box_right">
+                            <div class="hidden">
+                                <c:if test="${loggedInUserId == userId}">
                                     <a href="project/edit?id=${tempProject.projectId}">
                                         <button>Edit</button>
                                     </a>
-                                </td>
-                                <td>
                                     <a href="javascript:if(confirm('Delete?'))
                                        window.location='project/delete?id=${tempProject.projectId}';">
                                         <button>x</button>
                                     </a>
-                                </td>
-                            </c:if>
-                        </tr>
-                    </c:forEach>
-                </table>
-                <c:if test="${loggedInUserId == userId}">
-                    <p>
-                        <a href="project/edit?userId=">
-                            <button>+</button>
-                        </a>
-                    </p>
-                </c:if>
+                                </c:if>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
             </div>
         </div>
+
         <div id="main_right">
             <div class="container">
                 <h3>Completed Courses</h3>
@@ -217,42 +207,50 @@
             <div class="container">
                 <h3>Enrolled Courses</h3>
             </div>
+
             <div class="container">
-                <h3>Skills</h3>
-                <table border="0">
-                    <c:forEach var="tempSkill" items="${skillList}">
-                        <tr>
-                            <td>
-                                ${tempSkill.name}
-                            </td>
-                            <td>
-                                Level: ${tempSkill.level}
-                            </td>
-                            <c:if test="${loggedInUserId == userId}">
-                                <td>
-                                    <a href="skill/edit?id=${tempSkill.skillId}">
-                                        <button>Edit</button>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="javascript:if(confirm('Delete?'))
-                                       window.location='skill/delete?id=${tempSkill.skillId}';">
-                                        <button>x</button>
-                                    </a>
-                                </td>
-                            </c:if>
-                        </tr>
-                    </c:forEach>
-                </table>
-                <c:if test="${loggedInUserId == userId}">
-                    <p>
+                <div class="hidden rightButton">
+                    <c:if test="${loggedInUserId == userId}">
                         <a href="skill/edit?userId=">
                             <button>+</button>
                         </a>
-                    </p>
-                </c:if>
+                    </c:if>
+                </div>
+                <h3>Skills</h3>
+                <c:forEach var="tempSkill" items="${skillList}">
+                    <div class="boxRight">
+                        <div class="boxRight_left">
+                            <div class="top">
+                                <span class="marginTiny">${tempSkill.name}</span>
+                                <span class="marginSmall">${tempSkill.level}</span>
+                            </div>
+                        </div>
+                        <div class="boxRight_right">
+                            <div class="hidden">
+                                <c:if test="${loggedInUserId == userId}">
+                                    <a href="project/edit?id=${tempProject.projectId}">
+                                        <button>Edit</button>
+                                    </a>
+                                    <a href="javascript:if(confirm('Delete?'))
+                                       window.location='project/delete?id=${tempProject.projectId}';">
+                                        <button>x</button>
+                                    </a>
+                                </c:if>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
             </div>
         </div>
     </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("a").click(function() {
+            $("div").toggleClass("hidden unhidden");
+        });
+    });
+</script>
 </body>
 </html>

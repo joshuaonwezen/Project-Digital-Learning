@@ -46,13 +46,10 @@
                         <c:if test="${loggedInIsAdmin == true}">
                         <li><a href="/Project Digital Learning/management">Management</a></li>
                         </c:if>
-                        <c:if test="${loggedInIsAdmin == false}">
                         <li><a href="/Project%20Digital%20Learning/profile?id=${loggedInUserId}">My Profile</a></li>
-                        </c:if>
                     <li>
                         <a href="#">Settings</a>
                         <ul>
-                            <li><a href="#">Account Settings</a></li>
                             <li><a href="#">Help</a></li>
                             <li><a href="#">Report a Problem</a></li>
                             <li><a href="index.jsp">Log Out</a></li>
