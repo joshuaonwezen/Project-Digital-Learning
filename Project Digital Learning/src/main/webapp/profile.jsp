@@ -32,7 +32,9 @@
                 <li>
                     <a href="#">Settings</a>
                     <ul>
-                        <li><a id="toggle">Toggle Edit Mode</a></li>
+                        <c:if test="${loggedInUserId == userId}">
+                            <li><a id="toggle">Toggle Edit Mode</a></li>
+                            </c:if>
                         <li><a href="#">Help</a></li>
                         <li><a href="#">Report a Problem</a></li>
                         <li><a href="index.jsp">Log Out</a></li>
