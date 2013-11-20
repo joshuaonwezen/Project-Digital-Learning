@@ -34,6 +34,7 @@ public class ProfileHolder extends HttpServlet {
             request.setAttribute("firstname", tempGebruiker.getFirstname());
             request.setAttribute("lastname", tempGebruiker.getLastname());
             request.setAttribute("emailAddress", tempGebruiker.getEmailAddress());
+            request.setAttribute("position", tempGebruiker.getPosition());
             request.setAttribute("userId", tempGebruiker.getUserId());
 
             /* Work experience */
