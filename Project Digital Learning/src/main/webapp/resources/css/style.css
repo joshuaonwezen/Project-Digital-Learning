@@ -259,3 +259,44 @@ End author: Shahin Mokhtar
     padding-top:5%;
     padding-left:44%;
 }
+
+.box-level{
+        font: normal 100% 'century gothic', arial, sans-serif;        
+        text-align:right;
+        margin-right: 10px;
+}
+.box-name{
+        font: normal 125% 'century gothic', arial, sans-serif;
+        margin-left: 20px;
+        
+}
+
+.box-owner{
+        font: normal 100% 'century gothic', arial, sans-serif;        
+        text-align:left;
+        margin-left: 20px;
+}
+.box-image{
+    width:100px;
+    height:100px;
+}
+.box-image img{
+    height:auto;
+    width:auto;
+    float:left;
+}
+
+.box {
+        
+        background-repeat:no-repeat;
+	width:60%;
+        height:250px;
+	background:#FFF;
+	margin:50px auto;
+        }
+        
+.effect1{
+	-webkit-box-shadow: 0 10px 6px -6px #777;
+	   -moz-box-shadow: 0 10px 6px -6px #777;
+	        box-shadow: 0 10px 6px -6px #777;
+}

@@ -23,7 +23,7 @@
             <div id="header_nav">
                 <ul>
                     <li><a href="homepage.jsp">Home</a></li>
-                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="/PDL/courses">Courses</a></li>
                         <c:if test="${loggedInIsAdmin == true}">
                         <li><a href="/Project Digital Learning/management">Management</a></li>
                         </c:if>
