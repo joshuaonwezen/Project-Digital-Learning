@@ -28,11 +28,11 @@
                     <c:if test="${loggedInIsAdmin == true}">
                     <li><a href="/Project Digital Learning/management">Management</a></li>
                     </c:if>
-                    <li><a href="/Project%20Digital%20Learning/profile?id=${loggedInUserId}">My Profile</a></li>
+                <li><a href="/Project%20Digital%20Learning/profile?id=${loggedInUserId}">My Profile</a></li>
                 <li>
                     <a href="#">Settings</a>
                     <ul>
-                        <li><a>Toggle Edit Mode</a></li>
+                        <li><a id="toggle">Toggle Edit Mode</a></li>
                         <li><a href="#">Help</a></li>
                         <li><a href="#">Report a Problem</a></li>
                         <li><a href="index.jsp">Log Out</a></li>
@@ -45,12 +45,12 @@
         <div id="main_left">
             <div class="container">
                 <div class="hidden rightButton">
-                        <c:if test="${loggedInUserId == userId}">
-                            <a href="users/edit?id=${userId}">
-                                <button>Edit</button>
-                            </a>
-                        </c:if>
-                    </div>
+                    <c:if test="${loggedInUserId == userId}">
+                        <a href="users/edit?id=${userId}">
+                            <button>Edit</button>
+                        </a>
+                    </c:if>
+                </div>
                 <h2 style="margin-left: 20px;">
                     ${loggedInUsername}
                 </h2>
@@ -247,7 +247,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $("a").click(function() {
+        $("#toggle").click(function() {
             $("div").toggleClass("hidden unhidden");
         });
     });
