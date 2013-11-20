@@ -23,7 +23,7 @@
 
 
                 <c:forEach var="course" items="${courses}">
-                    <div class="box effect1">
+                    <div class="box-course effect1">
 
                         <div class="box-name">${course.name}</div>  <div class="box-level">${course.level}</div>
                         <div class="box-owner">Teacher: ${course.owner.firstname} ${course.owner.lastname}</div>
