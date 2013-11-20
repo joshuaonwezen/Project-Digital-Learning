@@ -9,35 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.User;
 import models.UserForm;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import services.HibernateUtil;
-//import services.HibernateUtil;
+import validators.GenericValidator;
 import validators.UserValidator;
 
 /**
  *
  * @author wesley
- * 
+ *
  * @todo password strength
- * @todo velden moeten ingevuld blijven wanneer de secundaire validatie niet passed (bijv. username)
  */
 public class ManageUserController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-       //nop
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -51,64 +35,67 @@ public class ManageUserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                
+
         //get the action
         String uri = request.getRequestURI();
         String action = uri.substring(uri.lastIndexOf("/") + 1);
-        
-        System.out.println("GET action: " + action);
 
-        //wijzigen of aanmaken van een user
+        //NOTICE: in this context edit can be both creating a new user or updating a user
         if (action.equals("edit")){
-            boolean isUpdate=false;
-            
-            //extract userId
+            //extract userId (if available)
+            boolean isUpdate;
             String queryString = request.getQueryString();
-            //als er een id is meegegeven gaan we wijzigen, anders een nieuwe user aanmaken
+            //we are updating a user if the userId existst
             if (queryString.substring(queryString.indexOf("=")).length() > 1){
                 isUpdate = true;
             }
-            //wijzigen van een gebruiker
-            if (isUpdate){
-                int userId = Integer.parseInt(queryString.substring(queryString.indexOf("=")+1));
+            else{
+                isUpdate = false;
+            }
             
-                //haal de user op uit de database om deze vervolgens in de request te zetten
+            //edit a user
+            if (isUpdate) {
+                //extract userId
+                int userId = Integer.parseInt(queryString.substring(queryString.indexOf("=")+1));
+                System.out.println("we are updating: " + userId);
+                //get user from database and set in the request
                 Session session = HibernateUtil.getSessionFactory().openSession();
                 Transaction tx = session.beginTransaction();
                 User managedUser = (User)session.load(User.class, userId);
                 
-                //set ze nu in de request
                 request.setAttribute("userId", managedUser.getUserId());
                 request.setAttribute("username", managedUser.getUsername());
-                request.setAttribute("firstName", managedUser.getFirstname());
-                request.setAttribute("lastName", managedUser.getLastname());
+                request.setAttribute("firstname", managedUser.getFirstname());
+                request.setAttribute("lastname", managedUser.getLastname());
                 request.setAttribute("emailAddress", managedUser.getEmailAddress());
                 request.setAttribute("position", managedUser.getPosition());
                 request.setAttribute("isAdmin", managedUser.isIsAdmin());
                 request.setAttribute("password", managedUser.getPassword());
-                session.close();
                 
-                //geef aan dat we gaan updaten
-                request.setAttribute("update", true);
+                session.close();
+                request.setAttribute("isUpdate", true);
+            } 
+            //create a user
+            else {
+                request.setAttribute("isUpdate", false);
             }
-            else{
-                //geef aan dat we een nieuwe user gaan aanmaken
-                request.setAttribute("update", false);
-            }
+
             redirect(request, response, "/edit_user.jsp");
-        }
+        } 
         //deleten van een user
-        else if (action.equals("delete")){
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            Transaction tx = session.beginTransaction();
+        else if (action.equals("delete")) {
             //extract userId
             String queryString = request.getQueryString();
-            int userId = Integer.parseInt(queryString.substring(queryString.indexOf("=")+1));
-            User managedUser = (User)session.load(User.class, userId);
+            int userId = Integer.parseInt(queryString.substring(queryString.indexOf("=") + 1));
+
+            //do the delete operation
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            User managedUser = (User) session.load(User.class, userId);
             session.delete(managedUser);
             tx.commit();
             session.close();
-            
+
             response.sendRedirect("../management");
         }
     }
@@ -127,11 +114,12 @@ public class ManageUserController extends HttpServlet {
         //get the action
         String uri = request.getRequestURI();
         String action = uri.substring(uri.lastIndexOf("/") + 1);
-        
-        System.out.println("POST action: " + action);
-        
-        //we moeten eerst een formvalidate doen als we een user gaan bewerken of toevoegen
-        if (action.equals("new") || action.equals("edit")){
+
+        if (action.equals("edit") || action.equals("new")) {
+            System.out.println("action equals: " + action);
+            boolean isUpdate = (action.equals("edit") ? true : false);
+
+            //step 1: do a form validation
             UserForm userForm = new UserForm();
             userForm.setUsername(request.getParameter("username"));
             userForm.setFirstname(request.getParameter("firstname"));
@@ -139,102 +127,119 @@ public class ManageUserController extends HttpServlet {
             userForm.setEmailAddress(request.getParameter("emailAddress"));
             userForm.setPosition(request.getParameter("position"));
             userForm.setPassword(User.md5(request.getParameter("password")));
-            
             UserValidator validator = new UserValidator();
             List<String> errors = validator.validate(userForm);
-            
-            //daarnaast doen we een extra test of de username al bestaat, deze moet uniek zijn
-            if (action.equals("new") || action.equals("edit")){
+
+            //step 1b: check if username exists (username must not be empty)
+            List result = null;
+            if (!GenericValidator.isEmpty("username")) {
                 Session session = HibernateUtil.getSessionFactory().openSession();
-                String hql = "from User  where username = ?";
-                List result = session.createQuery(hql)
-                .setString(0, request.getParameter("username"))
-                .list();
+                String hql = "from User where username = ?";
+                result = session.createQuery(hql)
+                        .setString(0, request.getParameter("username"))
+                        .list();
                 session.close();
-                
-                if (action.equals("new") && !result.isEmpty()){
+
+                //on creating user
+                if (!isUpdate && result != null && !result.isEmpty()) {
                     errors.add("Username already exists");
-                }
-                else{
-                    //hier kijken we of de username onder het editen is veranderd (en nog wel uniek is)
-                    if (!result.isEmpty()){
-                        User user = (User)result.get(0);
-                        if (request.getParameter("username").equals(user.getUsername())){
-                            if (Integer.parseInt(request.getParameter("userId")) != user.getUserId()){
+                } 
+                //on updating user
+                else {
+                    //check if username is changed (and still unique) while editing
+                    if (!result.isEmpty()) {
+                        User user = (User) result.get(0);
+                        if (request.getParameter("username").equals(user.getUsername())) {
+                            if (Integer.parseInt(request.getParameter("userId")) != user.getUserId()) {
                                 errors.add("Username already exists");
                             }
                         }
                     }
                 }
             }
-            
-            //wanneer we geen errors hebben kunnen we een user gaan bewerken of toevoegen
-            if (errors.isEmpty()) {
-                System.out.println("there are no errors");
-                //aanmaken van een gebruiker
-                if (action.equals("new")) {
-                    System.out.println("action equals new");
-                    Session session = HibernateUtil.getSessionFactory().openSession();
-                    Transaction tx = session.beginTransaction();
-
-                    User user = new User();
-                    user.setUsername(request.getParameter("username"));
-                    user.setFirstname(request.getParameter("firstname"));
-                    user.setLastname(request.getParameter("lastname"));
-                    user.setEmailAddress(request.getParameter("emailAddress"));
-                    user.setPosition(request.getParameter("position"));
-                    user.setIsAdmin((request.getParameter("isAdmin") != null ? true : false));
-                    user.setPassword(User.md5(request.getParameter("password")));
-
-                    session.save(user);
-                    tx.commit();
-                    session.close();
-                } 
-                //wijzigen van een gebruiker
-                else if (action.equals("edit")) {
-                    System.out.println("action equals edit");
-                    int userId;
-
-                    Session session = HibernateUtil.getSessionFactory().openSession();
-                    Transaction tx = session.beginTransaction();
-
-                    userId = Integer.parseInt(request.getParameter("userId"));
-                    User managedUser = (User) session.load(User.class, userId);
-
-                    managedUser.setUsername(request.getParameter("username"));
-                    managedUser.setFirstname(request.getParameter("firstname"));
-                    managedUser.setLastname(request.getParameter("lastname"));
-                    managedUser.setEmailAddress(request.getParameter("emailAddress"));
-                    managedUser.setPosition(request.getParameter("position"));
-                    managedUser.setIsAdmin((request.getParameter("isAdmin") != null ? true : false));
-
-                    //kijk of het wachtwoord veranderd is
-                    if (!managedUser.getPassword().equals(User.md5(request.getParameter("password")))){
-                        managedUser.setPassword(User.md5(request.getParameter("password")));
-                    }
-                    
-                    session.saveOrUpdate(managedUser);
-                    tx.commit();
-                    session.close();
+            //step 2: redirect user back if there are any errors
+            if (!errors.isEmpty()) {
+                //userId needs only to be set when we are editing
+                if (isUpdate) {
+                    request.setAttribute("userId", request.getParameter("userId"));
+                    //don't forget to set that we are still updating
+                    request.setAttribute("isUpdate", true);
                 }
-            }
-            //anders sturen we de gebruiker terug naar het form met de errors
-            //LETOP: we vullen de velden niet opnieuw in voor de gebruiker, de velden worden
-            //namelijk al default gevalideerd aan de client side: dit is dus een extra measure
-            else{
-                System.out.println("there are errors");
-                
+                request.setAttribute("username", request.getParameter("username"));
+                request.setAttribute("firstname", request.getParameter("firstname"));
+                request.setAttribute("lastname", request.getParameter("lastname"));
+                request.setAttribute("emailAddress", request.getParameter("emailAddress"));
+                request.setAttribute("position", request.getParameter("position"));
+                request.setAttribute("isAdmin", request.getParameter("isAdmin"));
+                request.setAttribute("password", request.getParameter("password"));
+
                 //vergeet de errors niet op de request te zetten
                 request.setAttribute("errorsSize", errors.size());
                 request.setAttribute("errors", errors);
+
+                redirect(request, response, "/edit_user.jsp");
+            } 
+            else {
+                //step 3: there are no errors. We can start to create or update a user
+                User user;
+                Session session = HibernateUtil.getSessionFactory().openSession();
+                Transaction tx = session.beginTransaction();
+
+                //get the userId if we are updating a user
+                if (isUpdate) {
+                    int userId = Integer.parseInt(request.getParameter("userId"));
+                    user = (User) session.load(User.class, userId);
+                } else {
+                    user = new User();
+                }
+                user.setUsername(request.getParameter("username"));
+                user.setFirstname(request.getParameter("firstname"));
+                user.setLastname(request.getParameter("lastname"));
+                user.setEmailAddress(request.getParameter("emailAddress"));
+                user.setPosition(request.getParameter("position"));
+                user.setIsAdmin((request.getParameter("isAdmin") != null ? true : false));
+
+                if (isUpdate) {
+                    //check if password is changed
+                    if (!user.getPassword().equals(request.getParameter("password"))) {
+                        user.setPassword(User.md5(request.getParameter("password")));
+                    }
+                } 
+                else {
+                    user.setPassword(User.md5(request.getParameter("password")));
+                }
+
+                session.saveOrUpdate(user);
+                tx.commit();
+                session.close();
+
+                //request handling
+                if (isUpdate) {
+                    request.setAttribute("userUpdated", true);
+                } 
+                else {
+                    request.setAttribute("userCreated", true);
+                }
+                
+                request.setAttribute("userId", user.getUserId());
+                request.setAttribute("username", user.getUsername());
+                request.setAttribute("firstname", user.getFirstname());
+                request.setAttribute("lastname", user.getLastname());
+                request.setAttribute("emailAddress", user.getEmailAddress());
+                request.setAttribute("position", user.getPosition());
+                request.setAttribute("isAdmin", user.isIsAdmin());
+                request.setAttribute("password", user.getPassword());
+                
+                //we are now editing
+                request.setAttribute("isUpdate", true);
                 
                 redirect(request, response, "/edit_user.jsp");
             }
         }
     }
-        
-    private void redirect(HttpServletRequest request, HttpServletResponse response, String address) 
-            throws ServletException, IOException{
+
+    private void redirect(HttpServletRequest request, HttpServletResponse response, String address)
+            throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher(address);
         dispatcher.forward(request, response);
     }

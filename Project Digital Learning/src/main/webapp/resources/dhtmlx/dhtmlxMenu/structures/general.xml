@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<menu>
+	<item id="new" text="New" img="new.gif"/>
+</menu>

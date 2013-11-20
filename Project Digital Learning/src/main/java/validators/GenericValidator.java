@@ -2,8 +2,6 @@ package validators;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 
 /**
  *
@@ -16,12 +14,11 @@ public class GenericValidator {
      * Patterns that are used over again (names, addresses, zip codes etc.)
      */
     public static enum Regex{
+        USERNAME("[a-zA-Z]{1,100}"),
         REGULAR(".{1,100}"),
-        REGULAR_LARGE(".{1,250}"),
-        REGULAR_ABC("[a-zA-Z]{1,100}"),
-        REGULAR_ABC_SPACING_ALLOWED("[a-zA-Z][a-zA-Z\\s]{1,100}"),
-        PASSWORD(".{7,50}");
-        
+        //this uses another regex than on the client side because of the escape characters
+        EMAIL_ADDRESS("[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\\.[a-zA-Z]{2,4}"),
+        PASSWORD(".{7,100}");
         
         private String regex;
         
@@ -52,22 +49,5 @@ public class GenericValidator {
      */
     public static boolean isEmpty(String input){
         return input == null || input.trim().isEmpty();
-    }
-    
-    /**
-     * Checks whether an emailaddress is valid or not
-     * @param emailAddress          emailaddress to check for
-     * @return                      true if valid
-     */
-    public static boolean isValidEmailAddress(String emailAddress){
-        boolean result = true;
-        try{
-            InternetAddress email = new InternetAddress(emailAddress);
-            email.validate();
-        }
-        catch(AddressException ae){
-            result = false;
-        }
-        return result;
     }
 }

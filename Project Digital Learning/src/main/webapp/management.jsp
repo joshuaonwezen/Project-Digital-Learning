@@ -2,8 +2,6 @@
     Document   : management
     Created on : Nov 4, 2013, 1:03:00 PM
     Author     : wesley
-    
-    Todo       : grid moet scrollbaar zijn
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,8 +13,8 @@
         <meta name="viewport" content="width=device-width">
 
         <!-- Company Style -->
-        <link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
-        <link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
+        <link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon">
+        <link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" type="text/css" href="resources/css/style.css">
         <!-- DHTMLX General -->
         <script src="resources/dhtmlx/dhtmlxTabbar/codebase/dhtmlxcommon.js"></script>
@@ -40,17 +38,44 @@
                 <li><a class="button" href="homepage.jsp">Home</a></li>
                 <li><a class="button" href="#profile">My Profile</a></li>
                 <li><a class="button" href="#courses">Courses</a></li>
-                    <c:if test="${isAdmin == true}">
+                    <c:if test="${loggedInIsAdmin == true}">
                     <li><a class="button" href="/Project Digital Learning/management">Management</a></li>
                     </c:if>
                 <li><a class="button" href="index.jsp">LogOut</a></li>
             </ul>
         </div>
         <!--Navigation End -->
-        <div id="usersGrid"></div>
-        <div id="coursesGrid"></div>
-        <div id="newsGrid"></div>
-        <br>
+        <div id="usersGrid" style="height:650px;"></div>
+        <div id="coursesGrid" style="height:650px;"></div>
+        <div id="newsGrid" style="height:650px;"></div>
+        </br>
+        <!-- General -->
+        <script>
+            //contextual menu settings for the whole page (this includes only the option New)
+            cmenu = new dhtmlXMenuObject();
+            cmenu.setIconsPath("resources/dhtmlx/dhtmlxMenu/samples/common/images/");
+            cmenu.setSkin('dhx_terrace');
+            cmenu.renderAsContextMenu();
+            cmenu.attachEvent('onClick', cmenuOnButtonClick);
+            cmenu.loadXML("resources/dhtmlx/dhtmlxMenu/structures/general.xml");
+            //add as default menu for the body
+            cmenu.addContextZone(document.body);
+            
+            function cmenuOnButtonClick(){
+                switch (tabbar.getActiveTab()){
+                    case "t1":
+                        openUserWindow(null);
+                        break;
+                    case "t2":
+                        openCourseWindow(null);
+                        break;
+                    case "t3":
+                        openNewsItemWindow(null);
+                        break;
+                }
+            }
+        </script>
+        
         <!-- User Management -->
         <script>
             //contextual menu settings for grid
@@ -60,17 +85,19 @@
             usersMenu.renderAsContextMenu();
             usersMenu.attachEvent('onClick', usersGridOnButtonClick);
             usersMenu.loadXML("resources/dhtmlx/dhtmlxMenu/structures/users.xml");
-
+            
             //grid settings
             usersGrid = new dhtmlXGridObject('usersGrid');
-            usersGrid.enableAutoHeight(true);
-            usersGrid.enableAutoWidth(true);
             usersGrid.setImagePath("resources/dhtmlx/dhtmlxGrid/codebase/imgs/");
             usersGrid.setSkin('dhx_terrace');
             usersGrid.enableContextMenu(usersMenu);
-            usersGrid.setHeader("Employee ID, Username, First Name, Last Name, E-mail address, Position, Admin");
+            //white space between columns
+            usersGrid.enableMultiline(true); 
+            usersGrid.setHeader("ID, Username, First Name, Last Name, E-mail address, Position, Admin");
+            //column width in percentage
+            usersGrid.setInitWidthsP('10, 15, 15, 15, 20, 15, 10');
             //way in which text has to be aligned
-            usersGrid.setColAlign("left,left,left,left,left,left,center");
+            usersGrid.setColAlign("right,left,left,left,left,left,center");
             //int=integer, str=string
             usersGrid.setColSorting("int,str,str,str,str,str,str");
             //ro=readonly, ch=checkbox
@@ -82,13 +109,13 @@
                 return false;
             });
             usersGrid.init();
-
+            
             //now lets build a javascript array with our users for the grid
             var users = new Array();
 
             <c:forEach var='user' items='${users}'>
-            var row = ['${user.userId}', '${user.username}', '${user.firstname}', '${user.lastname}', '${user.emailAddress}', '${user.position}', '${user.isAdmin}'];
-            users.push(row);
+                var row = ['${user.userId}', '${user.username}', '${user.firstname}', '${user.lastname}', '${user.emailAddress}', '${user.position}', '${user.isAdmin}'];
+                users.push(row);
             </c:forEach>
 
             //set data in grid
@@ -161,14 +188,16 @@
 
             //grid settings
             coursesGrid = new dhtmlXGridObject('coursesGrid');
-            coursesGrid.enableAutoHeight(true);
-            coursesGrid.enableAutoWidth(true);
             coursesGrid.setImagePath("resources/dhtmlx/dhtmlxGrid/codebase/imgs/");
             coursesGrid.setSkin('dhx_terrace');
             coursesGrid.enableContextMenu(coursesMenu);
-            coursesGrid.setHeader("Course ID, Name, Level, Description, Owner");
+            //white space between columns
+            coursesGrid.enableMultiline(true); 
+            coursesGrid.setHeader("ID, Name, Level, Description, Owner");
+            //column width in percentage
+            coursesGrid.setInitWidthsP('10, 15, 15, 40, 20');
             //way in which text has to be aligned
-            coursesGrid.setColAlign("left,left,left,left,left");
+            coursesGrid.setColAlign("right,left,left,left,left");
             //int=integer, str=string, date=datum
             coursesGrid.setColSorting("int,str,str,str,str");
             //ro=readonly
@@ -324,7 +353,7 @@
             }
 
         </script>    
-        <div id="tabbar"></div>
+        <div id="tabbar" style="height:700px;"></div>
         <script>
             tabbar = new dhtmlXTabBar("tabbar", "top");
             tabbar.setSkin('dhx_terrace');

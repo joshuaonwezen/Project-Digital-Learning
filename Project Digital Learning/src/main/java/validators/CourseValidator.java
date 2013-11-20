@@ -26,7 +26,7 @@ public class CourseValidator {
             errors.add("Description may not be empty");
         }
         else{
-            if (!GenericValidator.isValid(courseForm.getDescription(), Regex.REGULAR_LARGE)){
+            if (!GenericValidator.isValid(courseForm.getDescription(), Regex.REGULAR)){
                 errors.add("Description: must contain at least one character");
             }
         }

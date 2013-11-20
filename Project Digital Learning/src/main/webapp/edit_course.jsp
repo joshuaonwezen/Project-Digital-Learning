@@ -65,8 +65,7 @@
                                       {text: '${user.firstname}' + ' ${user.lastname}', value: ${user.userId}, selected: '${user.userId == ownerId ? 'true' : 'false'}'},
                                     </c:forEach>
                                 ]},
-                                {type: "input", name: "description", label: "Description", rows: 3, width: 400, offsetTop: 10, required: true},
-                                {type: "button", name: "save", value: "Save", offsetTop: 20}
+                                {type: "input", name: "description", label: "Description", rows: 3, width: 400, offsetTop: 10, required: true}
                             ]}
                     ];
 
@@ -77,8 +76,6 @@
                             case 'save':
                                 if (courseForm.validate()) {
                                     document.forms[0].submit();
-                                    //@todo
-                                    //setTimeout(console.log('workds'), 2000);
                                 }
                                 break;
                         }
@@ -90,6 +87,18 @@
                         courseForm.setItemValue("description", '${description}');
                     }
                 </script>
+                <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+                <link href="../resources/select2/select2.css" rel="stylesheet"/>
+    <script src="../resources/select2/select2.js"></script>
+    
+        <div id="e12" style="width:50%"></div>
+        Skills
+                <script>
+                        
+        $("#e12").select2({tags:["red", "green", "blue"]});
+    </script>
+                
+                
             </form>
     </body>
 </html>
