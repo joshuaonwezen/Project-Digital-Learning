@@ -42,7 +42,7 @@
         </div>
         <!-- Profile Information -->
         <div class="ProfileInformation">
-            <table>
+            <table class="profileinformationtable123">
                 <tr class="ProfilePictureHomepage"><td><input type="image" src="resources/images/users_icon.png"</td></tr>
                 <tr class="ProfileNameHomepage"><td>${loggedInUsername}</td></tr>
                 <c:if test="${loggedInIsAdmin == true}">
@@ -53,7 +53,7 @@
         </div>    
         <!-- Activity Feed -->
         <div class="ActivityFeed">
-        <table>
+        <table class="activityfeedtable123">
             <tr>
                 <td colspan="3" class="ActivityFeedtable">Activity Feed</th>
             </tr>

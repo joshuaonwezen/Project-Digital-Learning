@@ -3,8 +3,13 @@
     top: 20%;
     left:15%;
 }
-.ActivityFeedtable{
+.profileinformationtable123{
+    width:100px;
+}
+.activityfeedtable123{
     width:700px;
+}
+.ActivityFeedtable{
     text-align:left;
     color: #ffffff;
     border-width: 2px;
@@ -32,11 +37,11 @@
     width:50px;
     text-align:center;
 }
-.messagefeed{
-    width:500px;
-}
 .gotoMessage{
     width:50px;
+}
+.messageFeed{
+    width:450px;
 }
 .ProfileInformation{
     position:absolute;
@@ -45,8 +50,6 @@
     background-color:rgb(45,47,49);
 }
 .ProfilePictureHomepage{
-    height:110px;
-    width:105px;
     background-color:rgb(68,121,186);
     border-width: 1px;
     padding: 8px;
