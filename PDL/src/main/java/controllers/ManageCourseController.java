@@ -2,9 +2,8 @@ package controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,8 +16,6 @@ import models.User;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONValue;
 import services.HibernateUtil;
 import validators.CourseValidator;
 
@@ -26,6 +23,7 @@ import validators.CourseValidator;
  *
  * @author wesley
  * @todo de user die is ingelogd moet ook default geselecteerd staan in edit_course onder owner (wanneer je een nieuwe course aanmaakt)
+ * @todo the table of Course_Skill -> Indexes > must all be set to: Index Type: Normal
  */
 public class ManageCourseController extends HttpServlet {
 
@@ -74,9 +72,8 @@ public class ManageCourseController extends HttpServlet {
                 request.setAttribute("description", managedCourse.getDescription());
                 request.setAttribute("owner", managedCourse.getOwner());
                 request.setAttribute("level", managedCourse.getLevel());
-                request.setAttribute("skills", managedCourse.getSkills());
+                request.setAttribute("courseSkills", managedCourse.getSkillsSeperatedByComma());
                 request.setAttribute("isVisible", managedCourse.isIsVisible());
-                request.setAttribute("courseSkills", managedCourse.getSkillsJSONFormat());
                 
                 session.close();
                 request.setAttribute("isUpdate", true);
@@ -85,8 +82,8 @@ public class ManageCourseController extends HttpServlet {
             else {
                 request.setAttribute("isUpdate", false);
             }
-            //set the users on the request so we can select them
-            //van een course
+            //set the users and skills on the request so we can select them
+            setSkillsOnRequest(request);
             setUsersOnRequest(request);
             redirect(request, response, "/edit_course.jsp");
         } 
@@ -129,9 +126,6 @@ public class ManageCourseController extends HttpServlet {
         String uri = request.getRequestURI();
         String action = uri.substring(uri.lastIndexOf("/") + 1);
         
-        
-        System.out.println("skills: " + request.getParameter("skills"));
-        
         if (action.equals("edit") || action.equals("new")) {
             System.out.println("action equals: " + action);
             boolean isUpdate = (action.equals("edit") ? true : false);
@@ -143,7 +137,7 @@ public class ManageCourseController extends HttpServlet {
             courseForm.setDescription(request.getParameter("description"));
             courseForm.setLevel(getSelectedOption(request, "levelValues"));
             courseForm.setOwner(getSelectedOption(request, "ownerValues"));
-            courseForm.setSkills(request.getParameter("skills"));
+            courseForm.setSkills(request.getParameter("tagSkills"));
             
             CourseValidator validator = new CourseValidator();
             List<String> errors = validator.validate(courseForm);
@@ -161,8 +155,9 @@ public class ManageCourseController extends HttpServlet {
                 setUsersOnRequest(request);
                 request.setAttribute("owner", request.getParameter("owner"));
                 request.setAttribute("level", request.getParameter("level"));
-                request.setAttribute("skills", request.getParameter("skills"));
+                request.setAttribute("tagSkills", request.getParameter("tagSkills"));
                 request.setAttribute("isVisible", request.getParameter("isVisible"));
+                setSkillsOnRequest(request);
                 
                 //vergeet de errors niet op de request te zetten
                 request.setAttribute("errorsSize", errors.size());
@@ -189,6 +184,12 @@ public class ManageCourseController extends HttpServlet {
                 else {
                     course = new Course();
                 }
+                /**
+                 * GOD KNOWS WHY but if you don't use this user.getFirstname(), hibernate will through an 
+                 * org.hibernate.LazyInitializationException: could not initialize proxy - no Session
+                 */
+                user.getFirstname();
+                
                 course.setName(request.getParameter("name"));
                 course.setLevel(Course.Level.valueOf(getSelectedOption(request, "levelValues")));
                 course.setOwner(user);
@@ -197,29 +198,40 @@ public class ManageCourseController extends HttpServlet {
                 /**
                  * Skills
                  */
-                List<Skill> skills = new ArrayList<Skill>(); //this our the skills that must be linked to the course
+                List<Skill> courseSkills = new ArrayList<Skill>(); //this our the skills that must be linked to the course
+                List<String> skillsFromRequest = Arrays.asList(request.getParameter("tagSkills").split(","));
 
-                Object obj = JSONValue.parse(request.getParameter("skills"));
-                JSONArray array = (JSONArray) obj;
-
-                //convert the skills from json string and punt them in a map (which has an id + value)
-                for (int i = 0; i < array.size(); i++) {
-                    String line = array.get(i).toString();
-                    String id = line.substring(line.indexOf("id\":") + 5, line.indexOf("\",\""));
-                    String text = line.substring(line.indexOf("text\":") + 7, line.length() - 2);
-
-                    //if we can parse the id to a long, then it is an existing skill (it has an id) 
-                    try {
-                        long skillId = Long.parseLong(id);
-                        Skill managedSkill = (Skill) session.load(Skill.class, skillId);
-                        skills.add(managedSkill);
-                        session.close();
-                    } //otherwise we need to create it
-                    catch (NumberFormatException e) {
-                        skills.add(new Skill(text));
+                Criteria criteria = session.createCriteria(Skill.class);
+                List<Skill> skillsFromDatabase = criteria.list();
+                
+                /**
+                 * here we are matching skills from the request against skills from the database
+                 * if we have a match: add it to our courseSkill list, else create a new skill and add it to the courseSkill list
+                 */
+                if (skillsFromDatabase.isEmpty()){
+                    //we know for sure that a skill needs to be added to the database if the database contains no skills
+                    for (int i=0;i<skillsFromRequest.size();i++){
+                        Skill newSkill = new Skill();
+                        newSkill.setName(skillsFromRequest.get(i));
+                        courseSkills.add(newSkill);
                     }
                 }
-                course.setSkills(skills);
+                for (int i=0; i<skillsFromRequest.size(); i++){
+                    for (int j=0; j<skillsFromDatabase.size();j++){
+                        //when we enter this if we found a match from the database and use this to add it to our course
+                        if (skillsFromRequest.get(i).equals(skillsFromDatabase.get(j).getName())){
+                            courseSkills.add(skillsFromDatabase.get(j));
+                            break;
+                        }
+                        //when we enter the else if it means that we did not found the skill from our database
+                        else if (j==skillsFromDatabase.size()-1 && !skillsFromRequest.get(i).equals(skillsFromDatabase.get(j).getName())){
+                            Skill newSkill = new Skill();
+                            newSkill.setName(skillsFromRequest.get(i));
+                            courseSkills.add(newSkill);
+                        }
+                    }
+                }
+                course.setSkills(courseSkills);
 
                 session.saveOrUpdate(course);
                 tx.commit();
@@ -239,12 +251,10 @@ public class ManageCourseController extends HttpServlet {
                 request.setAttribute("owner", course.getOwner());
                 request.setAttribute("description", course.getDescription());
                 request.setAttribute("isVisible", course.isIsVisible());
-                System.out.println("Sjson: " + course.getSkillsJSONFormat());
-                request.setAttribute("courseSkills", course.getSkillsJSONFormat());
+                request.setAttribute("courseSkills", course.getSkillsSeperatedByComma());
                 
-                //@TODO
-                //setUsersOnRequest(request);
-                //setSkillsOnRequest(request);
+                setUsersOnRequest(request);
+                setSkillsOnRequest(request);
                 
                 //we are now editing
                 request.setAttribute("isUpdate", true);
@@ -299,6 +309,5 @@ public class ManageCourseController extends HttpServlet {
             throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher(address);
         dispatcher.forward(request, response);
-        System.out.println("redirected");
     }
 }
