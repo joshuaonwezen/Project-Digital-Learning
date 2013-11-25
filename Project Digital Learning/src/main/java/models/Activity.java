@@ -10,6 +10,8 @@ import javax.swing.ImageIcon;
 
 @Entity
 public class Activity implements Serializable{
+    
+    
     @Id
     @GeneratedValue
     private int activityId;

@@ -117,13 +117,14 @@ public class LoginController extends HttpServlet {
                               if (request.getParameter("id") != null) {
 
                                 int id = Integer.parseInt(request.getParameter("id"));
-        
-       
+                                Session activitySession = HibernateUtil.getSessionFactory().openSession();
+                                Transaction tx = session.beginTransaction();
+
                                 List<Activity> tempActivity = new LinkedList();
-                                Query queryActivity = session.createQuery("from Activity where userId = " + id);
+                                Query queryActivity = activitySession.createQuery("from Activity where user_userId = " + id);
                                 tempActivity = queryActivity.list();
                                 request.setAttribute("activityList", tempActivity);
-
+                                activitySession.close();
                               }
                               else{
                                   redirect(request, response, "/homepage.jsp");
