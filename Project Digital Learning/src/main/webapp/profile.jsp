@@ -1,3 +1,6 @@
+<!--
+@author Shahin Mokhtar
+-->
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
@@ -14,7 +17,15 @@
         .unhidden {
             display: block;
         }
+        iframe { width: 100%; height: 50%; }
     </style>
+    <script type="text/javascript">
+        //variables for the sizes and location (center) of a popup
+        var popupWidth = 800;
+        var popupHeight = 500;
+        var popupLeft = (screen.width / 2) - (popupWidth / 2);
+        var popupTop = (screen.height / 2) - (popupHeight / 2);
+    </script>
 </head>
 <body>
     <div id="header">
@@ -48,7 +59,7 @@
             <div class="container">
                 <div class="hidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
-                        <a href="users/edit?id=${userId}">
+                        <a href="users/edit?id=${userId}" target="_blank" onclick="return windowpop(this.href, 800, 500)">
                             <button>Edit</button>
                         </a>
                     </c:if>
@@ -59,11 +70,11 @@
                 <div class="container_left">
                     <img id="profileImage" src="$tempGebruiker.imageURL}">
                 </div>
-                <div class="container_right">
+                <div class="container_right" style="font-size: 19px;">
                     <table>
                         <tbody>
                             <tr>
-                                <td class="tableTitle">bio</td>
+                                <td class="tableTitle"></td>
                                 <td class="rowName">name</td>
                                 <td class="rowInfo">${firstname} ${lastname}</td>
                             </tr>
@@ -90,17 +101,17 @@
             <div class="container">
                 <div class="hidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
-                        <a href="project/edit?userId=">
+                        <a href="work/edit?userId=" target="_blank" onclick="return windowpop(this.href, 800, 500)">
                             <button>+</button>
                         </a>
                     </c:if>
                 </div>
-                <h3>Projects</h3>
+                <h3>Work experience</h3>
                 <c:forEach var="tempWork" items="${workList}">
                     <div class="box">
                         <div class="box_left">
                             <div class="top">
-                                <span class="marginTiny">${tempWork.fromYear} - ${tempProject.tillYear}</span>
+                                <span class="marginTiny">${tempWork.fromYear} - ${tempWork.tillYear}</span>
                                 <span class="marginSmall">${tempWork.name}</span>
                                 <span class="marginSmall">${tempWork.profession}</span>
                             </div>
@@ -111,7 +122,7 @@
                         <div class="box_right">
                             <div class="hidden">
                                 <c:if test="${loggedInUserId == userId}">
-                                    <a href="work/edit?id=${tempWork.workId}">
+                                    <a href="work/edit?id=${tempWork.workId}" target="_blank" onclick="return windowpop(this.href, 800, 500)">
                                         <button>Edit</button>
                                     </a>
                                     <a href="javascript:if(confirm('Delete?'))
@@ -128,7 +139,7 @@
             <div class="container">
                 <div class="hidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
-                        <a href="education/edit?userId=">
+                        <a href="education/edit?userId=" target="_blank" onclick="return windowpop(this.href, 800, 500)">
                             <button>+</button>
                         </a>
                     </c:if>
@@ -149,7 +160,7 @@
                         <div class="box_right">
                             <div class="hidden">
                                 <c:if test="${loggedInUserId == userId}">
-                                    <a href="education/edit?id=${tempEducation.educationId}">
+                                    <a href="education/edit?id=${tempEducation.educationId}" target="_blank" onclick="return windowpop(this.href, 800, 500)">
                                         <button>Edit</button>
                                     </a>
                                     <a href="javascript:if(confirm('Delete?'))
@@ -166,7 +177,7 @@
             <div class="container">
                 <div class="hidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
-                        <a href="project/edit?userId=">
+                        <a href="project/edit?userId=" target="_blank" onclick="return windowpop(this.href, 800, 500)">
                             <button>+</button>
                         </a>
                     </c:if>
@@ -187,7 +198,7 @@
                         <div class="box_right">
                             <div class="hidden">
                                 <c:if test="${loggedInUserId == userId}">
-                                    <a href="project/edit?id=${tempProject.projectId}">
+                                    <a href="project/edit?id=${tempProject.projectId}" target="_blank" onclick="return windowpop(this.href, 800, 500)">
                                         <button>Edit</button>
                                     </a>
                                     <a href="javascript:if(confirm('Delete?'))
@@ -213,7 +224,7 @@
             <div class="container">
                 <div class="hidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
-                        <a href="skill/edit?userId=">
+                        <a href="skill/edit?userId=" target="_blank" onclick="return windowpop(this.href, 800, 500)">
                             <button>+</button>
                         </a>
                     </c:if>
@@ -230,11 +241,11 @@
                         <div class="boxRight_right">
                             <div class="hidden">
                                 <c:if test="${loggedInUserId == userId}">
-                                    <a href="project/edit?id=${tempProject.projectId}">
+                                    <a href="skill/edit?id=${tempSkill.skillId}" target="_blank" onclick="return windowpop(this.href, 800, 500)">
                                         <button>Edit</button>
                                     </a>
                                     <a href="javascript:if(confirm('Delete?'))
-                                       window.location='project/delete?id=${tempProject.projectId}';">
+                                       window.location='skill/delete?id=${temppSkill.skillId}';">
                                         <button>x</button>
                                     </a>
                                 </c:if>
@@ -246,13 +257,22 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
     $(document).ready(function() {
         $("#toggle").click(function() {
             $("div").toggleClass("hidden unhidden");
         });
     });
+
+    function windowpop(url, width, height) {
+        var leftPosition, topPosition;
+//Allow for borders.
+        leftPosition = (window.screen.width / 2) - ((width / 2) + 10);
+//Allow for title and status bars.
+        topPosition = (window.screen.height / 2) - ((height / 2) + 50);
+//Open the window.
+        window.open(url, "Window2", "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no");
+    }
 </script>
 </body>
 </html>

@@ -14,6 +14,10 @@ import org.hibernate.*;
 import services.HibernateUtil;
 //import services.HibernateUtil;
 
+/**
+ *
+ * @author Shahin Mokhtar
+ */
 public class ProfileHolder extends HttpServlet {
 
     /* HTTP GET request */

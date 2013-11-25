@@ -1,3 +1,6 @@
+<!--
+@author Shahin Mokhtar
+-->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="windows-1252"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -60,13 +63,18 @@
                     </tr>
                 </table>
                 <p>
-                    <input class="submit" type="submit" value="Save">
+                    <input class="submit" id="close" onclick="window.close()" type="submit" value="Save">
                 </p>
             </form>
             <p>
                 <a href="/Project%20Digital%20Learning/profile?id=${loggedInUserId}">
-                    <button>Cancel</button>
+                    <button id="close" onclick="window.close()">Cancel</button>
                 </a>
             </p>
+            <script type="text/javascript">
+                window.onunload = function() {
+                    window.opener.location.reload();
+                };
+            </script>
     </body>
 </html>

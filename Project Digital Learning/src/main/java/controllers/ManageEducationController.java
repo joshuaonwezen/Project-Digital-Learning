@@ -17,7 +17,7 @@ import services.HibernateUtil;
 
 /**
  *
- * @author Shahin
+ * @author Shahin Mokhtar
  */
 public class ManageEducationController extends HttpServlet {
 

@@ -7,6 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+/**
+ *
+ * @author Shahin Mokhtar
+ */
 @Entity
 public class Education implements Serializable {
 
