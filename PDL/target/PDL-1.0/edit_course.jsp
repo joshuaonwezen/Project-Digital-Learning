@@ -81,7 +81,7 @@
                     <div class="leftContainer">
 
                         <input type="hidden" id="courseId" name="courseId">
-                        
+
                         <div class="form-group" id="formGroupName" style="width:100%">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" onchange="validateForm()" placeholder="Enter name">
@@ -104,11 +104,15 @@
                         </div>
                         <div class="form-group has-success" id="formGroupSkills" style="width:100%">
                             <label for="skills">Skills</label>
-                            <div id="multiselect" style="width:100%" onchange="validateForm()" placeholder="&nbsp;Enter skills seperated by comma"></div>
-                            <input type="hidden" name="skills" id ="skills"></input>
+                            <input type="hidden" id="tagSkills" name="tagSkills" onchange="validateForm()" placeholder="&nbsp;Enter skills seperated by a comma" style="width:100%">
                             <script>
-                                $("#multiselect").select2({tags: ["red", "green", "blue"], tokenSeparators: [",", " "]});
-                            </script> 
+                                //set all available skills from the database in the multiselect
+                                var arrSkills = new Array();
+                                <c:forEach var='skill' items='${skills}'>
+                                    arrSkills.push('${skill.name}');
+                                </c:forEach>
+                                $('#tagSkills').select2({tags: arrSkills, tokenSeparators: [",", " "]});
+                            </script>
                         </div>
                     </div>
 
@@ -116,7 +120,7 @@
 
                         <div class="form-group" id="formGroupDescription" style="width:100%">
                             <label for="description">Description</label>
-                            <textarea class="form-control" rows="4" id="description" name="description" onchange="validateForm()" placeholder="Enter description"></textarea>
+                            <textarea class="form-control" rows="4" id="description" name="description" onchange="validateForm()" placeholder="Enter description" style="resize: none"></textarea>
                         </div>
                         <div class="form-group" id="formGroupIsVisible" style="width:100%">
                             <label for="isVisible">Visibility</label><br/>
@@ -131,6 +135,11 @@
             document.getElementById('name').value = '${name}';
             document.getElementById('description').value = '${description}';
             document.getElementById('isVisible').checked = ${isVisible == true ? true : false};
+            var arrayCourseSkills = '${courseSkills}'.split(',');
+$('#tagSkills').select2('val', [arrayCourseSkills]);
+
+
+            //now set the courseSkills
 
             //close window
             function closeWindow() {
@@ -194,14 +203,13 @@
                     setValidated('formGroupDescription', true);
                 }
                 //skills
-                var skills = JSON.stringify($(multiselect).select2('data'));
-                if (skills === '[]') {
-                    //setValidated('formGroupSkills', false);
+                var skills = $('#tagSkills').val();
+                if (!skills) {
+                    //@todo setValidated('formGroupSkills', false);
                     errors += 'Please choose at least one skill. ';
                 }
                 else {
-                    document.getElementById('skills').value = skills;
-                    //setValidated('formGroupSkills', true);
+                    //@todo setValidated('formGroupSkills', true);
                 }
 
                 //return true if there are errors

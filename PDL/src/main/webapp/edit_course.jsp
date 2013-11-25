@@ -120,7 +120,7 @@
 
                         <div class="form-group" id="formGroupDescription" style="width:100%">
                             <label for="description">Description</label>
-                            <textarea class="form-control" rows="4" id="description" name="description" onchange="validateForm()" placeholder="Enter description"></textarea>
+                            <textarea class="form-control" rows="4" id="description" name="description" onchange="validateForm()" placeholder="Enter description" style="resize: none"></textarea>
                         </div>
                         <div class="form-group" id="formGroupIsVisible" style="width:100%">
                             <label for="isVisible">Visibility</label><br/>
