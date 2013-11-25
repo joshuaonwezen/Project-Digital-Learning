@@ -1,11 +1,18 @@
 package models;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.swing.ImageIcon;
+import org.json.simple.JSONValue;
 
 /**
  *
@@ -38,20 +45,25 @@ public class Course implements Serializable{
     private String name, description;
     private ImageIcon image;
     private Level level;
+    private boolean isVisible;
     @ManyToOne
     private User owner;
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Skill> skills;
     
     public Course(){
         
     }
             
-    public Course(int courseId, String name, String description, ImageIcon image, Level level, User owner){
+    public Course(int courseId, String name, String description, ImageIcon image, Level level, boolean isVisible, User owner, List<Skill> skills){
         this.courseId = courseId;
         this.name = name;
         this.description = description;
         this.image = image;
         this.level = level;
+        this.isVisible = isVisible;
         this.owner = owner;
+        this.skills = skills;
     }
 
     public int getCourseId() {
@@ -100,5 +112,32 @@ public class Course implements Serializable{
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public List<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
+    }    
+    
+    public String getSkillsJSONFormat(){
+        List tempSkills = new LinkedList();
+        for (Skill skill : skills){
+            Map map = new HashMap();
+            map.put("id", skill.getSkillId());
+            map.put("text", skill.getName());
+            tempSkills.add(map);
+        }
+        return JSONValue.toJSONString(tempSkills);
+    }
+    
+    public boolean isIsVisible() {
+        return isVisible;
+    }
+
+    public void setIsVisible(boolean isVisible) {
+        this.isVisible = isVisible;
     }
 }

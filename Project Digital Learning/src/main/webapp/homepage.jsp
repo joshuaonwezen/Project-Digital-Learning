@@ -13,6 +13,7 @@
     <head>
         <link rel="stylesheet" type="text/css" href="resources/css/style.css">
         <link rel="stylesheet" type="text/css" href="resources/css/homepage.css">
+        <link rel="stylesheet" type="text/css" href="resources/bootstrap/dist/css/bootstrapm.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home - Info Support</title>
     </head>
@@ -26,9 +27,9 @@
                     <li><a href="homepage.jsp">Home</a></li>
                     <li><a href="/PDL/courses">Courses</a></li>
                         <c:if test="${loggedInIsAdmin == true}">
-                        <li><a href="/Project Digital Learning/management">Management</a></li>
+                        <li><a href="/PDL/management">Management</a></li>
                         </c:if>
-                        <li><a href="/Project%20Digital%20Learning/profile?id=${loggedInUserId}">My Profile</a></li>
+                        <li><a href="/PDL/profile?id=${loggedInUserId}">My Profile</a></li>
                     <li>
                         <a href="#">Settings</a>
                         <ul>
@@ -44,7 +45,7 @@
         <div class="ProfileInformation">
             <table class="profileinformationtable123">
                 <tr class="ProfilePictureHomepage"><td><input type="image" src="resources/images/users_icon.png"</td></tr>
-                <tr class="ProfileNameHomepage"><td>${loggedInUsername}</td></tr>
+                <tr class="ProfileNameHomepage"><td>${loggedInFirstname}&nbsp;${loggedInLastname}</td></tr>
                 <c:if test="${loggedInIsAdmin == true}">
                     <tr class="ProfileRoleHomepage"><td>Admin</td></tr>
                 </c:if>
@@ -53,22 +54,20 @@
         </div>    
         <!-- Activity Feed -->
         <div class="ActivityFeed">
-        <table class="activityfeedtable123">
+        <table class="table table-hover table-bordered" end="5">
             <tr>
-                <td colspan="3" class="ActivityFeedtable">Activity Feed</th>
+                <td colspan="4" class="ActivityFeedtable">Activity Feed</th>
             </tr>
-            <tr class="messageHeader">
+            <tr>
                 <td class="ifRead">Read</td>
                 <td>Sent by</td>
                 <td colspan="2" class="messagefeed">Message</td>
             </tr>
-            <c:forEach var="tempActivity" items="${activity}" begin="1" end="5">           
-            <tr class="showMessages">
-              <c:if test="${tempActivity.activityOpened == false}">
+            <c:forEach var="tempActivity" items="${activityList}">           
+            <tr>
                 <td><input type="image" src="resources/images/ifNotReadbutton.png"</td>
-              </c:if>
                 <td>${tempActivity.sender}</td>
-                <td>${tempActivity.message}</td>
+                <td class="messageInActivityFeed">${tempActivity.message}</td>
                 <td class="gotoMessage">
                     <input type="image" src="resources/images/gotoMessage.png" href="Project%20Digital%20Learning/activity/message?id=${tempActivity.activityId}';">
                 </td>

@@ -3,6 +3,7 @@ package controllers;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import models.Activity;
 import models.User;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import services.HibernateUtil;
@@ -37,8 +40,20 @@ public class LoginController extends HttpServlet {
         //get the action
         String uri = request.getRequestURI();
         String action = uri.substring(uri.lastIndexOf("/") + 1);
+        if (request.getParameter("id") != null) {
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        String dispatchUrl = null;
+        int id = Integer.parseInt(request.getParameter("id"));
         
+       
+        List<Activity> tempActivity = new LinkedList();
+        Query queryActivity = session.createQuery("from Activity where user_userId = " + id);
+        tempActivity = queryActivity.list();
+        request.setAttribute("activityList", tempActivity);
         System.out.println("GET action: " + action);
+    }
     }
 
     /**
@@ -98,9 +113,23 @@ public class LoginController extends HttpServlet {
                         request.getSession().setAttribute("loggedInUsername", user.getUsername());
                         request.getSession().setAttribute("loggedInUserId", user.getUserId());
                         request.getSession().setAttribute("loggedInIsAdmin", user.isIsAdmin());
-                        
-                        redirect(request, response, "/homepage.jsp");
-                    }
+                        request.getSession().setAttribute("loggedInFirstname", user.getFirstname());
+                        request.getSession().setAttribute("loggedInLastname", user.getLastname());
+
+           
+                                int id = user.getUserId();
+                                Session activitySession = HibernateUtil.getSessionFactory().openSession();
+                                Transaction tx = activitySession.beginTransaction();
+
+                                List<Activity> tempActivity = new LinkedList();
+                                Query queryActivity = activitySession.createQuery("from Activity where user_userId = " + id);
+                                tempActivity = queryActivity.list();
+                                request.setAttribute("activityList", tempActivity);
+                                activitySession.close();
+
+                                  redirect(request, response, "/homepage.jsp");
+                              }
+                    
                 }
             }
         }

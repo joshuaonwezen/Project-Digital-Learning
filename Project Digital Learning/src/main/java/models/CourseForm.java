@@ -2,23 +2,25 @@ package models;
 
 /**
  *
- * @author Martijn
+ * @author martijn
  */
-public class CourseForm {
+public class CourseForm{
     
-    private String courseId, name, description, image, level, owner;
+    private String courseId, name, description, image, level, owner, skills, isVisible;
     
     public CourseForm(){
         
     }
-    
-    public CourseForm(String courseId, String name, String description, String image, String level, String owner){
+            
+    public CourseForm(String courseId, String name, String description, String image, String level, String isVisible, String owner, String skills){
         this.courseId = courseId;
         this.name = name;
         this.description = description;
         this.image = image;
         this.level = level;
+        this.isVisible = isVisible;
         this.owner = owner;
+        this.skills = skills;
     }
 
     public String getCourseId() {
@@ -67,5 +69,21 @@ public class CourseForm {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public String getSkills() {
+        return skills;
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
+
+    public String getIsVisible() {
+        return isVisible;
+    }
+
+    public void setIsVisible(String isVisible) {
+        this.isVisible = isVisible;
     }
 }

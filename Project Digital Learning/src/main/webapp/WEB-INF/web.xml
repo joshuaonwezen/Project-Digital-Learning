@@ -164,7 +164,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Debug</servlet-name>
-        <url-pattern>/createAdminUser</url-pattern>
+        <url-pattern>/createAdminUser</url-pattern> 
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Debug</servlet-name>
+        <url-pattern>/createActivity</url-pattern>        
     </servlet-mapping>
     <session-config>
         <session-timeout>
