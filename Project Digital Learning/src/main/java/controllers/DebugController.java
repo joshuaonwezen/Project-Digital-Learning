@@ -100,7 +100,7 @@ public class DebugController extends HttpServlet {
 
             Activity activity = new Activity();
             activity.setSender("Virtual Guardian Angel");
-            activity.setMessage("hallo");
+            activity.setMessage("hallo dit is een testmessage, ik hoop dat dit leesbaar is");
             activity.setActivityOpened(true);
             activity.setActivityId(1);
            

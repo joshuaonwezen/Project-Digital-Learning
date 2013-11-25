@@ -54,9 +54,9 @@
         </div>    
         <!-- Activity Feed -->
         <div class="ActivityFeed">
-        <table class="table table-hover table-bordered">
+        <table class="table table-hover table-bordered" end="5">
             <tr>
-                <td colspan="3" class="ActivityFeedtable">Activity Feed</th>
+                <td colspan="4" class="ActivityFeedtable">Activity Feed</th>
             </tr>
             <tr class="messageHeader">
                 <td class="ifRead">Read</td>
@@ -67,7 +67,7 @@
             <tr class="showMessages">
                 <td><input type="image" src="resources/images/ifNotReadbutton.png"</td>
                 <td>${tempActivity.sender}</td>
-                <td>${tempActivity.message}</td>
+                <td class="messageInActivityFeed">${tempActivity.message}</td>
                 <td class="gotoMessage">
                     <input type="image" src="resources/images/gotoMessage.png" href="Project%20Digital%20Learning/activity/message?id=${tempActivity.activityId}';">
                 </td>
