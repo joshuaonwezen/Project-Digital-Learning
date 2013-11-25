@@ -17,11 +17,8 @@
 .gotoMessage{
     width:50px;
 }
-.messageFeed{
-    width:600px;
-}
 .messageInActivityFeed{
-    max-width: 10px;
+    width: 600px;
 }
 .ProfileInformation{
     position:absolute;

@@ -114,6 +114,8 @@ public class LoginController extends HttpServlet {
                         request.getSession().setAttribute("loggedInUserId", user.getUserId());
                         request.getSession().setAttribute("loggedInIsAdmin", user.isIsAdmin());
                         request.getSession().setAttribute("loggedInFirstname", user.getFirstname());
+                        request.getSession().setAttribute("loggedInLastname", user.getLastname());
+
            
                                 int id = user.getUserId();
                                 Session activitySession = HibernateUtil.getSessionFactory().openSession();

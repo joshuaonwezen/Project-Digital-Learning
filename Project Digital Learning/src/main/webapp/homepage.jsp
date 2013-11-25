@@ -45,7 +45,7 @@
         <div class="ProfileInformation">
             <table class="profileinformationtable123">
                 <tr class="ProfilePictureHomepage"><td><input type="image" src="resources/images/users_icon.png"</td></tr>
-                <tr class="ProfileNameHomepage"><td>${loggedInFirstname}</td></tr>
+                <tr class="ProfileNameHomepage"><td>${loggedInFirstname}&nbsp;${loggedInLastname}</td></tr>
                 <c:if test="${loggedInIsAdmin == true}">
                     <tr class="ProfileRoleHomepage"><td>Admin</td></tr>
                 </c:if>
@@ -58,13 +58,13 @@
             <tr>
                 <td colspan="4" class="ActivityFeedtable">Activity Feed</th>
             </tr>
-            <tr class="messageHeader">
+            <tr>
                 <td class="ifRead">Read</td>
                 <td>Sent by</td>
                 <td colspan="2" class="messagefeed">Message</td>
             </tr>
             <c:forEach var="tempActivity" items="${activityList}">           
-            <tr class="showMessages">
+            <tr>
                 <td><input type="image" src="resources/images/ifNotReadbutton.png"</td>
                 <td>${tempActivity.sender}</td>
                 <td class="messageInActivityFeed">${tempActivity.message}</td>

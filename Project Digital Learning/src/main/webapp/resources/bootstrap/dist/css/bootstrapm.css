@@ -1305,6 +1305,9 @@ th {
 .table {
   background-color: #ffffff;
 }
+.th {
+    background-color: #000000
+}
 
 .table-condensed > thead > tr > th,
 .table-condensed > tbody > tr > th,
@@ -1316,7 +1319,7 @@ th {
 }
 
 .table-bordered {
-  border: 1px solid #dddddd;
+  border: 2px solid #dddddd;
 }
 
 .table-bordered > thead > tr > th,
@@ -1338,7 +1341,9 @@ th {
   background-color: #f9f9f9;
 }
 
-.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > td{
+      background-color: #f5f5f5;
+}
 .table-hover > tbody > tr:hover > th {
   background-color: #f5f5f5;
 }
