@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Activity;
 import models.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -92,6 +93,24 @@ public class DebugController extends HttpServlet {
             Datamining dm = new Datamining();
             
             dm.mineCourses(amount);
+        }
+        else if (action.equals("createActivity")){
+            Session session = services.HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+
+            Activity activity = new Activity();
+            activity.setSender("Virtual Guardian Angel");
+            activity.setMessage("hallo");
+            activity.setActivityOpened(true);
+            activity.setActivityId(1);
+           
+            User user = new User();
+            user.setUserId(1);
+            activity.setUser(user);
+            
+            session.save(activity);
+            tx.commit();
+            session.close();
         }
     }
 

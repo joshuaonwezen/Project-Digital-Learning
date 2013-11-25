@@ -13,6 +13,7 @@
     <head>
         <link rel="stylesheet" type="text/css" href="resources/css/style.css">
         <link rel="stylesheet" type="text/css" href="resources/css/homepage.css">
+        <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home - Info Support</title>
     </head>
@@ -44,7 +45,7 @@
         <div class="ProfileInformation">
             <table class="profileinformationtable123">
                 <tr class="ProfilePictureHomepage"><td><input type="image" src="resources/images/users_icon.png"</td></tr>
-                <tr class="ProfileNameHomepage"><td>${loggedInUsername}</td></tr>
+                <tr class="ProfileNameHomepage"><td>${loggedInFirstname}</td></tr>
                 <c:if test="${loggedInIsAdmin == true}">
                     <tr class="ProfileRoleHomepage"><td>Admin</td></tr>
                 </c:if>
@@ -53,7 +54,7 @@
         </div>    
         <!-- Activity Feed -->
         <div class="ActivityFeed">
-        <table class="activityfeedtable123">
+        <table class="table table-hover">
             <tr>
                 <td colspan="3" class="ActivityFeedtable">Activity Feed</th>
             </tr>

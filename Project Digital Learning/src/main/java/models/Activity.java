@@ -34,6 +34,10 @@ public class Activity implements Serializable{
     }
 
     public void setActivityId(int activityId) {
+        if (activityId < 1) {
+            throw new IllegalArgumentException(
+                    "Activity number may not be negative, value = " + activityId);
+        }
         this.activityId = activityId;
     }
 

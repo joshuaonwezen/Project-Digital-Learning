@@ -6,32 +6,9 @@
 .profileinformationtable123{
     width:100px;
 }
-.activityfeedtable123{
-    width:700px;
-}
 .ActivityFeedtable{
     text-align:left;
-    color: #ffffff;
-    border-width: 2px;
-    padding: 8px;
-    border-style: solid;
-    border-color: #000000;
-    background-color: rgb(68,121,186);
-}
-.messageHeader{
-    border-width: 2px;
-    padding: 8px;
-    border-style: solid;
-    border-color: #000000;
-    background-color: #ffffff;
-    font-weight:bold;
-}
-.showMessages{
-    border-width: 2px;
-    padding: 8px;
-    border-style: solid;
-    border-color: #000000;
-    background-color: #ffffff;
+    width:700px;
 }
 .ifRead{
     width:50px;
