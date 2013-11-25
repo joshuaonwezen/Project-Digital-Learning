@@ -1,0 +1,53 @@
+.ActivityFeed{
+    position:absolute;
+    top: 20%;
+    left:15%;
+}
+.profileinformationtable123{
+    width:100px;
+}
+.ActivityFeedtable{
+    text-align:left;
+    width:850px;
+}
+.ifRead{
+    width:50px;
+    text-align:center;
+}
+.gotoMessage{
+    width:50px;
+}
+.messageInActivityFeed{
+    width: 600px;
+}
+.ProfileInformation{
+    position:absolute;
+    top:20%;
+    left:3%;
+    background-color:rgb(45,47,49);
+}
+.ProfilePictureHomepage{
+    background-color:rgb(68,121,186);
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+}
+.ProfileNameHomepage{
+    text-align:center;
+    color:#FFFFFF;
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+}
+.ProfileRoleHomepage{
+    text-align:center;
+    font-style:italic;
+    font-size:11px;
+    color:#FFFFFF;
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+}
