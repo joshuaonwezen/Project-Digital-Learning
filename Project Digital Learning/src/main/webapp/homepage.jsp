@@ -13,7 +13,7 @@
     <head>
         <link rel="stylesheet" type="text/css" href="resources/css/style.css">
         <link rel="stylesheet" type="text/css" href="resources/css/homepage.css">
-        <link rel="stylesheet" type="text/css" href="resources/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="resources/bootstrap/dist/css/bootstrapm.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home - Info Support</title>
     </head>
@@ -27,9 +27,9 @@
                     <li><a href="homepage.jsp">Home</a></li>
                     <li><a href="/PDL/courses">Courses</a></li>
                         <c:if test="${loggedInIsAdmin == true}">
-                        <li><a href="/Project Digital Learning/management">Management</a></li>
+                        <li><a href="/PDL/management">Management</a></li>
                         </c:if>
-                        <li><a href="/Project%20Digital%20Learning/profile?id=${loggedInUserId}">My Profile</a></li>
+                        <li><a href="/PDL/profile?id=${loggedInUserId}">My Profile</a></li>
                     <li>
                         <a href="#">Settings</a>
                         <ul>
@@ -54,7 +54,7 @@
         </div>    
         <!-- Activity Feed -->
         <div class="ActivityFeed">
-        <table class="table table-hover">
+        <table class="table table-hover table-bordered">
             <tr>
                 <td colspan="3" class="ActivityFeedtable">Activity Feed</th>
             </tr>
