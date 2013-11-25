@@ -32,6 +32,9 @@ public class Skill implements Serializable {
         this.setName(name);
         this.setLevel(level);
     }
+    public Skill(String name) {
+        this.setName(name);
+    }
 
     /* Getters en setters voor de verschillende attributen van het Model */
     public long getSkillId() {
