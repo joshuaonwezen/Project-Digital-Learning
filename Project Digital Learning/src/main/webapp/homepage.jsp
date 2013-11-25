@@ -63,11 +63,9 @@
                 <td>Sent by</td>
                 <td colspan="2" class="messagefeed">Message</td>
             </tr>
-            <c:forEach var="tempActivity" items="${activity}" begin="1" end="5">           
+            <c:forEach var="tempActivity" items="${activityList}">           
             <tr class="showMessages">
-              <c:if test="${tempActivity.activityOpened == false}">
                 <td><input type="image" src="resources/images/ifNotReadbutton.png"</td>
-              </c:if>
                 <td>${tempActivity.sender}</td>
                 <td>${tempActivity.message}</td>
                 <td class="gotoMessage">

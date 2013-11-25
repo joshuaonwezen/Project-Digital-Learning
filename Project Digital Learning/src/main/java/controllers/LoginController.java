@@ -114,22 +114,20 @@ public class LoginController extends HttpServlet {
                         request.getSession().setAttribute("loggedInUserId", user.getUserId());
                         request.getSession().setAttribute("loggedInIsAdmin", user.isIsAdmin());
                         request.getSession().setAttribute("loggedInFirstname", user.getFirstname());
-                              if (request.getParameter("id") != null) {
-
-                                int id = Integer.parseInt(request.getParameter("id"));
+           
+                                int id = user.getUserId();
                                 Session activitySession = HibernateUtil.getSessionFactory().openSession();
-                                Transaction tx = session.beginTransaction();
+                                Transaction tx = activitySession.beginTransaction();
 
                                 List<Activity> tempActivity = new LinkedList();
                                 Query queryActivity = activitySession.createQuery("from Activity where user_userId = " + id);
                                 tempActivity = queryActivity.list();
                                 request.setAttribute("activityList", tempActivity);
                                 activitySession.close();
-                              }
-                              else{
+
                                   redirect(request, response, "/homepage.jsp");
                               }
-                    }
+                    
                 }
             }
         }
