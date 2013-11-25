@@ -13,7 +13,7 @@
     <head>
         <link rel="stylesheet" type="text/css" href="resources/css/style.css">
         <link rel="stylesheet" type="text/css" href="resources/css/homepage.css">
-        <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="resources/bootstrap/dist/css/bootstrap.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home - Info Support</title>
     </head>
