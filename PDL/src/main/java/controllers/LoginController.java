@@ -85,7 +85,7 @@ public class LoginController extends HttpServlet {
             //als de list leeg is dan is de username zoiezo fout
             List<String> errors = new ArrayList<String>();
             if (result.isEmpty()){
-                errors.add("Username or password incorrect");
+                errors.add("Username or password is incorrect. ");
                 request.setAttribute("errors", errors);
                 redirect(request, response, "/index.jsp");
             }
@@ -95,7 +95,7 @@ public class LoginController extends HttpServlet {
                 
                 //geef foutmelding als password leeg is
                 if (request.getParameter("password").trim().isEmpty()){
-                    errors.add("Username or password incorrect");
+                    errors.add("Username or password is incorrect. ");
                     request.setAttribute("errors", errors);
                     redirect(request, response, "/index.jsp");
                 }
@@ -104,7 +104,7 @@ public class LoginController extends HttpServlet {
                     String md5 = User.md5(request.getParameter("password"));
                     
                     if (!user.getPassword().equals(md5)){
-                        errors.add("Username or password incorrect");
+                        errors.add("Username or password is incorrect. ");
                         request.setAttribute("errors", errors);
                         redirect(request, response, "/index.jsp");
                     }

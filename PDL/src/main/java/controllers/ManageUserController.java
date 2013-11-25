@@ -126,7 +126,7 @@ public class ManageUserController extends HttpServlet {
             userForm.setLastname(request.getParameter("lastname"));
             userForm.setEmailAddress(request.getParameter("emailAddress"));
             userForm.setPosition(request.getParameter("position"));
-            userForm.setPassword(User.md5(request.getParameter("password")));
+            userForm.setPassword(request.getParameter("password"));
             UserValidator validator = new UserValidator();
             List<String> errors = validator.validate(userForm);
 

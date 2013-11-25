@@ -122,15 +122,19 @@ public class Course implements Serializable{
         this.skills = skills;
     }    
     
-    public String getSkillsJSONFormat(){
-        List tempSkills = new LinkedList();
-        for (Skill skill : skills){
-            Map map = new HashMap();
-            map.put("id", skill.getSkillId());
-            map.put("text", skill.getName());
-            tempSkills.add(map);
+    /**
+     * Returns the skills in the following format: Skill1,Skill2,Skill3
+     */
+    public String getSkillsSeperatedByComma(){
+        String skillsSeperatedByComma="";
+        for (int i=0;i<skills.size();i++){
+            skillsSeperatedByComma += skills.get(i).getName();
+            if (i!=skills.size()-1){
+                skillsSeperatedByComma += ",";
+            }
         }
-        return JSONValue.toJSONString(tempSkills);
+        System.out.println("returning: " + skillsSeperatedByComma);
+        return skillsSeperatedByComma;
     }
     
     public boolean isIsVisible() {
