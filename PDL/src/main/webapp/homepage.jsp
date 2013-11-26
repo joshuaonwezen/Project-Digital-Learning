@@ -56,20 +56,43 @@
         <div class="ActivityFeed">
         <table class="table table-hover table-bordered" end="5">
             <tr>
-                <td colspan="4" class="ActivityFeedtable">Activity Feed</th>
+                <td colspan="4" class="TableHeader">Activity Feed</th>
             </tr>
             <tr>
-                <td class="ifRead">Read</td>
-                <td>Sent by</td>
-                <td colspan="2" class="messagefeed">Message</td>
+                <td class="Date">Date</td>
+                <td>Title</td>
+                <td colspan="2">Message</td>
             </tr>
             <c:forEach var="tempActivity" items="${activityList}">           
             <tr>
-                <td><input type="image" src="resources/images/ifNotReadbutton.png"</td>
-                <td>${tempActivity.sender}</td>
-                <td class="messageInActivityFeed">${tempActivity.message}</td>
+                <td>${tempActivity.sent}</td>
+                <td>${tempActivity.title}</td>
+                <td class="Message">${tempActivity.message}</td>
                 <td class="gotoMessage">
-                    <input type="image" src="resources/images/gotoMessage.png" href="Project%20Digital%20Learning/activity/message?id=${tempActivity.activityId}';">
+                    <input type="image" src="resources/images/gotoMessage.png" href="PDL/activity/message?id=${tempActivity.activityId}';">
+                </td>
+            </tr>
+          </c:forEach>
+        </table>
+        </div>
+        <!-- News Feed -->
+        <div class="NewsFeed">
+        <table class="table table-hover table-bordered" end="5">
+            <tr>
+                <td colspan="4" class="TableHeader">News Feed</th>
+            </tr>
+            <tr>
+                <td class="Date">Date</td>
+                <td>Title</td>
+                <td colspan="2">Message</td>
+            </tr>
+            <c:forEach var="tempActivity" items="${activityList}">           
+            <tr>
+                <td>${tempActivity.sent}</td>
+                <td>${tempActivity.title}</td>
+                <td class="Message">${tempActivity.message}</td>
+                <td class="gotoMessage">
+                    <input type="image" src="resources/images/gotoMessage.png" href="PDL/activity/message?id=${tempActivity.activityId}';">
                 </td>
             </tr>
           </c:forEach>

@@ -1,10 +1,12 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 import javax.swing.ImageIcon;
 
 
@@ -15,20 +17,37 @@ public class Activity implements Serializable{
     @Id
     @GeneratedValue
     private int activityId;
-    private String sender;
+    private String title;
     private String message;
-    private boolean activityOpened;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date sent;
     @ManyToOne
     private User user;
 
     public Activity() {
     }
     
-    public Activity(int activityId, String sender, String message, boolean activityOpened){
+    public Activity(int activityId, String title, String message, Date sent){
       this.activityId=activityId;
-      this.sender=sender;
+      this.title=title;
       this.message=message;
-      this.activityOpened=activityOpened;
+      this.sent=sent;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Date getSent() {
+        return sent;
+    }
+
+    public void setSent(Date sent) {
+        this.sent = sent;
     }
 
     public int getActivityId() {
@@ -43,28 +62,12 @@ public class Activity implements Serializable{
         this.activityId = activityId;
     }
 
-    public String getSender() {
-        return sender;
-    }
-
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
     public String getMessage() {
         return message;
     }
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public boolean isActivityOpened() {
-        return activityOpened;
-    }
-
-    public void setActivityOpened(boolean activityOpened) {
-        this.activityOpened = activityOpened;
     }
 
     public User getUser() {

@@ -3,21 +3,24 @@
     top: 20%;
     left:15%;
 }
+.NewsFeed{
+    position:absolute;
+    top: 60%;
+    left:15%;
+}
 .profileinformationtable123{
     width:100px;
 }
-.ActivityFeedtable{
+.TableHeader{
     text-align:left;
+    font-weight: bold;
     width:850px;
 }
-.ifRead{
-    width:50px;
+.Date{
+    width:100px;
     text-align:center;
 }
-.gotoMessage{
-    width:50px;
-}
-.messageInActivityFeed{
+.Message{
     width: 600px;
 }
 .ProfileInformation{

@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -99,9 +100,13 @@ public class DebugController extends HttpServlet {
             Transaction tx = session.beginTransaction();
 
             Activity activity = new Activity();
-            activity.setSender("Virtual Guardian Angel");
+            activity.setTitle("Suggest Course");
             activity.setMessage("hallo dit is een testmessage, ik hoop dat dit leesbaar is");
-            activity.setActivityOpened(true);
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.MONTH, 11);
+            cal.set(Calendar.DATE, 24);
+            cal.set(Calendar.YEAR, 2013);
+            activity.setSent(cal.getTime());
             activity.setActivityId(1);
            
             User user = new User();
