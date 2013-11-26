@@ -1,7 +1,0 @@
-<tabbar>
-    <row>
-        <tab id="t1">Users</tab>
-        <tab id="t2">Courses</tab>
-        <tab id="t3">News items</tab>
-    </row>
-</tabbar>

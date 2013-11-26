@@ -68,6 +68,27 @@
         <servlet-name>ManageCourseController</servlet-name>
         <url-pattern>/courses/delete</url-pattern>
     </servlet-mapping>
+    <!-- News Item Management -->
+    <servlet>
+        <servlet-name>ManageNewsItemController</servlet-name>
+        <servlet-class>controllers.ManageNewsItemController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManageNewsItemController</servlet-name>
+        <url-pattern>/news</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageNewsItemController</servlet-name>
+        <url-pattern>/news/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageNewsItemController</servlet-name>
+        <url-pattern>/news/new</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageNewsItemController</servlet-name>
+        <url-pattern>/news/delete</url-pattern>
+    </servlet-mapping>
     <!-- ProfileHolder -->
     <servlet>
         <servlet-name>ProfileHolder</servlet-name>
