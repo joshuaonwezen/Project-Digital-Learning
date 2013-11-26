@@ -89,7 +89,9 @@ public class ManageProjectController extends HttpServlet {
             session.delete(project);
 
             tx.commit();
-            response.sendRedirect("../profile?id=");
+            
+            int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
+            response.sendRedirect("../profile?id=" + userId);
         }
     }
 

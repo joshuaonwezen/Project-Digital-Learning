@@ -89,7 +89,9 @@ public class ManageEducationController extends HttpServlet {
             session.delete(education);
 
             tx.commit();
-            response.sendRedirect("../profile?id=");
+            
+            int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
+            response.sendRedirect("../profile?id=" + userId);
         }
     }
 

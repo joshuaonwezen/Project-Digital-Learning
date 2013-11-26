@@ -22,7 +22,6 @@ import validators.WorkValidator;
  */
 public class ManageWorkController extends HttpServlet {
 
-    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -89,7 +88,9 @@ public class ManageWorkController extends HttpServlet {
             session.delete(work);
 
             tx.commit();
-            response.sendRedirect("../profile?id=");
+            
+            int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
+            response.sendRedirect("../profile?id=" + userId);
         }
     }
 
