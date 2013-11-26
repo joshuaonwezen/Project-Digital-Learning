@@ -2,9 +2,12 @@ package models;
 
 import java.io.Serializable;
 import java.security.MessageDigest;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -19,6 +22,9 @@ public class User implements Serializable{
     private String username, firstname, lastname, emailAddress, position, password;
     private String fullName;
     private boolean isAdmin;
+    
+    @ManyToMany
+    private List<Skill> skills;
     
     public User(){
         
@@ -101,6 +107,14 @@ public class User implements Serializable{
     
     public String getFullName(){
         return fullName;
+    }
+
+    public List<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
     }
     
     /**
