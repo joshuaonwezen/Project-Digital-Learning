@@ -219,9 +219,9 @@
                         <div class="boxRight_right">
                             <div class="hidden">
                                 <c:if test="${loggedInUserId == userId}">
-                                    <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('skill/edit?id=${tempSkill.skillId}', 800, 500)">Edit</button>
+                                    
                                     <a href="javascript:if(confirm('Delete?'))
-                                       window.location='skill/delete?id=${temppSkill.skillId}';">
+                                       window.location='skill/delete?id=${tempSkill.skillId}';">
                                         <button>x</button>
                                     </a>
                                 </c:if>

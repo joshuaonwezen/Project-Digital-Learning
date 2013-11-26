@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import models.Course;
 import models.Education;
 import models.Project;
 import models.Skill;
@@ -61,8 +62,11 @@ public class ProfileHolder extends HttpServlet {
             /* Skill  */
             List<Skill> tempSkill = new LinkedList();
             // Zet de session in een variable
-            Query querySkill = session.createQuery("from Skill where user_userId = " + id);
-            tempSkill = querySkill.list();
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            User managedUser = (User)session.load(User.class, id);
+            
+            tempSkill = managedUser.getSkills();
             // Zet de lijst met skill en het totaal aantal skill op het request
             request.setAttribute("skillList", tempSkill);
             request.setAttribute("aantalSkills", tempSkill.size());

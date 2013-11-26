@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import models.Skill;
 import models.SkillForm;
 import models.User;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import services.HibernateUtil;
-import validators.GenericValidator;
 import validators.SkillValidator;
 
 /**
@@ -22,7 +22,6 @@ import validators.SkillValidator;
  */
 public class ManageSkillController extends HttpServlet {
 
-    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -50,7 +49,8 @@ public class ManageSkillController extends HttpServlet {
             //we are updating a skill if the skillId existst
             if (queryString.substring(queryString.indexOf("=")).length() > 1) {
                 isUpdate = true;
-            } else {
+            } 
+            else {
                 isUpdate = false;
             }
 
@@ -58,7 +58,6 @@ public class ManageSkillController extends HttpServlet {
             if (isUpdate) {
                 //extract skillId
                 int id = Integer.parseInt(queryString.substring(queryString.indexOf("=") + 1));
-                System.out.println("we are updating: " + id);
                 //get skill from database and set in the request
                 long skillId = Long.parseLong(request.getParameter("id"));
                 request.setAttribute("skillId", skillId);
@@ -77,15 +76,32 @@ public class ManageSkillController extends HttpServlet {
             }
 
             redirect(request, response, "/edit_skill.jsp");
-        } //deleten van een skill
+        } //deleten (unlink) skill from user
         else if (action.equals("delete")) {
-            long skillId = Long.parseLong(request.getParameter("id"));
+            //extract the id of the skill from the url
+            String queryString = request.getQueryString();
+            long skillId = Long.parseLong(queryString.substring(queryString.indexOf("=") + 1));
+            
+            //now remove the skill that is linked to the user
+            int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
             Transaction tx = session.beginTransaction();
-            Skill skill = (Skill) session.load(Skill.class, skillId);
-            session.delete(skill);
-
+            User managedUser = (User) session.load(User.class, userId);
+            List<Skill> skills = managedUser.getSkills();
+            
+            int temp=0;
+            //check to see which item we need to remove from the list
+            for (int i=0;i<skills.size();i++){
+                if (skills.get(i).getSkillId() == skillId){
+                    temp = i;
+                    break;
+                }
+            }
+            skills.remove(temp);
+            managedUser.setSkills(skills);
+            session.update(managedUser);
             tx.commit();
-            response.sendRedirect("../profile?id=");
+            
+            response.sendRedirect("../profile?id=" + userId);
         }
     }
 
@@ -116,33 +132,7 @@ public class ManageSkillController extends HttpServlet {
 
             SkillValidator validator = new SkillValidator();
             List<String> errors = validator.validate(skillForm);
-
-            //step 1b: check if skill exists (skill id must not be empty)
-            List result = null;
-            if (!GenericValidator.isEmpty("skillId")) {
-                Session session = HibernateUtil.getSessionFactory().openSession();
-                String hql = "from Skill where skillId = ?";
-                result = session.createQuery(hql)
-                        .setString(0, request.getParameter("skillId"))
-                        .list();
-                session.close();
-
-                //on creating skill
-                if (!isUpdate && result != null && !result.isEmpty()) {
-                    errors.add("Skill Id already exists");
-                } //on updating skill
-                else {
-                    //check if skill id is changed (and still unique) while editing
-                    if (!result.isEmpty()) {
-                        Skill skill = (Skill) result.get(0);
-                        if (request.getParameter("skillId").equals(skill.getSkillId())) {
-                            if (Integer.parseInt(request.getParameter("skillId")) != skill.getSkillId()) {
-                                errors.add("Skill Id already exists");
-                            }
-                        }
-                    }
-                }
-            }
+            
             //step 2: redirect user back if there are any errors
             if (!errors.isEmpty()) {
                 //skillId needs only to be set when we are editing
@@ -154,52 +144,64 @@ public class ManageSkillController extends HttpServlet {
                 request.setAttribute("name", request.getParameter("name"));
                 request.setAttribute("level", request.getParameter("level"));
                 request.setAttribute("description", request.getParameter("description"));
-
                 //placing errors in request
                 request.setAttribute("errorsSize", errors.size());
                 request.setAttribute("errors", errors);
 
                 redirect(request, response, "/edit_skill.jsp");
             } else {
-                //step 3: there are no errors. We can start to create or update a skill
-                Skill skill;
+                //step 3: there are no errors. We can start to (create and) link skills
                 Session session = HibernateUtil.getSessionFactory().openSession();
                 Transaction tx = session.beginTransaction();
-
-                //get the skillId if we are updating a skill
-                if (isUpdate) {
-                    Long skillId = Long.parseLong(request.getParameter("skillId"));
-                    skill = (Skill) session.load(Skill.class, skillId);
-                } else {
-                    skill = new Skill();
-                }
-                skill.setName(request.getParameter("name"));
-                skill.setLevel(request.getParameter("level"));
-                skill.setDescription(request.getParameter("description"));
-
-                User user = new User();
+                
                 int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
-                user.setUserId(userId);
-                skill.setUser(user);
-
-                session.saveOrUpdate(skill);
+                User managedUser = (User) session.load(User.class, userId);
+                List<Skill> skillsLinkedToUser = managedUser.getSkills();
+                
+                //step 3a: add skill to the database if it does not yet exist
+                Criteria criteria = session.createCriteria(Skill.class);
+                List<Skill> skillsFromDatabase = criteria.list();
+                
+                //we know for sure that we need to create a skill if their are no skills in the db
+                if (skillsFromDatabase.isEmpty()) {
+                    System.out.println("skill needs to be created because db is empty");
+                    Skill newSkill = new Skill();
+                    newSkill.setName(request.getParameter("name"));
+                    session.save(newSkill);
+                    tx.commit();
+                    //now link it to the user
+                    skillsLinkedToUser.add(newSkill);
+                } 
+                else {
+                    for (int i = 0; i < skillsFromDatabase.size(); i++) {
+                        if (skillsFromDatabase.get(i).getName().equals(request.getParameter("name"))) {
+                            System.out.println("we hava match, now linking");
+                            //we have a match so we don't have to create it, only link it
+                            skillsLinkedToUser.add(skillsFromDatabase.get(i));
+                            break;
+                        } 
+                        else if (i == skillsFromDatabase.size() - 1 && !request.getParameter("name").equals(skillsFromDatabase.get(i).getName())) {
+                        //we don't have a match if we are at the end, 1. create it and 2. link it
+                            System.out.println("skill needs to be created");
+                            Skill newSkill = new Skill();
+                            newSkill.setName(request.getParameter("name"));
+                            session.save(newSkill);
+                            tx.commit();
+                            //now link it to the user
+                            skillsLinkedToUser.add(newSkill);
+                        }
+                    }
+                }
+                //we need to get the user from the database so we can add skills to him
+                tx = session.beginTransaction();
+                managedUser = (User) session.load(User.class, userId);
+  
+                managedUser.setSkills(skillsLinkedToUser);
+                
+                session.saveOrUpdate(managedUser);
                 tx.commit();
                 session.close();
 
-                //request handling
-                if (isUpdate) {
-                    request.setAttribute("skillUpdated", true);
-                } else {
-                    request.setAttribute("skillCreated", true);
-                }
-
-                request.setAttribute("skillId", skill.getSkillId());
-                request.setAttribute("name", skill.getName());
-                request.setAttribute("level", skill.getLevel());
-                request.setAttribute("description", skill.getDescription());
-
-                //we are now editing
-                request.setAttribute("isUpdate", true);
 
                 redirect(request, response, "/edit_skill.jsp");
             }
