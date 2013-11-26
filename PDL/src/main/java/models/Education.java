@@ -18,9 +18,9 @@ public class Education implements Serializable {
     @GeneratedValue
 
     private long educationId;
-    @Column(columnDefinition="int(2)")
+    @Column(columnDefinition = "int(2)")
     private int fromMonth;
-    @Column(columnDefinition="int(2)")
+    @Column(columnDefinition = "int(2)")
     private int tillMonth;
     @Column(columnDefinition="int(4)")
     private int fromYear;
@@ -39,7 +39,7 @@ public class Education implements Serializable {
     public Education() {
     }
 
-    public Education(long educationId, int fromMonth, int tillMonth, int fromYear, int tillYear, String name, String profession, String description) {
+    public Education(long educationId, int fromYear, int tillYear, String name, String profession, String description) {
         this.setEducationId(educationId);
         this.setFromMonth(fromMonth);
         this.setTillMonth(tillMonth);
@@ -61,6 +61,34 @@ public class Education implements Serializable {
                     "Education number may not be negative, value = " + educationId);
         }
         this.educationId = educationId;
+    }
+
+    /**
+     * @return the fromMonth
+     */
+    public int getFromMonth() {
+        return fromMonth;
+    }
+
+    /**
+     * @param fromMonth the fromMonth to set
+     */
+    public void setFromMonth(int fromMonth) {
+        this.fromMonth = fromMonth;
+    }
+
+    /**
+     * @return the tillMonth
+     */
+    public int getTillMonth() {
+        return tillMonth;
+    }
+
+    /**
+     * @param tillMonth the tillMonth to set
+     */
+    public void setTillMonth(int tillMonth) {
+        this.tillMonth = tillMonth;
     }
 
     /**
@@ -145,34 +173,6 @@ public class Education implements Serializable {
      */
     public void setUser(User user) {
         this.user = user;
-    }
-
-    /**
-     * @return the fromMonth
-     */
-    public int getFromMonth() {
-        return fromMonth;
-    }
-
-    /**
-     * @param fromMonth the fromMonth to set
-     */
-    public void setFromMonth(int fromMonth) {
-        this.fromMonth = fromMonth;
-    }
-
-    /**
-     * @return the tillMonth
-     */
-    public int getTillMonth() {
-        return tillMonth;
-    }
-
-    /**
-     * @param tillMonth the tillMonth to set
-     */
-    public void setTillMonth(int tillMonth) {
-        this.tillMonth = tillMonth;
     }
 
 }

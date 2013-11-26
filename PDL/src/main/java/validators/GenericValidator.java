@@ -21,8 +21,11 @@ public class GenericValidator {
         REGULAR(".{1,100}"),
         //this uses another regex than on the client side because of the escape characters
         EMAIL_ADDRESS("[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\\.[a-zA-Z]{2,4}"),
-        PASSWORD(".{7,100}");
+        PASSWORD(".{7,100}"),
         
+        //ProfileValidators
+        BASE("^[a-zA-Z0-9_ ]{1,25}$"),
+        DESC("^[a-zA-Z0-9_ ]{1,300}$");
         private String regex;
         
         Regex(String regex){

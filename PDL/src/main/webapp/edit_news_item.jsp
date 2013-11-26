@@ -109,7 +109,7 @@
             document.getElementById('newsId').value = '${newsId}';
             document.getElementById('title').value = '${title}';
             document.getElementById('description').value = '${description}';
-            console.log("skdfjlsdfhsdk: " + '${date}');
+            console.log('date is: ' + moment('${date}', "YYYY-MM-DD"));
             document.getElementById('date').value = '${date}';
                     
 

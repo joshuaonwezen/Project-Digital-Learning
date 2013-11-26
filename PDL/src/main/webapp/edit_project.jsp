@@ -81,7 +81,7 @@
                 <div id="form_container">
                     <div class="leftContainer">
 
-                        <input type="hidden" name="id" id="id" value="${id}">
+                        <input type="hidden" name="projectId" id="projectId" value="${projectId}">
 
                         <div class="form-group" id="" style="width:100%">
                             <label for="from">From</label>
@@ -102,6 +102,9 @@
                             </select>
                             <select id="fromYear" name="fromYear">
                                 <option value="${fromYear}">${fromYear}</option>
+                                <option value="2014">2014</option>
+                                <option value="2013">2013</option>
+                                <option value="2012">2012</option>
                                 <option value="2011">2011</option>
                                 <option value="2010">2010</option>
                                 <option value="2009">2009</option>
@@ -233,6 +236,9 @@
                             </select>
                             <select id="tillYear" name="tillYear">
                                 <option value="${tillYear}">${tillYear}</option>
+                                <option value="2014">2014</option>
+                                <option value="2013">2013</option>
+                                <option value="2012">2012</option>
                                 <option value="2011">2011</option>
                                 <option value="2010">2010</option>
                                 <option value="2009">2009</option>
@@ -357,6 +363,10 @@
                             <label for="profession">Profession</label>
                             <input type="text" class="form-control" id="profession" name="profession" onchange="validateForm()" value="${profession}">
                         </div>
+                        
+                        <div class="form-group" id="formGroupUser" style="width:100%">
+                            <input type="hidden" class="form-control" id="user" name="user" value="${loggedInUserId}">
+                        </div>
 
                     </div>
 
@@ -403,8 +413,8 @@
             }
             //use the same validations that are used on the server side
             function validateForm() {
-                var regexRegular = '[a-zA-Z]{1,25}$';
-                var regexDesc = '[a-zA-Z]{1,300}$';
+                var regexRegular = '^[a-zA-Z0-9_ ]{1,25}$';
+                var regexDesc = '^[a-zA-Z0-9_ ]{1,300}$';
 
                 errors = "";
                 //name
