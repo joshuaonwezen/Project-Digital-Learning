@@ -1,5 +1,8 @@
 package models;
 
+import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +15,7 @@ import javax.persistence.Temporal;
  * @author wesley
  */
 @Entity
-public class NewsItem {
+public class NewsItem implements Serializable {
 
     @Id
     @GeneratedValue
@@ -22,11 +25,12 @@ public class NewsItem {
     private Date updated;
     @ManyToOne
     private User editedBy;
-    
-    public NewsItem(){
-        
+
+    public NewsItem() {
+
     }
-    public NewsItem(String title, String description, Date updated, User editedBy){
+
+    public NewsItem(String title, String description, Date updated, User editedBy) {
         this.title = title;
         this.description = description;
         this.updated = updated;
@@ -59,6 +63,17 @@ public class NewsItem {
 
     public Date getUpdated() {
         return updated;
+    }
+
+    public String getUpdatedFormatted() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = "";
+
+        formattedDate = sdf.format(updated);
+
+        System.out.println("RETURING: " + formattedDate);
+        return formattedDate;
+
     }
 
     public void setUpdated(Date updated) {

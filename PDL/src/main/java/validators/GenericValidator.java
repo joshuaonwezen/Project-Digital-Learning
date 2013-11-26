@@ -1,5 +1,8 @@
 package validators;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,6 +45,22 @@ public class GenericValidator {
         return matcher.matches();
     }
     
+    /**
+     * Check to see if a given date is valid
+     * @param inputDate     the date to match against
+     * @return              true or false depending on match
+     */
+    public static boolean dateIsValid(String inputDate){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try{
+            Date date = sdf.parse(inputDate);
+        }
+        catch(ParseException e){
+            return false;
+        }
+        return true;
+        
+    }
     /**
      * Check if an input is null or empty (spaces are not included)
      * @param input         input to check for

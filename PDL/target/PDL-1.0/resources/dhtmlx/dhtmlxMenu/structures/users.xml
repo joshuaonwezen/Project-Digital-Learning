@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<menu>
-	<item id="new" text="New" img="new.gif"/> 
-        <item id="view" text="View" img="open.gif"/>
-        <item id="edit" text="Edit" img="page_setup.gif"/>
-        <item id="delete" text="Delete" img="close.gif"/>
-</menu>

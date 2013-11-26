@@ -59,7 +59,7 @@
         <!--Navigation End -->
         <div id="usersGrid" style="height:650px;"></div>
         <div id="coursesGrid" style="height:650px;"></div>
-        <div id="newsGrid" style="height:650px;"></div>
+        <div id="newsItemsGrid" style="height:650px;"></div>
         </br>
         <!-- General -->
         <script>
@@ -282,52 +282,54 @@
             }
 
         </script>
-        <!-- Newsfeed Management -->
+        <!-- News Item Management -->
         <script>
             //contextual menu settings for grid
-            newsMenu = new dhtmlXMenuObject();
-            newsMenu.setIconsPath("resources/dhtmlx/dhtmlxMenu/samples/common/images/");
-            newsMenu.setSkin('dhx_terrace');
-            newsMenu.renderAsContextMenu();
-            newsMenu.attachEvent('onClick', newsGridOnButtonClick);
-            newsMenu.loadXML("resources/dhtmlx/dhtmlxMenu/structures/news.xml");
+            newsItemsMenu = new dhtmlXMenuObject();
+            newsItemsMenu.setIconsPath("resources/dhtmlx/dhtmlxMenu/samples/common/images/");
+            newsItemsMenu.setSkin('dhx_terrace');
+            newsItemsMenu.renderAsContextMenu();
+            newsItemsMenu.attachEvent('onClick', newsItemsGridOnButtonClick);
+            newsItemsMenu.loadXML("resources/dhtmlx/dhtmlxMenu/structures/news.xml");
 
             //grid settings
-            newsGrid = new dhtmlXGridObject('newsGrid');
-            newsGrid.enableAutoHeight(true);
-            newsGrid.enableAutoWidth(true);
-            newsGrid.setImagePath("resources/dhtmlx/dhtmlxGrid/codebase/imgs/");
-            newsGrid.setSkin('dhx_terrace');
-            newsGrid.enableContextMenu(newsMenu);
-            newsGrid.setHeader("News ID, Date, Title, Description, Modified by");
+            newsItemsGrid = new dhtmlXGridObject('newsItemsGrid');
+            newsItemsGrid.setImagePath("resources/dhtmlx/dhtmlxGrid/codebase/imgs/");
+            newsItemsGrid.setSkin('dhx_terrace');
+            newsItemsGrid.enableContextMenu(newsItemsMenu);
+            //white space between columns
+            newsItemsGrid.enableMultiline(true); 
+            newsItemsGrid.setHeader("ID, Title, Description, Modified, Editor");
+            //column width in percentage
+            newsItemsGrid.setInitWidthsP('10, 15, 40, 15, 20');
             //way in which text has to be aligned
-            newsGrid.setColAlign("left,left,left,left,left");
+            newsItemsGrid.setColAlign("right,left,left,left,left");
             //int=integer, str=string, date=datum
-            newsGrid.setColSorting("int,date,str,str,str");
+            newsItemsGrid.setColSorting("int,str,str,str,str");
             //ro=readonly
-            newsGrid.setColTypes("ro,ro,ro,ro,ro");
+            newsItemsGrid.setColTypes("ro,ro,ro,ro,ro");
             //disable cell editing
-            newsGrid.enableEditEvents(false, false, false);
+            newsItemsGrid.enableEditEvents(false, false, false);
             //disable checkbox editing
-            newsGrid.attachEvent("onEditCell", function(stage, rId, cInd, nValue, oValue) {
+            newsItemsGrid.attachEvent("onEditCell", function(stage, rId, cInd, nValue, oValue) {
                 return false;
             });
-            newsGrid.init();
+            newsItemsGrid.init();
 
-            //now lets build a javascript array with our news items for the grid
+            //now lets build a javascript array with our newsItems for the grid
             var newsItems = new Array();
 
-            <c:forEach var='item' items='${newsItems}'>
-            var row = ['${item.newsId}', '${item.date}', '${item.title}', '${item.description}', '${item.editedBy}'];
-            newsItems.push(row);
+            <c:forEach var='newsItem' items='${newsItems}'>
+                var row = ['${newsItem.newsId}', '${newsItem.title}', '${newsItem.description}', '${newsItem.updated}', '${newsItem.editedBy.firstname}' + ' ${newsItem.editedBy.lastname}'];
+                newsItems.push(row);
             </c:forEach>
 
             //set data in grid
-            newsGrid.parse(newsItems, "jsarray");
+            newsItemsGrid.parse(newsItems, "jsarray");
 
             //event handling for contextual menu
-            function newsGridOnButtonClick(menuitemId) {
-                var data = newsGrid.contextID.split("_");
+            function newsItemsGridOnButtonClick(menuitemId) {
+                var data = newsItemsGrid.contextID.split("_");
                 var rowIndex = data[0];
                 var columnIndex = data[1];
 
@@ -336,10 +338,10 @@
                         openNewsItemWindow(null);
                         break;
                     case "edit":
-                        openNewsItemWindow(newsGrid.cells(rowIndex, 0).getValue());
+                        openNewsItemWindow(newsItemsGrid.cells(rowIndex, 0).getValue());
                         break;
                     case "delete":
-                        deleteNewsItem(newsGrid.cells(rowIndex, 0).getValue());
+                        deleteNewsItem(newsItemsGrid.cells(rowIndex, 0).getValue());
                         break;
                 }
             }
@@ -349,27 +351,26 @@
             var popupLeft = (screen.width / 2) - (popupWidth / 2);
             var popupTop = (screen.height / 2) - (popupHeight / 2);
 
-            //window for creating/editing a user
-            function openNewsItemWindow(newsId) {
+            //window for creating/editing a newsItem
+            function openNewsItemWindow(newsItemId) {
                 var uri = "news/edit?newsId=";
-                //edit a news item
-                if (newsId !== null) {
-                    uri += newsId;
+                //edit a newsItem
+                if (newsItemId !== null) {
+                    uri += newsItemId;
                 }
 
-                //now open a new window for creating/editing a news item
+                //now open a new window for creating/editing a newsItem
                 window.open(uri, "_blank", "menubar=no" +
                         ",width=" + popupWidth + ",height=" + popupHeight +
                         ",top=" + popupTop + ",left=" + popupLeft);
             }
 
-            function deleteNewsItem(newsId) {
-                if (confirm('Are you sure you want to delete this news item?\n\
-        It will no longer be showed in the newsfeed'))
-                    window.location = 'news/delete?newsId=' + newsId;
+            function deleteNewsItem(newsItemId) {
+                if (confirm('Are you sure you want to delete this news item?'))
+                    window.location = 'news/delete?newsId=' + newsItemId;
             }
 
-        </script>    
+        </script>        
         <div id="tabbar" style="height:700px;"></div>
         <script>
             tabbar = new dhtmlXTabBar("tabbar", "top");
@@ -381,9 +382,7 @@
                 tabbar.setTabActive("t1");
                 tabbar.setContent('t1', 'usersGrid');
                 tabbar.setContent('t2', 'coursesGrid');
-                tabbar.setContent('t3', 'newsGrid');
-
-                tabbar.disableTab('t3');
+                tabbar.setContent('t3', 'newsItemsGrid');
             });
         </script>
     </body>
