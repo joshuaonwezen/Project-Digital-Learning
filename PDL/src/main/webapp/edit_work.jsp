@@ -17,7 +17,7 @@
         <!-- Company Style -->
         <link rel="Shortcut Icon" href="../resources/images/favicon.ico" type="image/x-icon">
         <link rel="Icon" href="../resources/images/favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" type="text/css" href="../resources/css/style-m.css">
+        <link rel="stylesheet" type="text/css" href="../resources/css/editmode.css">
 
         <title>${isUpdate == true ? 'Edit' : 'Create'} Work - Info Support</title>
         <style type="text/css">
