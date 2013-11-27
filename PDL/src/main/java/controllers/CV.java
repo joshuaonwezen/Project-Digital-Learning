@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import models.Course;
 import models.Education;
 import models.Project;
 import models.Skill;
@@ -47,7 +48,7 @@ public class CV extends HttpServlet {
             tempWork = queryWork.list();
             // Zet de lijst met work en het totaal aantal work op het request
             request.setAttribute("workList", tempWork);
-            request.setAttribute("aantalWork", tempWork.size());
+            request.setAttribute("sizeWork", tempWork.size());
 
             /* Project experience */
             List<Project> tempProject = new LinkedList();
@@ -56,16 +57,19 @@ public class CV extends HttpServlet {
             tempProject = queryProject.list();
             // Zet de lijst met project en het totaal aantal project op het request
             request.setAttribute("projectList", tempProject);
-            request.setAttribute("aantalProjects", tempProject.size());
+            request.setAttribute("sizeProject", tempProject.size());
 
             /* Skill  */
             List<Skill> tempSkill = new LinkedList();
             // Zet de session in een variable
-            Query querySkill = session.createQuery("from Skill where user_userId = " + id);
-            tempSkill = querySkill.list();
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            User managedUser = (User)session.load(User.class, id);
+            
+            tempSkill = managedUser.getSkills();
             // Zet de lijst met skill en het totaal aantal skill op het request
             request.setAttribute("skillList", tempSkill);
-            request.setAttribute("aantalSkills", tempSkill.size());
+            request.setAttribute("sizeSkill", tempSkill.size());
             
             /* Education  */
             List<Education> tempEducation = new LinkedList();
@@ -74,7 +78,7 @@ public class CV extends HttpServlet {
             tempEducation = queryEducation.list();
             // Zet de lijst met skill en het totaal aantal skill op het request
             request.setAttribute("educationList", tempEducation);
-            request.setAttribute("aantalEducation", tempEducation.size());
+            request.setAttribute("sizeEducation", tempEducation.size());
 
             /* stuur door naar */
             dispatchUrl = "/cv.jsp";

@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Profile - Info Support</title>
-    <link href="resources/css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="resources/css/profile.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <style type="text/css">
         .hidden {
@@ -89,7 +89,7 @@
                     </table>
                 </div>
             </div>
-
+                            
             <div class="container">
                 <div class="hidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
@@ -219,7 +219,7 @@
                         <div class="boxRight_right">
                             <div class="hidden">
                                 <c:if test="${loggedInUserId == userId}">
-                                    
+
                                     <a href="javascript:if(confirm('Delete?'))
                                        window.location='skill/delete?id=${tempSkill.skillId}';">
                                         <button>x</button>

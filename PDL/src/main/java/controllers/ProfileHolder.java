@@ -48,7 +48,7 @@ public class ProfileHolder extends HttpServlet {
             tempWork = queryWork.list();
             // Zet de lijst met work en het totaal aantal work op het request
             request.setAttribute("workList", tempWork);
-            request.setAttribute("aantalWork", tempWork.size());
+            request.setAttribute("sizeWork", tempWork.size());
 
             /* Project experience */
             List<Project> tempProject = new LinkedList();
@@ -57,7 +57,7 @@ public class ProfileHolder extends HttpServlet {
             tempProject = queryProject.list();
             // Zet de lijst met project en het totaal aantal project op het request
             request.setAttribute("projectList", tempProject);
-            request.setAttribute("aantalProjects", tempProject.size());
+            request.setAttribute("sizeProject", tempProject.size());
 
             /* Skill  */
             List<Skill> tempSkill = new LinkedList();
@@ -69,7 +69,7 @@ public class ProfileHolder extends HttpServlet {
             tempSkill = managedUser.getSkills();
             // Zet de lijst met skill en het totaal aantal skill op het request
             request.setAttribute("skillList", tempSkill);
-            request.setAttribute("aantalSkills", tempSkill.size());
+            request.setAttribute("sizeSkill", tempSkill.size());
             
             /* Education  */
             List<Education> tempEducation = new LinkedList();
@@ -78,7 +78,7 @@ public class ProfileHolder extends HttpServlet {
             tempEducation = queryEducation.list();
             // Zet de lijst met skill en het totaal aantal skill op het request
             request.setAttribute("educationList", tempEducation);
-            request.setAttribute("aantalEducation", tempEducation.size());
+            request.setAttribute("sizeEducation", tempEducation.size());
 
             /* stuur door naar */
             dispatchUrl = "/profile.jsp";
