@@ -68,6 +68,14 @@
         <servlet-name>ManageCourseController</servlet-name>
         <url-pattern>/courses/delete</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageCourseController</servlet-name>
+        <url-pattern>/enroll</url-pattern>
+    </servlet-mapping>
+        <servlet-mapping>
+        <servlet-name>ManageCourseController</servlet-name>
+        <url-pattern>/searchCourse</url-pattern>
+    </servlet-mapping>
     <!-- News Item Management -->
     <servlet>
         <servlet-name>ManageNewsItemController</servlet-name>

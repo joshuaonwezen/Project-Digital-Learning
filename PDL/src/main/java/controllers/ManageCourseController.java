@@ -23,7 +23,6 @@ import validators.CourseValidator;
  *
  * @author wesley
  * @todo de user die is ingelogd moet ook default geselecteerd staan in edit_course onder owner (wanneer je een nieuwe course aanmaakt)
- * @todo the table of Course_Skill -> Indexes > must all be set to: Index Type: Normal
  */
 public class ManageCourseController extends HttpServlet {
 
@@ -106,9 +105,52 @@ public class ManageCourseController extends HttpServlet {
         //course overview
         else if (action.equals("courses")) {
             //set all courses on request
-            setCoursesOnRequest(request);                        
+            setCoursesOnRequest(request);    
+            //and the courses that a user is enrolled to
+            int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
+            setUserEnrolledCoursesOnRequest(request, userId);
             redirect(request, response, "/courses.jsp");
         }
+        //search course on the course page
+        else if (action.equals("searchCourse")){
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            String searchQuery = request.getParameter("searchQuery");
+            String hql = "FROM Course WHERE name LIKE '%" + searchQuery + "%' OR description LIKE '%" + searchQuery + "%'";
+            List<Course> result = session.createQuery(hql).list();
+            
+            //set our results on the request and redirect back
+            request.setAttribute("courses", result);
+            request.setAttribute("coursesSize", result.size());
+            request.setAttribute("coursesSizeResults", result.size());
+            int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
+            setUserEnrolledCoursesOnRequest(request, userId);
+            
+            redirect(request, response, "/courses.jsp");
+            session.close();
+        }
+        else if (action.equals("enroll")){
+            //extract the courseId
+            int courseId = Integer.parseInt(request.getParameter("courseId"));
+            //enroll the user in the course
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            Course managedCourse = (Course) session.load(Course.class, courseId);
+            
+            List<User> enrolledUsers = managedCourse.getEnrolledUsers();
+            //add the logged in user to the course
+            int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
+            User managedUser = (User) session.load(User.class, userId);
+            //now add the user to the course and update the course
+            enrolledUsers.add(managedUser);
+            session.update(managedCourse);
+            tx.commit();
+            
+            //redirect the user back and let it now he was enrolled
+            request.setAttribute("enrolledIn", managedCourse.getName());
+            setCoursesOnRequest(request);
+            setUserEnrolledCoursesOnRequest(request, userId);
+            redirect(request, response, "/courses.jsp");
+            }
     }
 
     /**
@@ -273,6 +315,36 @@ public class ManageCourseController extends HttpServlet {
         request.setAttribute("skills", skills);
         request.setAttribute("skillsSize", skills.size());
     }
+    
+    /**
+     * @todo This is a very expensive operation as it needs to go along every course and user linked to that course
+     */
+    private void setUserEnrolledCoursesOnRequest(HttpServletRequest request, int userId){
+        //1: get all courses
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        Criteria criteria = session.createCriteria(Course.class);
+        List<Course> courses = criteria.list();
+        
+        List<Integer> enrolledCourses = new ArrayList<Integer>();
+        //2: get the courses that a user is enrolled to
+        for (Course course : courses){
+            for (User user : course.getEnrolledUsers()){
+                if (user.getUserId() == userId){
+                    //user is enrolled in this course
+                    enrolledCourses.add(course.getCourseId());
+                    break;
+                }
+            }
+        }
+        
+        session.close();
+        System.out.println("there are: " + enrolledCourses.size() + "enrolledcourses");
+        
+        //3: set the course id's of the courses that a user is enrolled to in the request
+        request.setAttribute("userEnrolledCourses", enrolledCourses);
+        request.setAttribute("userEnrolledCoursesSize", enrolledCourses.size());
+    } 
     
     private void setCoursesOnRequest(HttpServletRequest request){
         Session session = HibernateUtil.getSessionFactory().openSession();
