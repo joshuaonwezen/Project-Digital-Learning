@@ -39,12 +39,12 @@
             </div>
             <div id="header_nav">
                 <ul>
-                    <li><a href="homepage.jsp">Home</a></li>
-                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="/PDL/homepage">Home</a></li>
+                    <li><a href="PDL/courses">Courses</a></li>
                         <c:if test="${loggedInIsAdmin == true}">
-                        <li><a href="/Project Digital Learning/management">Management</a></li>
+                        <li><a href="/PDL/management">Management</a></li>
                         </c:if>
-                        <li><a href="/Project%20Digital%20Learning/profile?id=${loggedInUserId}">My Profile</a></li>
+                        <li><a href="/PDL/profile?id=${loggedInUserId}">My Profile</a></li>
                     <li>
                         <a href="#">Settings</a>
                         <ul>
