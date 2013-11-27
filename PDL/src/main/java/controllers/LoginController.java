@@ -37,23 +37,6 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //get the action
-        String uri = request.getRequestURI();
-        String action = uri.substring(uri.lastIndexOf("/") + 1);
-        if (request.getParameter("id") != null) {
-
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = session.beginTransaction();
-        String dispatchUrl = null;
-        int id = Integer.parseInt(request.getParameter("id"));
-        
-       
-        List<Activity> tempActivity = new LinkedList();
-        Query queryActivity = session.createQuery("from Activity where user_userId = " + id);
-        tempActivity = queryActivity.list();
-        request.setAttribute("activityList", tempActivity);
-        System.out.println("GET action: " + action);
-    }
     }
 
     /**
@@ -71,6 +54,7 @@ public class LoginController extends HttpServlet {
         //get the action
         String uri = request.getRequestURI();
         String action = uri.substring(uri.lastIndexOf("/") + 1);
+        
         
         System.out.println("POST action: " + action);
         
