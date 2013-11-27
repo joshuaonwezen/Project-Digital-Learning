@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -49,6 +50,8 @@ public class Course implements Serializable{
     private boolean isVisible;
     @ManyToOne
     private User owner;
+    @ManyToMany
+    private List<User> enrolledUsers;
     @ManyToMany(cascade = {CascadeType.ALL})
     private List<Skill> skills;
     
@@ -56,7 +59,7 @@ public class Course implements Serializable{
         
     }
             
-    public Course(int courseId, String name, String description, ImageIcon image, Level level, boolean isVisible, User owner, List<Skill> skills){
+    public Course(int courseId, String name, String description, ImageIcon image, Level level, boolean isVisible, User owner, List<User> enrolledUsers, List<Skill> skills){
         this.courseId = courseId;
         this.name = name;
         this.description = description;
@@ -64,6 +67,7 @@ public class Course implements Serializable{
         this.level = level;
         this.isVisible = isVisible;
         this.owner = owner;
+        this.enrolledUsers = enrolledUsers;
         this.skills = skills;
     }
 
@@ -145,4 +149,13 @@ public class Course implements Serializable{
     public void setIsVisible(boolean isVisible) {
         this.isVisible = isVisible;
     }
+
+    public List<User> getEnrolledUsers() {
+        return enrolledUsers;
+    }
+
+    public void setEnrolledUsers(List<User> enrolledUsers) {
+        this.enrolledUsers = enrolledUsers;
+    }
+    
 }

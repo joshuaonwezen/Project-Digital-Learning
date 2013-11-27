@@ -6,70 +6,141 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link href="resources/css/style.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="resources/bootstrap/dist/css/bootstrapm.css">
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Bootstrap-->
+        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
+        <script src="resources/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="resources/bootstrap/dist/js/alert.js"></script>
+        <!-- Company Style -->
+<!--        <link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon">
+        <link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" type="text/css" href="resources/css/style.css">
         <title>Courses</title>
     </head>
-    <div id="header">
-        <div id="header_logo">
-            <img src="resources/images/Logo.png">
-        </div>
-        <div id="header_nav">
-            <ul>
-                <li><a href="homepage.jsp">Home</a></li>
-                <li><a href="#courses">Courses</a></li>
-                    <c:if test="${loggedInIsAdmin == true}">
-                    <li><a href="/Project Digital Learning/management">Management</a></li>
-                    </c:if>
-                <li><a href="/Project%20Digital%20Learning/profile?id=${loggedInUserId}">My Profile</a></li>
-                <li>
-                    <a href="#">Settings</a>
-                    <ul>
-                        <li><a href="#">Help</a></li>
-                        <li><a href="#">Report a Problem</a></li>
-                        <li><a href="index.jsp">Log Out</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
     <body>
-        <h1 style="margin-left:10px">Courses</h1>
+        <!--Header-->
+                <div id="header">
+            <div id="header_logo">
+                <img src="resources/images/Logo.png">
+            </div>
+            <div id="header_nav">
+                <ul>
+                    <li><a href="homepage.jsp">Home</a></li>
+                    <li><a href="/PDL/courses">Courses</a></li>
+                        <c:if test="${loggedInIsAdmin == true}">
+                        <li><a href="/PDL/management">Management</a></li>
+                        </c:if>
+                        <li><a href="/PDL/profile?id=${loggedInUserId}">My Profile</a></li>
+                    <li>
+                        <a href="#">Settings</a>
+                        <ul>
+                            <li><a href="#">Help</a></li>
+                            <li><a href="#">Report a Problem</a></li>
+                            <li><a href="index.jsp">Log Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--eof header-->
+        <form class="navbar-form navbar-left" role="search" id="searchCourse" action="searchCourse">
+            <div class="form-group">
+                <input type="text" name="searchQuery" id="searchQuery" class="form-control" placeholder="Search Course">
+            </div>
+            <button type="submit" class="btn btn-default">Search</button>
+        </form>
+        </br></br></br></br>
+
+
+        <div id="validationAlert" style="margin-left:20px;margin-right:20px"></div>
+        <c:if test="${enrolledIn != null}">
+            <div class="alert alert-success" style="margin-left:20px;margin-right:20px">
+                <a class="close" data-dismiss="alert">×</a>
+                <strong>Done!</strong> You are successfully enrolled in the Course "${enrolledIn}"
+            </div>
+        </c:if>
+        
+        <script>
+            var coursesSize = '${coursesSize}';
+        </script>
         <c:choose>
             <c:when test="${coursesSize == 0}">
-                No course available
             </c:when>
             <c:otherwise>
-
-
                 <c:forEach var="course" items="${courses}">
-                <div class="box-course effect1">
                     <form action="enroll" id="enroll">
-                        <input type="hidden" value="${course.courseId}"/>
-                    <div class="box-name">${course.name}</div>  <div class="box-level">${course.level}</div>
-                    <div class="box-owner">Teacher: ${course.owner.firstname} ${course.owner.lastname}</div>
-                    <div class="box-owner">Skills: </div>
-                    <br>
-                    <img class="box-image" src="http://findready.com/adminCP/graphics/NotAvailable.JPG"/>
-                    <br>Description: <br> ${course.description}
-                    <div class="box-level"></div>
-                    <br>
-                   <ul style="text-align: right; margin-right:20px;">
-                       <li><button type="submit" class="btn btn-primary" action="enroll" style="text-align: right;">Enroll</button></li>
-                   </ul>
-                    
-                  <!--<div class="box-button"><button type="button" class="btn btn-default" >Enroll</button></div>-->
+                        <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"
+                               <c:if test="${course.isVisible}">
+                                   <div class="row">
+                                       <div class=".col-md-6 .col-md-offset-3" style="margin-left:200px;margin-right:200px">
+                                       <div class="thumbnail" >
+                                           <div class="caption">
+                                               <div style="float:right">
+                                                   <small>
+                                                       hier moeten de skills nog worden opgesomd
+                                                   </small>
+                                               </div>
+                                               <h3>${course.name} ${course.level}</h3>
+                                               <h4><small>By ${course.owner.firstname} ${course.owner.lastname}</small></h4>
+                                               <p>${course.description}</p>
+                                               <button id="buttonCourseEnroll${course.courseId}" type="submit" class="btn btn-primary">Enroll me</buton>
+                                                   <button id="buttonCourseOpen${course.courseId}" type="button" class="btn btn-success">Go</buton>
+                                                       <c:choose>
+                                                           <c:when test="${userEnrolledCoursesSize != 0}">
+                                                               <script>var found = false;</script>
+                                                               <c:forEach var="temp" items="${userEnrolledCourses}">
+                                                                   <c:if test="${temp == course.courseId}">
+                                                                       <script>
+                                                                           found = true;
+                                                                       </script>
+                                                                   </c:if>
 
-                </div>
-            </form>
-            </c:forEach>
+                                                               </c:forEach>
+                                                               <script>
+                                                                   if (found) {
+                                                                       document.getElementById('buttonCourseEnroll${course.courseId}').style.display = 'none';
+                                                                   }
+                                                                   else {
+                                                                       document.getElementById('buttonCourseOpen${course.courseId}').style.display = 'none';
+                                                                   }
+                                                               </script>
+                                                           </c:when>
+                                                       </c:choose>
+                                                       </div>
+                                                       </div>
+                                                       </div>
+                                                       </div>
+                                                       </br>
 
-            </c:otherwise>
-        </c:choose> 
+                                                   </c:if>
 
-    </body>
-</html>
+                                                   </form>
+                                                   <script>
+                                                       console.log('the cours ei siil');
+                        if (${!course.isVisible}) {
+                            coursesSize = coursesSize - 1;
+                        }
+                                                   </script>
+                                               </c:forEach>
+
+                                           </c:otherwise>
+                                       </c:choose> 
+                                       <script>
+                                           //give feedback to the user about the results
+                                           console.log('coursesSize: ' + coursesSize);
+                                           if (coursesSize == 0) {
+                                               console.log('showing melding');
+                                               document.getElementById('validationAlert').innerHTML = '<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>Oh snap!</strong> Your search did not match any Course.</div>';
+                                           }
+                                           else if ('${coursesSizeResults}' > 0) {
+                                               document.getElementById('validationAlert').innerHTML = '<div class="alert alert-info"><a class="close" data-dismiss="alert">×</a><strong>Results:</strong> <u>' + coursesSize + '</u> Course(s) match your search.</div>';
+                                           }
+                                       </script>
+
+                                       </body>
+                                       </html>
