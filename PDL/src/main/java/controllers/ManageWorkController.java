@@ -1,7 +1,10 @@
 package controllers;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -64,10 +67,8 @@ public class ManageWorkController extends HttpServlet {
                 Work work = (Work) session.load(Work.class, workId);
 
                 // Place in request
-                request.setAttribute("fromMonth", work.getFromMonth());
-                request.setAttribute("tillMonth", work.getTillMonth());
-                request.setAttribute("fromYear", work.getFromYear());
-                request.setAttribute("tillYear", work.getTillYear());
+                request.setAttribute("dateFrom", work.getDateFromFormatted());
+                request.setAttribute("dateTill", work.getDateTillFormatted());
                 request.setAttribute("name", work.getName());
                 request.setAttribute("profession", work.getProfession());
                 request.setAttribute("description", work.getDescription());
@@ -115,10 +116,7 @@ public class ManageWorkController extends HttpServlet {
 
             //step 1: do a form validation
             WorkForm workForm = new WorkForm();
-            workForm.setFromMonth(request.getParameter("fromMonth"));
-            workForm.setTillMonth(request.getParameter("tillMonth"));
-            workForm.setFromYear(request.getParameter("fromYear"));
-            workForm.setTillYear(request.getParameter("tillYear"));
+
             workForm.setName(request.getParameter("name"));
             workForm.setProfession(request.getParameter("profession"));
             workForm.setDescription(request.getParameter("description"));
@@ -160,10 +158,8 @@ public class ManageWorkController extends HttpServlet {
                     //don't forget to set that we are still updating
                     request.setAttribute("isUpdate", true);
                 }
-                request.setAttribute("fromMonth", request.getParameter("fromMonth"));
-                request.setAttribute("tillMonth", request.getParameter("tillMonth"));
-                request.setAttribute("fromYear", request.getParameter("fromYear"));
-                request.setAttribute("tillYear", request.getParameter("tillYear"));
+                request.setAttribute("dateFrom", request.getParameter("dateFrom"));
+                request.setAttribute("dateTill", request.getParameter("dateTill"));
                 request.setAttribute("name", request.getParameter("name"));
                 request.setAttribute("profession", request.getParameter("profession"));
                 request.setAttribute("description", request.getParameter("description"));
@@ -186,10 +182,23 @@ public class ManageWorkController extends HttpServlet {
                 } else {
                     work = new Work();
                 }
-                work.setFromMonth(Integer.parseInt(request.getParameter("fromMonth")));
-                work.setTillMonth(Integer.parseInt(request.getParameter("tillMonth")));
-                work.setFromYear(Integer.parseInt(request.getParameter("fromYear")));
-                work.setTillYear(Integer.parseInt(request.getParameter("tillYear")));
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date dateFrom = new Date();
+                try {
+                    dateFrom = sdf.parse(request.getParameter("dateFrom"));
+                } 
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                work.setDateFrom(dateFrom);
+                Date dateTill = new Date();
+                try {
+                    dateTill = sdf.parse(request.getParameter("dateTill"));
+                } 
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                work.setDateTill(dateTill);
                 work.setName(request.getParameter("name"));
                 work.setProfession(request.getParameter("profession"));
                 work.setDescription(request.getParameter("description"));
@@ -211,10 +220,8 @@ public class ManageWorkController extends HttpServlet {
                 }
 
                 request.setAttribute("workId", work.getWorkId());
-                request.setAttribute("fromMonth", work.getFromMonth());
-                request.setAttribute("tillMonth", work.getTillMonth());
-                request.setAttribute("fromYear", work.getFromYear());
-                request.setAttribute("tillYear", work.getTillYear());
+                request.setAttribute("dateFrom", work.getDateFromFormatted());
+                request.setAttribute("dateTill", work.getDateTillFormatted());
                 request.setAttribute("name", work.getName());
                 request.setAttribute("profession", work.getProfession());
                 request.setAttribute("description", work.getDescription());

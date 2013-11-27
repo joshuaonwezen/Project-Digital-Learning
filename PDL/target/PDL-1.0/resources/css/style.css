@@ -267,7 +267,7 @@ End author: Shahin Mokhtar
         margin-right: 10px;
 }
 .box-name{
-        font: normal 125% 'century gothic', arial, sans-serif;
+        font: bold 125% 'century gothic', arial, sans-serif;
         margin-left: 20px;
         
 }
@@ -280,18 +280,20 @@ End author: Shahin Mokhtar
 .box-image{
     width:100px;
     height:100px;
-}
-.box-image img{
-    height:auto;
-    width:auto;
     float:left;
+    margin-left: 10px;
+    margin-right:10px;
+}
+.box-button{
+    text-align: right;
+    margin-right:10px;
 }
 
 .box-course {
         
         background-repeat:no-repeat;
 	width:60%;
-        height:250px;
+        height:210px;
 	background:#FFF;
 	margin:50px auto;
         }

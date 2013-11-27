@@ -176,7 +176,7 @@
         <div style="float:right;margin-right:20px;margin-top:-10px">
 
             <button type="button" class="btn btn-default" onclick="closeWindow()">Cancel</button>
-            <button type="button" class="btn btn-primary" onclick="saveForm()">Save</button>
+            <button type="button" class="btn btn-primary" onclick="saveForm()">Save and New</button>
         </div>
         <!-- Modal Dialog for Canceling -->
         <div class="modal fade" id="myModal">

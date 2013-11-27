@@ -6,19 +6,17 @@ package models;
  */
 public class EducationForm {
 
-    private String educationId, fromMonth, fromYear, tillMonth, tillYear, name, profession, description;
+    private String educationId, dateFrom, dateTill, name, profession, description;
 
     public EducationForm() {
 
     }
 
-    public EducationForm(String educationId, String fromMonth, String fromYear, String tillMonth, String tillYear,
+    public EducationForm(String educationId, String dateFrom, String dateTill,
             String profession, String description) {
         this.educationId = educationId;
-        this.fromMonth = fromMonth;
-        this.fromYear = fromYear;
-        this.tillMonth = tillMonth;
-        this.tillYear = tillYear;
+        this.dateFrom = dateFrom;
+        this.dateTill = dateTill;
         this.name = name;
         this.profession = profession;
         this.description = description;
@@ -39,59 +37,31 @@ public class EducationForm {
     }
 
     /**
-     * @return the fromMonth
+     * @return the dateFrom
      */
-    public String getFromMonth() {
-        return fromMonth;
+    public String getDateFrom() {
+        return dateFrom;
     }
 
     /**
-     * @param fromMonth the fromMonth to set
+     * @param dateFrom the dateFrom to set
      */
-    public void setFromMonth(String fromMonth) {
-        this.fromMonth = fromMonth;
+    public void setDateFrom(String dateFrom) {
+        this.dateFrom = dateFrom;
     }
 
     /**
-     * @return the fromYear
+     * @return the dateTill
      */
-    public String getFromYear() {
-        return fromYear;
+    public String getDateTill() {
+        return dateTill;
     }
 
     /**
-     * @param fromYear the fromYear to set
+     * @param dateTill the dateTill to set
      */
-    public void setFromYear(String fromYear) {
-        this.fromYear = fromYear;
-    }
-
-    /**
-     * @return the tillMonth
-     */
-    public String getTillMonth() {
-        return tillMonth;
-    }
-
-    /**
-     * @param tillMonth the tillMonth to set
-     */
-    public void setTillMonth(String tillMonth) {
-        this.tillMonth = tillMonth;
-    }
-
-    /**
-     * @return the tillYear
-     */
-    public String getTillYear() {
-        return tillYear;
-    }
-
-    /**
-     * @param tillYear the tillYear to set
-     */
-    public void setTillYear(String tillYear) {
-        this.tillYear = tillYear;
+    public void setDateTill(String dateTill) {
+        this.dateTill = dateTill;
     }
 
     /**
@@ -136,4 +106,5 @@ public class EducationForm {
         this.description = description;
     }
 
+    
 }

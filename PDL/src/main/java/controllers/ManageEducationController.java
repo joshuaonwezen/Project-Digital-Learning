@@ -1,6 +1,9 @@
 package controllers;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -65,10 +68,8 @@ public class ManageEducationController extends HttpServlet {
                 Education education = (Education) session.load(Education.class, educationId);
 
                 // Place in request
-                request.setAttribute("fromMonth", education.getFromMonth());
-                request.setAttribute("tillMonth", education.getTillMonth());
-                request.setAttribute("fromYear", education.getFromYear());
-                request.setAttribute("tillYear", education.getTillYear());
+                request.setAttribute("dateFrom", education.getDateFromFormatted());
+                request.setAttribute("dateTill", education.getDateTillFormatted());
                 request.setAttribute("name", education.getName());
                 request.setAttribute("profession", education.getProfession());
                 request.setAttribute("description", education.getDescription());
@@ -116,10 +117,7 @@ public class ManageEducationController extends HttpServlet {
 
             //step 1: do a form validation
             EducationForm educationForm = new EducationForm();
-            educationForm.setFromMonth(request.getParameter("fromMonth"));
-            educationForm.setTillMonth(request.getParameter("tillMonth"));
-            educationForm.setFromYear(request.getParameter("fromYear"));
-            educationForm.setTillYear(request.getParameter("tillYear"));
+            
             educationForm.setName(request.getParameter("name"));
             educationForm.setProfession(request.getParameter("profession"));
             educationForm.setDescription(request.getParameter("description"));
@@ -161,10 +159,8 @@ public class ManageEducationController extends HttpServlet {
                     //don't forget to set that we are still updating
                     request.setAttribute("isUpdate", true);
                 }
-                request.setAttribute("fromMonth", request.getParameter("fromMonth"));
-                request.setAttribute("tillMonth", request.getParameter("tillMonth"));
-                request.setAttribute("fromYear", request.getParameter("fromYear"));
-                request.setAttribute("tillYear", request.getParameter("tillYear"));
+                request.setAttribute("dateFrom", request.getParameter("dateFrom"));
+                request.setAttribute("dateTill", request.getParameter("dateTill"));
                 request.setAttribute("name", request.getParameter("name"));
                 request.setAttribute("profession", request.getParameter("profession"));
                 request.setAttribute("description", request.getParameter("description"));
@@ -187,10 +183,23 @@ public class ManageEducationController extends HttpServlet {
                 } else {
                     education = new Education();
                 }
-                education.setFromMonth(Integer.parseInt(request.getParameter("fromMonth")));
-                education.setTillMonth(Integer.parseInt(request.getParameter("tillMonth")));
-                education.setFromYear(Integer.parseInt(request.getParameter("fromYear")));
-                education.setTillYear(Integer.parseInt(request.getParameter("tillYear")));
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date dateFrom = new Date();
+                try {
+                    dateFrom = sdf.parse(request.getParameter("dateFrom"));
+                } 
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                education.setDateFrom(dateFrom);
+                Date dateTill = new Date();
+                try {
+                    dateTill = sdf.parse(request.getParameter("dateTill"));
+                } 
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                education.setDateTill(dateTill);
                 education.setName(request.getParameter("name"));
                 education.setProfession(request.getParameter("profession"));
                 education.setDescription(request.getParameter("description"));
@@ -212,10 +221,8 @@ public class ManageEducationController extends HttpServlet {
                 }
 
                 request.setAttribute("educationId", education.getEducationId());
-                request.setAttribute("fromMonth", education.getFromMonth());
-                request.setAttribute("tillMonth", education.getTillMonth());
-                request.setAttribute("fromYear", education.getFromYear());
-                request.setAttribute("tillYear", education.getTillYear());
+                request.setAttribute("dateFrom", education.getDateFromFormatted());
+                request.setAttribute("dateTill", education.getDateTillFormatted());
                 request.setAttribute("name", education.getName());
                 request.setAttribute("profession", education.getProfession());
                 request.setAttribute("description", education.getDescription());

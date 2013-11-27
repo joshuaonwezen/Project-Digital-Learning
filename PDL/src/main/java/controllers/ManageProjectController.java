@@ -1,6 +1,9 @@
 package controllers;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,7 +25,6 @@ import validators.ProjectValidator;
  */
 public class ManageProjectController extends HttpServlet {
 
-    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -65,10 +67,8 @@ public class ManageProjectController extends HttpServlet {
                 Project project = (Project) session.load(Project.class, projectId);
 
                 // Place in request
-                request.setAttribute("fromMonth", project.getFromMonth());
-                request.setAttribute("tillMonth", project.getTillMonth());
-                request.setAttribute("fromYear", project.getFromYear());
-                request.setAttribute("tillYear", project.getTillYear());
+                request.setAttribute("dateFrom", project.getDateFromFormatted());
+                request.setAttribute("dateTill", project.getDateTillFormatted());
                 request.setAttribute("name", project.getName());
                 request.setAttribute("profession", project.getProfession());
                 request.setAttribute("description", project.getDescription());
@@ -89,7 +89,7 @@ public class ManageProjectController extends HttpServlet {
             session.delete(project);
 
             tx.commit();
-            
+
             int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
             response.sendRedirect("../profile?id=" + userId);
         }
@@ -116,10 +116,7 @@ public class ManageProjectController extends HttpServlet {
 
             //step 1: do a form validation
             ProjectForm projectForm = new ProjectForm();
-            projectForm.setFromMonth(request.getParameter("fromMonth"));
-            projectForm.setTillMonth(request.getParameter("tillMonth"));
-            projectForm.setFromYear(request.getParameter("fromYear"));
-            projectForm.setTillYear(request.getParameter("tillYear"));
+            
             projectForm.setName(request.getParameter("name"));
             projectForm.setProfession(request.getParameter("profession"));
             projectForm.setDescription(request.getParameter("description"));
@@ -161,10 +158,8 @@ public class ManageProjectController extends HttpServlet {
                     //don't forget to set that we are still updating
                     request.setAttribute("isUpdate", true);
                 }
-                request.setAttribute("fromMonth", request.getParameter("fromMonth"));
-                request.setAttribute("tillMonth", request.getParameter("tillMonth"));
-                request.setAttribute("fromYear", request.getParameter("fromYear"));
-                request.setAttribute("tillYear", request.getParameter("tillYear"));
+                request.setAttribute("dateFrom", request.getParameter("dateFrom"));
+                request.setAttribute("dateTill", request.getParameter("dateTill"));
                 request.setAttribute("name", request.getParameter("name"));
                 request.setAttribute("profession", request.getParameter("profession"));
                 request.setAttribute("description", request.getParameter("description"));
@@ -189,10 +184,23 @@ public class ManageProjectController extends HttpServlet {
                 } else {
                     project = new Project();
                 }
-                project.setFromMonth(Integer.parseInt(request.getParameter("fromMonth")));
-                project.setTillMonth(Integer.parseInt(request.getParameter("tillMonth")));
-                project.setFromYear(Integer.parseInt(request.getParameter("fromYear")));
-                project.setTillYear(Integer.parseInt(request.getParameter("tillYear")));
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date dateFrom = new Date();
+                try {
+                    dateFrom = sdf.parse(request.getParameter("dateFrom"));
+                } 
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                project.setDateFrom(dateFrom);
+                Date dateTill = new Date();
+                try {
+                    dateTill = sdf.parse(request.getParameter("dateTill"));
+                } 
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                project.setDateTill(dateTill);
                 project.setName(request.getParameter("name"));
                 project.setProfession(request.getParameter("profession"));
                 project.setDescription(request.getParameter("description"));
@@ -214,10 +222,8 @@ public class ManageProjectController extends HttpServlet {
                 }
 
                 request.setAttribute("projectId", project.getProjectId());
-                request.setAttribute("fromMonth", project.getFromMonth());
-                request.setAttribute("tillMonth", project.getTillMonth());
-                request.setAttribute("fromYear", project.getFromYear());
-                request.setAttribute("tillYear", project.getTillYear());
+                request.setAttribute("dateFrom", project.getDateFromFormatted());
+                request.setAttribute("dateTill", project.getDateTillFormatted());
                 request.setAttribute("name", project.getName());
                 request.setAttribute("profession", project.getProfession());
                 request.setAttribute("description", project.getDescription());

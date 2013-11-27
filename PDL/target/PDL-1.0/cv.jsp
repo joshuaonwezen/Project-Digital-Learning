@@ -48,7 +48,7 @@
                                     <div class="job">
                                         <h2>${tempWork.name}</h2>
                                         <h3>${tempWork.profession}</h3>
-                                        <h4>${tempWork.fromMonth}-${tempWork.fromYear} - ${tempWork.tillMonth}-${tempWork.tillYear}</h4>
+                                        <h4>${tempWork.dateFrom} - ${tempWork.dateTill}</h4>
                                         <p>${tempWork.description}</p>
                                     </div>
                                 </c:forEach>
@@ -66,7 +66,7 @@
                                     <div class="job">
                                         <h2>${tempProject.name}</h2>
                                         <h3>${tempProject.profession}</h3>
-                                        <h4>${tempProject.fromMonth}-${tempProject.fromYear} - ${tempProject.tillMonth}-${tempProject.tillYear}</h4>
+                                        <h4>${tempProject.dateFrom} - ${tempProject.dateTill}</h4>
                                         <p>${tempProject.description}</p>
                                     </div>
                                 </c:forEach>
@@ -84,7 +84,7 @@
                                     <div class="job">
                                         <h2>${tempEducation.name}</h2>
                                         <h3>${tempEducation.profession}</h3>
-                                        <h4>${tempEducation.fromMonth}-${tempEducation.fromYear} - ${tempEducation.tillMonth}-${tempEducation.tillYear}</h4>
+                                        <h4>${tempEducation.dateFrom} - ${tempEducation.dateTill}</h4>
                                         <p>${tempEducation.description}</p>
                                     </div>
                                 </c:forEach>

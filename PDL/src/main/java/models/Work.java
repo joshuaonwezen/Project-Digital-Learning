@@ -1,11 +1,14 @@
 package models;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -18,14 +21,10 @@ public class Work implements Serializable {
     @GeneratedValue
 
     private long workId;
-    @Column(columnDefinition="int(2)")
-    private int fromMonth;
-    @Column(columnDefinition="int(2)")
-    private int tillMonth;
-    @Column(columnDefinition="int(4)")
-    private int fromYear;
-    @Column(columnDefinition="int(4)")
-    private int tillYear;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dateFrom;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dateTill;
     @Column(columnDefinition="varchar(20)")
     private String name;
     @Column(columnDefinition="varchar(30)")
@@ -39,12 +38,10 @@ public class Work implements Serializable {
     public Work() {
     }
 
-    public Work(long workId, int fromMonth, int tillMonth, int fromYear, int tillYear, String name, String profession, String description) {
+    public Work(long workId, Date dateFrom, Date dateTill, String name, String profession, String description) {
         this.setWorkId(workId);
-        this.setFromMonth(fromMonth);
-        this.setTillMonth(tillMonth);
-        this.setFromYear(fromYear);
-        this.setTillYear(tillYear);
+        this.setDateFrom(dateFrom);
+        this.setDateTill(dateTill);
         this.setName(name);
         this.setProfession(profession);
         this.setDescription(description);
@@ -64,31 +61,51 @@ public class Work implements Serializable {
     }
 
     /**
-     * @return the fromYear
+     * @return the dateFrom
      */
-    public int getFromYear() {
-        return fromYear;
+    public Date getDateFrom() {
+        return dateFrom;
+    }
+    
+    public String getDateFromFormatted() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = "";
+
+        formattedDate = sdf.format(dateFrom);
+
+        System.out.println("RETURING: " + formattedDate);
+        return formattedDate;
     }
 
     /**
-     * @param fromYear the fromYear to set
+     * @param dateFrom the dateFrom to set
      */
-    public void setFromYear(int fromYear) {
-        this.fromYear = fromYear;
+    public void setDateFrom(Date dateFrom) {
+        this.dateFrom = dateFrom;
     }
 
     /**
-     * @return the tillYear
+     * @return the dateTill
      */
-    public int getTillYear() {
-        return tillYear;
+    public Date getDateTill() {
+        return dateTill;
+    }
+    
+    public String getDateTillFormatted() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = "";
+
+        formattedDate = sdf.format(dateTill);
+
+        System.out.println("RETURING: " + formattedDate);
+        return formattedDate;
     }
 
     /**
-     * @param tillYear the tillYear to set
+     * @param dateTill the dateTill to set
      */
-    public void setTillYear(int tillYear) {
-        this.tillYear = tillYear;
+    public void setDateTill(Date dateTill) {
+        this.dateTill = dateTill;
     }
 
     /**
@@ -145,34 +162,6 @@ public class Work implements Serializable {
      */
     public void setUser(User user) {
         this.user = user;
-    }
-
-    /**
-     * @return the fromMonth
-     */
-    public int getFromMonth() {
-        return fromMonth;
-    }
-
-    /**
-     * @param fromMonth the fromMonth to set
-     */
-    public void setFromMonth(int fromMonth) {
-        this.fromMonth = fromMonth;
-    }
-
-    /**
-     * @return the tillMonth
-     */
-    public int getTillMonth() {
-        return tillMonth;
-    }
-
-    /**
-     * @param tillMonth the tillMonth to set
-     */
-    public void setTillMonth(int tillMonth) {
-        this.tillMonth = tillMonth;
     }
 
 }

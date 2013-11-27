@@ -101,7 +101,7 @@
                     <div class="box">
                         <div class="box_left">
                             <div class="top">
-                                <span class="marginTiny">${tempWork.fromYear} - ${tempWork.tillYear}</span>
+                                <span class="marginTiny">${tempWork.dateFrom} - ${tempWork.dateTill}</span>
                                 <span class="marginSmall">${tempWork.name}</span>
                                 <span class="marginSmall">${tempWork.profession}</span>
                             </div>
@@ -135,7 +135,7 @@
                     <div class="box">
                         <div class="box_left">
                             <div class="top">
-                                <span class="marginTiny">${tempEducation.fromYear} - ${tempEducation.tillYear}</span>
+                                <span class="marginTiny">${tempEducation.dateFrom} - ${tempEducation.dateTill}</span>
                                 <span class="marginSmall">${tempEducation.name}</span>
                                 <span class="marginSmall">${tempEducation.profession}</span>
                             </div>
@@ -169,7 +169,7 @@
                     <div class="box">
                         <div class="box_left">
                             <div class="top">
-                                <span class="marginTiny">${tempProject.fromYear} - ${tempProject.tillYear}</span>
+                                <span class="marginTiny">${tempProject.dateFrom} - ${tempProject.dateTill}</span>
                                 <span class="marginSmall">${tempProject.name}</span>
                                 <span class="marginSmall">${tempProject.profession}</span>
                             </div>
