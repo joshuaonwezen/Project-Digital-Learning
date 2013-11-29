@@ -11,11 +11,16 @@
     <meta charset="UTF-8">
     <title>Profile - Info Support</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<<<<<<< HEAD
         <!-- Bootstrap-->
         <!-- Company Style-->
         <link rel="stylesheet" type="text/css" href="resources/css/profile.css">
         <link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 <link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
+=======
+
+
+>>>>>>> 911449026b3e6d5f90068bc682b1a5fad2e682f3
     <style type="text/css">
         .hidden {
             display: none;
@@ -27,6 +32,7 @@
     </style>
 </head>
 <body>
+<<<<<<< HEAD
         <!--Start nav bar-->
         <nav class="navbar navbar-inverse" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -75,6 +81,36 @@
             </div><!-- /.navbar-collapse -->
         </nav>
         <!-- eof navbar-->
+=======
+    <div id="header">
+        <div id="header_logo">
+            <img src="resources/images/Logo.png">
+        </div>
+        <div id="header_nav">
+            <ul>
+                <li><a href="homepage.jsp">Home</a></li>
+                <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
+                    <c:if test="${loggedInIsAdmin == true}">
+                    <li><a href="/PDL/management">Management</a></li>
+                    </c:if>
+                <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
+                <li><a href="/PDL/search.jsp"><fmt:message key="navbar.search"/></a></li>
+                <li>
+                    <a href="#"><fmt:message key="navbar.settings"/></a>
+                    <ul>
+                        <c:if test="${loggedInUserId == userId}">
+                            <li><a id="toggle"><fmt:message key="profile.edit"/></a></li>
+                            </c:if>
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#"><fmt:message key="navbar.problem"/></a></li>
+                        <li><a href="index.jsp"><fmt:message key="navbar.logout"/></a></li>
+                        <li><a href="cv?id=${userId}" target="_blank"><fmt:message key="navbar.cv"/></a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+>>>>>>> 911449026b3e6d5f90068bc682b1a5fad2e682f3
     <div id="main">
         <div id="main_left">
             <div class="container">
@@ -116,7 +152,7 @@
                     </table>
                 </div>
             </div>
-                            
+
             <div class="container">
                 <div class="hidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
@@ -257,6 +293,8 @@
                     </div>
                 </c:forEach>
             </div>
+
+                
         </div>
     </div>
 </div>
