@@ -17,33 +17,34 @@
         <!-- Bootstrap-->
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
         <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
         <script src="resources/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="resources/bootstrap/dist/js/alert.js"></script>
         <!-- Company style -->
         <link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
         <link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
-        <link rel="stylesheet" type="text/css" href="resources/css/style.css">
 
         <title>Login - Info Support</title>
     </head>
     <body>
         <!-- MADE IN HOLLAND -->
-        <div id="header">
-            <div id="header_logo">
-                <img src="resources/images/Logo.png">
+        <!--Start nav bar-->
+        <nav class="navbar navbar-inverse" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="homepage.jsp"><img src="resources/images/Logo.png"></a>
             </div>
-            <div id="header_nav">
-                <ul>
-                    <li>
-                        <a href="#"><fmt:message key="navbar.settings"/></a>
-                        <ul>
-                            <li><a class="button" href="information.jsp">Information</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:12px">
+            </div><!-- /.navbar-collapse -->
+        </nav>
+        <!-- eof navbar-->
         <c:if test="${errors != null}">
             <script>
                 //concat the errors in a var
@@ -66,7 +67,7 @@
 
 
 
-            <div id="form_container" style="margin-left:auto; margin-right:auto;width:350px">
+            <div id="form_container" style="margin-left:auto; margin-right:auto;width:350px;margin-top:100px">
                 <div class="form-group" id="formGroupUsername" style="width:100%">
                     <label for="username">Username</label>
                     <div class="input-group">
@@ -87,7 +88,8 @@
             <div id="form_container" style="margin-left:auto; margin-right:auto;width:350px">
                 <button type="button" class="btn btn-primary" style="width:100%;" onclick="login()">Login</button>
             </div>
-
+            <div class="well" style="margin-top:150px"><center>You can only login with an InfoSupport account.<br/> No account yet?</br>Contact the InfoSupport Admin.</center></div>
+            
             <script>
                 //use the same validations that are used on the server side
                 function validateForm() {

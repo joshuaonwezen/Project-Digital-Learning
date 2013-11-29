@@ -19,7 +19,11 @@
         <!-- Company Style -->
         <link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon">
         <link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" type="text/css" href="resources/css/style.css">
+        <!-- Bootstrap-->
+        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
+        <script src="resources/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="resources/bootstrap/dist/js/alert.js"></script>
         <!-- DHTMLX General -->
         <script src="resources/dhtmlx/dhtmlxTabbar/codebase/dhtmlxcommon.js"></script>
         <!-- DHTMLX Tabbar -->
@@ -36,31 +40,41 @@
         <script src="resources/dhtmlx/dhtmlxMenu/codebase/ext/dhtmlxmenu_ext.js"></script>
     </head>
     <body>
-        <!-- Navigation -->
-        <div id="header">
-            <div id="header_logo">
-                <img src="resources/images/Logo.png">
+        <!--Start nav bar-->
+        <nav class="navbar navbar-inverse" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="homepage.jsp"><img src="resources/images/Logo.png"></a>
             </div>
-            <div id="header_nav">
-                <ul>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:12px">
+                <ul class="nav navbar-nav">
                     <li><a href="homepage.jsp">Home</a></li>
                     <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
-                        <c:if test="${loggedInIsAdmin == true}">
+                     <c:if test="${loggedInIsAdmin == true}">
                         <li><a href="/PDL/management">Management</a></li>
-                        </c:if>
-                        <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
-                    <li>
-                        <a href="#"><fmt:message key="navbar.settings"/></a>
-                        <ul>
+                    </c:if>
+                    <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.jsp">Logout</a></li>
+                            <li class="divider"></li>
                             <li><a href="#">Help</a></li>
-                            <li><a href="#"><fmt:message key="navbar.problem"/></a></li>
-                            <li><a href="index.jsp"><fmt:message key="navbar.logout"/></a></li>
+                            <li><a href="#">Report a Problem</a></li>
                         </ul>
                     </li>
                 </ul>
-            </div>
-        </div>
-        <!--Navigation End -->
+            </div><!-- /.navbar-collapse -->
+        </nav>
+        <!-- eof navbar-->
         <div id="usersGrid" style="height:650px;"></div>
         <div id="coursesGrid" style="height:650px;"></div>
         <div id="newsItemsGrid" style="height:650px;"></div>

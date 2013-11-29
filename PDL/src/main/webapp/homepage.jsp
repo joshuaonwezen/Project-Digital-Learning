@@ -10,41 +10,58 @@
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="index_nl_NL" />
-<link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
-<link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="resources/css/style.css">
+        <!--Company Style-->
         <link rel="stylesheet" type="text/css" href="resources/css/homepage.css">
-        <link rel="stylesheet" type="text/css" href="resources/bootstrap/dist/css/bootstrap-homepage.css">
+        <link rel="icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
+        <!-- Bootstrap-->
+        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
+        <script src="resources/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="resources/bootstrap/dist/js/alert.js"></script>
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home - Info Support</title>
     </head>
     <body>
-        <div id="header">
-            <div id="header_logo">
-                <img src="resources/images/Logo.png">
+        <!--Start nav bar-->
+        <nav class="navbar navbar-inverse" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="homepage.jsp"><img src="resources/images/Logo.png"></a>
             </div>
-            <div id="header_nav">
-                <ul>
-                    <li><a href="homepage.jsp">Home</a></li>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:12px">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="homepage.jsp">Home</a></li>
                     <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
-                        <c:if test="${loggedInIsAdmin == true}">
+                     <c:if test="${loggedInIsAdmin == true}">
                         <li><a href="/PDL/management">Management</a></li>
-                        </c:if>
-                        <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
-                    <li>
-                        <a href="#"><fmt:message key="navbar.settings"/></a>
-                        <ul>
+                    </c:if>
+                    <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.jsp">Logout</a></li>
+                            <li class="divider"></li>
                             <li><a href="#">Help</a></li>
-                            <li><a href="#"><fmt:message key="navbar.problem"/></a></li>
-                            <li><a href="index.jsp"><fmt:message key="navbar.logout"/></a></li>
+                            <li><a href="#">Report a Problem</a></li>
                         </ul>
                     </li>
                 </ul>
-            </div>
-        </div>
+            </div><!-- /.navbar-collapse -->
+        </nav>
+        <!-- eof navbar-->
         <!-- Profile Information -->
         <div class="ProfileInformation">
             <table class="profileinformationtable123">

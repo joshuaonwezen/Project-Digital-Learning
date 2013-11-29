@@ -7,13 +7,15 @@
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="index_nl_NL" />
-<link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
-<link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 <head>
     <meta charset="UTF-8">
     <title>Profile - Info Support</title>
-    <link rel="stylesheet" type="text/css" href="resources/css/profile.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <!-- Bootstrap-->
+        <!-- Company Style-->
+        <link rel="stylesheet" type="text/css" href="resources/css/profile.css">
+        <link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
+<link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
     <style type="text/css">
         .hidden {
             display: none;
@@ -25,33 +27,54 @@
     </style>
 </head>
 <body>
-    <div id="header">
-        <div id="header_logo">
-            <img src="resources/images/Logo.png">
-        </div>
-        <div id="header_nav">
-            <ul>
-                    <li><a href="homepage.jsp">Home</a></li>
+        <!--Start nav bar-->
+        <nav class="navbar navbar-inverse" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="homepage.jsp"><img src="resources/images/Logo.png"></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:12px">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="homepage.jsp">Home</a></li>
                     <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
-                        <c:if test="${loggedInIsAdmin == true}">
+                     <c:if test="${loggedInIsAdmin == true}">
                         <li><a href="/PDL/management">Management</a></li>
-                        </c:if>
-                        <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
-                    <li>
-                        <a href="#"><fmt:message key="navbar.settings"/></a>
-                        <ul>
-                        <c:if test="${loggedInUserId == userId}">
-                            <li><a id="toggle"><fmt:message key="profile.edit"/></a></li>
-                            </c:if>
+                    </c:if>
+                    <li class="dropdown">
+                        <a href="/PDL/profile?id=${loggedInUserId}" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.profile"/><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/PDL/profile?id=${loggedInUserId}">View</a></li>
+                            <li><a href="#">Toggle Edit Mode</a></li>
+                            <li><a href="cv?id=${userId}" target="_blank">Generate CV</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.jsp">Logout</a></li>
+                            <li class="divider"></li>
                             <li><a href="#">Help</a></li>
-                            <li><a href="#"><fmt:message key="navbar.problem"/></a></li>
-                            <li><a href="index.jsp"><fmt:message key="navbar.logout"/></a></li>
-                            <li><a href="cv?id=${userId}" target="_blank"><fmt:message key="navbar.cv"/></a></li>
+                            <li><a href="#">Report a Problem</a></li>
                         </ul>
                     </li>
                 </ul>
-        </div>
-    </div>
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search Courses">
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                </form>
+            </div><!-- /.navbar-collapse -->
+        </nav>
+        <!-- eof navbar-->
     <div id="main">
         <div id="main_left">
             <div class="container">

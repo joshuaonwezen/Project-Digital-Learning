@@ -17,48 +17,53 @@
         <!-- Bootstrap-->
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
         <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="resources/css/style.css">
-        <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
         <script src="resources/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="resources/bootstrap/dist/js/alert.js"></script>
-        <!-- Company Style -->
-<!--        <link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon">
-        <link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" type="text/css" href="resources/css/style.css">
-        <title>Courses</title>
+        <title>Courses - Info Support</title>
     </head>
     <body>
-        <!--Header-->
-                <div id="header">
-            <div id="header_logo">
-                <img src="resources/images/Logo.png">
+        <!--Start nav bar-->
+        <nav class="navbar navbar-inverse" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="homepage.jsp"><img src="resources/images/Logo.png"></a>
             </div>
-            <div id="header_nav">
-                <ul>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:12px">
+                <ul class="nav navbar-nav">
                     <li><a href="homepage.jsp">Home</a></li>
-                    <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
-                        <c:if test="${loggedInIsAdmin == true}">
+                    <li class="active"><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
+                    <c:if test="${loggedInIsAdmin == true}">
                         <li><a href="/PDL/management">Management</a></li>
-                        </c:if>
-                        <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
-                    <li>
-                        <a href="#"><fmt:message key="navbar.settings"/></a>
-                        <ul>
+                    </c:if>
+                    <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.jsp">Logout</a></li>
+                            <li class="divider"></li>
                             <li><a href="#">Help</a></li>
-                            <li><a href="#"><fmt:message key="navbar.problem"/></a></li>
-                            <li><a href="index.jsp"><fmt:message key="navbar.logout"/></a></li>
+                            <li><a href="#">Report a Problem</a></li>
                         </ul>
                     </li>
                 </ul>
-            </div>
-        </div>
-        <!--eof header-->
-        <form class="navbar-form navbar-left" role="search" id="searchCourse" action="searchCourse">
-            <div class="form-group">
-                <input type="text" name="searchQuery" id="searchQuery" class="form-control" placeholder="Search Course">
-            </div>
-            <button type="submit" class="btn btn-default">Search</button>
-        </form>
+                <form class="navbar-form navbar-right" role="search" id="searchCourse" action="searchCourse">
+                    <div class="form-group">
+                        <input type="text" name="searchQuery" id="searchQuery" class="form-control" placeholder="Search Course">
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                </form>
+            </div><!-- /.navbar-collapse -->
+        </nav>
+        <!-- eof navbar-->
+
         </br></br></br></br>
 
 
@@ -69,7 +74,7 @@
                 <strong><fmt:message key="popup.done"/></strong> <fmt:message key="course.enroll.succes"/> "${enrolledIn}"
             </div>
         </c:if>
-        
+
         <script>
             var coursesSize = '${coursesSize}';
         </script>
@@ -82,15 +87,15 @@
                         <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"
                                <c:if test="${course.isVisible}">
                                    <div class="row">
-                                       <div class=".col-md-6 .col-md-offset-3" style="margin-left:200px;margin-right:200px">
+                                   <div class=".col-md-6 .col-md-offset-3" style="margin-left:200px;margin-right:200px">
                                        <div class="thumbnail" >
                                            <div class="caption">
                                                <div style="float:right">
                                                    <small>
-                                                       hier moeten de skills nog worden opgesomd
+                                                       placeholder for skills
                                                    </small>
                                                </div>
-                                               <h3>${course.name} ${course.level}</h3>
+                                               <h3 style="margin-left:0px">${course.name} ${course.level}</h3>
                                                <h4><small><fmt:message key="course.teacher"/> ${course.owner.firstname} ${course.owner.lastname}</small></h4>
                                                <p>${course.description}</p>
                                                <button id="buttonCourseEnroll${course.courseId}" type="submit" class="btn btn-primary"><fmt:message key="course.enroll"/></buton>
@@ -127,9 +132,9 @@
                                                    </form>
                                                    <script>
                                                        console.log('the cours ei siil');
-                        if (${!course.isVisible}) {
-                            coursesSize = coursesSize - 1;
-                        }
+                                                       if (${!course.isVisible}) {
+                                                           coursesSize = coursesSize - 1;
+                                                       }
                                                    </script>
                                                </c:forEach>
 

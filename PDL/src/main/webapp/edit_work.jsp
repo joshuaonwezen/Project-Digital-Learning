@@ -11,8 +11,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- Bootstrap-->
+        <!-- Bootstrap-->
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="../resources/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="../resources/bootstrap/dist/css/bootstrap.min.css">
         <script src="../resources/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="../resources/bootstrap/dist/js/alert.js"></script>
