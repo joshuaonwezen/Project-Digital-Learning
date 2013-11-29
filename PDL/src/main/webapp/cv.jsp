@@ -3,6 +3,10 @@
 -->
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="index" />
 <link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 <link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 <head>
@@ -41,7 +45,7 @@
                             <div class="yui-gf">
 
                                 <div class="yui-u first">
-                                    <h2>Work</h2>
+                                    <h2><fmt:message key="work.work"/></h2>
                                 </div>
 
                                 <div class="yui-u">
@@ -61,7 +65,7 @@
                             <div class="yui-gf">
 
                                 <div class="yui-u first">
-                                    <h2>Projects</h2>
+                                    <h2><fmt:message key="project.project"/><</h2>
                                 </div>
 
                                 <div class="yui-u">
@@ -81,7 +85,7 @@
                             <div class="yui-gf">
 
                                 <div class="yui-u first">
-                                    <h2>Education</h2>
+                                    <h2><fmt:message key="education.education"/><</h2>
                                 </div>
 
                                 <div class="yui-u">
@@ -100,7 +104,7 @@
                         <c:if test="${skillList.size() > 0}">
                             <div class="yui-gf">
                                 <div class="yui-u first">
-                                    <h2>Skills</h2>
+                                    <h2><fmt:message key="skill.skill"/><</h2>
                                 </div>
                                 <div class="yui-u">
                                     <c:forEach var="tempSkill" items="${skillList}">

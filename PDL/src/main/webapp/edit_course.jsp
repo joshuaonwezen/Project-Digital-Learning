@@ -31,7 +31,7 @@
     <body onload="validateForm()">
         <div class="header">
             <h1>
-                ${isUpdate == true ? 'Edit' : 'Create'} Course
+                ${isUpdate == true ? 'Edit' : 'Create'} <fmt:message key="course.course"/><
             </h1>
         </div>
         <c:choose>
@@ -49,13 +49,13 @@
                 <c:if test="${courseCreated == true}">
                     <div class="alert alert-success" style="margin-left:20px;margin-right:20px">
                         <a class="close" data-dismiss="alert">×</a>
-                        <strong>Done!</strong> New Course created.
+                        <strong><fmt:message key="popup.done"/></strong> <fmt:message key="course.edit.popup.new"/>
                     </div>
                 </c:if>
                 <c:if test="${courseUpdated == true}">
                     <div class="alert alert-success" style="margin-left:20px;margin-right:20px">
                         <a class="close" data-dismiss="alert">×</a>
-                        <strong>Done!</strong> Course is successfully updated.
+                        <strong><fmt:message key="popup.done"/><</strong> <fmt:message key="course.edit.popup.update"/><
                     </div>
                 </c:if>
                 <c:if test="${errors != null}">
@@ -83,11 +83,11 @@
                         <input type="hidden" id="courseId" name="courseId">
 
                         <div class="form-group" id="formGroupName" style="width:100%">
-                            <label for="name">Name</label>
+                            <label for="name"><fmt:message key="course.name"/></label>
                             <input type="text" class="form-control" id="name" name="name" onchange="validateForm()" placeholder="Enter name">
                         </div>
                         <div class="form-group" id="formGroupLevel" style="width:100%">
-                            <label for="levelValues">Level</label>
+                            <label for="levelValues"><fmt:message key="course.level"/></label>
                             <select class="form-control" id="levelValues" name="levelValues" onchange="validateForm()">
                                 <option value="Beginner" ${'Beginner' == level ? 'selected' : ''}>Beginner</option>
                                 <option value="Intermediate" ${'Intermediate' == level ? 'selected' : ''}>Intermediate</option>
@@ -95,7 +95,7 @@
                             </select>
                         </div>
                         <div class="form-group" id="formGroupOwner" style="width:100%">
-                            <label for="ownerValues">Owner</label>
+                            <label for="ownerValues"><fmt:message key="course.owner"/></label>
                             <select class="form-control" id="ownerValues" name="ownerValues" onchange="validateForm()">
                                 <c:forEach var='user' items='${users}'>
                                     <option value="${user.userId}" ${user.userId == owner.userId ? 'selected' : ''}>${user.firstname} ${user.lastname}</option>
@@ -103,7 +103,7 @@
                             </select>
                         </div>
                         <div class="form-group has-success" id="formGroupSkills" style="width:100%">
-                            <label for="skills">Skills</label>
+                            <label for="skills"><fmt:message key="course.skills"/></label>
                             <input type="hidden" id="tagSkills" name="tagSkills" onchange="validateForm()" placeholder="&nbsp;Enter skills seperated by a comma" style="width:100%">
                             <script>
                                 //set all available skills from the database in the multiselect
@@ -119,11 +119,11 @@
                     <div class="rightContainer">
 
                         <div class="form-group" id="formGroupDescription" style="width:100%">
-                            <label for="description">Description</label>
+                            <label for="description"><fmt:message key="course.description"/></label>
                             <textarea class="form-control" rows="4" id="description" name="description" onchange="validateForm()" placeholder="Enter description" style="resize: none"></textarea>
                         </div>
                         <div class="form-group" id="formGroupIsVisible" style="width:100%">
-                            <label for="isVisible">Visibility</label><br/>
+                            <label for="isVisible"><fmt:message key="course.visable"/></label><br/>
                             <input type="checkbox" id="isVisible" name="isVisible"> Visible
                         </div>
                     </div>
@@ -240,8 +240,8 @@ $('#tagSkills').select2('val', [arrayCourseSkills]);
         <hr style="width:100%;margin-top:370px"/>
         <div style="float:right;margin-right:20px;margin-top:-10px">
 
-            <button type="button" class="btn btn-default" onclick="closeWindow()">Cancel</button>
-            <button type="button" class="btn btn-primary" onclick="saveForm()">Save</button>
+            <button type="button" class="btn btn-default" onclick="closeWindow()"><fmt:message key="edit.popup.cancel"/></button>
+            <button type="button" class="btn btn-primary" onclick="saveForm()"><fmt:message key="edit.popup.save"/></button>
         </div>
         <!-- Modal Dialog for Canceling -->
         <div class="modal fade" id="myModal">
@@ -252,7 +252,7 @@ $('#tagSkills').select2('val', [arrayCourseSkills]);
                         <h4 class="modal-title">Unsaved data</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure you want to cancel? Any unsaved changes will be lost.</p>
+                        <p><fmt:message key="edit.popup.confirmation.message"/></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Continue editing</button>

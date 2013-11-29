@@ -6,6 +6,10 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="index" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -31,17 +35,17 @@
             <div id="header_nav">
                 <ul>
                     <li><a href="homepage.jsp">Home</a></li>
-                    <li><a href="/PDL/courses">Courses</a></li>
+                    <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
                         <c:if test="${loggedInIsAdmin == true}">
                         <li><a href="/PDL/management">Management</a></li>
                         </c:if>
-                        <li><a href="/PDL/profile?id=${loggedInUserId}">My Profile</a></li>
+                        <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
                     <li>
-                        <a href="#">Settings</a>
+                        <a href="#"><fmt:message key="navbar.settings"/></a>
                         <ul>
                             <li><a href="#">Help</a></li>
-                            <li><a href="#">Report a Problem</a></li>
-                            <li><a href="index.jsp">Log Out</a></li>
+                            <li><a href="#"><fmt:message key="navbar.problem"/></a></li>
+                            <li><a href="index.jsp"><fmt:message key="navbar.logout"/></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -86,10 +90,10 @@
                                                    </small>
                                                </div>
                                                <h3>${course.name} ${course.level}</h3>
-                                               <h4><small>By ${course.owner.firstname} ${course.owner.lastname}</small></h4>
+                                               <h4><small><fmt:message key="course.teacher"/> ${course.owner.firstname} ${course.owner.lastname}</small></h4>
                                                <p>${course.description}</p>
-                                               <button id="buttonCourseEnroll${course.courseId}" type="submit" class="btn btn-primary">Enroll me</buton>
-                                                   <button id="buttonCourseOpen${course.courseId}" type="button" class="btn btn-success">Go</buton>
+                                               <button id="buttonCourseEnroll${course.courseId}" type="submit" class="btn btn-primary"><fmt:message key="course.enroll"/></buton>
+                                                   <button id="buttonCourseOpen${course.courseId}" type="button" class="btn btn-success"><fmt:message key="course.go"/></buton>
                                                        <c:choose>
                                                            <c:when test="${userEnrolledCoursesSize != 0}">
                                                                <script>var found = false;</script>
