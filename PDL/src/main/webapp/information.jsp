@@ -2,6 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 <link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="index_nl_NL" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,7 +25,7 @@
             <div id="header_nav">
                 <ul>
                     <li>
-                        <a href="#">Settings</a>
+                        <a href="#"><fmt:message key="navbar.settings"/></a>
                         <ul>
                             <li><a class="button" href="information.jsp">Information</a></li>
                             <li><a href="index.jsp">Log In</a></li>

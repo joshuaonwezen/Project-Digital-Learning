@@ -9,7 +9,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${language}" />
-<fmt:setBundle basename="index" />
+<fmt:setBundle basename="index_nl_NL" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,6 +17,7 @@
         <!-- Bootstrap-->
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
         <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/css/style.css">
         <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
         <script src="resources/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="resources/bootstrap/dist/js/alert.js"></script>
@@ -65,7 +66,7 @@
         <c:if test="${enrolledIn != null}">
             <div class="alert alert-success" style="margin-left:20px;margin-right:20px">
                 <a class="close" data-dismiss="alert">×</a>
-                <strong>Done!</strong> You are successfully enrolled in the Course "${enrolledIn}"
+                <strong><fmt:message key="popup.done"/></strong> <fmt:message key="course.enroll.succes"/> "${enrolledIn}"
             </div>
         </c:if>
         

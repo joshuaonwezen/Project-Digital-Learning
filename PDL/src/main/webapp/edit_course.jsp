@@ -9,6 +9,10 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="index_nl_NL" />
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -240,8 +244,8 @@ $('#tagSkills').select2('val', [arrayCourseSkills]);
         <hr style="width:100%;margin-top:370px"/>
         <div style="float:right;margin-right:20px;margin-top:-10px">
 
-            <button type="button" class="btn btn-default" onclick="closeWindow()"><fmt:message key="edit.popup.cancel"/></button>
-            <button type="button" class="btn btn-primary" onclick="saveForm()"><fmt:message key="edit.popup.save"/></button>
+            <button type="button" class="btn btn-default" onclick="closeWindow()">Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="saveForm()">Save</button>
         </div>
         <!-- Modal Dialog for Canceling -->
         <div class="modal fade" id="myModal">
@@ -252,7 +256,7 @@ $('#tagSkills').select2('val', [arrayCourseSkills]);
                         <h4 class="modal-title">Unsaved data</h4>
                     </div>
                     <div class="modal-body">
-                        <p><fmt:message key="edit.popup.confirmation.message"/></p>
+                        <p>Are you sure you want to cancel? Any unsaved changes will be lost.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Continue editing</button>

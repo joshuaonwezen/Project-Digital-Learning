@@ -6,6 +6,10 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="index_nl_NL" />
 <link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 <link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 <!DOCTYPE html>
@@ -24,18 +28,18 @@
             </div>
             <div id="header_nav">
                 <ul>
-                    <li><a href="/PDL/homepage">Home</a></li>
-                    <li><a href="/PDL/courses">Courses</a></li>
+                    <li><a href="homepage.jsp">Home</a></li>
+                    <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
                         <c:if test="${loggedInIsAdmin == true}">
                         <li><a href="/PDL/management">Management</a></li>
                         </c:if>
-                        <li><a href="/PDL/profile?id=${loggedInUserId}">My Profile</a></li>
+                        <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
                     <li>
-                        <a href="#">Settings</a>
+                        <a href="#"><fmt:message key="navbar.settings"/></a>
                         <ul>
                             <li><a href="#">Help</a></li>
-                            <li><a href="#">Report a Problem</a></li>
-                            <li><a href="index.jsp">Log Out</a></li>
+                            <li><a href="#"><fmt:message key="navbar.problem"/></a></li>
+                            <li><a href="index.jsp"><fmt:message key="navbar.logout"/></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -56,12 +60,12 @@
         <div class="ActivityFeed">
         <table class="table table-hover table-bordered" end="5">
             <tr>
-                <td colspan="4" class="TableHeader">Activity Feed</th>
+                <td colspan="4" class="TableHeader"><fmt:message key="activity.feed"/></th>
             </tr>
             <tr>
-                <td class="Date">Date</td>
-                <td>Title</td>
-                <td colspan="2">Message</td>
+                <td class="Date"><fmt:message key="activity.date"/></td>
+                <td><fmt:message key="activity.title"/></td>
+                <td colspan="2"><fmt:message key="activity.message"/></td>
             </tr>
             <c:forEach var="tempActivity" items="${activityList}">           
             <tr>
@@ -79,12 +83,12 @@
         <div class="NewsFeed">
         <table class="table table-hover table-bordered" end="5">
             <tr>
-                <td colspan="4" class="TableHeader">News Feed</th>
+                <td colspan="4" class="TableHeader"><fmt:message key="news.feed"/></th>
             </tr>
             <tr>
-                <td class="Date">Date</td>
-                <td>Title</td>
-                <td colspan="2">Message</td>
+                <td class="Date"><fmt:message key="news.date"/></td>
+                <td><fmt:message key="news.title"/></td>
+                <td colspan="2"><fmt:message key="activity.message"/></td>
             </tr>
             <c:forEach var="tempActivity" items="${activityList}">           
             <tr>

@@ -6,6 +6,10 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="index_nl_NL" />
 <html>
     <head>
         <title>Management</title>
@@ -39,18 +43,18 @@
             </div>
             <div id="header_nav">
                 <ul>
-                    <li><a href="/PDL/homepage">Home</a></li>
-                    <li><a href="PDL/courses">Courses</a></li>
+                    <li><a href="homepage.jsp">Home</a></li>
+                    <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
                         <c:if test="${loggedInIsAdmin == true}">
                         <li><a href="/PDL/management">Management</a></li>
                         </c:if>
-                        <li><a href="/PDL/profile?id=${loggedInUserId}">My Profile</a></li>
+                        <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
                     <li>
-                        <a href="#">Settings</a>
+                        <a href="#"><fmt:message key="navbar.settings"/></a>
                         <ul>
                             <li><a href="#">Help</a></li>
-                            <li><a href="#">Report a Problem</a></li>
-                            <li><a href="index.jsp">Log Out</a></li>
+                            <li><a href="#"><fmt:message key="navbar.problem"/></a></li>
+                            <li><a href="index.jsp"><fmt:message key="navbar.logout"/></a></li>
                         </ul>
                     </li>
                 </ul>

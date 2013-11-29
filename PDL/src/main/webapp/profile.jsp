@@ -3,6 +3,10 @@
 -->
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="index_nl_NL" />
 <link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 <link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 <head>
@@ -27,25 +31,24 @@
         </div>
         <div id="header_nav">
             <ul>
-                <li><a href="PDL/homepage">Home</a></li>
-                <li><a href="PDL/courses">Courses</a></li>
-                    <c:if test="${loggedInIsAdmin == true}">
-                    <li><a href="PDL/management">Management</a></li>
-                    </c:if>
-                <li><a href="PDL/profile?id=${loggedInUserId}">My Profile</a></li>
-                <li>
-                    <a href="#">Settings</a>
-                    <ul>
+                    <li><a href="homepage.jsp">Home</a></li>
+                    <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
+                        <c:if test="${loggedInIsAdmin == true}">
+                        <li><a href="/PDL/management">Management</a></li>
+                        </c:if>
+                        <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
+                    <li>
+                        <a href="#"><fmt:message key="navbar.settings"/></a>
+                        <ul>
                         <c:if test="${loggedInUserId == userId}">
-                            <li><a id="toggle">Toggle Edit Mode</a></li>
+                            <li><a id="toggle"><fmt:message key="profile.edit"/></a></li>
                             </c:if>
-                        <li><a href="#">Help</a></li>
-                        <li><a href="#">Report a Problem</a></li>
-                        <li><a href="index.jsp">Log Out</a></li>
-                        <li><a href="cv?id=${userId}" target="_blank">Generate CV</a></li>
-                    </ul>
-                </li>
-            </ul>
+                            <li><a href="#">Help</a></li>
+                            <li><a href="#"><fmt:message key="navbar.problem"/></a></li>
+                            <li><a href="index.jsp"><fmt:message key="navbar.logout"/></a></li>
+                        </ul>
+                    </li>
+                </ul>
         </div>
     </div>
     <div id="main">
@@ -53,7 +56,7 @@
             <div class="container">
                 <div class="hidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
-                        <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('users/edit?id=${userId}', 800, 500)">Edit</button>
+                        <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('users/edit?id=${userId}', 800, 500)"><fmt:message key="profile.edit"/></button>
                     </c:if>
                 </div>
                 <h2 style="margin-left: 20px;">
@@ -67,22 +70,22 @@
                         <tbody>
                             <tr>
                                 <td class="tableTitle"></td>
-                                <td class="rowName">name</td>
+                                <td class="rowName"><fmt:message key="profile.name"/></td>
                                 <td class="rowInfo">${firstname} ${lastname}</td>
                             </tr>
                             <tr>
                                 <td class="tableTitle"></td>
-                                <td class="rowName">e-mail</td>
+                                <td class="rowName"><fmt:message key="profile.email"/></td>
                                 <td class="rowInfo">${emailAddress}</td>
                             </tr>
                             <tr>
                                 <td class="tableTitle"></td>
-                                <td class="rowName">age</td>
+                                <td class="rowName"><fmt:message key="profile.age"/></td>
                                 <td class="rowInfo">${age}</td>
                             </tr>
                             <tr>
                                 <td class="tableTitle"></td>
-                                <td class="rowName">position</td>
+                                <td class="rowName"><fmt:message key="profile.position"/></td>
                                 <td class="rowInfo">${position}</td>
                             </tr>
                         </tbody>
@@ -96,7 +99,7 @@
                         <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('work/edit?userId=', 800, 500)">+</button>
                     </c:if>
                 </div>
-                <h3>Work experience</h3>
+                <h3><fmt:message key="profile.workexperience"/></h3>
                 <c:forEach var="tempWork" items="${workList}">
                     <div class="box">
                         <div class="box_left">
@@ -130,7 +133,7 @@
                         <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('education/edit?userId=', 800, 500)">+</button>
                     </c:if>
                 </div>
-                <h3>Education</h3>
+                <h3><fmt:message key="profile.education"/></h3>
                 <c:forEach var="tempEducation" items="${educationList}">
                     <div class="box">
                         <div class="box_left">
@@ -164,7 +167,7 @@
                         <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('project/edit?userId=', 800, 500)">+</button>
                     </c:if>
                 </div>
-                <h3>Projects</h3>
+                <h3><fmt:message key="profile.projects"/></h3>
                 <c:forEach var="tempProject" items="${projectList}">
                     <div class="box">
                         <div class="box_left">
@@ -195,10 +198,10 @@
 
         <div id="main_right">
             <div class="container">
-                <h3>Completed Courses</h3>
+                <h3><fmt:message key="profile.completed.courses"/></h3>
             </div>
             <div class="container">
-                <h3>Enrolled Courses</h3>
+                <h3><fmt:message key="profile.enrolled.courses"/></h3>
             </div>
 
             <div class="container">
@@ -207,7 +210,7 @@
                         <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('skill/edit?userId=', 800, 500)">+</button>
                     </c:if>
                 </div>
-                <h3>Skills</h3>
+                <h3><fmt:message key="profile.skills"/></h3>
                 <c:forEach var="tempSkill" items="${skillList}">
                     <div class="boxRight">
                         <div class="boxRight_left">

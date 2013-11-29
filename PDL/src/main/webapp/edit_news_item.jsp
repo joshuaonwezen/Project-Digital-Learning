@@ -6,6 +6,10 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="index_nl_NL" />
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -27,7 +31,7 @@
     <body onload="validateForm()">
         <div class="header">
             <h1>
-                ${isUpdate == true ? 'Edit' : 'Create'} News Item
+                ${isUpdate == true ? 'Edit' : 'Create'} <fmt:message key="news.news"/>
             </h1>
         </div>
         <c:choose>
@@ -45,13 +49,13 @@
                 <c:if test="${newsItemCreated == true}">
                     <div class="alert alert-success" style="margin-left:20px;margin-right:20px">
                         <a class="close" data-dismiss="alert">×</a>
-                        <strong>Done!</strong> New News Item created.
+                        <strong><fmt:message key="popup.done"/></strong> <fmt:message key="news.new"/>
                     </div>
                 </c:if>
                 <c:if test="${newsItemUpdated == true}">
                     <div class="alert alert-success" style="margin-left:20px;margin-right:20px">
                         <a class="close" data-dismiss="alert">×</a>
-                        <strong>Done!</strong> News Item is successfully updated.
+                        <strong>Done!</strong> <fmt:message key="news.update"/>
                     </div>
                 </c:if>
                 <c:if test="${errors != null}">
@@ -78,15 +82,15 @@
 
                         <input type="hidden" id="newsId" name="newsId">
                         <div class="form-group" id="formGroupTitle" style="width:100%">
-                            <label for="title">Title</label>
+                            <label for="title"><fmt:message key="news.title"/></label>
                             <input type="text" class="form-control" id="title" name="title" onchange="validateForm()" placeholder="Enter title">
                         </div>
                         <div class="form-group" id="formGroupDate" style="width:50%">
-                            <label for="date">Date</label>
+                            <label for="date"><fmt:message key="news.date"/></label>
                             <input type="date" class="form-control" id="date" name="date" onchange="validateForm()">
                         </div>
                         <div class="form-group" id="formGroupEditedBy" style="width:50%">
-                            <label for="editedByValues">Editor</label>
+                            <label for="editedByValues"><fmt:message key="news.editor"/></label>
                             <select class="form-control" id="editedByValues" name="editedByValues" onchange="validateForm()">
                                 <c:forEach var='user' items='${users}'>
                                     <option value="${user.userId}" ${user.userId == editedBy.userId ? 'selected' : ''}>${user.firstname} ${user.lastname}</option>
@@ -97,7 +101,7 @@
 
                     <div class="rightContainer">
                         <div class="form-group" id="formGroupDescription" style="width:100%">
-                            <label for="description">Description</label>
+                            <label for="description"><fmt:message key="news.description"/></label>
                             <textarea class="form-control" rows="4" id="description" name="description" onchange="validateForm()" placeholder="Enter description"></textarea>
                         </div>
 

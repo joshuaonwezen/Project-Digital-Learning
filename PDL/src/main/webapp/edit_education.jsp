@@ -3,6 +3,10 @@
 -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="index_nl_NL" />
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -34,7 +38,7 @@
     <body onload="validateForm()">
         <div class="header">
             <h1>
-                ${isUpdate == true ? 'Edit' : 'Create'} Education
+                ${isUpdate == true ? 'Edit' : 'Create'} <fmt:message key="education.education"/>
             </h1>
         </div>
         <c:choose>
@@ -52,13 +56,13 @@
                 <c:if test="${educationCreated == true}">
                     <div class="alert alert-success" style="margin-left:20px;margin-right:20px">
                         <a class="close" data-dismiss="alert">×</a>
-                        <strong>Done!</strong> New education added.
+                        <strong><fmt:message key="popup.done"/></strong> <fmt:message key="education.edit.popup.create"/>
                     </div>
                 </c:if>
                 <c:if test="${educationUpdated == true}">
                     <div class="alert alert-success" style="margin-left:20px;margin-right:20px">
                         <a class="close" data-dismiss="alert">×</a>
-                        <strong>Done!</strong> Education is successfully updated.
+                        <strong><fmt:message key="popup.done"/></strong> <fmt:message key="education.edit.popup.update"/>
                     </div>
                 </c:if>
                 <c:if test="${errors != null}">
@@ -86,22 +90,22 @@
                         <input type="hidden" name="educationId" id="educationId" value="${educationId}">
 
                         <div class="form-group" id="formGroupDateFrom" style="width:50%">
-                            <label for="dateFrom">From</label>
+                            <label for="dateFrom"><fmt:message key="education.from"/></label>
                             <input type="date" class="form-control" id="dateFrom" name="dateFrom" onchange="validateForm()" value="${dateFrom}">
                         </div>
                         
                         <div class="form-group" id="formGroupDateTill" style="width:50%">
-                            <label for="dateTill">Till</label>
+                            <label for="dateTill"><fmt:message key="education.till"/></label>
                             <input type="date" class="form-control" id="dateTill" name="dateTill" onchange="validateForm()" value="${dateTill}">
                         </div>
 
                         <div class="form-group" id="formGroupName" style="width:100%">
-                            <label for="name">Name</label>
+                            <label for="name"><fmt:message key="education.name"/></label>
                             <input type="text" class="form-control" id="name" name="name" onchange="validateForm()" value="${name}">
                         </div>
                         
                         <div class="form-group" id="formGroupProfession" style="width:100%">
-                            <label for="profession">Profession</label>
+                            <label for="profession"><fmt:message key="education.profession"/></label>
                             <input type="text" class="form-control" id="profession" name="profession" onchange="validateForm()" value="${profession}">
                         </div>
                         
@@ -114,7 +118,7 @@
                     <div class="rightContainer">
 
                         <div class="form-group" id="formGroupDescription" style="width:100%">
-                            <label for="description">Description</label>
+                            <label for="description"><fmt:message key="education.description"/></label>
                             <textarea class="form-control" id="description" name="description" onchange="validateForm()">${description}</textarea>
                         </div>
 
@@ -214,8 +218,8 @@
         <hr style="width:100%;margin-top:370px"/>
         <div style="float:right;margin-right:20px;margin-top:-10px">
 
-            <button type="button" class="btn btn-default" onclick="closeWindow()">Cancel</button>
-            <button type="button" class="btn btn-primary" onclick="saveForm()">Save</button>
+            <button type="button" class="btn btn-default" onclick="closeWindow()"><fmt:message key="edit.popup.cancel"/></button>
+            <button type="button" class="btn btn-primary" onclick="saveForm()"><fmt:message key="edit.popup.save"/></button>
         </div>
         <!-- Modal Dialog for Canceling -->
         <div class="modal fade" id="myModal">
@@ -226,7 +230,7 @@
                         <h4 class="modal-title">Unsaved data</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure you want to cancel? Any unsaved changes will be lost.</p>
+                        <p><fmt:message key="edit.popup.confirmation.message"/></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Continue editing</button>

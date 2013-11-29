@@ -6,6 +6,10 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="index_nl_NL" />
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -25,7 +29,7 @@
     <body onload="validateForm()">
         <div class="header">
             <h1>
-                ${isUpdate == true ? 'Edit' : 'Create'} User
+                ${isUpdate == true ? 'Edit' : 'Create'} <fmt:message key="user.user"/>
             </h1>
         </div>
         <c:choose>
@@ -43,13 +47,13 @@
                 <c:if test="${userCreated == true}">
                     <div class="alert alert-success" style="margin-left:20px;margin-right:20px">
                         <a class="close" data-dismiss="alert">×</a>
-                        <strong>Done!</strong> New User created.
+                        <strong><fmt:message key="popup.done"/></strong> <fmt:message key="user.edit.popup.new"/>
                     </div>
                 </c:if>
                 <c:if test="${userUpdated == true}">
                     <div class="alert alert-success" style="margin-left:20px;margin-right:20px">
                         <a class="close" data-dismiss="alert">×</a>
-                        <strong>Done!</strong> User is successfully updated.
+                        <strong><fmt:message key="popup.done"/></strong> <fmt:message key="user.edit.popup.update"/>
                     </div>
                 </c:if>
                 <c:if test="${errors != null}">
@@ -76,19 +80,19 @@
 
                         <input type="hidden" id="userId" name="userId">
                         <div class="form-group" id="formGroupUsername" style="width:100%">
-                            <label for="username">Username</label>
+                            <label for="username"><fmt:message key="user.username"/></label>
                             <input type="text" class="form-control" id="username" name="username" onchange="validateForm()" placeholder="Enter username">
                         </div>
                         <div class="form-group" id="formGroupFirstname" style="width:100%">
-                            <label for="firstname">First Name</label>
+                            <label for="firstname"><fmt:message key="user.firstname"/></label>
                             <input type="text" class="form-control" id="firstname" name="firstname" onchange="validateForm()" placeholder="Enter first name">
                         </div>
                         <div class="form-group" id="formGroupLastname" style="width:100%">
-                            <label for="lastname">Last Name</label>
+                            <label for="lastname"><fmt:message key="user.lastname"/></label>
                             <input type="text" class="form-control" id="lastname" name="lastname" onchange="validateForm()" placeholder="Enter last name">
                         </div>
                         <div class="form-group" id="formGroupEmailAddress" style="width:100%">
-                            <label for="emailAddress">Email Address</label>
+                            <label for="emailAddress"><fmt:message key="user.email"/></label>
                             <input type="text" class="form-control" id="emailAddress" name="emailAddress" onchange="validateForm()" placeholder="Enter email address">
                         </div>
                     </div>
@@ -96,15 +100,15 @@
                     <div class="rightContainer">
 
                         <div class="form-group" id="formGroupPassword" style="width:100%">
-                            <label for="password">Password</label>
+                            <label for="password"><fmt:message key="user.password"/></label>
                             <input type="password" class="form-control" id="password" name="password" onchange="validateForm()" placeholder="Enter a password">
                         </div>
                         <div class="form-group" id="formGroupPosition" style="width:100%">
-                            <label for="position">Position</label>
+                            <label for="position"><fmt:message key="user.position"/></label>
                             <input type="text" class="form-control" id="position" name="position" onchange="validateForm()" placeholder="Enter position">
                         </div>
                         <div class="form-group" id="formGroupUserRights" style="width:100%">
-                            <label for="userRights">User Rights</label><br/>
+                            <label for="userRights"><fmt:message key="user.userrights"/></label><br/>
                             <input type="checkbox" id="isAdmin" name="isAdmin"> Administrator
                         </div>
                     </div>
