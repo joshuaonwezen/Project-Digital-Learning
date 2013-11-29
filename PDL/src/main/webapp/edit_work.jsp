@@ -219,8 +219,8 @@
         <hr style="width:100%;margin-top:370px"/>
         <div style="float:right;margin-right:20px;margin-top:-10px">
 
-            <button type="button" class="btn btn-default" onclick="closeWindow()">Save</button>
-            <button type="button" class="btn btn-primary" onclick="saveForm()">Cancel</button>
+            <button type="button" class="btn btn-default" onclick="closeWindow()"><fmt:message key="edit.popup.cancel"/></button>
+            <button type="button" class="btn btn-primary" onclick="saveForm()"><fmt:message key="edit.popup.save"/></button>
         </div>
         <!-- Modal Dialog for Canceling -->
         <div class="modal fade" id="myModal">

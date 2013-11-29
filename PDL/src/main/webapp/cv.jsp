@@ -65,7 +65,7 @@
                             <div class="yui-gf">
 
                                 <div class="yui-u first">
-                                    <h2><fmt:message key="project.project"/><</h2>
+                                    <h2><fmt:message key="project.project"/></h2>
                                 </div>
 
                                 <div class="yui-u">
@@ -85,7 +85,7 @@
                             <div class="yui-gf">
 
                                 <div class="yui-u first">
-                                    <h2><fmt:message key="education.education"/><</h2>
+                                    <h2><fmt:message key="education.education"/></h2>
                                 </div>
 
                                 <div class="yui-u">
@@ -104,7 +104,7 @@
                         <c:if test="${skillList.size() > 0}">
                             <div class="yui-gf">
                                 <div class="yui-u first">
-                                    <h2><fmt:message key="skill.skill"/><</h2>
+                                    <h2><fmt:message key="skill.skill"/></h2>
                                 </div>
                                 <div class="yui-u">
                                     <c:forEach var="tempSkill" items="${skillList}">
