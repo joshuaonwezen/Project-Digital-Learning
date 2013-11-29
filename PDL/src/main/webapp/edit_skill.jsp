@@ -141,6 +141,7 @@
                 var regexDesc = '^[a-zA-Z0-9_ ]{1,300}$';
 
                 errors = "";
+                
                 //name
                 var name = document.getElementById('name').value;
                 if (!name || !name.match(regexRegular)) {

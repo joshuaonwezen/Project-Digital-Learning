@@ -160,6 +160,30 @@
                 var regexDesc = '^[a-zA-Z0-9_ ]{1,300}$';
 
                 errors = "";
+                //dateFrom
+                var dateFrom = document.getElementById('dateFrom').value;
+                var dateMomentFrom = moment(dateFrom);
+                
+                if (!dateFrom || !dateMomentFrom.isValid()) {
+                    setValidated('formGroupDateFrom', false);
+                    errors += 'Date from may not be empty. ';
+                }
+                else {
+                    setValidated('formGroupDateFrom', true);
+                }
+                
+                //dateTill
+                var dateTill = document.getElementById('dateTill').value;
+                var dateMomentTill = moment(dateTill);
+                
+                if (!dateTill || !dateMomentTill.isValid()) {
+                    setValidated('formGroupDateTill', false);
+                    errors += 'Date till may not be empty. ';
+                }
+                else {
+                    setValidated('formGroupDateTill', true);
+                }
+                
                 //name
                 var name = document.getElementById('name').value;
                 if (!name || !name.match(regexRegular)) {
