@@ -24,12 +24,17 @@ public class ProfileHolder extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        
+
         if (request.getParameter("id") != null) {
             /* create session */
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
             String dispatchUrl = null;
+
+            //get the action
+            String uri = request.getRequestURI();
+            String action = uri.substring(uri.lastIndexOf("/") + 1);
+            request.setAttribute("action", action);
 
             int id = Integer.parseInt(request.getParameter("id"));
 
@@ -64,13 +69,13 @@ public class ProfileHolder extends HttpServlet {
             // Zet de session in een variable
             session = HibernateUtil.getSessionFactory().openSession();
             tx = session.beginTransaction();
-            User managedUser = (User)session.load(User.class, id);
-            
+            User managedUser = (User) session.load(User.class, id);
+
             tempSkill = managedUser.getSkills();
             // Zet de lijst met skill en het totaal aantal skill op het request
             request.setAttribute("skillList", tempSkill);
             request.setAttribute("sizeSkill", tempSkill.size());
-            
+
             /* Education  */
             List<Education> tempEducation = new LinkedList();
             // Zet de session in een variable
@@ -80,6 +85,8 @@ public class ProfileHolder extends HttpServlet {
             request.setAttribute("educationList", tempEducation);
             request.setAttribute("sizeEducation", tempEducation.size());
 
+            
+
             /* stuur door naar */
             dispatchUrl = "/profile.jsp";
 
@@ -88,9 +95,7 @@ public class ProfileHolder extends HttpServlet {
                         = request.getRequestDispatcher(dispatchUrl);
                 rd.forward(request, response);
             }
-        }
-        else
-        {
+        } else {
             response.setStatus(404);
         }
 

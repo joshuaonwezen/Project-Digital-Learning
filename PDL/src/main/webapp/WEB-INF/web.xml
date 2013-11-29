@@ -188,6 +188,19 @@
         <servlet-name>ManageEducation</servlet-name>
         <url-pattern>/education/delete</url-pattern>
     </servlet-mapping>
+    <!-- Search -->
+    <servlet>
+        <servlet-name>ManageSearch</servlet-name>
+        <servlet-class>controllers.ManageSearchController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManageSearch</servlet-name>
+        <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+        <servlet-mapping>
+        <servlet-name>ManageSearch</servlet-name>
+        <url-pattern>/searchUser</url-pattern>
+    </servlet-mapping>
     <!--debug-->
     <servlet>
         <servlet-name>Debug</servlet-name>
