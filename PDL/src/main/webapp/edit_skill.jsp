@@ -92,15 +92,15 @@
                             <input type="text" class="form-control" id="name" name="name" onchange="validateForm()" value="${name}">
                         </div>
                         
-                        <div class="form-group" id="" style="width:100%">
-                            <label for="from"><fmt:message key="skill.level"/></label>
+<!--                        <div class="form-group" id="" style="width:100%">
+                            <label for="from"></label>
                             <select id="level" name="level">
                                 <option value="${level}">${level}</option>
                                 <option value="beginner">beginner</option>
                                 <option value="intermediate">intermediate</option>
                                 <option value="advanced">advanced</option>
                             </select>
-                        </div>
+                        </div>-->
 
                     </div>
 
@@ -113,7 +113,7 @@
             //initialize the form with variables if available
             document.getElementById('skillId').value = '${skillId}';
             document.getElementById('name').value = '${name}';
-            document.getElementById('level').value = '${level}';
+//            document.getElementById('level').value = '${level}';
 
             //close window
             function closeWindow() {
