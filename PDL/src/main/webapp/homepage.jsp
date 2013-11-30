@@ -26,7 +26,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home - Info Support</title>
     </head>
-
   <body>
         <!--Start nav bar-->
         <nav class="navbar navbar-inverse" role="navigation">
@@ -76,7 +75,6 @@
         </div>    
 
         <!-- Activity Feed -->
-        <div class="scrollingTable">
         <div class="ActivityFeed">
         <table class="table table-hover table-bordered">
             <tr>
@@ -87,18 +85,19 @@
                 <td><fmt:message key="activity.title"/></td>
                 <td><fmt:message key="activity.message"/></td>
             </tr>
-            <c:forEach var="tempActivity" items="${activityList}">           
+            <c:forEach var="tempActivity" items="${activityList}">   
+            <tbody class="scrollingTable">
             <tr>
                 <td>${tempActivity.sent}</td>
                 <td>${tempActivity.title}</td>
                 <td class="Message">${tempActivity.message}</td>
             </tr>
+            </tbody>
           </c:forEach>
         </table>
         </div>
         </div>
         <!-- News Feed -->
-        <div class="scrollingTable">
         <div class="NewsFeed">
         <table class="table table-hover table-bordered">
             <tr>
@@ -109,12 +108,14 @@
                 <td><fmt:message key="news.title"/></td>
                 <td><fmt:message key="activity.message"/></td>
             </tr>
-            <c:forEach var="tempNewsItem" items="${newsitemList}">           
+            <c:forEach var="tempNewsItem" items="${newsitemList}"> 
+            <tbody class="scrollingTable">
             <tr>
                 <td>${tempNewsItem.updated}</td>
                 <td>${tempNewsItem.title}</td>
                 <td class="Message">${tempNewsItem.description}</td>
             </tr>
+            </tbody>
           </c:forEach>
         </table>
         </div>

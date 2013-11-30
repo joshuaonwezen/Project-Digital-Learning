@@ -10,10 +10,11 @@
 }
 .profileinformationtable123{
     width:120px;
+    height:220px;
     text-align:center;
 }
 .scrollingTable {
-       height: 50px;
+       height: 200px;
        overflow: auto;
 }
 .TableHeader{
@@ -32,10 +33,10 @@
     position:absolute;
     top:20%;
     left:3%;
-    background-color:rgb(45,47,49);
+    background-color:rgb(34,34,34);
 }
 .ProfilePictureHomepage{
-    background-color:rgb(68,121,186);
+    background-color:rgb(34,34,34);
     border-width: 1px;
     padding: 8px;
     border-style: solid;
