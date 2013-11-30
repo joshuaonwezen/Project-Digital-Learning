@@ -107,7 +107,7 @@ public class LoginController extends HttpServlet {
                                 Transaction tx = activitySession.beginTransaction();
 
                                 List<Activity> tempActivity = new LinkedList();
-                                Query queryActivity = activitySession.createQuery("from Activity where user_userId = " + id);
+                                Query queryActivity = activitySession.createQuery("from Activity where user_userId = " + id + "order by sent desc");
                                 tempActivity = queryActivity.list();
                                 request.setAttribute("activityList", tempActivity);
                                 activitySession.close();
@@ -115,7 +115,7 @@ public class LoginController extends HttpServlet {
                                 
                                  Session newsitemSession = HibernateUtil.getSessionFactory().openSession();
                                  List<NewsItem> tempNewsItem = new LinkedList();
-                                 Query queryNewsItem = newsitemSession.createQuery("from NewsItem");
+                                 Query queryNewsItem = newsitemSession.createQuery("from NewsItem order by updated desc");
                                  tempNewsItem = queryNewsItem.list();
                                  request.setAttribute("newsitemList", tempNewsItem);
                                  newsitemSession.close();

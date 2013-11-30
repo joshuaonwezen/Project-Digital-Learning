@@ -85,8 +85,7 @@
                 <td><fmt:message key="activity.title"/></td>
                 <td><fmt:message key="activity.message"/></td>
             </tr>
-            <c:forEach var="tempActivity" items="${activityList}">   
-            <tbody class="scrollingTable">
+            <c:forEach var="tempActivity" items="${activityList}" begin="0" end="4">   
             <tr>
                 <td>${tempActivity.sent}</td>
                 <td>${tempActivity.title}</td>
@@ -108,8 +107,7 @@
                 <td><fmt:message key="news.title"/></td>
                 <td><fmt:message key="activity.message"/></td>
             </tr>
-            <c:forEach var="tempNewsItem" items="${newsitemList}"> 
-            <tbody class="scrollingTable">
+            <c:forEach var="tempNewsItem" items="${newsitemList}" begin="0" end="4"> 
             <tr>
                 <td>${tempNewsItem.updated}</td>
                 <td>${tempNewsItem.title}</td>
