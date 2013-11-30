@@ -226,6 +226,10 @@
         <servlet-name>Debug</servlet-name>
         <url-pattern>/createActivity</url-pattern>        
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Debug</servlet-name>
+        <url-pattern>/createNewsItem</url-pattern>        
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

@@ -50,7 +50,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="homepage.jsp"><img src="resources/images/Logo.png"></a>
+                <a class="navbar-brand" href="/PDL/homepage"><img src="resources/images/Logo.png"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

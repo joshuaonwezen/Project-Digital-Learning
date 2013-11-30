@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Activity;
+import models.NewsItem;
+import models.NewsItemForm;
 import models.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -116,6 +118,21 @@ public class DebugController extends HttpServlet {
             session.save(activity);
             tx.commit();
             session.close();
+         if (action.equals("createNewsItem")){                
+            Session newsitem = services.HibernateUtil.getSessionFactory().openSession();
+            Transaction test = session.beginTransaction();
+                 
+            NewsItem newsItem = new NewsItem();
+            newsItem.setTitle("test");
+            newsItem.setDescription("test");
+            newsItem.setUpdated(cal.getTime());  
+            newsItem.setNewsId(1);
+            newsItem.setEditedBy(user);
+            
+            newsitem.save(newsItem);
+            test.commit();
+            newsitem.close();
+            }
         }
     }
 

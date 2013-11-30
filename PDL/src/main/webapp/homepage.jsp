@@ -37,7 +37,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="homepage.jsp"><img src="resources/images/Logo.png"></a>
+                <a class="navbar-brand" href="/PDL/homepage"><img src="resources/images/Logo.png"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -103,15 +103,15 @@
                 <td colspan="4" class="TableHeader"><fmt:message key="news.feed"/></th>
             </tr>
             <tr>
-                <td class="Date"><fmt:message key="news.date"/></td>
+                <td class="Date"><fmt:message key="activity.date"/></td>
                 <td><fmt:message key="news.title"/></td>
                 <td colspan="2"><fmt:message key="activity.message"/></td>
             </tr>
-            <c:forEach var="tempActivity" items="${activityList}">           
+            <c:forEach var="tempNewsItem" items="${newsitemList}">           
             <tr>
-                <td>${tempActivity.sent}</td>
-                <td>${tempActivity.title}</td>
-                <td class="Message">${tempActivity.message}</td>
+                <td>${tempNewsItem.updated}</td>
+                <td>${tempNewsItem.title}</td>
+                <td class="Message">${tempNewsItem.description}</td>
                 <td class="gotoMessage">
                     <input type="image" src="resources/images/gotoMessage.png" href="PDL/activity/message?id=${tempActivity.activityId}';">
                 </td>

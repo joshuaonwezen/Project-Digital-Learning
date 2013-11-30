@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Activity;
+import models.NewsItem;
 import models.User;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -44,7 +45,15 @@ public class HomepageController extends HttpServlet {
         Query queryActivity = activitySession.createQuery("from Activity where user_userId = " + userId);
         tempActivity = queryActivity.list();
         request.setAttribute("activityList", tempActivity);
-        activitySession.close();
+        activitySession.close();   
+        
+        Session newsitemSession = HibernateUtil.getSessionFactory().openSession();
+        List<NewsItem> tempNewsItem = new LinkedList();
+        Query queryNewsItem = newsitemSession.createQuery("from NewsItem");
+        tempNewsItem = queryNewsItem.list();
+        request.setAttribute("newsitemList", tempNewsItem);
+        newsitemSession.close();
+        
         redirect(request, response, "/homepage.jsp");
 
     }
