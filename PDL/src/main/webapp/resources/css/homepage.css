@@ -9,7 +9,12 @@
     left:15%;
 }
 .profileinformationtable123{
-    width:100px;
+    width:120px;
+    text-align:center;
+}
+.scrollingTable {
+       height: 50px;
+       overflow: auto;
 }
 .TableHeader{
     text-align:left;

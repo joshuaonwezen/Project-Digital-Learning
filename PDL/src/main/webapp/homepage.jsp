@@ -26,7 +26,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home - Info Support</title>
     </head>
-    <body>
+
+  <body>
         <!--Start nav bar-->
         <nav class="navbar navbar-inverse" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -73,54 +74,50 @@
                     <tr class="ChatIconHomepage"><td><input type="image" src="resources/images/ChatIconHomepage.png"></td></tr>
             </table>
         </div>    
+
         <!-- Activity Feed -->
+        <div class="scrollingTable">
         <div class="ActivityFeed">
-        <table class="table table-hover table-bordered" end="5">
+        <table class="table table-hover table-bordered">
             <tr>
                 <td colspan="4" class="TableHeader"><fmt:message key="activity.feed"/></th>
             </tr>
             <tr>
                 <td class="Date"><fmt:message key="activity.date"/></td>
                 <td><fmt:message key="activity.title"/></td>
-                <td colspan="2"><fmt:message key="activity.message"/></td>
+                <td><fmt:message key="activity.message"/></td>
             </tr>
             <c:forEach var="tempActivity" items="${activityList}">           
             <tr>
                 <td>${tempActivity.sent}</td>
                 <td>${tempActivity.title}</td>
                 <td class="Message">${tempActivity.message}</td>
-                <td class="gotoMessage">
-                    <input type="image" src="resources/images/gotoMessage.png" href="PDL/activity/message?id=${tempActivity.activityId}';">
-                </td>
             </tr>
           </c:forEach>
         </table>
         </div>
+        </div>
         <!-- News Feed -->
+        <div class="scrollingTable">
         <div class="NewsFeed">
-        <table class="table table-hover table-bordered" end="5">
+        <table class="table table-hover table-bordered">
             <tr>
                 <td colspan="4" class="TableHeader"><fmt:message key="news.feed"/></th>
             </tr>
             <tr>
                 <td class="Date"><fmt:message key="activity.date"/></td>
                 <td><fmt:message key="news.title"/></td>
-                <td colspan="2"><fmt:message key="activity.message"/></td>
+                <td><fmt:message key="activity.message"/></td>
             </tr>
             <c:forEach var="tempNewsItem" items="${newsitemList}">           
             <tr>
                 <td>${tempNewsItem.updated}</td>
                 <td>${tempNewsItem.title}</td>
                 <td class="Message">${tempNewsItem.description}</td>
-                <td class="gotoMessage">
-                    <input type="image" src="resources/images/gotoMessage.png" href="PDL/activity/message?id=${tempActivity.activityId}';">
-                </td>
             </tr>
           </c:forEach>
         </table>
         </div>
-
-
-
+        </div>
     </body>
 </html>
