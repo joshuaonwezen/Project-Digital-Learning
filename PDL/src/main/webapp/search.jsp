@@ -35,7 +35,7 @@
         </div>
         <div id="header_nav">
             <ul>
-                <li><a href="homepage.jsp">Home</a></li>
+                <li><a href="/PDL/homepage">Home</a></li>
                 <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
                     <c:if test="${loggedInIsAdmin == true}">
                     <li><a href="/PDL/management">Management</a></li>
