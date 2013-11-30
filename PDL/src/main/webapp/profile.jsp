@@ -11,16 +11,13 @@
     <meta charset="UTF-8">
     <title>Profile - Info Support</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<<<<<<< HEAD
         <!-- Bootstrap-->
         <!-- Company Style-->
         <link rel="stylesheet" type="text/css" href="resources/css/profile.css">
+        <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
         <link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 <link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
-=======
 
-
->>>>>>> 911449026b3e6d5f90068bc682b1a5fad2e682f3
     <style type="text/css">
         .hidden {
             display: none;
@@ -32,8 +29,7 @@
     </style>
 </head>
 <body>
-<<<<<<< HEAD
-        <!--Start nav bar-->
+  <!--Start nav bar-->
         <nav class="navbar navbar-inverse" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -49,19 +45,12 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:12px">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="homepage.jsp">Home</a></li>
-                    <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
-                     <c:if test="${loggedInIsAdmin == true}">
+                    <li><a href="homepage.jsp">Home</a></li>
+                    <li class="active"><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
+                    <c:if test="${loggedInIsAdmin == true}">
                         <li><a href="/PDL/management">Management</a></li>
                     </c:if>
-                    <li class="dropdown">
-                        <a href="/PDL/profile?id=${loggedInUserId}" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.profile"/><b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/PDL/profile?id=${loggedInUserId}">View</a></li>
-                            <li><a href="#">Toggle Edit Mode</a></li>
-                            <li><a href="cv?id=${userId}" target="_blank">Generate CV</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -72,48 +61,19 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="navbar-form navbar-right" role="search">
+                <form class="navbar-form navbar-right" role="search" id="searchCourse" action="searchCourse">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search Courses">
+                        <input type="text" name="searchQuery" id="searchQuery" class="form-control" placeholder="Search Course">
                     </div>
                     <button type="submit" class="btn btn-default">Search</button>
                 </form>
             </div><!-- /.navbar-collapse -->
         </nav>
         <!-- eof navbar-->
-=======
-    <div id="header">
-        <div id="header_logo">
-            <img src="resources/images/Logo.png">
-        </div>
-        <div id="header_nav">
-            <ul>
-                <li><a href="homepage.jsp">Home</a></li>
-                <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
-                    <c:if test="${loggedInIsAdmin == true}">
-                    <li><a href="/PDL/management">Management</a></li>
-                    </c:if>
-                <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
-                <li><a href="/PDL/search.jsp"><fmt:message key="navbar.search"/></a></li>
-                <li>
-                    <a href="#"><fmt:message key="navbar.settings"/></a>
-                    <ul>
-                        <c:if test="${loggedInUserId == userId}">
-                            <li><a id="toggle"><fmt:message key="profile.edit"/></a></li>
-                            </c:if>
-                        <li><a href="#">Help</a></li>
-                        <li><a href="#"><fmt:message key="navbar.problem"/></a></li>
-                        <li><a href="index.jsp"><fmt:message key="navbar.logout"/></a></li>
-                        <li><a href="cv?id=${userId}" target="_blank"><fmt:message key="navbar.cv"/></a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
->>>>>>> 911449026b3e6d5f90068bc682b1a5fad2e682f3
+
     <div id="main">
         <div id="main_left">
-            <div class="container">
+            <div class="container_profile">
                 <div class="hidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
                         <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('users/edit?id=${userId}', 800, 500)"><fmt:message key="profile.edit"/></button>
@@ -122,10 +82,10 @@
                 <h2 style="margin-left: 20px;">
                     ${loggedInUsername}
                 </h2>
-                <div class="container_left">
+                <div class="container_profile_left">
                     <img id="profileImage" src="$tempGebruiker.imageURL}">
                 </div>
-                <div class="container_right" style="font-size: 19px;">
+                <div class="container_profile_right" style="font-size: 19px;">
                     <table>
                         <tbody>
                             <tr>
@@ -153,7 +113,7 @@
                 </div>
             </div>
 
-            <div class="container">
+            <div class="container_profile">
                 <div class="hidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
                         <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('work/edit?userId=', 800, 500)">+</button>
@@ -187,7 +147,7 @@
                 </c:forEach>
             </div>
 
-            <div class="container">
+            <div class="container_profile">
                 <div class="hidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
                         <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('education/edit?userId=', 800, 500)">+</button>
@@ -221,7 +181,7 @@
                 </c:forEach>
             </div>
 
-            <div class="container">
+            <div class="container_profile">
                 <div class="hidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
                         <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('project/edit?userId=', 800, 500)">+</button>
@@ -257,14 +217,14 @@
         </div>
 
         <div id="main_right">
-            <div class="container">
+            <div class="container_profile">
                 <h3><fmt:message key="profile.completed.courses"/></h3>
             </div>
-            <div class="container">
+            <div class="container_profile">
                 <h3><fmt:message key="profile.enrolled.courses"/></h3>
             </div>
 
-            <div class="container">
+            <div class="container_profile">
                 <div class="hidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
                         <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('skill/edit?userId=', 800, 500)">+</button>
