@@ -29,12 +29,14 @@
         <link rel="Icon" href="../resources/images/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" type="text/css" href="../resources/css/editmode.css">
 
-        <title>${isUpdate == true ? 'Edit' : 'Create'} Course - Info Support</title>
+        <title><c:if test="${isUpdate == true}"><fmt:message key="edit.popup.edit"/><fmt:message key="course.course"/> - Info Support</c:if>
+            <c:if test="${isUpdate == false}"><fmt:message key="edit.popup.create"/><fmt:message key="course.course"/> - Info Support</c:if></title>
     </head>
     <body onload="validateForm()">
         <div class="header">
             <h1>
-                ${isUpdate == true ? 'Edit' : 'Create'} <fmt:message key="course.course"/><
+                <c:if test="${isUpdate == true}"><fmt:message key="edit.popup.edit"/> <fmt:message key="course.course"/></c:if>
+                <c:if test="${isUpdate == false}"><fmt:message key="edit.popup.create"/> <fmt:message key="course.course"/></c:if>
             </h1>
         </div>
         <c:choose>
