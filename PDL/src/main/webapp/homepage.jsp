@@ -68,59 +68,65 @@
             </div><!-- /.navbar-collapse -->
         </nav>
         <!-- eof navbar-->
-        <!-- Profile Information -->
-        <div class="ProfileInformation">
-            <table class="profileinformationtable123">
-                <tr class="ProfilePictureHomepage"><td><input type="image" src="resources/images/users_icon.png"</td></tr>
-                <tr class="ProfileNameHomepage"><td>${loggedInFirstname}&nbsp;${loggedInLastname}</td></tr>
-                <c:if test="${loggedInIsAdmin == true}">
-                    <tr class="ProfileRoleHomepage"><td>Admin</td></tr>
-                </c:if>
-                <tr class="ChatIconHomepage"><td><input type="image" src="resources/images/ChatIconHomepage.png"></td></tr>
-            </table>
-        </div>    
+        <div id="main">
+            <div id="main_left">
+                <!-- Profile Information -->
+                <div class="ProfileInformation">
+                    <table class="profileinformationtable123">
+                        <tr class="ProfilePictureHomepage"><td><input type="image" src="resources/images/users_icon.png"</td></tr>
+                        <tr class="ProfileNameHomepage"><td>${loggedInFirstname}&nbsp;${loggedInLastname}</td></tr>
+                        <c:if test="${loggedInIsAdmin == true}">
+                            <tr class="ProfileRoleHomepage"><td>Admin</td></tr>
+                        </c:if>
+                        <tr class="ChatIconHomepage"><td><input type="image" src="resources/images/ChatIconHomepage.png"></td></tr>
+                    </table>
+                </div>    
+            </div>
 
-        <!-- Activity Feed -->
-        <div class="ActivityFeed">
-            <table class="table table-hover table-bordered">
-                <tr>
-                    <td colspan="4" class="TableHeader"><fmt:message key="activity.feed"/></th>
-                </tr>
-                <tr>
-                    <td class="Date"><fmt:message key="activity.date"/></td>
-                    <td><fmt:message key="activity.title"/></td>
-                    <td><fmt:message key="activity.message"/></td>
-                </tr>
-                <c:forEach var="tempActivity" items="${activityList}" begin="0" end="4">   
-                    <tr>
-                        <td>${tempActivity.sent}</td>
-                        <td>${tempActivity.title}</td>
-                        <td class="Message">${tempActivity.message}</td>
-                    </tr>
-                    </tbody>
-                </c:forEach>
-            </table>
+            <div id="main_right">
+                <!-- Activity Feed -->
+                <div class="conainer_homepage">
+                    <table class="table table-hover table-bordered">
+                        <tr>
+                            <td colspan="4" class="TableHeader"><fmt:message key="activity.feed"/></th>
+                        </tr>
+                        <tr>
+                            <td class="Date"><fmt:message key="activity.date"/></td>
+                            <td><fmt:message key="activity.title"/></td>
+                            <td><fmt:message key="activity.message"/></td>
+                        </tr>
+                        <c:forEach var="tempActivity" items="${activityList}" begin="0" end="4">   
+                            <tr>
+                                <td>${tempActivity.sent}</td>
+                                <td>${tempActivity.title}</td>
+                                <td class="Message">${tempActivity.message}</td>
+                            </tr>
+                            </tbody>
+                        </c:forEach>
+                    </table>
+                </div>
+                <!-- News Feed -->
+                <div class="conainer_homepage">
+                    <table class="table table-hover table-bordered">
+                        <tr>
+                            <td colspan="4" class="TableHeader"><fmt:message key="news.feed"/></th>
+                        </tr>
+                        <tr>
+                            <td class="Date"><fmt:message key="activity.date"/></td>
+                            <td><fmt:message key="news.title"/></td>
+                            <td><fmt:message key="activity.message"/></td>
+                        </tr>
+                        <c:forEach var="tempNewsItem" items="${newsitemList}" begin="0" end="4"> 
+                            <tr>
+                                <td>${tempNewsItem.updated}</td>
+                                <td>${tempNewsItem.title}</td>
+                                <td class="Message">${tempNewsItem.description}</td>
+                            </tr>
+                            </tbody>
+                        </c:forEach>
+                    </table>
+                </div>
+            </div>
         </div>
-        <!-- News Feed -->
-        <div class="NewsFeed">
-        <table class="table table-hover table-bordered">
-            <tr>
-                <td colspan="4" class="TableHeader"><fmt:message key="news.feed"/></th>
-            </tr>
-            <tr>
-                <td class="Date"><fmt:message key="activity.date"/></td>
-                <td><fmt:message key="news.title"/></td>
-                <td><fmt:message key="activity.message"/></td>
-            </tr>
-            <c:forEach var="tempNewsItem" items="${newsitemList}" begin="0" end="4"> 
-                <tr>
-                    <td>${tempNewsItem.updated}</td>
-                    <td>${tempNewsItem.title}</td>
-                    <td class="Message">${tempNewsItem.description}</td>
-                </tr>
-                </tbody>
-            </c:forEach>
-        </table>
-        </div>
-</body>
+    </body>
 </html>

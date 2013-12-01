@@ -65,12 +65,7 @@
         </nav>
         <div id="main">
             <!--end of header-->
-            <form class="navbar-form navbar-left" role="search" id="searchUser" action="searchUser">
-                <div class="form-group">
-                    <input type="text" name="searchQuery" id="searchQuery" class="form-control" placeholder="Search User">
-                </div>
-                <button type="submit" class="btn btn-default">Search</button>
-            </form>
+
             <script>
                 var usersSize = '${usersSize}';
                 console.log('userssize debugsdkjfs: ' + '${usersSize}');
@@ -80,7 +75,14 @@
             <!--<div class="container">-->
             <table class="table table-hover table-bordered" end="5">
                 <tr>
-                    <td colspan="4" class="TableHeader"><fmt:message key="search.result"/></th>
+                    <th colspan="4" class="TableHeader">
+                <form class="navbar-form navbar-left" role="search" id="searchUser" action="searchUser">
+                    <div class="form-group">
+                        <input type="text" name="searchQuery" id="searchQuery" class="form-control" placeholder="Search User">
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                </form>
+                </th>
                 </tr>
                 <tr>
                     <td><fmt:message key="search.firstname"/></td>
