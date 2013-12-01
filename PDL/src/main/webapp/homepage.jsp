@@ -101,9 +101,8 @@
                 </c:forEach>
             </table>
         </div>
-    </div>
-    <!-- News Feed -->
-    <div class="NewsFeed">
+        <!-- News Feed -->
+        <div class="NewsFeed">
         <table class="table table-hover table-bordered">
             <tr>
                 <td colspan="4" class="TableHeader"><fmt:message key="news.feed"/></th>
@@ -122,7 +121,6 @@
                 </tbody>
             </c:forEach>
         </table>
-    </div>
-</div>
+        </div>
 </body>
 </html>
