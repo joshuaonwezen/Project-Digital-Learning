@@ -5,9 +5,9 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${language}" />
-<fmt:setBundle basename="index_nl_NL" />
+<fmt:setBundle basename="index" />
 <!DOCTYPE html>
-<html>
+<html  lang="${language}">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Information - Info Support</title>

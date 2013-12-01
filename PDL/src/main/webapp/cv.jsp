@@ -9,7 +9,7 @@
 <fmt:setBundle basename="index" />
 <link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 <link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
-<head>
+<html  lang="${language}">
     <title>${firstname} ${lastname} - CV</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
