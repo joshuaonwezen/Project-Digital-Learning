@@ -25,14 +25,14 @@
 
         <title><c:if test="${isUpdate == true}"><fmt:message key="edit.popup.edit"/><fmt:message key="user.user"/> - Info Support</c:if>
             <c:if test="${isUpdate == false}"><fmt:message key="edit.popup.create"/><fmt:message key="user.user"/> - Info Support</c:if></title>
-    </head>
-    <body onload="validateForm()">
-        <div class="header">
-            <h1>
+        </head>
+        <body onload="validateForm()">
+            <div class="header">
+                <h1>
                 <c:if test="${isUpdate == true}"><fmt:message key="edit.popup.edit"/> <fmt:message key="user.user"/></c:if>
                 <c:if test="${isUpdate == false}"><fmt:message key="edit.popup.create"/> <fmt:message key="user.user"/></c:if>
-            </h1>
-        </div>
+                </h1>
+            </div>
         <c:choose>
             <c:when test="${empty userId}">
                 <!-- Without userId means a new user -->
@@ -104,14 +104,15 @@
                             <label for="password"><fmt:message key="user.password"/></label>
                             <input type="password" class="form-control" id="password" name="password" onchange="validateForm()" placeholder="Enter a password">
                         </div>
-                        <div class="form-group" id="formGroupPosition" style="width:100%">
-                            <label for="position"><fmt:message key="user.position"/></label>
-                            <input type="text" class="form-control" id="position" name="position" onchange="validateForm()" placeholder="Enter position">
-                        </div>
-                        <div class="form-group" id="formGroupUserRights" style="width:100%">
-                            <label for="userRights"><fmt:message key="user.userrights"/></label><br/>
-                            <input type="checkbox" id="isAdmin" name="isAdmin"> Administrator
-                        </div>
+                        
+                            <div class="form-group" id="formGroupPosition" style="width:100%; <c:if test='${loggedInIsAdmin == false}'>display: none;</c:if>">
+                                <label for="position"><fmt:message key="user.position"/></label>
+                                <input type="text" class="form-control" id="position" name="position" onchange="validateForm()" placeholder="Enter position">
+                            </div>
+                            <div class="form-group" id="formGroupUserRights" style="width:100%; <c:if test='${loggedInIsAdmin == false}'>display: none;</c:if>">
+                                <label for="userRights"><fmt:message key="user.userrights"/></label><br/>
+                                <input type="checkbox" id="isAdmin" name="isAdmin"> Administrator
+                            </div>
                     </div>
             </form>
         </div>
@@ -125,18 +126,18 @@
             document.getElementById('position').value = '${position}';
             document.getElementById('isAdmin').checked = ${isAdmin == true ? true : false};
             document.getElementById('password').value = '${password}';
-            
+
             //close window
             function closeWindow() {
                 console.log('canceling');
                 $('#myModal').modal('show')
             }
-            
+
             //function to refresh the parent window on save/close to reflect the updated data in the grid
             window.onunload = function() {
                 window.opener.location.reload();
             };
-            
+
             //set input color for validations
             function setValidated(id, isValidated) {
                 if (isValidated) {
@@ -231,7 +232,7 @@
                 else {
                     document.getElementById('validationAlert').innerHTML = '';
                     //check to see which form we need to submit (edit or new)
-                    if (!document.getElementById('userId').value){
+                    if (!document.getElementById('userId').value) {
                         document.getElementById('newUser').submit();
                     }
                     else {
