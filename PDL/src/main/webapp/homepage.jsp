@@ -56,6 +56,16 @@
                             <li class="divider"></li>
                             <li><a href="#">Help</a></li>
                             <li><a href="#">Report a Problem</a></li>
+                            <li>
+                                <a >
+                                    <form>
+                                        <select id="language" name="language" onchange="submit()">
+                                            <option value="en_US" ${language == 'en_US' ? 'selected' : ''}>English</option>
+                                            <option value="nl_NL" ${language == 'nl_NL' ? 'selected' : ''}>Nederlands</option>
+                                        </select>
+                                    </form>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -128,15 +138,6 @@
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
     </body>
-=======
-            <form>
-            <select id="language" name="language" onchange="submit()">
-                <option value="en_US" ${language == 'en_US' ? 'selected' : ''}>English</option>
-                <option value="nl_NL" ${language == 'nl_NL' ? 'selected' : ''}>Nederlands</option>
-            </select>
-        </form>
 </body>
->>>>>>> 31ede1c78a96f8397223dac0e1094311c23d2e1b
 </html>

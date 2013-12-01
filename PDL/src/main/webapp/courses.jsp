@@ -40,9 +40,9 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/PDL/homepage">Home</a></li>
                     <li class="active"><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
-                    <c:if test="${loggedInIsAdmin == true}">
+                        <c:if test="${loggedInIsAdmin == true}">
                         <li><a href="/PDL/management">Management</a></li>
-                    </c:if>
+                        </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
@@ -51,6 +51,16 @@
                             <li class="divider"></li>
                             <li><a href="#">Help</a></li>
                             <li><a href="#">Report a Problem</a></li>
+                            <li>
+                                <a >
+                                    <form>
+                                        <select id="language" name="language" onchange="submit()">
+                                            <option value="en_US" ${language == 'en_US' ? 'selected' : ''}>English</option>
+                                            <option value="nl_NL" ${language == 'nl_NL' ? 'selected' : ''}>Nederlands</option>
+                                        </select>
+                                    </form>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
