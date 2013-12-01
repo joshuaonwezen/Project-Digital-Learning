@@ -100,17 +100,17 @@
                         <tbody>
                             <tr>
                                 <td class="tableTitle"></td>
-                                <td class="rowName"><fmt:message key="profile.name"/></td>
+                                <td class="rowName"><fmt:message key="profile.name"/>:</td>
                                 <td class="rowInfo">${firstname} ${lastname}</td>
                             </tr>
                             <tr>
                                 <td class="tableTitle"></td>
-                                <td class="rowName"><fmt:message key="profile.email"/></td>
+                                <td class="rowName"><fmt:message key="profile.email"/>:</td>
                                 <td class="rowInfo">${emailAddress}</td>
                             </tr>
                             <tr>
                                 <td class="tableTitle"></td>
-                                <td class="rowName"><fmt:message key="profile.position"/></td>
+                                <td class="rowName"><fmt:message key="profile.position"/>:</td>
                                 <td class="rowInfo">${position}</td>
                             </tr>
                         </tbody>
