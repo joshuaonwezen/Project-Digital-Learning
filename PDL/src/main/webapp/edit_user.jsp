@@ -108,10 +108,12 @@
                             <label for="position"><fmt:message key="user.position"/></label>
                             <input type="text" class="form-control" id="position" name="position" onchange="validateForm()" placeholder="Enter position">
                         </div>
+                            <c:if test="${loggedInIsAdmin == true}">
                         <div class="form-group" id="formGroupUserRights" style="width:100%">
                             <label for="userRights"><fmt:message key="user.userrights"/></label><br/>
                             <input type="checkbox" id="isAdmin" name="isAdmin"> Administrator
                         </div>
+                            </c:if>
                     </div>
             </form>
         </div>
@@ -123,9 +125,11 @@
             document.getElementById('lastname').value = '${lastname}';
             document.getElementById('emailAddress').value = '${emailAddress}';
             document.getElementById('position').value = '${position}';
+                <c:if test="${loggedInIsAdmin == true}">
             document.getElementById('isAdmin').checked = ${isAdmin == true ? true : false};
+                </c:if>
             document.getElementById('password').value = '${password}';
-            
+               
             //close window
             function closeWindow() {
                 console.log('canceling');
