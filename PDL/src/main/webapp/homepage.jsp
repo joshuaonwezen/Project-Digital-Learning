@@ -9,10 +9,10 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${language}" />
-<fmt:setBundle basename="index_nl_NL" />
+<fmt:setBundle basename="index" />
 
 <!DOCTYPE html>
-<html>
+<html  lang="${language}">
     <head>
         <!--Company Style-->
         <link rel="stylesheet" type="text/css" href="resources/css/homepage.css">
@@ -122,5 +122,11 @@
             </c:forEach>
         </table>
         </div>
+            <form>
+            <select id="language" name="language" onchange="submit()">
+                <option value="en_US" ${language == 'en_US' ? 'selected' : ''}>English</option>
+                <option value="nl_NL" ${language == 'nl_NL' ? 'selected' : ''}>Nederlands</option>
+            </select>
+        </form>
 </body>
 </html>
