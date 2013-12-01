@@ -11,72 +11,78 @@
     <meta charset="UTF-8">
     <title>Profile - Info Support</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-        <!-- Bootstrap-->
-        <!-- Company Style-->
-        <link rel="stylesheet" type="text/css" href="resources/css/profile.css">
-        <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
-        <link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
-<link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
+    <!-- Bootstrap-->
+    <!-- Company Style-->
+    <link rel="stylesheet" type="text/css" href="resources/css/profile.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
+    <script src="resources/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="resources/bootstrap/dist/js/alert.js"></script>
+    <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="Shortcut Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
+    <link rel="Icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
 
     <style type="text/css">
-        .hidden {
+        .editHidden {
             display: none;
         }
-        .unhidden {
+        .editUnhidden {
             display: block;
         }
-        iframe { width: 100%; height: 50%; }
     </style>
 </head>
 <body>
-  <!--Start nav bar-->
-        <nav class="navbar navbar-inverse" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/PDL/homepage"><img src="resources/images/Logo.png"></a>
-            </div>
+    <!--Start nav bar-->
+    <nav class="navbar navbar-inverse" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/PDL/homepage"><img src="resources/images/Logo.png"></a>
+        </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:12px">
-                <ul class="nav navbar-nav">
-                    <li><a href="/PDL/homepage">Home</a></li>
-                    <li class="active"><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:12px">
+            <ul class="nav navbar-nav">
+                <li><a href="/PDL/homepage">Home</a></li>
+                <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
                     <c:if test="${loggedInIsAdmin == true}">
-                        <li><a href="/PDL/management">Management</a></li>
+                    <li><a href="/PDL/management">Management</a></li>
                     </c:if>
-                    <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="index.jsp">Logout</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Help</a></li>
-                            <li><a href="#">Report a Problem</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form class="navbar-form navbar-right" role="search" id="searchCourse" action="searchCourse">
-                    <div class="form-group">
-                        <input type="text" name="searchQuery" id="searchQuery" class="form-control" placeholder="Search Course">
-                    </div>
-                    <button type="submit" class="btn btn-default">Search</button>
-                </form>
-            </div><!-- /.navbar-collapse -->
-        </nav>
-        <!-- eof navbar-->
+                <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.jsp">Logout</a></li>
+                            <c:if test="${loggedInUserId == userId}">
+                            <li><a id="toggle"><fmt:message key="profile.edit"/></a></li>
+                            </c:if>
+                        <li><a href="cv?id=${userId}" target="_blank"><fmt:message key="navbar.cv"/></a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#">Report a Problem</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" id="searchUser" action="searchUser">
+                <div class="form-group">
+                    <input type="text" name="searchQuery" id="searchQuery" class="form-control" placeholder="Search User">
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
+        </div><!-- /.navbar-collapse -->
+    </nav>
 
     <div id="main">
         <div id="main_left">
             <div class="container_profile">
-                <div class="hidden rightButton">
+                <div class="editHidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
-                        <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('users/edit?id=${userId}', 800, 500)"><fmt:message key="profile.edit"/></button>
+                        <button class="btn btn-default" target="_blank" onclick="return windowpop('users/edit?id=${userId}', 800, 500)"><fmt:message key="profile.edit"/></button>
                     </c:if>
                 </div>
                 <h2 style="margin-left: 20px;">
@@ -114,9 +120,9 @@
             </div>
 
             <div class="container_profile">
-                <div class="hidden rightButton">
+                <div class="editHidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
-                        <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('work/edit?userId=', 800, 500)">+</button>
+                        <button class="btn btn-default" target="_blank" onclick="return windowpop('work/edit?userId=', 800, 500)">+</button>
                     </c:if>
                 </div>
                 <h3><fmt:message key="profile.workexperience"/></h3>
@@ -133,12 +139,12 @@
                             </div>
                         </div>
                         <div class="box_right">
-                            <div class="hidden">
+                            <div class="editHidden">
                                 <c:if test="${loggedInUserId == userId}">
-                                    <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('work/edit?id=${tempWork.workId}', 800, 500)">Edit</button>
+                                    <button class="btn btn-default" target="_blank" onclick="return windowpop('work/edit?id=${tempWork.workId}', 800, 500)">Edit</button>
                                     <a href="javascript:if(confirm('Delete?'))
                                        window.location='work/delete?id=${tempWork.workId}';">
-                                        <button>x</button>
+                                        <button class="btn btn-default">x</button>
                                     </a>
                                 </c:if>
                             </div>
@@ -148,9 +154,9 @@
             </div>
 
             <div class="container_profile">
-                <div class="hidden rightButton">
+                <div class="editHidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
-                        <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('education/edit?userId=', 800, 500)">+</button>
+                        <button class="btn btn-default" target="_blank" onclick="return windowpop('education/edit?userId=', 800, 500)">+</button>
                     </c:if>
                 </div>
                 <h3><fmt:message key="profile.education"/></h3>
@@ -167,12 +173,12 @@
                             </div>
                         </div>
                         <div class="box_right">
-                            <div class="hidden">
+                            <div class="editHidden">
                                 <c:if test="${loggedInUserId == userId}">
-                                    <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('education/edit?id=${tempEducation.educationId}', 800, 500)">Edit</button>
+                                    <button class="btn btn-default" target="_blank" onclick="return windowpop('education/edit?id=${tempEducation.educationId}', 800, 500)">Edit</button>
                                     <a href="javascript:if(confirm('Delete?'))
                                        window.location='education/delete?id=${tempEducation.educationId}';">
-                                        <button>x</button>
+                                        <button class="btn btn-default">x</button>
                                     </a>
                                 </c:if>
                             </div>
@@ -182,9 +188,9 @@
             </div>
 
             <div class="container_profile">
-                <div class="hidden rightButton">
+                <div class="editHidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
-                        <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('project/edit?userId=', 800, 500)">+</button>
+                        <button class="btn btn-default" target="_blank" onclick="return windowpop('project/edit?userId=', 800, 500)">+</button>
                     </c:if>
                 </div>
                 <h3><fmt:message key="profile.projects"/></h3>
@@ -201,12 +207,12 @@
                             </div>
                         </div>
                         <div class="box_right">
-                            <div class="hidden">
+                            <div class="editHidden">
                                 <c:if test="${loggedInUserId == userId}">
-                                    <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('project/edit?id=${tempProject.projectId}', 800, 500)">Edit</button>
+                                    <button class="btn btn-default" target="_blank" onclick="return windowpop('project/edit?id=${tempProject.projectId}', 800, 500)">Edit</button>
                                     <a href="javascript:if(confirm('Delete?'))
                                        window.location='project/delete?id=${tempProject.projectId}';">
-                                        <button>x</button>
+                                        <button class="btn btn-default">x</button>
                                     </a>
                                 </c:if>
                             </div>
@@ -225,9 +231,9 @@
             </div>
 
             <div class="container_profile">
-                <div class="hidden rightButton">
+                <div class="editHidden rightButton">
                     <c:if test="${loggedInUserId == userId}">
-                        <button style="width:auto; height:auto;" target="_blank" onclick="return windowpop('skill/edit?userId=', 800, 500)">+</button>
+                        <button class="btn btn-default" target="_blank" onclick="return windowpop('skill/edit?userId=', 800, 500)">+</button>
                     </c:if>
                 </div>
                 <h3><fmt:message key="profile.skills"/></h3>
@@ -240,12 +246,12 @@
                             </div>
                         </div>
                         <div class="boxRight_right">
-                            <div class="hidden">
+                            <div class="editHidden">
                                 <c:if test="${loggedInUserId == userId}">
 
                                     <a href="javascript:if(confirm('Delete?'))
                                        window.location='skill/delete?id=${tempSkill.skillId}';">
-                                        <button>x</button>
+                                        <button class="btn btn-default">x</button>
                                     </a>
                                 </c:if>
                             </div>
@@ -254,14 +260,14 @@
                 </c:forEach>
             </div>
 
-                
+
         </div>
     </div>
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
         $("#toggle").click(function() {
-            $("div").toggleClass("hidden unhidden");
+            $("div").toggleClass("editHidden editUnhidden");
         });
     });
 

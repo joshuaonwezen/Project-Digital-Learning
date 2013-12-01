@@ -19,6 +19,10 @@ import org.hibernate.Transaction;
 import services.HibernateUtil;
 import validators.CourseValidator;
 
+/**
+ *
+ * @author Shahin Mokhtar
+ */
 public class ManageSearchController extends HttpServlet {
 
     @Override

@@ -1,7 +1,7 @@
 /*
 Author: Shahin Mokhtar
 */
- html {
+html {
     width: 100%;
     height: 100%;
     background-color:#FFF;
@@ -144,26 +144,26 @@ table {
 /*
 End author: Shahin Mokhtar
 */
- .loginform {
+.loginform {
     padding-top:5%;
     padding-left:44%;
 }
 
 .box-level{
-        font: normal 100% 'century gothic', arial, sans-serif;        
-        text-align:right;
-        margin-right: 10px;
+    font: normal 100% 'century gothic', arial, sans-serif;        
+    text-align:right;
+    margin-right: 10px;
 }
 .box-name{
-        font: bold 125% 'century gothic', arial, sans-serif;
-        margin-left: 20px;
-        
+    font: bold 125% 'century gothic', arial, sans-serif;
+    margin-left: 20px;
+
 }
 
 .box-owner{
-        font: normal 100% 'century gothic', arial, sans-serif;        
-        text-align:left;
-        margin-left: 20px;
+    font: normal 100% 'century gothic', arial, sans-serif;        
+    text-align:left;
+    margin-left: 20px;
 }
 .box-image{
     width:100px;
@@ -178,16 +178,43 @@ End author: Shahin Mokhtar
 }
 
 .box-course {
-        
-        background-repeat:no-repeat;
-	width:60%;
-        height:210px;
-	background:#FFF;
-	margin:50px auto;
-        }
-        
+
+    background-repeat:no-repeat;
+    width:60%;
+    height:210px;
+    background:#FFF;
+    margin:50px auto;
+}
+
 .effect1{
-	-webkit-box-shadow: 0 10px 6px -6px #777;
-	   -moz-box-shadow: 0 10px 6px -6px #777;
-	        box-shadow: 0 10px 6px -6px #777;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 0 10px 6px -6px #777;
+}
+-h1, h2, h3, h4, h5, h6 {
+    font: normal 179%'century gothic', arial, sans-serif;
+    color: #43423F;
+    margin: 0 0 15px 0;
+    padding: 15px 0 5px 0;
+}
+h2 {
+    font: normal 170%'century gothic', arial, sans-serif;
+    color: #0AB6F6;
+}
+h3 {
+    font: normal 125%'century gothic', arial, sans-serif;
+    margin-left: 20px;
+}
+h4, h5, h6 {
+    margin: 0;
+    padding: 0 0 5px 0;
+    font: normal 120% arial, sans-serif;
+    color: #0AB6F6;
+}
+h5, h6 {
+    font: italic 95% arial, sans-serif;
+    color: #888;
+}
+h6 {
+    color: #362C20;
 }
