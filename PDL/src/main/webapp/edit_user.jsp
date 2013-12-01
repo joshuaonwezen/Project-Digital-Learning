@@ -110,7 +110,7 @@
                                 <label for="position"><fmt:message key="user.position"/></label>
                                 <input type="text" class="form-control" id="position" name="position" onchange="validateForm()" placeholder="Enter position">
                             </div>
-                            <div class="form-group" id="formGroupUserRights" style="width:100%; <c:if test='${loggedInIsAdmin == false}'>display: none;</c:if>">
+                            <div class="form-group" id="formGroupUserRights" style="width:100%;">
                                 <label for="userRights"><fmt:message key="user.userrights"/></label><br/>
                                 <input type="checkbox" id="isAdmin" name="isAdmin"> Administrator
                             </div>
