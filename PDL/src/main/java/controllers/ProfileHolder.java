@@ -85,8 +85,6 @@ public class ProfileHolder extends HttpServlet {
             request.setAttribute("educationList", tempEducation);
             request.setAttribute("sizeEducation", tempEducation.size());
 
-            
-
             /* stuur door naar */
             dispatchUrl = "/profile.jsp";
 

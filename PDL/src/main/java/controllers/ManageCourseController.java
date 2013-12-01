@@ -217,6 +217,7 @@ public class ManageCourseController extends HttpServlet {
                 Transaction tx = session.beginTransaction();
                 
                 user = (User)session.load(User.class, Integer.parseInt(getSelectedOption(request, "ownerValues")));
+                
 
                 //get the courseId if we are updating a course
                 if (isUpdate) {

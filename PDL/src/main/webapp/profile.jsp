@@ -110,11 +110,6 @@
                             </tr>
                             <tr>
                                 <td class="tableTitle"></td>
-                                <td class="rowName"><fmt:message key="profile.age"/></td>
-                                <td class="rowInfo">${age}</td>
-                            </tr>
-                            <tr>
-                                <td class="tableTitle"></td>
                                 <td class="rowName"><fmt:message key="profile.position"/></td>
                                 <td class="rowInfo">${position}</td>
                             </tr>
@@ -230,6 +225,7 @@
             <div class="container_profile">
                 <h3><fmt:message key="profile.completed.courses"/></h3>
             </div>
+            
             <div class="container_profile">
                 <h3><fmt:message key="profile.enrolled.courses"/></h3>
             </div>
