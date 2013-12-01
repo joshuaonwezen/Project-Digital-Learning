@@ -89,7 +89,7 @@
 
                         <div class="form-group" id="formGroupName" style="width:100%">
                             <label for="name"><fmt:message key="course.name"/></label>
-                            <input type="text" class="form-control" id="name" name="name" onchange="validateForm()" placeholder="Enter name">
+                            <input type="text" class="form-control" id="name" name="name" onchange="validateForm()" placeholder="<fmt:message key="placeholder.name"/>">
                         </div>
                         <div class="form-group" id="formGroupLevel" style="width:100%">
                             <label for="levelValues"><fmt:message key="course.level"/></label>
@@ -109,7 +109,7 @@
                         </div>
                         <div class="form-group has-success" id="formGroupSkills" style="width:100%">
                             <label for="skills"><fmt:message key="course.skills"/></label>
-                            <input type="hidden" id="tagSkills" name="tagSkills" onchange="validateForm()" placeholder="&nbsp;Enter skills seperated by a comma" style="width:100%">
+                            <input type="hidden" id="tagSkills" name="tagSkills" onchange="validateForm()" placeholder="&nbsp;<fmt:message key="placeholder.skills.seperated"/>" style="width:100%">
                             <script>
                                 //set all available skills from the database in the multiselect
                                 var arrSkills = new Array();
@@ -125,7 +125,7 @@
 
                         <div class="form-group" id="formGroupDescription" style="width:100%">
                             <label for="description"><fmt:message key="course.description"/></label>
-                            <textarea class="form-control" rows="4" id="description" name="description" onchange="validateForm()" placeholder="Enter description" style="resize: none"></textarea>
+                            <textarea class="form-control" rows="4" id="description" name="description" onchange="validateForm()" placeholder="<fmt:message key="placeholder.description"/>" style="resize: none"></textarea>
                         </div>
                         <div class="form-group" id="formGroupIsVisible" style="width:100%">
                             <label for="isVisible"><fmt:message key="course.visable"/></label><br/>
@@ -245,8 +245,8 @@ $('#tagSkills').select2('val', [arrayCourseSkills]);
         <hr style="width:100%;margin-top:370px"/>
         <div style="float:right;margin-right:20px;margin-top:-10px">
 
-            <button type="button" class="btn btn-default" onclick="closeWindow()">Cancel</button>
-            <button type="button" class="btn btn-primary" onclick="saveForm()">Save</button>
+            <button type="button" class="btn btn-default" onclick="closeWindow()"><fmt:message key="edit.popup.cancel"/></button>
+            <button type="button" class="btn btn-primary" onclick="saveForm()"><fmt:message key="edit.popup.save"/></button>
         </div>
         <!-- Modal Dialog for Canceling -->
         <div class="modal fade" id="myModal">
@@ -254,14 +254,14 @@ $('#tagSkills').select2('val', [arrayCourseSkills]);
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Unsaved data</h4>
+                        <h4 class="modal-title"><fmt:message key="edit.popup.unsaved"/></h4>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure you want to cancel? Any unsaved changes will be lost.</p>
+                        <p><fmt:message key="edit.popup.confirmation.message"/></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Continue editing</button>
-                        <button type="button" class="btn btn-primary" onclick="window.close()">Yes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="edit.popup.continue"/></button>
+                        <button type="button" class="btn btn-primary" onclick="window.close()"><fmt:message key="edit.popup.yes"/></button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->

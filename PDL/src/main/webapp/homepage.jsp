@@ -50,12 +50,12 @@
                         </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.settings"/> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="index.jsp">Logout</a></li>
+                            <li><a href="index.jsp"><fmt:message key="navbar.logout"/></a></li>
                             <li class="divider"></li>
                             <li><a href="#">Help</a></li>
-                            <li><a href="#">Report a Problem</a></li>
+                            <li><a href="#"><fmt:message key="navbar.problem"/></a></li>
                             <li>
                                 <a >
                                     <form>
@@ -71,9 +71,9 @@
                 </ul>
                 <form class="navbar-form navbar-right" role="search" id="searchUser" action="searchUser">
                     <div class="form-group">
-                        <input type="text" name="searchQuery" id="searchQuery" class="form-control" placeholder="Search User">
+                        <input type="text" name="searchQuery" id="searchQuery" class="form-control" placeholder="<fmt:message key="searchbar.search.user"/>">
                     </div>
-                    <button type="submit" class="btn btn-default">Search</button>
+                    <button type="submit" class="btn btn-default"><fmt:message key="navbar.search"/></button>
                 </form>
             </div><!-- /.navbar-collapse -->
         </nav>

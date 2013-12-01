@@ -84,7 +84,7 @@
                         <input type="hidden" id="newsId" name="newsId">
                         <div class="form-group" id="formGroupTitle" style="width:100%">
                             <label for="title"><fmt:message key="news.title"/></label>
-                            <input type="text" class="form-control" id="title" name="title" onchange="validateForm()" placeholder="Enter title">
+                            <input type="text" class="form-control" id="title" name="title" onchange="validateForm()" placeholder="<fmt:message key="placeholder.title"/>">
                         </div>
                         <div class="form-group" id="formGroupDate" style="width:50%">
                             <label for="date"><fmt:message key="news.date"/></label>
@@ -103,7 +103,7 @@
                     <div class="rightContainer">
                         <div class="form-group" id="formGroupDescription" style="width:100%">
                             <label for="description"><fmt:message key="news.description"/></label>
-                            <textarea class="form-control" rows="4" id="description" name="description" onchange="validateForm()" placeholder="Enter description"></textarea>
+                            <textarea class="form-control" rows="4" id="description" name="description" onchange="validateForm()" placeholder="<fmt:message key="placeholder.description"/>"></textarea>
                         </div>
 
                     </div>
@@ -210,8 +210,8 @@
         <hr style="width:100%;margin-top:370px"/>
         <div style="float:right;margin-right:20px;margin-top:-10px">
 
-            <button type="button" class="btn btn-default" onclick="closeWindow()">Cancel</button>
-            <button type="button" class="btn btn-primary" onclick="saveForm()">Save</button>
+            <button type="button" class="btn btn-default" onclick="closeWindow()"><fmt:message key="edit.popup.cancel"/></button>
+            <button type="button" class="btn btn-primary" onclick="saveForm()"><fmt:message key="edit.popup.save"/></button>
         </div>
         <!-- Modal Dialog for Canceling -->
         <div class="modal fade" id="myModal">
@@ -219,14 +219,14 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Unsaved data</h4>
+                        <h4 class="modal-title"><fmt:message key="edit.popup.unsaved"/></h4>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure you want to cancel? Any unsaved changes will be lost.</p>
+                        <p><fmt:message key="edit.popup.confirmation.message"/></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Continue editing</button>
-                        <button type="button" class="btn btn-primary" onclick="window.close()">Yes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="edit.popup.continue"/></button>
+                        <button type="button" class="btn btn-primary" onclick="window.close()"><fmt:message key="edit.popup.yes"/></button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->

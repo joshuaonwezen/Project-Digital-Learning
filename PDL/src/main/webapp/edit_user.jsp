@@ -82,19 +82,19 @@
                         <input type="hidden" id="userId" name="userId">
                         <div class="form-group" id="formGroupUsername" style="width:100%">
                             <label for="username"><fmt:message key="user.username"/></label>
-                            <input type="text" class="form-control" id="username" name="username" onchange="validateForm()" placeholder="Enter username">
+                            <input type="text" class="form-control" id="username" name="username" onchange="validateForm()" placeholder="<fmt:message key="placeholder.username"/>">
                         </div>
                         <div class="form-group" id="formGroupFirstname" style="width:100%">
                             <label for="firstname"><fmt:message key="user.firstname"/></label>
-                            <input type="text" class="form-control" id="firstname" name="firstname" onchange="validateForm()" placeholder="Enter first name">
+                            <input type="text" class="form-control" id="firstname" name="firstname" onchange="validateForm()" placeholder="<fmt:message key="placeholder.first"/>">
                         </div>
                         <div class="form-group" id="formGroupLastname" style="width:100%">
                             <label for="lastname"><fmt:message key="user.lastname"/></label>
-                            <input type="text" class="form-control" id="lastname" name="lastname" onchange="validateForm()" placeholder="Enter last name">
+                            <input type="text" class="form-control" id="lastname" name="lastname" onchange="validateForm()" placeholder="<fmt:message key="placeholder.last"/>">
                         </div>
                         <div class="form-group" id="formGroupEmailAddress" style="width:100%">
                             <label for="emailAddress"><fmt:message key="user.email"/></label>
-                            <input type="text" class="form-control" id="emailAddress" name="emailAddress" onchange="validateForm()" placeholder="Enter email address">
+                            <input type="text" class="form-control" id="emailAddress" name="emailAddress" onchange="validateForm()" placeholder="<fmt:message key="placeholder.email"/>">
                         </div>
                     </div>
 
@@ -102,12 +102,12 @@
 
                         <div class="form-group" id="formGroupPassword" style="width:100%">
                             <label for="password"><fmt:message key="user.password"/></label>
-                            <input type="password" class="form-control" id="password" name="password" onchange="validateForm()" placeholder="Enter a password">
+                            <input type="password" class="form-control" id="password" name="password" onchange="validateForm()" placeholder="<fmt:message key="placeholder.password"/>">
                         </div>
                         <%--<c:if test='${loggedInIsAdmin == false}'>display: none;</c:if>--%>
                         <div class="form-group" id="formGroupPosition" style="width:100%">
                             <label for="position"><fmt:message key="user.position"/></label>
-                            <input type="text" class="form-control" id="position" name="position" onchange="validateForm()" placeholder="Enter position">
+                            <input type="text" class="form-control" id="position" name="position" onchange="validateForm()" placeholder="<fmt:message key="placeholder.position"/>">
                         </div>
                         <c:if test="${loggedInIsAdmin == true}">
                             <div class="form-group" id="formGroupUserRights" style="width:100%">
@@ -257,14 +257,14 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Unsaved data</h4>
+                        <h4 class="modal-title"><fmt:message key="edit.popup.unsaved"/></h4>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure you want to cancel? Any unsaved changes will be lost.</p>
+                        <p><fmt:message key="edit.popup.confirmation.message"/></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Continue editing</button>
-                        <button type="button" class="btn btn-primary" onclick="window.close()">Yes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="edit.popup.continue"/></button>
+                        <button type="button" class="btn btn-primary" onclick="window.close()"><fmt:message key="edit.popup.yes"/></button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
