@@ -101,7 +101,7 @@
                         </c:if>
                     </div>
                     <h2 style="margin-left: 20px;">
-                        ${loggedInUsername}
+                        ${username}
                     </h2>
                     <div class="container_profile_left">
                         <img id="profileImage" src="$tempGebruiker.imageURL}">

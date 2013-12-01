@@ -40,6 +40,7 @@ public class ProfileHolder extends HttpServlet {
 
             User tempGebruiker = (User) session.load(User.class, id);
             // Zet de lijst met gebruikers en het totaal aantal gebruikers op het request
+            request.setAttribute("username", tempGebruiker.getUsername());
             request.setAttribute("firstname", tempGebruiker.getFirstname());
             request.setAttribute("lastname", tempGebruiker.getLastname());
             request.setAttribute("emailAddress", tempGebruiker.getEmailAddress());
