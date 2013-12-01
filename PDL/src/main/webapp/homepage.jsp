@@ -111,7 +111,6 @@
                                 <td>${tempActivity.title}</td>
                                 <td class="Message">${tempActivity.message}</td>
                             </tr>
-                            </tbody>
                         </c:forEach>
                     </table>
                 </div>
@@ -132,7 +131,6 @@
                                 <td>${tempNewsItem.title}</td>
                                 <td class="Message">${tempNewsItem.description}</td>
                             </tr>
-                            </tbody>
                         </c:forEach>
                     </table>
                 </div>
