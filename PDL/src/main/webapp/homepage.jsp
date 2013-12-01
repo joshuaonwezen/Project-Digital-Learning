@@ -22,11 +22,11 @@
         <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
         <script src="resources/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="resources/bootstrap/dist/js/alert.js"></script>
-        
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home - Info Support</title>
     </head>
-  <body>
+    <body>
         <!--Start nav bar-->
         <nav class="navbar navbar-inverse" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -45,9 +45,9 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="/PDL/homepage">Home</a></li>
                     <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
-                     <c:if test="${loggedInIsAdmin == true}">
+                        <c:if test="${loggedInIsAdmin == true}">
                         <li><a href="/PDL/management">Management</a></li>
-                    </c:if>
+                        </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
@@ -59,6 +59,12 @@
                         </ul>
                     </li>
                 </ul>
+                <form class="navbar-form navbar-right" role="search" id="searchUser" action="searchUser">
+                    <div class="form-group">
+                        <input type="text" name="searchQuery" id="searchQuery" class="form-control" placeholder="Search User">
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                </form>
             </div><!-- /.navbar-collapse -->
         </nav>
         <!-- eof navbar-->
@@ -70,34 +76,34 @@
                 <c:if test="${loggedInIsAdmin == true}">
                     <tr class="ProfileRoleHomepage"><td>Admin</td></tr>
                 </c:if>
-                    <tr class="ChatIconHomepage"><td><input type="image" src="resources/images/ChatIconHomepage.png"></td></tr>
+                <tr class="ChatIconHomepage"><td><input type="image" src="resources/images/ChatIconHomepage.png"></td></tr>
             </table>
         </div>    
 
         <!-- Activity Feed -->
         <div class="ActivityFeed">
-        <table class="table table-hover table-bordered">
-            <tr>
-                <td colspan="4" class="TableHeader"><fmt:message key="activity.feed"/></th>
-            </tr>
-            <tr>
-                <td class="Date"><fmt:message key="activity.date"/></td>
-                <td><fmt:message key="activity.title"/></td>
-                <td><fmt:message key="activity.message"/></td>
-            </tr>
-            <c:forEach var="tempActivity" items="${activityList}" begin="0" end="4">   
-            <tr>
-                <td>${tempActivity.sent}</td>
-                <td>${tempActivity.title}</td>
-                <td class="Message">${tempActivity.message}</td>
-            </tr>
-            </tbody>
-          </c:forEach>
-        </table>
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <td colspan="4" class="TableHeader"><fmt:message key="activity.feed"/></th>
+                </tr>
+                <tr>
+                    <td class="Date"><fmt:message key="activity.date"/></td>
+                    <td><fmt:message key="activity.title"/></td>
+                    <td><fmt:message key="activity.message"/></td>
+                </tr>
+                <c:forEach var="tempActivity" items="${activityList}" begin="0" end="4">   
+                    <tr>
+                        <td>${tempActivity.sent}</td>
+                        <td>${tempActivity.title}</td>
+                        <td class="Message">${tempActivity.message}</td>
+                    </tr>
+                    </tbody>
+                </c:forEach>
+            </table>
         </div>
-        </div>
-        <!-- News Feed -->
-        <div class="NewsFeed">
+    </div>
+    <!-- News Feed -->
+    <div class="NewsFeed">
         <table class="table table-hover table-bordered">
             <tr>
                 <td colspan="4" class="TableHeader"><fmt:message key="news.feed"/></th>
@@ -108,15 +114,15 @@
                 <td><fmt:message key="activity.message"/></td>
             </tr>
             <c:forEach var="tempNewsItem" items="${newsitemList}" begin="0" end="4"> 
-            <tr>
-                <td>${tempNewsItem.updated}</td>
-                <td>${tempNewsItem.title}</td>
-                <td class="Message">${tempNewsItem.description}</td>
-            </tr>
-            </tbody>
-          </c:forEach>
+                <tr>
+                    <td>${tempNewsItem.updated}</td>
+                    <td>${tempNewsItem.title}</td>
+                    <td class="Message">${tempNewsItem.description}</td>
+                </tr>
+                </tbody>
+            </c:forEach>
         </table>
-        </div>
-        </div>
-    </body>
+    </div>
+</div>
+</body>
 </html>
