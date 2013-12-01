@@ -53,7 +53,12 @@
                     <c:if test="${loggedInIsAdmin == true}">
                     <li><a href="/PDL/management">Management</a></li>
                     </c:if>
-                <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.profile"/> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="cv?id=${userId}" target="_blank"><fmt:message key="navbar.cv"/></a></li>
+                    </ul>
+                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -61,7 +66,6 @@
                             <c:if test="${loggedInUserId == userId}">
                             <li><a id="toggle"><fmt:message key="profile.edit"/></a></li>
                             </c:if>
-                        <li><a href="cv?id=${userId}" target="_blank"><fmt:message key="navbar.cv"/></a></li>
                         <li class="divider"></li>
                         <li><a href="#">Help</a></li>
                         <li><a href="#">Report a Problem</a></li>
