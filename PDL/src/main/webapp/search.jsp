@@ -102,10 +102,10 @@
                 </tr>
                 <c:forEach var="user" items="${users}">
                     <tr>
-                        <td>${user.firstname}</td>
-                        <td>${user.lastname}</td>
-                        <td>${user.username}</td>
-                        <td>${user.emailAddress}</td>
+                        <td><a href="/PDL/profile?id=${user.userId}">${user.firstname}</a></td>
+                        <td><a href="/PDL/profile?id=${user.userId}">${user.lastname}</a></td>
+                        <td><a href="/PDL/profile?id=${user.userId}">${user.username}</a></td>
+                        <td><a href="/PDL/profile?id=${user.userId}">${user.emailAddress}</a></td>
                     </tr>
                 </c:forEach>
             </table>
