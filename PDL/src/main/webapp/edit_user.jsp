@@ -104,6 +104,7 @@
                             <label for="password"><fmt:message key="user.password"/></label>
                             <input type="password" class="form-control" id="password" name="password" onchange="validateForm()" placeholder="Enter a password">
                         </div>
+<<<<<<< HEAD
                         
                             <div class="form-group" id="formGroupPosition" style="width:100%; <c:if test='${loggedInIsAdmin == false}'>display: none;</c:if>">
                                 <label for="position"><fmt:message key="user.position"/></label>
@@ -113,6 +114,18 @@
                                 <label for="userRights"><fmt:message key="user.userrights"/></label><br/>
                                 <input type="checkbox" id="isAdmin" name="isAdmin"> Administrator
                             </div>
+=======
+                        <div class="form-group" id="formGroupPosition" style="width:100%">
+                            <label for="position"><fmt:message key="user.position"/></label>
+                            <input type="text" class="form-control" id="position" name="position" onchange="validateForm()" placeholder="Enter position">
+                        </div>
+                            <c:if test="${loggedInIsAdmin == true}">
+                        <div class="form-group" id="formGroupUserRights" style="width:100%">
+                            <label for="userRights"><fmt:message key="user.userrights"/></label><br/>
+                            <input type="checkbox" id="isAdmin" name="isAdmin"> Administrator
+                        </div>
+                            </c:if>
+>>>>>>> 326d8468f5a0e8aee90c595b6993b723a71f785e
                     </div>
             </form>
         </div>
@@ -124,9 +137,15 @@
             document.getElementById('lastname').value = '${lastname}';
             document.getElementById('emailAddress').value = '${emailAddress}';
             document.getElementById('position').value = '${position}';
+                <c:if test="${loggedInIsAdmin == true}">
             document.getElementById('isAdmin').checked = ${isAdmin == true ? true : false};
+                </c:if>
             document.getElementById('password').value = '${password}';
+<<<<<<< HEAD
 
+=======
+               
+>>>>>>> 326d8468f5a0e8aee90c595b6993b723a71f785e
             //close window
             function closeWindow() {
                 console.log('canceling');

@@ -54,7 +54,7 @@
                         <c:if test="${loggedInIsAdmin == true}">
                         <li><a href="/PDL/management">Management</a></li>
                         </c:if>
-                    <li class="dropdown">
+                    <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.profile"/> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="cv?id=${userId}" target="_blank"><fmt:message key="navbar.cv"/></a></li>
