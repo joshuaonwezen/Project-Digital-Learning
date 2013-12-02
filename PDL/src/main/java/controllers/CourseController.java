@@ -30,11 +30,15 @@ public class CourseController extends HttpServlet {
         String uri = request.getRequestURI();
         String action = uri.substring(uri.lastIndexOf("/") + 1);
 
+        String queryString = request.getQueryString();
+        
         //go to the selected course
         if (action.equals("course")){
-            redirect(request, response, "/selected_coursepage.jsp");
             
+            int courseId = Integer.parseInt(queryString.substring(queryString.indexOf("=")+1));
             
+            request.setAttribute("courseId", courseId);
+            redirect(request, response, "/virtualclassroom.jsp");
         }
         
     }

@@ -15,16 +15,19 @@
 <html  lang="${language}">
     <head>
         <!--Company Style-->
-        <link rel="stylesheet" type="text/css" href="resources/css/virtualclassroom.css">
-        <link rel="icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
+        <link rel="stylesheet" type="text/css" href="../resources/css/virtualclassroom.css">
+        <link rel="icon" href="../resources/images/favicon.ico" type="image/x-icon"></link>
         <!-- Bootstrap-->
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
-        <script src="resources/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="resources/bootstrap/dist/js/alert.js"></script>
+        <link rel="stylesheet" href="../resources/bootstrap/dist/css/bootstrap.min.css">
+        <script src="../resources/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="../resources/bootstrap/dist/js/alert.js"></script>
+        <!-- Chat -->
+        <script src="http://localhost:1025/socket.io/socket.io.js"></script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home - Info Support</title>
+
     </head>
     <body>
         <!--Start nav bar-->
@@ -37,7 +40,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/PDL/homepage"><img src="resources/images/Logo.png"></a>
+                <a class="navbar-brand" href="/PDL/homepage"><img src="../resources/images/Logo.png"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -77,9 +80,99 @@
                 </form>
             </div>
         </nav>
-                
-        <div id="stream">
-           <embed width="768" height="456" src="http://www.focusonthefamily.com/family/JWPlayer/mediaplayer.swf" flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file=test.flv&streamer=rtmp://31.186.175.82/live" />
+
+        <div id="stream" style="margin-left:5px">
+-           <embed width="768" height="456" src="http://www.focusonthefamily.com/family/JWPlayer/mediaplayer.swf" flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file=test.flv&streamer=rtmp://31.186.175.82/live" />
+        <div id="chat">
+            <div class="panel panel-default" style="width:40%;margin-left:750px;height:300px; overflow: scroll;overflow-x: hidden">
+                <div class="panel-body" style="width:106%;margin-left:-15px;margin-top:-16px;">
+                    <table class="table table-striped" id="chatOutput" name="chatOutput">
+                    </table>
+                </div>
+            </div>
+            <form class="form-inline" role="form">
+                <div class="form-group" id="formGroupChatInput" style="width:40%;margin-left:750px;height:300px;">
+                    <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" style="width:88%" placeholder="Enter a message">
+                    <button type="button" disabled class="btn btn-primary" id="buttonSent" name="buttonSent" onClick="sentMessage()">Sent</button>
+                </div>
+            </form>
         </div>
+        <script>
+            var users = new Array(); // this var holds all the users that are currently online
+            try {
+                var socket = io.connect('http://localhost:1025');
+            }
+            catch (error) {
+                // this error states that a connection cannot be established
+                // disable the chatInput to show this
+                if (error.toString() === 'ReferenceError: io is not defined') {
+                    document.getElementById('chatInput').disabled = true;
+                    document.getElementById('chatInput').placeholder = 'Cannot establish connection to the chat server';
+                }
+            }
+            // join the room on connect
+            socket.on('connect', function(data) {
+                var courseId = ${courseId};
+                console.log('welcome to chatroom: ' + courseId);
+
+                socket.emit('join room', 'room ' + courseId);
+                socket.emit('userJoined', '${loggedInUsername}');
+
+
+                console.log('room joined');
+            });
+
+            // receiving a join
+            socket.on('userJoined', function(data) {
+                //update the output box
+                $("#chatOutput").append(data + ' joined the chat\n');
+                users.push(data);
+
+                console.log('currently users active: ');
+                for (var i = 0; i < users.length; i++) {
+                    console.log(users[i]);
+                }
+            });
+
+            // receiving a message
+            socket.on('message', function(data) {
+                //update the output box
+                addRow(data);
+
+                console.log('message received');
+            });
+
+            function sentMessage() {
+                var message = '${loggedInUsername}' + ':' + document.getElementById('chatInput').value;
+                // emit the message
+                socket.emit('message', message);
+
+                // update the output and input boxes
+                addRow(message);
+                document.getElementById('chatInput').value = '';
+                toggleSentButton();
+                console.log('message sent');
+            }
+
+            // add a row to the table which contains a message
+            function addRow(data) {
+                var table = document.getElementById('chatOutput');
+
+                var rowCount = table.rows.length;
+                var row = table.insertRow(rowCount);
+                var cell1 = row.insertCell(0);
+                cell1.innerHTML = data;
+            }
+
+            // block the sent button if there is no input in the chatInput box
+            function toggleSentButton() {
+                if (document.getElementById('chatInput').value.length > 0) {
+                    document.getElementById('buttonSent').disabled = false;
+                }
+                else {
+                    document.getElementById('buttonSent').disabled = true;
+                }
+            }
+        </script>
     </body>
 </html>
