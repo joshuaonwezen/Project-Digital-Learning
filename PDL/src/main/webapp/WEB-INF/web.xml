@@ -77,9 +77,18 @@
         <servlet-name>ManageCourseController</servlet-name>
         <url-pattern>/enroll</url-pattern>
     </servlet-mapping>
-        <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ManageCourseController</servlet-name>
         <url-pattern>/searchCourse</url-pattern>
+    </servlet-mapping>
+    <!-- Course -->
+    <servlet>
+        <servlet-name>CourseController</servlet-name>
+        <servlet-class>controllers.CourseController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CourseController</servlet-name>
+        <url-pattern>/courses/course</url-pattern>
     </servlet-mapping>
     <!-- News Item Management -->
     <servlet>

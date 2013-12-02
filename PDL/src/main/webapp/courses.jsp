@@ -109,7 +109,7 @@
                                                <h4><small><fmt:message key="course.teacher"/> ${course.owner.firstname} ${course.owner.lastname}</small></h4>
                                                <p>${course.description}</p>
                                                <button id="buttonCourseEnroll${course.courseId}" type="submit" class="btn btn-primary"><fmt:message key="course.enroll"/></buton>
-                                                   <button id="buttonCourseOpen${course.courseId}" type="button" class="btn btn-success"><fmt:message key="course.go"/></buton>
+                                                   <button id="buttonCourseOpen${course.courseId}" type="button" class="btn btn-success" onClick="openCourse(${course.courseId})"><fmt:message key="course.go"/></buton>
                                                        <c:choose>
                                                            <c:when test="${userEnrolledCoursesSize != 0}">
                                                                <script>var found = false;</script>
@@ -160,6 +160,12 @@
                                            else if ('${coursesSizeResults}' > 0) {
                                                document.getElementById('validationAlert').innerHTML = '<div class="alert alert-info"><a class="close" data-dismiss="alert">×</a><strong>Results:</strong> <u>' + coursesSize + '</u> Course(s) match your search.</div>';
                                            }
+                                           
+                                           //function for opening the course page
+                                           function openCourse(courseId){
+                                               window.open('/PDL/courses/course?courseId=' + courseId,'_self',false);
+                                           }
+                                           
                                        </script>
 
                                        </body>
