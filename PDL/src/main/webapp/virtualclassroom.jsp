@@ -23,7 +23,7 @@
         <script src="../resources/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="../resources/bootstrap/dist/js/alert.js"></script>
         <!-- Chat -->
-        <script src="http://localhost:1025/socket.io/socket.io.js"></script>
+        <script src="http://31.186.175.82:5001/socket.io/socket.io.js"></script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home - Info Support</title>
@@ -80,9 +80,8 @@
                 </form>
             </div>
         </nav>
-
         <div id="stream" style="margin-left:5px">
--           <embed width="768" height="456" src="http://www.focusonthefamily.com/family/JWPlayer/mediaplayer.swf" flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file=test.flv&streamer=rtmp://31.186.175.82/live" />
+           <embed width="768" height="456" src="http://www.focusonthefamily.com/family/JWPlayer/mediaplayer.swf" flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file=test.flv&streamer=rtmp://31.186.175.82/live" />
         <div id="chat">
             <div class="panel panel-default" style="width:40%;margin-left:750px;height:300px; overflow: scroll;overflow-x: hidden">
                 <div class="panel-body" style="width:106%;margin-left:-15px;margin-top:-16px;">
@@ -96,11 +95,16 @@
                     <button type="button" disabled class="btn btn-primary" id="buttonSent" name="buttonSent" onClick="sentMessage()">Sent</button>
                 </div>
             </form>
+            
+             <div class="panel panel-default" style="width:14%;margin-left:350px;height:300px; overflow: scroll;overflow-x: hidden">
+                <table class="table table-condensed" id="userList" style="width:100%;margin-top:-2px;">
+            </table>
+             </div>
+            
         </div>
         <script>
-            var users = new Array(); // this var holds all the users that are currently online
             try {
-                var socket = io.connect('http://localhost:1025');
+                var socket = io.connect('http://31.186.175.82:5001');
             }
             catch (error) {
                 // this error states that a connection cannot be established
@@ -117,27 +121,48 @@
 
                 socket.emit('join room', 'room ' + courseId);
                 socket.emit('userJoined', '${loggedInUsername}');
-
-
+                
                 console.log('room joined');
+            });
+            
+             //receiving userlist
+            var users = new Array; // this variable holds all the users that are currently connected to this room
+            socket.on('userList', function(data) {
+                console.log('users ' + data);
+                
+                //first make sure that we don't add duplicate users to the list
+                for (var i=0;i<data.length;i++){
+                    var found = false;
+                    for (var j=0;j<users.length;j++){
+                        if (data[i] === users[j]){
+                            found = true;
+                            console.log('found duplicate');
+                        }
+                    }
+                    if (!found){    // if not found it means that this user is not already in our userslist
+                        users.push(data[i]);
+                        found=false;
+                        console.log('found no duplicate');
+                    }
+                }
+                for (var i=0;i<users.length;i++){
+                    addRowUserList(users[i]);
+                }
+                
+                
+                console.log('userList received: ');
             });
 
             // receiving a join
             socket.on('userJoined', function(data) {
                 //update the output box
-                $("#chatOutput").append(data + ' joined the chat\n');
-                users.push(data);
-
-                console.log('currently users active: ');
-                for (var i = 0; i < users.length; i++) {
-                    console.log(users[i]);
-                }
+                //$("#chatOutput").append(data + ' joined the chat\n');
             });
 
             // receiving a message
             socket.on('message', function(data) {
                 //update the output box
-                addRow(data);
+                addRowChatOutput(data);
 
                 console.log('message received');
             });
@@ -148,14 +173,14 @@
                 socket.emit('message', message);
 
                 // update the output and input boxes
-                addRow(message);
+                addRowChatOutput(message);
                 document.getElementById('chatInput').value = '';
                 toggleSentButton();
                 console.log('message sent');
             }
 
-            // add a row to the table which contains a message
-            function addRow(data) {
+            // add a row to the table which contains the messages
+            function addRowChatOutput(data) {
                 var table = document.getElementById('chatOutput');
 
                 var rowCount = table.rows.length;
@@ -164,6 +189,27 @@
                 cell1.innerHTML = data;
             }
 
+            // add a row to the table which contains the users
+            function addRowUserList(data) {
+                var table = document.getElementById('userList');
+
+                var rowCount = table.rows.length;
+                
+                //prevent duplicate entries
+                var found = false;
+                for (var i=0;i<rowCount;i++){
+                    var rowData = table.rows[i].cells[0].innerHTML;
+                    if (data === rowData){
+                        found = true;
+                    }
+                }
+                if (!found){
+                    var row = table.insertRow(rowCount);
+                    row.className = "success"; // make the row green
+                    var cell1 = row.insertCell(0);
+                    cell1.innerHTML = data;
+                }
+            }
             // block the sent button if there is no input in the chatInput box
             function toggleSentButton() {
                 if (document.getElementById('chatInput').value.length > 0) {
