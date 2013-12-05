@@ -83,9 +83,9 @@
 
 
             <!--<div class="container">-->
-            <table class="table table-hover table-bordered" end="5">
+            <table class="table table-hover table-bordered" end="6">
                 <tr>
-                    <th colspan="4" class="TableHeader">
+                    <th colspan="6" class="TableHeader">
                 <form class="navbar-form navbar-left" role="search" id="searchUser" action="searchUser">
                     <div class="form-group">
                         <input type="text" name="searchQuery" id="searchQuery" class="form-control" placeholder="<fmt:message key="searchbar.search.user"/>">
@@ -99,6 +99,7 @@
                     <td><fmt:message key="search.lastname"/></td>
                     <td><fmt:message key="search.username"/></td>
                     <td><fmt:message key="search.email"/></td>
+                    <td>CV</td>
                 </tr>
                 <c:forEach var="user" items="${users}">
                     <tr>
@@ -106,6 +107,7 @@
                         <td><a href="/PDL/profile?id=${user.userId}">${user.lastname}</a></td>
                         <td><a href="/PDL/profile?id=${user.userId}">${user.username}</a></td>
                         <td><a href="/PDL/profile?id=${user.userId}">${user.emailAddress}</a></td>
+                        <td><a href="/PDL/cv?id=${user.userId}">CV</a></td>
                     </tr>
                 </c:forEach>
             </table>
