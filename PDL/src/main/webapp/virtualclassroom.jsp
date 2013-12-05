@@ -80,27 +80,38 @@
                 </form>
             </div>
         </nav>
-        <div id="stream" style="margin-left:5px">
-           <embed width="768" height="456" src="http://www.focusonthefamily.com/family/JWPlayer/mediaplayer.swf" flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file=test.flv&streamer=rtmp://31.186.175.82/live" />
-        <div id="chat">
-            <div class="panel panel-default" style="width:40%;margin-left:750px;height:300px; overflow: scroll;overflow-x: hidden">
-                <div class="panel-body" style="width:106%;margin-left:-15px;margin-top:-16px;">
-                    <table class="table table-striped" id="chatOutput" name="chatOutput">
+        <div id="main">
+            <div id="main_top">
+                <div id="stream">
+                    <embed width="100%" height="500px" src="http://www.focusonthefamily.com/family/JWPlayer/mediaplayer.swf" flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file=test.flv&streamer=rtmp://31.186.175.82/live" />
+                </div>
+            </div>
+            <div id="main_left">
+                <div class="panel panel-default chatOutputStyle">
+                    <div class="panel-body" style="width:106%;margin-left:-15px;margin-top:-16px;">
+                        <table class="table table-striped" id="chatOutput" name="chatOutput">
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="main_right">
+                <div class="panel panel-default users">
+                    <table class="table table-condensed" id="userList" style="width:100%;margin-top:-2px;">
                     </table>
                 </div>
             </div>
-            <form class="form-inline" role="form">
-                <div class="form-group" id="formGroupChatInput" style="width:40%;margin-left:750px;height:300px;">
-                    <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" style="width:88%" placeholder="Enter a message">
-                    <button type="button" disabled class="btn btn-primary" id="buttonSent" name="buttonSent" onClick="sentMessage()">Sent</button>
-                </div>
-            </form>
-            
-             <div class="panel panel-default" style="width:14%;margin-left:350px;height:300px; overflow: scroll;overflow-x: hidden">
-                <table class="table table-condensed" id="userList" style="width:100%;margin-top:-2px;">
-            </table>
-             </div>
-            
+            <div id="maint_bot">
+                <form class="form-inline" role="form">
+                    <div class="" id="formGroupChatInput">
+                        <div class="chatInput">
+                            <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" placeholder="Enter a message">
+                        </div>
+                        <div class="chatSend">
+                            <button style="width: 190px;" class="btn btn-default" disabled id="buttonSent" name="buttonSent" onClick="sentMessage()">Send</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
         <script>
             try {
@@ -121,35 +132,35 @@
 
                 socket.emit('join room', 'room ' + courseId);
                 socket.emit('userJoined', '${loggedInUsername}');
-                
+
                 console.log('room joined');
             });
-            
-             //receiving userlist
+
+            //receiving userlist
             var users = new Array; // this variable holds all the users that are currently connected to this room
             socket.on('userList', function(data) {
                 console.log('users ' + data);
-                
+
                 //first make sure that we don't add duplicate users to the list
-                for (var i=0;i<data.length;i++){
+                for (var i = 0; i < data.length; i++) {
                     var found = false;
-                    for (var j=0;j<users.length;j++){
-                        if (data[i] === users[j]){
+                    for (var j = 0; j < users.length; j++) {
+                        if (data[i] === users[j]) {
                             found = true;
                             console.log('found duplicate');
                         }
                     }
-                    if (!found){    // if not found it means that this user is not already in our userslist
+                    if (!found) {    // if not found it means that this user is not already in our userslist
                         users.push(data[i]);
-                        found=false;
+                        found = false;
                         console.log('found no duplicate');
                     }
                 }
-                for (var i=0;i<users.length;i++){
+                for (var i = 0; i < users.length; i++) {
                     addRowUserList(users[i]);
                 }
-                
-                
+
+
                 console.log('userList received: ');
             });
 
@@ -194,16 +205,16 @@
                 var table = document.getElementById('userList');
 
                 var rowCount = table.rows.length;
-                
+
                 //prevent duplicate entries
                 var found = false;
-                for (var i=0;i<rowCount;i++){
+                for (var i = 0; i < rowCount; i++) {
                     var rowData = table.rows[i].cells[0].innerHTML;
-                    if (data === rowData){
+                    if (data === rowData) {
                         found = true;
                     }
                 }
-                if (!found){
+                if (!found) {
                     var row = table.insertRow(rowCount);
                     row.className = "success"; // make the row green
                     var cell1 = row.insertCell(0);

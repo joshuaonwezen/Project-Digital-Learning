@@ -1,15 +1,80 @@
 /*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Author: Shahin Mokhtar
 */
-/* 
-    Created on : 2-dec-2013, 11:38:32
-    Author     : Joshua
-*/
+html {
+    width: 100%;
+    height: 100%;
+    background-color:#FFF;
+}
+body {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    font-family:"lucida sans", arial, sans-serif;
+    padding: 0px;
+    margin-top: 0px;
+    font-size: .78em;
+}
+a {
+    text-decoration: none;
+    color: white;
+}
+p {
+    margin: 5px;
+    padding: 1px 1px 16px 0px;
+    line-height: 1.7em;
+}
 
-#stream {
-    float:left;
-    margin-left:100px;
-    margin-top:50px;
+#main {
+    width: 1000px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    overflow:hidden;
+}
+#main_top {
+    width: 100%;
+    height: auto;
+    overflow:hidden;
+}
+#main_left {
+    width: 800px;
+    height: auto;
+    float: left;
+    overflow:hidden;
+}
+#main_right {
+    width: 190px;
+    float: right;
+    margin-left: 10px;
+    overflow:hidden;
+}
+#main_bot {
+    width: 100%;
+    height: auto;
+    overflow:hidden;
+}
+.users {
+    width:100%;
+    height:300px; 
+    overflow: scroll;
+    overflow-x: hidden;
+}
+.chatOutputStyle {
+    width:100%;
+    height:300px;
+    overflow: scroll;overflow-x: hidden;
+}
+.chatInput {
+    width: 800px;
+    height: auto;
+    float: left;
+}
+.chatSend {
+    width: 190px;
+    float: right;
+    margin-left: 10px;
+}
+.VideoStream {
+    
 }
