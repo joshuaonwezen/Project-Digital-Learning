@@ -6,20 +6,21 @@ package models;
  */
 public class ProjectForm {
 
-    private String projectId, dateFrom, dateTill, name, profession, description;
+    private String projectId, dateFrom, dateTill, name, profession, description, URL;
 
     public ProjectForm() {
 
     }
 
     public ProjectForm(String projectId, String dateFrom, String dateTill,
-            String profession, String description) {
+            String profession, String description, String URL) {
         this.projectId = projectId;
         this.dateFrom = dateFrom;
         this.dateTill = dateTill;
         this.name = name;
         this.profession = profession;
         this.description = description;
+        this.URL = URL;
     }
 
     /**
@@ -104,6 +105,20 @@ public class ProjectForm {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * @return the URL
+     */
+    public String getURL() {
+        return URL;
+    }
+
+    /**
+     * @param URL the URL to set
+     */
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 
 }

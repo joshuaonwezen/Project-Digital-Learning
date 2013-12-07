@@ -25,7 +25,7 @@ public class GenericValidator {
         
         //ProfileValidators
         BASE("^[a-zA-Z0-9_ ]{1,25}$"),
-        DESC("^[a-zA-Z0-9_ ]{1,300}$");
+        DESC("^[a-zA-Z0-9_ ]{1,500}$");
         private String regex;
         
         Regex(String regex){

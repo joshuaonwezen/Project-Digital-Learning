@@ -107,7 +107,7 @@
                         </tr>
                         <c:forEach var="tempActivity" items="${activityList}" begin="0" end="4">   
                             <tr>
-                                <td>${tempActivity.sent}</td>
+                                <td><fmt:formatDate value="${tempActivity.sent}" pattern="dd-MM-yyyy" /></td>
                                 <td>${tempActivity.title}</td>
                                 <td class="Message">${tempActivity.message}</td>
                             </tr>
@@ -127,7 +127,7 @@
                         </tr>
                         <c:forEach var="tempNewsItem" items="${newsitemList}" begin="0" end="4"> 
                             <tr>
-                                <td>${tempNewsItem.updated}</td>
+                                <td><fmt:formatDate value="${tempNewsItem.updated}" pattern="dd-MM-yyyy" /></td>
                                 <td>${tempNewsItem.title}</td>
                                 <td class="Message">${tempNewsItem.description}</td>
                             </tr>

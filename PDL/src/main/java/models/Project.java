@@ -29,8 +29,10 @@ public class Project implements Serializable {
     private String name;
     @Column(columnDefinition = "varchar(25)")
     private String profession;
-    @Column(columnDefinition = "varchar(300)")
+    @Column(columnDefinition = "varchar(500)")
     private String description;
+    @Column(columnDefinition = "varchar(100)")
+    private String URL;
 
     @ManyToOne
     private User user;
@@ -38,13 +40,14 @@ public class Project implements Serializable {
     public Project() {
     }
 
-    public Project(long projectId, Date dateFrom, Date dateTill, String name, String profession, String description) {
+    public Project(long projectId, Date dateFrom, Date dateTill, String name, String profession, String description, String URL) {
         this.setProjectId(projectId);
         this.setDateFrom(dateFrom);
         this.setDateTill(dateTill);
         this.setName(name);
         this.setProfession(profession);
         this.setDescription(description);
+        this.setURL(URL);
     }
 
     /* Getters en setters voor de verschillende attributen van het Model */
@@ -71,7 +74,7 @@ public class Project implements Serializable {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = "";
 
-        formattedDate = sdf.format(dateFrom);
+        formattedDate = sdf.format(getDateFrom());
 
         System.out.println("RETURING: " + formattedDate);
         return formattedDate;
@@ -88,7 +91,7 @@ public class Project implements Serializable {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = "";
 
-        formattedDate = sdf.format(dateTill);
+        formattedDate = sdf.format(getDateTill());
 
         System.out.println("RETURING: " + formattedDate);
         return formattedDate;
@@ -162,6 +165,20 @@ public class Project implements Serializable {
      */
     public void setUser(User user) {
         this.user = user;
+    }
+
+    /**
+     * @return the URL
+     */
+    public String getURL() {
+        return URL;
+    }
+
+    /**
+     * @param URL the URL to set
+     */
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 
     

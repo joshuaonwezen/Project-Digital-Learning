@@ -29,7 +29,7 @@ public class ProjectValidator {
         if (GenericValidator.isEmpty(ProjectForm.getDescription())) {
             errors.add("Description may not be empty. ");
         } else if (!GenericValidator.isValid(ProjectForm.getDescription(), Regex.DESC)) {
-            errors.add("Description must be 1-300 characters in size");
+            errors.add("Description must be 1-500 characters in size");
         }
 
         return errors;

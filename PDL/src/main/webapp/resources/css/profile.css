@@ -55,18 +55,35 @@ p {
     float: right;
     margin-left: 10px;
 }
-.boxRight {
-    width: 240px;
+.side_box {
+    width: 250px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    overflow: hidden;
 }
-.boxRight_left {
-    width: 160px;
+.side_left {
+    width: 200px;
+    height: 18px;
     float: left;
+    overflow: hidden;
 }
-.boxRight_right {
-    width: 80px;
+.side_right {
+    width: 40px;
+    height: 18px;
     float: right;
+    margin-left: 10px;
+    overflow: hidden;
+}
+.skillButtonPlace {
+    position: relative; 
+    top: -11px;
+    left: -4px;
+}
+.skillButtonSize {
+    width: 10px;
+    height: 10px;
 }
 .rightButton {
     float: right;
@@ -111,18 +128,31 @@ table {
 }
 .top {
     margin-bottom: 5px;
+    overflow: hidden;
+}
+.top_left {
+    width: 200px;
+    float: left;
+    overflow: hidden;
+}
+.top_right {
+    width: 350px;
+    float: right;
+    overflow: hidden;
 }
 .bottom {
     margin-bottom: 15px;
+    overflow: hidden;
 }
-.marginTiny {
-    margin-left: 0px;
+.bottom_left {
+    width: 200px;
+    float: left;
+    overflow: hidden;
 }
-.marginSmall {
-    margin-left: 25px;
-}
-.marginBig {
-    margin-left: 93px;
+.bottom_right {
+    width: 350px;
+    float: right;
+    overflow: hidden;
 }
 #profileImage {
     width: 200px;
@@ -133,7 +163,6 @@ table {
     border-width: 3px;
     border-color: #FFF;
 }
-// navigation 
 
 .hidden {
     display: none;
@@ -141,57 +170,8 @@ table {
 .unhidden {
     display: block;
 }
-/*
-End author: Shahin Mokhtar
-*/
-.loginform {
-    padding-top:5%;
-    padding-left:44%;
-}
 
-.box-level{
-    font: normal 100% 'century gothic', arial, sans-serif;        
-    text-align:right;
-    margin-right: 10px;
-}
-.box-name{
-    font: bold 125% 'century gothic', arial, sans-serif;
-    margin-left: 20px;
-
-}
-
-.box-owner{
-    font: normal 100% 'century gothic', arial, sans-serif;        
-    text-align:left;
-    margin-left: 20px;
-}
-.box-image{
-    width:100px;
-    height:100px;
-    float:left;
-    margin-left: 10px;
-    margin-right:10px;
-}
-.box-button{
-    text-align: right;
-    margin-right:10px;
-}
-
-.box-course {
-
-    background-repeat:no-repeat;
-    width:60%;
-    height:210px;
-    background:#FFF;
-    margin:50px auto;
-}
-
-.effect1{
-    -webkit-box-shadow: 0 10px 6px -6px #777;
-    -moz-box-shadow: 0 10px 6px -6px #777;
-    box-shadow: 0 10px 6px -6px #777;
-}
--h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {
     font: normal 179%'century gothic', arial, sans-serif;
     color: #43423F;
     margin: 0 0 15px 0;
@@ -218,3 +198,6 @@ h5, h6 {
 h6 {
     color: #362C20;
 }
+/*
+End author: Shahin Mokhtar
+*/

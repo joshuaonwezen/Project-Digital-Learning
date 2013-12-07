@@ -129,168 +129,237 @@
                     </div>
                 </div>
 
-                <div class="container_profile">
-                    <div class="editHidden rightButton">
-                        <c:if test="${loggedInUserId == userId}">
-                            <button class="btn btn-default" target="_blank" onclick="return windowpop('work/edit?userId=', 800, 500)">+</button>
-                        </c:if>
-                    </div>
-                    <h3><fmt:message key="profile.workexperience"/></h3>
-                    <c:forEach var="tempWork" items="${workList}">
-                        <div class="box">
-                            <div class="box_left">
-                                <div class="top">
-                                    <span class="marginTiny">${tempWork.dateFrom} - ${tempWork.dateTill}</span>
-                                    <span class="marginSmall">${tempWork.name}</span>
-                                    <span class="marginSmall">${tempWork.profession}</span>
-                                </div>
-                                <div class="bottom">
-                                    <span class="marginBig">${tempWork.description}</span>
-                                </div>
-                            </div>
-                            <div class="box_right">
-                                <div class="editHidden">
-                                    <c:if test="${loggedInUserId == userId}">
-                                        <button class="btn btn-default" target="_blank" onclick="return windowpop('work/edit?id=${tempWork.workId}', 800, 500)">Edit</button>
-                                        <a href="javascript:if(confirm('Delete?'))
-                                           window.location='work/delete?id=${tempWork.workId}';">
-                                            <button class="btn btn-default">x</button>
-                                        </a>
-                                    </c:if>
-                                </div>
-                            </div>
+                <c:if test="${workList.size() < 1}">
+                    <div class="editHidden container_profile">
+                        <div class="editHidden rightButton">
+                            <c:if test="${loggedInUserId == userId}">
+                                <button class="btn btn-default" target="_blank" onclick="return windowpop('work/edit?userId=', 800, 500)">+</button>
+                            </c:if>
                         </div>
-                    </c:forEach>
-                </div>
+                        <h3><fmt:message key="profile.workexperience"/></h3>
+                    </div>
+                </c:if>
+                <c:if test="${workList.size() > 0}">
+                    <div class="container_profile">
+                        <div class="editHidden rightButton">
+                            <c:if test="${loggedInUserId == userId}">
+                                <button class="btn btn-default" target="_blank" onclick="return windowpop('work/edit?userId=', 800, 500)">+</button>
+                            </c:if>
+                        </div>
+                        <h3><fmt:message key="profile.workexperience"/></h3>
+                        <c:forEach var="tempWork" items="${workList}">
+                            <div class="box">
+                                <div class="box_left">
+                                    <div class="top">
+                                        <div class="top_left">
+                                            <fmt:formatDate value="${tempWork.dateFrom}" pattern="dd-MM-yyyy" /> - <fmt:formatDate value="${tempWork.dateTill}" pattern="dd-MM-yyyy" />
+                                        </div>
+                                        <div class="top_right">
+                                            ${tempWork.name} - 
+                                            ${tempWork.profession}
+                                        </div>
+                                    </div>
+                                    <div class="bottom">
+                                        <div class="bottom_left"></div>
+                                        <div class="bottom_right">
+                                            ${tempWork.description}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box_right">
+                                    <div class="editHidden">
+                                        <c:if test="${loggedInUserId == userId}">
+                                            <button class="btn btn-default" target="_blank" onclick="return windowpop('work/edit?id=${tempWork.workId}', 800, 500)">Edit</button>
+                                            <a href="javascript:if(confirm('Delete?'))
+                                               window.location='work/delete?id=${tempWork.workId}';">
+                                                <button class="btn btn-default">x</button>
+                                            </a>
+                                        </c:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </c:if>
 
-                <div class="container_profile">
-                    <div class="editHidden rightButton">
-                        <c:if test="${loggedInUserId == userId}">
-                            <button class="btn btn-default" target="_blank" onclick="return windowpop('education/edit?userId=', 800, 500)">+</button>
-                        </c:if>
-                    </div>
-                    <h3><fmt:message key="profile.education"/></h3>
-                    <c:forEach var="tempEducation" items="${educationList}">
-                        <div class="box">
-                            <div class="box_left">
-                                <div class="top">
-                                    <span class="marginTiny">${tempEducation.dateFrom} - ${tempEducation.dateTill}</span>
-                                    <span class="marginSmall">${tempEducation.name}</span>
-                                    <span class="marginSmall">${tempEducation.profession}</span>
-                                </div>
-                                <div class="bottom">
-                                    <span class="marginBig">${tempEducation.description}</span>
-                                </div>
-                            </div>
-                            <div class="box_right">
-                                <div class="editHidden">
-                                    <c:if test="${loggedInUserId == userId}">
-                                        <button class="btn btn-default" target="_blank" onclick="return windowpop('education/edit?id=${tempEducation.educationId}', 800, 500)">Edit</button>
-                                        <a href="javascript:if(confirm('Delete?'))
-                                           window.location='education/delete?id=${tempEducation.educationId}';">
-                                            <button class="btn btn-default">x</button>
-                                        </a>
-                                    </c:if>
-                                </div>
-                            </div>
+                <c:if test="${educationList.size() < 1}">
+                    <div class="editHidden container_profile">
+                        <div class="editHidden rightButton">
+                            <c:if test="${loggedInUserId == userId}">
+                                <button class="btn btn-default" target="_blank" onclick="return windowpop('education/edit?userId=', 800, 500)">+</button>
+                            </c:if>
                         </div>
-                    </c:forEach>
-                </div>
+                        <h3><fmt:message key="profile.education"/></h3>
+                    </div>
+                </c:if>
+                <c:if test="${educationList.size() > 0}">
+                    <div class="container_profile">
+                        <div class="editHidden rightButton">
+                            <c:if test="${loggedInUserId == userId}">
+                                <button class="btn btn-default" target="_blank" onclick="return windowpop('education/edit?userId=', 800, 500)">+</button>
+                            </c:if>
+                        </div>
+                        <h3><fmt:message key="profile.education"/></h3>
+                        <c:forEach var="tempEducation" items="${educationList}">
+                            <div class="box">
+                                <div class="box_left">
+                                    <div class="top">
+                                        <div class="top_left">
+                                            <fmt:formatDate value="${tempEducation.dateFrom}" pattern="dd-MM-yyyy" /> - <fmt:formatDate value="${tempEducation.dateTill}" pattern="dd-MM-yyyy" />
+                                        </div>
+                                        <div class="top_right">
+                                            ${tempEducation.name} - 
+                                            ${tempEducation.profession}
+                                        </div>
+                                    </div>
+                                    <div class="bottom">
+                                        <div class="bottom_left"></div>
+                                        <div class="bottom_right">
+                                            ${tempEducation.description}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box_right">
+                                    <div class="editHidden">
+                                        <c:if test="${loggedInUserId == userId}">
+                                            <button class="btn btn-default" target="_blank" onclick="return windowpop('education/edit?id=${tempEducation.educationId}', 800, 500)">Edit</button>
+                                            <a href="javascript:if(confirm('Delete?'))
+                                               window.location='education/delete?id=${tempEducation.educationId}';">
+                                                <button class="btn btn-default">x</button>
+                                            </a>
+                                        </c:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </c:if>
 
-                <div class="container_profile">
-                    <div class="editHidden rightButton">
-                        <c:if test="${loggedInUserId == userId}">
-                            <button class="btn btn-default" target="_blank" onclick="return windowpop('project/edit?userId=', 800, 500)">+</button>
-                        </c:if>
-                    </div>
-                    <h3><fmt:message key="profile.projects"/></h3>
-                    <c:forEach var="tempProject" items="${projectList}">
-                        <div class="box">
-                            <div class="box_left">
-                                <div class="top">
-                                    <span class="marginTiny">${tempProject.dateFrom} - ${tempProject.dateTill}</span>
-                                    <span class="marginSmall">${tempProject.name}</span>
-                                    <span class="marginSmall">${tempProject.profession}</span>
-                                </div>
-                                <div class="bottom">
-                                    <span class="marginBig">${tempProject.description}</span>
-                                </div>
-                            </div>
-                            <div class="box_right">
-                                <div class="editHidden">
-                                    <c:if test="${loggedInUserId == userId}">
-                                        <button class="btn btn-default" target="_blank" onclick="return windowpop('project/edit?id=${tempProject.projectId}', 800, 500)">Edit</button>
-                                        <a href="javascript:if(confirm('Delete?'))
-                                           window.location='project/delete?id=${tempProject.projectId}';">
-                                            <button class="btn btn-default">x</button>
-                                        </a>
-                                    </c:if>
-                                </div>
-                            </div>
+                <c:if test="${projectList.size() < 1}">
+                    <div class="editHidden container_profile">
+                        <div class="editHidden rightButton">
+                            <c:if test="${loggedInUserId == userId}">
+                                <button class="btn btn-default" target="_blank" onclick="return windowpop('project/edit?userId=', 800, 500)">+</button>
+                            </c:if>
                         </div>
-                    </c:forEach>
-                </div>
+                        <h3><fmt:message key="profile.projects"/></h3>
+                    </div>
+                </c:if>
+                <c:if test="${projectList.size() > 0}">
+                    <div class="container_profile">
+                        <div class="editHidden rightButton">
+                            <c:if test="${loggedInUserId == userId}">
+                                <button class="btn btn-default" target="_blank" onclick="return windowpop('project/edit?userId=', 800, 500)">+</button>
+                            </c:if>
+                        </div>
+                        <h3><fmt:message key="profile.projects"/></h3>
+                        <c:forEach var="tempProject" items="${projectList}">
+                            <div class="box">
+                                <div class="box_left">
+                                    <div class="top">
+                                        <div class="top_left">
+                                            <fmt:formatDate value="${tempProject.dateFrom}" pattern="dd-MM-yyyy" /> - <fmt:formatDate value="${tempProject.dateTill}" pattern="dd-MM-yyyy" />
+                                        </div>
+                                        <div class="top_right">
+                                            ${tempProject.name} - 
+                                            ${tempProject.profession}
+                                        </div>
+                                    </div>
+                                    <div class="bottom">
+                                        <div class="bottom_left"></div>
+                                        <div class="bottom_right">
+                                            ${tempProject.description}
+                                            <p>
+                                                ${tempProject.URL}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box_right">
+                                    <div class="editHidden">
+                                        <c:if test="${loggedInUserId == userId}">
+                                            <button class="btn btn-default" target="_blank" onclick="return windowpop('project/edit?id=${tempProject.projectId}', 800, 500)">Edit</button>
+                                            <a href="javascript:if(confirm('Delete?'))
+                                               window.location='project/delete?id=${tempProject.projectId}';">
+                                                <button class="btn btn-default">x</button>
+                                            </a>
+                                        </c:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </c:if>
             </div>
 
             <div id="main_right">
-                <div class="container_profile">
-                    <h3><fmt:message key="profile.completed.courses"/></h3>
-                </div>
-
-                <div class="container_profile">
-                    <h3><fmt:message key="profile.enrolled.courses"/></h3>
-                </div>
-
-                <div class="container_profile">
-                    <div class="editHidden rightButton">
-                        <c:if test="${loggedInUserId == userId}">
-                            <button class="btn btn-default" target="_blank" onclick="return windowpop('skill/edit?userId=', 800, 500)">+</button>
-                        </c:if>
+                <c:if test="${1 > 2}">
+                    <div class="container_profile">
+                        <h3><fmt:message key="profile.completed.courses"/></h3>
                     </div>
-                    <h3><fmt:message key="profile.skills"/></h3>
-                    <c:forEach var="tempSkill" items="${skillList}">
-                        <div class="boxRight">
-                            <div class="boxRight_left">
-                                <div class="top">
-                                    <span class="marginTiny">${tempSkill.name}</span>
-                                    <span class="marginSmall">${tempSkill.level}</span>
-                                </div>
-                            </div>
-                            <div class="boxRight_right">
-                                <div class="editHidden">
-                                    <c:if test="${loggedInUserId == userId}">
+                </c:if>
+                <c:if test="${1 > 2}">
+                    <div class="container_profile">
+                        <h3><fmt:message key="profile.enrolled.courses"/></h3>
+                    </div>
+                </c:if>
 
-                                        <a href="javascript:if(confirm('Delete?'))
-                                           window.location='skill/delete?id=${tempSkill.skillId}';">
-                                            <button class="btn btn-default">x</button>
-                                        </a>
-                                    </c:if>
-                                </div>
-                            </div>
+                <c:if test="${skillList.size() < 1}">
+                    <div class="editHidden container_profile">
+                        <div class="editHidden rightButton">
+                            <c:if test="${loggedInUserId == userId}">
+                                <button class="btn btn-default" target="_blank" onclick="return windowpop('skill/edit?userId=', 800, 500)">+</button>
+                            </c:if>
                         </div>
-                    </c:forEach>
-                </div>
-
-
-            </div>
+                        <h3><fmt:message key="profile.skills"/></h3>
+                    </div>
+                </c:if>
+                <c:if test="${skillList.size() > 0}">
+                    <div class="container_profile">
+                        <div class="editHidden rightButton">
+                            <c:if test="${loggedInUserId == userId}">
+                                <button class="btn btn-default" target="_blank" onclick="return windowpop('skill/edit?userId=', 800, 500)">+</button>
+                            </c:if>
+                        </div>
+                        <h3><fmt:message key="profile.skills"/></h3>
+                        <c:forEach var="tempSkill" items="${skillList}">
+                            <div class="side_box">
+                                <div class="side_left">
+                                    ${tempSkill.name}
+                                </div>
+                                <div class="side_right">
+                                    <div class="editHidden">
+                                        <c:if test="${loggedInUserId == userId}">
+                                            <a href="javascript:if(confirm('Delete?'))
+                                               window.location='skill/delete?id=${tempSkill.skillId}';">
+                                                <button class="btn btn-default skillButtonSize"><span class="skillButtonPlace">x</span></button>
+                                            </a>
+                                        </c:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </c:if>
+            </div>           
         </div>
-    </div>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#toggle").click(function() {
-                $("div").toggleClass("editHidden editUnhidden");
-            });
-        });
 
-        function windowpop(url, width, height) {
-            var leftPosition, topPosition;
-            //Allow for borders.
-            leftPosition = (window.screen.width / 2) - ((width / 2) + 10);
-            //Allow for title and status bars.
-            topPosition = (window.screen.height / 2) - ((height / 2) + 50);
-            //Open the window.
-            window.open(url, "Window2", "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no");
-        }
-    </script>
-</body>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#toggle").click(function() {
+                    $("div").toggleClass("editHidden editUnhidden");
+                });
+            });
+
+            function windowpop(url, width, height) {
+                var leftPosition, topPosition;
+                //Allow for borders.
+                leftPosition = (window.screen.width / 2) - ((width / 2) + 10);
+                //Allow for title and status bars.
+                topPosition = (window.screen.height / 2) - ((height / 2) + 50);
+                //Open the window.
+                window.open(url, "Window2", "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no");
+            }
+        </script>
+    </body>
 </html>

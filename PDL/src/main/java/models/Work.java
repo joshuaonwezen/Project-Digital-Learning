@@ -29,7 +29,7 @@ public class Work implements Serializable {
     private String name;
     @Column(columnDefinition="varchar(30)")
     private String profession;
-    @Column(columnDefinition="varchar(300)")
+    @Column(columnDefinition = "varchar(500)")
     private String description;
 
     @ManyToOne
@@ -71,7 +71,7 @@ public class Work implements Serializable {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = "";
 
-        formattedDate = sdf.format(dateFrom);
+        formattedDate = sdf.format(getDateFrom());
 
         System.out.println("RETURING: " + formattedDate);
         return formattedDate;
@@ -95,7 +95,7 @@ public class Work implements Serializable {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = "";
 
-        formattedDate = sdf.format(dateTill);
+        formattedDate = sdf.format(getDateTill());
 
         System.out.println("RETURING: " + formattedDate);
         return formattedDate;

@@ -122,6 +122,11 @@
                             <label for="description"><fmt:message key="project.description"/></label>
                             <textarea class="form-control" id="description" name="description" onchange="validateForm()">${description}</textarea>
                         </div>
+                        
+                        <div class="form-group" id="formGroupURL" style="width:100%">
+                            <label for="URL">Project URL</label>
+                            <input type="text" class="form-control" id="URL" name="URL">${URL}</textarea>
+                        </div>
 
                     </div>
             </form>
@@ -134,6 +139,7 @@
             document.getElementById('name').value = '${name}';
             document.getElementById('profession').value = '${profession}';
             document.getElementById('description').value = '${description}';
+            document.getElementById('URL').value = '${URL}';
 
             //close window
             function closeWindow() {
@@ -158,7 +164,7 @@
             //use the same validations that are used on the server side
             function validateForm() {
                 var regexRegular = '^[a-zA-Z0-9_ ]{1,25}$';
-                var regexDesc = '^[a-zA-Z0-9_ ]{1,300}$';
+                var regexDesc = '^[a-zA-Z0-9_ ]{1,500}$';
 
                 errors = "";
                 //dateFrom
@@ -209,7 +215,7 @@
                 var description = document.getElementById('description').value;
                 if (!description || !description.match(regexDesc)) {
                     setValidated('formGroupDescription', false);
-                    errors += 'Description must be 1-300 characters in size. ';
+                    errors += 'Description must be 1-500 characters in size. ';
                 }
                 else {
                     setValidated('formGroupDescription', true);
