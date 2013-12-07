@@ -27,33 +27,6 @@ public class ManageSearchController extends HttpServlet {
         String uri = request.getRequestURI();
         String action = uri.substring(uri.lastIndexOf("/") + 1);
 
-        //search user on the search page
-//        if (action.equals("searchUser")) {
-//            Session session = HibernateUtil.getSessionFactory().openSession();
-//            String searchQuery = request.getParameter("searchQuery");
-//            String[] query = searchQuery.split(" ");
-//
-//            List<User> usersFound = new ArrayList<User>();
-//            for (int i = 0; i < query.length; i++) {
-//                String hql = "FROM User WHERE username LIKE '%" + query[i] + "%' OR firstname LIKE '%" + query[i]
-//                        + "%' OR lastname LIKE '%" + query[i] + "%' OR emailAddress LIKE '%" + query[i] + "%' "
-//                        + "GROUP BY userId";
-//                
-//                List<User> result = session.createQuery(hql).list();
-//                if (result != null) {
-//                    usersFound.addAll(result);
-//                    System.out.println("size:" + result.size());
-//                }
-//            }
-//
-//            // set our results on the request and redirect back
-//            request.setAttribute("users", usersFound);
-//            request.setAttribute("usersSize", usersFound.size());
-//            request.setAttribute("usersSizeResults", usersFound.size());
-//
-//            redirect(request, response, "/search.jsp");
-//            session.close();
-//        }
         if (action.equals("searchUser")) {
             Session session = HibernateUtil.getSessionFactory().openSession();
             String searchQuery = request.getParameter("searchQuery");
@@ -89,17 +62,22 @@ public class ManageSearchController extends HttpServlet {
 
     private String getSearchHqlQuery(String[] params, String andOrfilter) {
         StringBuilder hql = new StringBuilder();
-        hql.append("from User ");
+        hql.append("SELECT distinct u FROM User u ");
+        hql.append("LEFT JOIN u.skills s ");
         if (params.length > 0) {
             hql.append("where ");
             for (int i = 0; i < params.length; i++) {
                 if (i > 0) {
                     hql.append(andOrfilter);
                 }
-                hql.append(" (username like '%").append(params[i]);
-                hql.append("%' OR firstname like '%").append(params[i]);
-                hql.append("%' OR lastname like '%").append(params[i]);
-                hql.append("%' OR emailAddress like '%").append(params[i]);
+                hql.append(" (u.username like '%").append(params[i]);
+                hql.append("%' OR u.firstname like '%").append(params[i]);
+                hql.append("%' OR u.lastname like '%").append(params[i]);
+                hql.append("%' OR u.emailAddress like '%").append(params[i]);
+                hql.append("%' OR s.name like '%").append(params[i]);
+                for (int t = 0; t < params.length; t++) {
+                    hql.append("%' AND s.name like '%").append(params[i]);
+                }
                 hql.append("%') ");
             }
         }
