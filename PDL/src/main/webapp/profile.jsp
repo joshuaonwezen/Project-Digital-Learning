@@ -270,7 +270,7 @@
                                         <div class="bottom_right">
                                             ${tempProject.description}
                                             <p>
-                                                ${tempProject.URL}
+                                                <a href="${tempProject.URL}">${tempProject.URL}</a>
                                             </p>
                                         </div>
                                     </div>
