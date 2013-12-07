@@ -80,10 +80,10 @@
                 </form>
             </div>
         </nav>
-        <c:if test="${courseOwner.firstname}">
+        <c:if test="${course.owner.firstname}">
               Key:  ${courseKey}
         </c:if>
-              ${courseOwner.userid}
+              ${course.owner.userid}
         <div id="main">
             <div id="main_top">
                 <div id="stream">
