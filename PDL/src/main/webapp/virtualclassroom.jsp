@@ -80,10 +80,14 @@
                 </form>
             </div>
         </nav>
+        <c:if test="${courseOwner.firstname}">
+              Key:  ${courseKey}
+        </c:if>
+              ${courseOwner.userid}
         <div id="main">
             <div id="main_top">
                 <div id="stream">
-                    <embed width="100%" height="500px" src="http://www.focusonthefamily.com/family/JWPlayer/mediaplayer.swf" flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file=test.flv&streamer=rtmp://31.186.175.82/live" />
+                    <embed width="100%" height="500px" src="http://www.focusonthefamily.com/family/JWPlayer/mediaplayer.swf" flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file={courseKey}.flv&streamer=rtmp://31.186.175.82/live" />
                 </div>
             </div>
             <div id="main_left">

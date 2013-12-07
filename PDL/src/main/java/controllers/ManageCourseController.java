@@ -73,6 +73,7 @@ public class ManageCourseController extends HttpServlet {
                 request.setAttribute("level", managedCourse.getLevel());
                 request.setAttribute("courseSkills", managedCourse.getSkillsSeperatedByComma());
                 request.setAttribute("isVisible", managedCourse.isIsVisible());
+                request.setAttribute("courseKey", managedCourse.getCourseKey());
                 
                 session.close();
                 request.setAttribute("isUpdate", true);

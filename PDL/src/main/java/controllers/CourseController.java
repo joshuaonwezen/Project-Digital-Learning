@@ -6,6 +6,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Course;
+import models.User;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import services.HibernateUtil;
 
 /**
  *
@@ -31,16 +36,31 @@ public class CourseController extends HttpServlet {
         String action = uri.substring(uri.lastIndexOf("/") + 1);
 
         String queryString = request.getQueryString();
+     
+                    
+            int courseId = Integer.parseInt(queryString.substring(queryString.indexOf("=")+1));
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            Course course = (Course)session.load(Course.class, courseId);
         
         //go to the selected course
-        if (action.equals("course")){
-            
-            int courseId = Integer.parseInt(queryString.substring(queryString.indexOf("=")+1));
-            
-            request.setAttribute("courseId", courseId);
-            redirect(request, response, "/virtualclassroom.jsp");
+        if (action.equals("course")){            
+            request.setAttribute("courseName", course.getName());
+            request.setAttribute("courseOwner", course.getOwner());
+            request.setAttribute("courseDescription", course.getDescription());
+            request.setAttribute("courseId", course.getCourseId());
+            redirect(request, response, "/selected_coursepage.jsp");
         }
-        
+            
+        if (action.equals("virtualclassroom")){     
+            request.setAttribute("courseName", course.getName());
+            request.setAttribute("courseOwner", course.getOwner());
+            request.setAttribute("courseDescription", course.getDescription());
+            request.setAttribute("courseId", course.getCourseId());
+            request.setAttribute("courseKey", course.getCourseKey());
+            redirect(request, response, "/virtualclassroom.jsp");
+        }   
+        session.close();
     }
 
     /**

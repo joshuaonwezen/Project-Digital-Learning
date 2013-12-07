@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -44,7 +45,7 @@ public class Course implements Serializable{
     @Id
     @GeneratedValue
     private int courseId;
-    private String name, description;
+    private String name, description, courseKey;
     private ImageIcon image;
     private Level level;
     private boolean isVisible;
@@ -59,8 +60,9 @@ public class Course implements Serializable{
         
     }
             
-    public Course(int courseId, String name, String description, ImageIcon image, Level level, boolean isVisible, User owner, List<User> enrolledUsers, List<Skill> skills){
+    public Course(int courseId, String courseKey, String name, String description, ImageIcon image, Level level, boolean isVisible, User owner, List<User> enrolledUsers, List<Skill> skills){
         this.courseId = courseId;
+        this.courseKey = courseKey;
         this.name = name;
         this.description = description;
         this.image = image;
@@ -97,6 +99,14 @@ public class Course implements Serializable{
 
     public ImageIcon getImage() {
         return image;
+    }
+
+    public String getCourseKey() {
+        return UUID.randomUUID().toString();
+    }
+
+    public void setCourseKey(String courseKey) {
+        this.courseKey = courseKey;
     }
 
     public void setImage(ImageIcon image) {
