@@ -21,6 +21,22 @@
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/message</url-pattern>
     </servlet-mapping>
+            <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/createMessage</url-pattern>
+    </servlet-mapping>
+            <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/manageMessage</url-pattern>
+    </servlet-mapping>
+            <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/deleteMessage</url-pattern>
+    </servlet-mapping>
+                <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/removeUserFromMessage</url-pattern>
+    </servlet-mapping>
     <!-- Homepage -->
     <servlet>
         <servlet-name>HomepageController</servlet-name>

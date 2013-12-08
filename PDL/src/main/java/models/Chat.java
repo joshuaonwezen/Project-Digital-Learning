@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -18,16 +19,19 @@ public class Chat {
     @GeneratedValue
     private int chatId;
     private String subject;
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany
     private List<User> users;
+    @ManyToOne
+    private User created;
     
     public Chat(){
         
     }
-    public Chat(int chatId, String subject, List<User> users){
+    public Chat(int chatId, String subject, List<User> users, User created){
         this.chatId = chatId;
         this.subject = subject;
         this.users = users;
+        this.created = created;
     }
 
     public int getChatId() {
@@ -68,5 +72,12 @@ public class Chat {
     public void setUsers(List<User> users) {
         this.users = users;
     }
-    
+
+    public User getCreated() {
+        return created;
+    }
+
+    public void setCreated(User created) {
+        this.created = created;
+    }
 }

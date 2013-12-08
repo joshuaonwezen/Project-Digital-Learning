@@ -2,6 +2,8 @@
     Document   : homepage
     Created on : Nov 11, 2013, 2:25:25 PM
     Author     : wesley
+
+    @todo the should be one modal alert for creating/editing a chat
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -86,38 +88,59 @@
         </nav>
         <!-- eof navbar-->
         <div id="main">
-            
+
             <div id="connectionAlert"></div>
-                <button type="button" class="btn btn-default" onClick="$('#myModal').modal('show')">New Message</button>
-            
-                <c:choose>
-            <c:when test="${chatsSize == 0}">
-                <div class="alert alert-warning" style="margin-left:20px;margin-right:20px">
+            <button type="button" class="btn btn-default" id="createMessage" onClick="$('#createChat').modal('show')">New Message</button>
+
+            <c:choose>
+                <c:when test="${chatsSize == 0}">
+                    <div class="alert alert-warning" style="margin-left:20px;margin-right:20px">
                         <a class="close" data-dismiss="alert">×</a>
                         <strong>Nothing available</strong> Press the create button to start a new Message.
-                </div>
-            </c:when>
-            <c:otherwise>
-                <table class="table" id="messagesOverview" name="messagesOverview">
-                    <tr><th>Subject</th><th>Users</th><th>Last Message</th><th>Last Received</th></tr>
-                <c:forEach var="chat" items="${userChats}">
-                        <tr id="${chat.chatId}">
-                            <td><a href="message?chatId=${chat.chatId}">${chat.subject}</a>
-                            </td>
-                            <td>
-                                <c:forEach var="user" items="${chat.users}">
-                                   ${user.username}
-                                </c:forEach>
-                            </td>
-                        </tr>
-                </c:forEach>
-  
-                </table>
-            </c:otherwise>
-                </c:choose>
-                
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <table class="table" id="messagesOverview" name="messagesOverview">
+                        <tr><th>Subject</th><th>Users</th><th>Last Message</th><th>Last Received</th><th>Manage</th></tr>
+                                <c:forEach var="chat" items="${userChats}">
+                            <tr id="${chat.chatId}">
+                                <td><a href="message?chatId=${chat.chatId}">${chat.subject}</a>
+                                </td>
+                                <td>
+                                    <c:forEach var="user" items="${chat.users}">
+                                        ${user.username}
+                                    </c:forEach>
+                                </td>
+                                <td>
+                                    <c:if test="${chat.created.userId == loggedInUserId}">
+                                        <form id="deleteMessage" action="deleteMessage" method="post">
+                                            <input type="hidden" id="chatToDelete" name="chatToDelete"/>
+                                            <button type="button" class="btn btn-default btn-xs" id="btnDelete" onclick="$('#confirmDelete').modal('show');document.getElementById('chatToDelete').value=${chat.chatId}">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
+                                        </form>
+                                        <button type="button" class="btn btn-default btn-xs" id ="btnManage" onclick="showManageMessage(${chat.chatId}, '${chat.subject}');">
+                                            <span class="glyphicon glyphicon-cog"></span>
+                                        </button>
+                                    </c:if>
+                                    <c:if test="${chat.created.userId != loggedInUserId}">
+                                        <form id="removeUserFromMessage" action="removeUserFromMessage" method="post">
+                                            <input type="hidden" id="chatToRemoveUser" name="chatToRemoveUser"/>
+                                            <button type="button" class="btn btn-default btn-xs" id="btnRemove" onclick="$('#confirmRemove').modal('show');document.getElementById('chatToRemoveUser').value=${chat.chatId}">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                        </form>
+                                    </c:if>
+
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </c:otherwise>
+            </c:choose>
+
             <!-- Modal Dialog for Creating a new Chat -->
-            <div class="modal fade" id="myModal">
+            <div class="modal fade" id="createChat">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -125,8 +148,8 @@
                             <h4 class="modal-title">Compose New Message</h4>
                         </div>
                         <div class="modal-body">
-                            <form class="form-horizontal" role="form" id="newChat" action="message" method="post">
-                                
+                            <form class="form-horizontal" role="form" id="newMessage" action="createMessage" method="post">
+
                                 <div class="form-group">
                                     <label for="subject" class="col-sm-2 control-label">Subject</label>
                                     <div class="col-sm-10">
@@ -134,7 +157,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="subject" class="col-sm-2 control-label">Users</label>
+                                    <label for="users" class="col-sm-2 control-label">Users</label>
                                     <div class="col-sm-10">
                                         <input type="hidden" id="tagUsers" name="tagUsers" placeholder="&nbsp;Enter Users" style="width:100%">
                                         <script>
@@ -147,14 +170,53 @@
                                         </script> 
                                     </div>
                                 </div>
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary" id="create" name="create" disabled>Create</button>
                         </div>
-                    </form>
-                        
+                        </form>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+            <!-- Modal Dialog for Managing/Editing a new Chat -->
+            <div class="modal fade" id="manageChat">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Manage Message</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form" id="manageMessage" action="manageMessage" method="post">
+                                <input type="hidden" id="chatToManage" name="chatToManage"/>
+                                <div class="form-group">
+                                    <label for="subjectUpdate" class="col-sm-2 control-label">Subject</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="subjectUpdate" name="subjectUpdate" onkeyup="toggleUpdateButton()" placeholder="Enter a subject">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="users" class="col-sm-2 control-label">Users</label>
+                                    <div class="col-sm-10">
+                                        <input type="hidden" id="tagManageUsers" name="tagManageUsers" placeholder="&nbsp;Enter Users" style="width:100%">
+                                        <script>
+                                            //set all available users from the database in the multiselect
+                                            var arrUsers = new Array();
+                                            <c:forEach var='user' items='${users}'>
+                                            arrUsers.push('${user.username}');
+                                            </c:forEach>
+                                            $('#tagManageUsers').select2({tags: arrUsers, tokenSeparators: [",", " "], createSearchChoice: false});
+                                        </script> 
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="update" name="update" disabled>Update</button>
+                        </div>
+                        </form>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
@@ -164,35 +226,37 @@
                 var socket = io.connect('http://31.186.175.82:5001');
             }
             catch (error) {
+                //block all elements that should not be used when there is no connection and show a message
                 document.getElementById('connectionAlert').innerHTML = '<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>Oh snap!</strong> Cannot establish connection to the chatserver.</div>';
-              
+                document.getElementById('createMessage').style.display = 'none';
+                document.getElementById('messagesOverview').style.display = 'none';
             }
             // join the room on connect
             socket.on('connect', function(data) {
                 //get for each chat the latest message
-                <c:forEach var="chat" items="${userChats}">
-                    socket.emit('getLatestMessage', 'privateRoom ' + ${chat.chatId});
-                </c:forEach>
+            <c:forEach var="chat" items="${userChats}">
+                socket.emit('getLatestMessage', 'privateRoom ' + ${chat.chatId});
+            </c:forEach>
                 console.log('request for latest message sent');
             });
-            
+
             //receiving the latest messages
-            socket.on('latestMessage', function(docs){
-                console.log('received latest message: ' + docs[docs.length-1].msg);
-                addMessage(docs[docs.length-1]);
-                
+            socket.on('latestMessage', function(docs) {
+                console.log('received latest message: ' + docs[docs.length - 1].msg);
+                addMessage(docs[docs.length - 1]);
+
             });
 
-            function addMessage(data){
+            function addMessage(data) {
                 var table = document.getElementById('messagesOverview');
                 var row = document.getElementById(data.room.replace('privateRoom ', ''));
                 var cellMessage = row.insertCell(2);
                 var cellData = row.insertCell(3);
-                
-                cellMessage.innerHTML=data.msg;
-                cellData.innerHTML=moment(data.timeSent).fromNow();
+
+                cellMessage.innerHTML = data.msg;
+                cellData.innerHTML = moment(data.timeSent).fromNow();
             }
-            
+
             // block the create button if there is no input in the subject feld
             function toggleCreateButton() {
                 if (document.getElementById('subject').value.length > 0) {
@@ -202,6 +266,86 @@
                     document.getElementById('create').disabled = true;
                 }
             }
+            // block the update button if there is no input in the subject feld
+            function toggleUpdateButton() {
+                if (document.getElementById('subjectUpdate').value.length > 0) {
+                    document.getElementById('update').disabled = false;
+                }
+                else {
+                    document.getElementById('update').disabled = true;
+                }
+            }
+
+            //delete a chat
+            function deleteChat() {
+                console.log('lastTime: ' + document.getElementById('chatToDelete').value);
+                document.getElementById('deleteMessage').submit();
+            }
+
+            //remove a user from the message
+            function removeUserFromChat() {
+                document.getElementById('removeUserFromMessage').submit();
+            }
+
+            //show the dialog for managing a chat
+            function showManageMessage(chatId, subject) {
+                //set the general values
+                document.getElementById("chatToManage").value = chatId;
+                document.getElementById('subjectUpdate').value = subject;
+
+                //set the users that are already linked to the chat
+                var linkedUsers = new Array();
+            <c:forEach var="chat" items="${userChats}">
+                if (${chat.chatId} === chatId) {
+                <c:forEach var="user" items="${chat.users}">
+                    if (${user.userId} !== ${loggedInUserId}) {
+                        linkedUsers.push('${user.username}');
+                    }
+                </c:forEach>
+                }
+            </c:forEach>
+                $('#tagManageUsers').select2('val', [linkedUsers]);
+
+                toggleUpdateButton();
+                $('#manageChat').modal('show');
+            }
         </script>
+        <!-- Modal Dialog for Deleting -->
+        <div class="modal fade" id="confirmDelete">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Confirm Delete</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>All Users will be removed from this message. Are you sure you want to delete this message?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="deleteChat()"><fmt:message key="edit.popup.yes"/></button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </body>
+    <!-- Modal Dialog for Removing -->
+    <div class="modal fade" id="confirmRemove">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Confirm Leave</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to leave this message?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="removeUserFromChat()"><fmt:message key="edit.popup.yes"/></button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</body>
 </html>

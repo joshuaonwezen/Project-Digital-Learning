@@ -180,7 +180,11 @@ public class LoginController extends HttpServlet {
                 }
             }
         } //create a new message (chat)
-        else if (action.equals("message")) {
+        else if (action.equals("createMessage") || action.equals("manageMessage")) {
+            boolean isUpdate=false;
+            if (action.equals("manageMessage")){
+                isUpdate=true;
+            }
             //1. get users from the database
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
@@ -188,20 +192,21 @@ public class LoginController extends HttpServlet {
             List<User> usersFromDatabase = criteria.list();
 
             //2. the list with users from the request
-            List<String> usersFromRequest = Arrays.asList(request.getParameter("tagUsers").split(","));
+            String pmTagUsers="tagUsers";
+            if (isUpdate){pmTagUsers="tagManageUsers";}
+            List<String> usersFromRequest = Arrays.asList(request.getParameter(pmTagUsers).split(","));
             List<User> users = new ArrayList<User>(); // list with the users that match in step 3
 
             //3. we have to match the users from the array to real users in the database
-            boolean loggedInUserFound=false;
-            String loggedInUsername = request.getSession().getAttribute("loggedInUsername").toString();
+            //3a. alway add the user that created the cat
+            int loggedInUserId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
+            User loggedInUser = (User) session.load(User.class, loggedInUserId);
+            users.add(loggedInUser);
+            
+            //3b. match for other users
             for (int i = 0; i < usersFromRequest.size(); i++) {
                 for (int j = 0; j < usersFromDatabase.size(); j++) {
-                    //the first if adds the user that is logged in to the chat
-                    if (!loggedInUserFound && usersFromDatabase.get(j).getUsername().equals(loggedInUsername)){
-                        users.add(usersFromDatabase.get(j));
-                        loggedInUserFound = true;
-                    }
-                    //this if checks for other users from the request
+                    //match the users from the request against the db and add them
                     if (usersFromRequest.get(i).equals(usersFromDatabase.get(j).getUsername())) {
                         users.add(usersFromDatabase.get(j));
                         System.out.println("user match");
@@ -210,21 +215,90 @@ public class LoginController extends HttpServlet {
                 }
             }
 
-            //4. create a new Chat and add the users to the chat
-            Chat chat = new Chat();
-            chat.setSubject(request.getParameter("subject"));
-            chat.setUsers(users);
-
+            //4. create a new or edit a Chat and add the users to the chat
+            Chat chat;
+            if (!isUpdate){
+                chat = new Chat();
+                chat.setSubject(request.getParameter("subject"));
+                chat.setUsers(users);
+                User createdBy = (User) session.load(User.class, loggedInUserId);
+            
+                for(User u : users){
+                    System.out.println("added: " + u.getUsername());
+                }
+                
+                chat.setCreated(createdBy);
+            }
+            //updating a chat
+            else{
+                System.out.println("chatId " + request.getParameter("chatToManage"));
+                int chatId = Integer.parseInt(request.getParameter("chatToManage"));
+                chat = (Chat) session.load(Chat.class, chatId);
+                chat.setSubject(request.getParameter("subjectUpdate"));
+                chat.setUsers(users);
+            }
+             
             //4b. save to the db
-            session.save(chat);
+            session.saveOrUpdate(chat);
             tx.commit();
             
-            request.setAttribute("chat", chat);
+            //redirect to the message if we created a new one
+            if (!isUpdate){
+                request.setAttribute("chat", chat);
+                redirect(request, response, "/message.jsp");
+            }
+            //otherwise show all the messages again
+            else{
+                response.sendRedirect("messages");
+            }
             
             session.close();
-            
-            redirect(request, response, "/message.jsp");
         }
+        //delete a message 
+        else if (action.equals("deleteMessage")){
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            int chatId = Integer.parseInt(request.getParameter("chatToDelete"));
+            
+            System.out.println("request: " + request.getParameter("chatToDelete"));
+            Chat chatToDelete = (Chat) session.load(Chat.class, chatId);
+            
+            session.delete(chatToDelete);
+            tx.commit();
+            session.close();
+            
+            response.sendRedirect("messages");
+        }
+        //remove a user from a message
+        else if (action.equals("removeUserFromMessage")){
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            int chatId = Integer.parseInt(request.getParameter("chatToRemoveUser"));
+            Chat chat = (Chat) session.load(Chat.class, chatId);
+            
+            int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
+            
+            //iterate over the userlist to found the user which has to be removed from the list
+            int userRemoveIndex = -1;
+            for (int i=0;i<chat.getUsers().size();i++){
+                if (chat.getUsers().get(i).getUserId() == userId){
+                    userRemoveIndex = i;
+                    break;
+                }
+            }
+            List<User> updatedUsers = new ArrayList<User>();
+            updatedUsers = chat.getUsers();
+            updatedUsers.remove(userRemoveIndex);
+            
+            chat.setUsers(updatedUsers);
+            //and save to db
+            session.save(chat);
+            tx.commit();
+            session.close();
+            
+            response.sendRedirect("messages");
+        }
+        
     }
 
     /**
