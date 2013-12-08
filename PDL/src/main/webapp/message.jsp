@@ -1,7 +1,7 @@
 <%-- 
-    Document   : virtualclassroom
-    Created on : 2-dec-2013, 10:56:56
-    Author     : Joshua
+    Document   : message
+    Created on : Dec 6, 2013, 9:06:11 PM
+    Author     : wesley
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,19 +15,23 @@
 <html  lang="${language}">
     <head>
         <!--Company Style-->
-        <link rel="stylesheet" type="text/css" href="../resources/css/virtualclassroom.css">
-        <link rel="icon" href="../resources/images/favicon.ico" type="image/x-icon"></link>
+        <link rel="stylesheet" type="text/css" href="resources/css/virtualclassroom.css">
+        <link rel="icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
         <!-- Bootstrap-->
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="../resources/bootstrap/dist/css/bootstrap.min.css">
-        <script src="../resources/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="../resources/bootstrap/dist/js/alert.js"></script>
+        <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
+        <script src="resources/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="resources/bootstrap/dist/js/alert.js"></script>
         <!-- Chat -->
         <script src="http://31.186.175.82:5001/socket.io/socket.io.js"></script>
+        <!-- Select2 -->
+        <link href="resources/select2/select2.css" rel="stylesheet"/>
+        <script src="resources/select2/select2.js"></script>
+        <!-- Moment JS-->
+        <script src="resources/moment/moment-m.js" type="text/javascript"></script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home - Info Support</title>
-
     </head>
     <body>
         <!--Start nav bar-->
@@ -40,7 +44,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/PDL/homepage"><img src="../resources/images/Logo.png"></a>
+                <a class="navbar-brand" href="/PDL/homepage"><img src="resources/images/Logo.png"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -78,18 +82,11 @@
                     </div>
                     <button type="submit" class="btn btn-default"><fmt:message key="navbar.search"/></button>
                 </form>
-            </div>
+            </div><!-- /.navbar-collapse -->
         </nav>
-        <c:if test="${course.owner.firstname}">
-              Key:  ${courseKey}
-        </c:if>
-              ${course.owner.userid}
-        <div id="main">
-            <div id="main_top">
-                <div id="stream">
-                    <embed width="100%" height="500px" src="http://www.focusonthefamily.com/family/JWPlayer/mediaplayer.swf" flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file={courseKey}.flv&streamer=rtmp://31.186.175.82/live" />
-                </div>
-            </div>
+        <!-- eof navbar-->
+        <div id="chat">
+            <h2>${chat.subject}</h2>
             <div id="main_left">
                 <div class="panel panel-default chatOutputStyle">
                     <div class="panel-body" style="width:106%;margin-left:-15px;margin-top:-16px;">
@@ -117,7 +114,7 @@
                 </form>
             </div>
         </div>
-         <script>
+        <script>
             try {
                 var socket = io.connect('http://31.186.175.82:5001');
             }
@@ -131,13 +128,11 @@
             }
             // join the room on connect
             socket.on('connect', function(data) {
-                var courseId = ${courseId};
-                console.log('welcome to chatroom: ' + courseId);
+                var chatId = ${chat.chatId};
+                console.log('welcome to chatroom: ' + chatId);
 
-                socket.emit('join room', 'room ' + courseId);
+                socket.emit('join room', 'privateRoom ' + chatId);
                 socket.emit('userJoined', '${loggedInUsername}');
-                
-                console.log('room joined');
             });
             
              //receiving userlist
@@ -174,7 +169,7 @@
                 //$("#chatOutput").append(data + ' joined the chat\n');
                 
                 //play a sound
-                var userJoinedSound = new Audio('../resources/sounds/01_-_Warm_Interface_Sound_1.wav');
+                var userJoinedSound = new Audio('resources/sounds/01_-_Warm_Interface_Sound_1.wav');
                 userJoinedSound.play();
             });
 
@@ -182,7 +177,10 @@
             socket.on('message', function(data) {
                 //update the output box
                 addRowChatOutput(data);
-
+                //play a sound
+                var userJoinedSound = new Audio('resources/sounds/Interface Alert Sound 3.wav');
+                userJoinedSound.play();
+                
                 console.log('message received');
             });
             
@@ -193,6 +191,13 @@
                     //update the output box
                     addRowChatOutput(docs[i].msg);
                 }
+                if (docs.length === 0){
+                    //alway emit a first message in the room so we can display the latest message
+                var message = 'Chat created on ' + moment().format('MMMM Do YYYY, HH:mm');
+                socket.emit('message', message);
+                addRowChatOutput(message);
+                console.log('room joined');
+            }
             });
 
             function sentMessage() {

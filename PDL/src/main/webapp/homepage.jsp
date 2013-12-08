@@ -80,17 +80,20 @@
         <!-- eof navbar-->
         <div id="main">
             <div id="main_left">
-                <!-- Profile Information -->
-                <div class="ProfileInformation">
-                    <table class="profileinformationtable123">
-                        <tr class="ProfilePictureHomepage"><td><input type="image" src="resources/images/users_icon.png"</td></tr>
-                        <tr class="ProfileNameHomepage"><td>${loggedInFirstname}&nbsp;${loggedInLastname}</td></tr>
-                        <c:if test="${loggedInIsAdmin == true}">
-                            <tr class="ProfileRoleHomepage"><td>Admin</td></tr>
-                        </c:if>
-                        <tr class="ChatIconHomepage"><td><input type="image" src="resources/images/ChatIconHomepage.png"></td></tr>
-                    </table>
-                </div>    
+                <ul class="nav nav-pills nav-stacked" style="width:150px">
+                    <li class="active">
+                        <a href="#">
+                            <span class="badge pull-right">42</span>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="messages">
+                            <span class="badge pull-right">42</span>
+                            Messages
+                        </a>
+                    </li>
+                </ul>
             </div>
 
             <div id="main_right">
@@ -136,5 +139,5 @@
                 </div>
             </div>
         </div>
-</body>
+    </body>
 </html>
