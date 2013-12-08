@@ -82,6 +82,7 @@ public class ManagementController extends HttpServlet {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         Criteria criteria = session.createCriteria(Course.class);
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//prevents duplicate courses
         List<Course> courses = criteria.list();
         session.close();
         

@@ -53,7 +53,7 @@ public class Course implements Serializable{
     private User owner;
     @ManyToMany
     private List<User> enrolledUsers;
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Skill> skills;
     
     public Course(){

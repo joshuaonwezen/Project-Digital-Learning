@@ -102,7 +102,11 @@
                                            <div class="caption">
                                                <div style="float:right">
                                                    <small>
-                                                       placeholder for skills
+                                                       <script>var skills='';</script>
+                                                       <c:forEach var="skill" items="${course.skills}">
+                                                           <script>skills += '${skill.name}, ';</script>
+                                                       </c:forEach>
+                                                           <script>document.write(skills.substring(0, skills.length-2));</script>
                                                    </small>
                                                </div>
                                                <h3 style="margin-left:0px">${course.name} ${course.level}</h3>

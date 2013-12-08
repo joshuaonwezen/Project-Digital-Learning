@@ -257,6 +257,7 @@ public class ManageCourseController extends HttpServlet {
                     for (int i=0;i<skillsFromRequest.size();i++){
                         Skill newSkill = new Skill();
                         newSkill.setName(skillsFromRequest.get(i));
+                        session.save(newSkill);
                         courseSkills.add(newSkill);
                     }
                 }
@@ -269,8 +270,10 @@ public class ManageCourseController extends HttpServlet {
                         }
                         //when we enter the else if it means that we did not found the skill from our database
                         else if (j==skillsFromDatabase.size()-1 && !skillsFromRequest.get(i).equals(skillsFromDatabase.get(j).getName())){
+                            System.out.println("saving new skill");
                             Skill newSkill = new Skill();
                             newSkill.setName(skillsFromRequest.get(i));
+                            session.save(newSkill);
                             courseSkills.add(newSkill);
                         }
                     }
@@ -352,6 +355,7 @@ public class ManageCourseController extends HttpServlet {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         Criteria criteria = session.createCriteria(Course.class);
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//prevent duplicate courses
         List<Course> courses = criteria.list();
         session.close();
         
