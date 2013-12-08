@@ -24,7 +24,16 @@
         <script src="../resources/bootstrap/dist/js/alert.js"></script>
         <!-- Chat -->
         <script src="http://31.186.175.82:5001/socket.io/socket.io.js"></script>
-
+        <!-- Player -->
+        <link href="http://vjs.zencdn.net/4.3/video-js.css" rel="stylesheet">
+        <script src="http://vjs.zencdn.net/4.3/video.js"></script>
+        <style type="text/css">
+            .vjs-default-skin .vjs-play-progress,
+            .vjs-default-skin .vjs-volume-level { background-color: #596063 }
+            .vjs-default-skin .vjs-control-bar,
+            .vjs-default-skin .vjs-big-play-button { background: rgba(8,7,7,0.7) }
+            .vjs-default-skin .vjs-slider { background: rgba(8,7,7,0.2333333333333333) }
+        </style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home - Info Support</title>
 
@@ -80,14 +89,13 @@
                 </form>
             </div>
         </nav>
-        <c:if test="${course.owner.firstname}">
-              Key:  ${courseKey}
-        </c:if>
-              ${course.owner.userid}
         <div id="main">
             <div id="main_top">
                 <div id="stream">
-                    <embed width="100%" height="500px" src="http://www.focusonthefamily.com/family/JWPlayer/mediaplayer.swf" flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file={courseKey}.flv&streamer=rtmp://31.186.175.82/live" />
+                    <video id="my_video_1" class="video-js vjs-default-skin"  flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file=${courseKey}.flv&streamer=rtmp://31.186.175.82/live" controls
+                    preload="auto" width="1000" height="650" poster="../resources/images/Logo.png"
+                    data-setup="{}">
+                    </video>
                 </div>
             </div>
             <div id="main_left">
@@ -248,5 +256,8 @@
                 }
             }
         </script>
+        <p style="text-align: center;">
+        Key:  ${courseKey}
+        </p>
     </body>
 </html>
