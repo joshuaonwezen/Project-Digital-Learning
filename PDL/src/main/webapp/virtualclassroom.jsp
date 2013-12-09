@@ -61,11 +61,13 @@
                         <li><a href="/PDL/management">Management</a></li>
                         </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
-                    <li><a href="/PDL/courses/tutorial">Tutorial</a></li>
+                    <c:if test="${courseOwner.username == loggedInUsername}">
+                    <li><a href="/PDL/courses/tutorial?courseId=${courseId}">Tutorial</a></li>
+                    </c:if>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.settings"/> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="index.jsp"><fmt:message key="navbar.logout"/></a></li>
+                            <li><a href="/PDL/index.jsp"><fmt:message key="navbar.logout"/></a></li>
                             <li class="divider"></li>
                             <li><a href="#">Help</a></li>
                             <li><a href="#"><fmt:message key="navbar.problem"/></a></li>
@@ -92,14 +94,14 @@
         </nav>
         <c:if test="${courseOwner.username == loggedInUsername}">
         <p style="text-align: center;">
-        Key: ${courseKey}
+        Press the "Tutorial" button for a detailed tutorial on how to start your lesson.
         </p>
         </c:if>
         <div id="main">
             <div id="main_top">
                 <div id="stream">
                     <video id="my_video_1" class="video-js vjs-default-skin"  flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file=${courseKey}.flv&streamer=rtmp://31.186.175.82/live" controls
-                    preload="auto" width="650" height="480" poster="../resources/images/Logo.png"
+                    preload="auto" width="1000" height="480" poster="../resources/images/Logo.png"
                     data-setup="{}">
                     </video>
                 </div>

@@ -10,9 +10,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- Bootstrap-->
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
-        <script src="resources/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="resources/bootstrap/dist/js/alert.js"></script>
+        <link rel="stylesheet" href="../resources/bootstrap/dist/css/bootstrap.min.css">
+        <script src="../resources/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="../resources/bootstrap/dist/js/alert.js"></script>
         <title>Tutorial - Info Support</title>
     </head>
     <body>
@@ -26,7 +26,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/PDL/homepage"><img src="resources/images/Logo.png"></a>
+                <a class="navbar-brand" href="/PDL/homepage"><img src="../resources/images/Logo.png"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -67,12 +67,16 @@
             </div>
         </nav>
         <div style="position: absolute; margin-left: 20%;">
+        <c:if test="${courseOwner.username == loggedInUsername}">
+            <h3>Your key is:  ${courseKey}<br><br></h3>
+        </c:if>
+            
         <h1> Step 1</h1><br>
         Download the following program: <a href="http://sourceforge.net/projects/obsproject/files/OBS_0_584b_Installer.exe/download">Open Broadcast Software</a><br>
         This program will allow you to setup your videostream and start a lesson.<br><br>
         <h1> Step 2</h1><br>
         Right click on the "Sources" tab and press "Add".<br>
-        <img src="resources/images/tutorial1.png"><br>
+        <img src="../resources/images/tutorial1.png"><br>
         From here on you can select what you want to be shown on the livestream in the virtual classroom<br>
         - Window Capture:   Captures a select window (like your browser or a word document, only this window will be shown on your stream.<br>
         - Monitor Capture:   Captures your entire screen, everything you do on the selected monitor will be shown!<br>
@@ -81,9 +85,12 @@
         <h1> Step 3</h1><br>
         Now that you've setup your stream, it's time to connect to our server and start your lesson!<br>
         Press the "Settings" button and go to "Broadcast Settings"<br>
-        <img src="resources/images/tutorial2.png"><br>
+        <img src="../resources/images/tutorial2.png"><br>
         Here fill in the server address "rtmp://31.186.175.82/live"<br>
-        Now fill in the stream key of your selected course: ${courseKey}<br>
+        Now fill in the stream key of your selected course which is:
+        <c:if test="${courseOwner.username == loggedInUsername}">
+        ${courseKey}<br>
+        </c:if>
         Your done! Press "OK" and "Start Streaming".<br><br>
         
         <a href="/PDL/courses/virtualclassroom?courseId=${courseId}">Back to Virtual Classroom</a>
