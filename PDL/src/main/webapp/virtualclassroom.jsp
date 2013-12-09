@@ -119,7 +119,7 @@
                             <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" placeholder="Enter a message">
                         </div>
                         <div class="chatSend">
-                            <button style="width: 190px;" class="btn btn-default" disabled id="buttonSent" name="buttonSent" onClick="sentMessage()">Send</button>
+                            <button type="button" style="width: 190px;" class="btn btn-default" disabled id="buttonSent" name="buttonSent" onClick="sentMessage()">Send</button>
                         </div>
                     </div>
                 </form>
@@ -152,8 +152,8 @@
                 console.log('users ' + data);
                 
                 //add users to the userlist
-                for (var i=0;i<users.length;i++){
-                    addRowUserList(users[i]);
+                for (var i=0;i<data.length;i++){
+                    addRowUserList(data[i], i);
                 }
                 
                 
@@ -210,7 +210,7 @@
             }
 
             // add a row to the table which contains the users
-            function addRowUserList(data) {
+            function addRowUserList(data, i) {
                 var table = document.getElementById('userList');
                 var rowCount = table.rows.length;
                 //reset the userlist if we received a new one
