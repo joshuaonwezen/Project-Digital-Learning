@@ -108,7 +108,7 @@
                             <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" placeholder="Enter a message">
                         </div>
                         <div class="chatSend">
-                            <button style="width: 190px;" class="btn btn-default" disabled id="buttonSent" name="buttonSent" onClick="sentMessage()">Send</button>
+                            <button style="width: 190px;" type="button" class="btn btn-default" disabled id="buttonSent" name="buttonSent" onClick="sentMessage()">Send</button>
                         </div>
                     </div>
                 </form>
