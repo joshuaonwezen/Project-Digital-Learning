@@ -118,6 +118,10 @@
         <servlet-name>CourseController</servlet-name>
         <url-pattern>/courses/virtualclassroom</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourseController</servlet-name>
+        <url-pattern>/courses/tutorial</url-pattern>
+    </servlet-mapping>
     <!-- News Item Management -->
     <servlet>
         <servlet-name>ManageNewsItemController</servlet-name>

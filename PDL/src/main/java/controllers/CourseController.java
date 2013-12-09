@@ -63,6 +63,11 @@ public class CourseController extends HttpServlet {
             request.setAttribute("courseKey", course.getCourseKey());
             redirect(request, response, "/virtualclassroom.jsp");
         }   
+        if (action.equals("tutorial")){     
+            request.setAttribute("courseId", course.getCourseId());
+            request.setAttribute("courseKey", course.getCourseKey());
+            redirect(request, response, "/virtualclassroom_tutorial.jsp");
+        }   
         session.close();
     }
 

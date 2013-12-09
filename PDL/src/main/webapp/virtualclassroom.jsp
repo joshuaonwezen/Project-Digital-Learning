@@ -61,6 +61,7 @@
                         <li><a href="/PDL/management">Management</a></li>
                         </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
+                    <li><a href="/PDL/courses/tutorial">Tutorial</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.settings"/> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -89,11 +90,9 @@
                 </form>
             </div>
         </nav>
-        ${courseOwner.username}        
-        ${loggedInUsername}
-        <c:if test="${courseOwner.username} == ${loggedInUsername}">
+        <c:if test="${courseOwner.username == loggedInUsername}">
         <p style="text-align: center;">
-        Use this key to start a lesson:  ${courseKey}
+        Key: ${courseKey}
         </p>
         </c:if>
         <div id="main">
