@@ -102,11 +102,11 @@ public class Course implements Serializable{
     }
 
     public String getCourseKey() {
-        return UUID.randomUUID().toString();
+        return courseKey;
     }
 
-    public void setCourseKey(String courseKey) {
-        this.courseKey = courseKey;
+    public void setCourseKey() {
+        this.courseKey = UUID.randomUUID().toString();;
     }
 
     public void setImage(ImageIcon image) {

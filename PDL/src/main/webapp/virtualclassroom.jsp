@@ -89,11 +89,18 @@
                 </form>
             </div>
         </nav>
+        ${courseOwner.username}        
+        ${loggedInUsername}
+        <c:if test="${courseOwner.username} == ${loggedInUsername}">
+        <p style="text-align: center;">
+        Use this key to start a lesson:  ${courseKey}
+        </p>
+        </c:if>
         <div id="main">
             <div id="main_top">
                 <div id="stream">
                     <video id="my_video_1" class="video-js vjs-default-skin"  flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file=${courseKey}.flv&streamer=rtmp://31.186.175.82/live" controls
-                    preload="auto" width="1000" height="650" poster="../resources/images/Logo.png"
+                    preload="auto" width="650" height="480" poster="../resources/images/Logo.png"
                     data-setup="{}">
                     </video>
                 </div>
@@ -236,8 +243,5 @@
                 }
             }
         </script>
-        <p style="text-align: center;">
-        Key:  ${courseKey}
-        </p>
     </body>
 </html>
