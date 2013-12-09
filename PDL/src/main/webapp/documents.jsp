@@ -1,0 +1,174 @@
+<%-- 
+    Document   : files
+    Created on : Dec 9, 2013, 12:01:05 PM
+    Author     : wesley
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="index" />
+
+<!DOCTYPE html>
+<html  lang="${language}">
+    <head>
+        <!--Company Style-->
+        <link rel="stylesheet" type="text/css" href="resources/css/homepage.css">
+        <link rel="icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
+        <!-- Bootstrap-->
+        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
+        <script src="resources/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="resources/bootstrap/dist/js/alert.js"></script>
+        <!-- Moment JS-->
+        <script src="resources/moment/moment-m.js" type="text/javascript"></script>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Home - Info Support</title>
+    </head>
+    <body>
+        <!--Start nav bar-->
+        <nav class="navbar navbar-inverse" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/PDL/homepage"><img src="resources/images/Logo.png"></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:12px">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/PDL/homepage">Home</a></li>
+                    <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
+                        <c:if test="${loggedInIsAdmin == true}">
+                        <li><a href="/PDL/management">Management</a></li>
+                        </c:if>
+                    <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.settings"/> <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.jsp"><fmt:message key="navbar.logout"/></a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Help</a></li>
+                            <li><a href="#"><fmt:message key="navbar.problem"/></a></li>
+                            <li>
+                                <a >
+                                    <form>
+                                        <select id="language" name="language" onchange="submit()">
+                                            <option value="en_US" ${language == 'en_US' ? 'selected' : ''}>English</option>
+                                            <option value="nl_NL" ${language == 'nl_NL' ? 'selected' : ''}>Nederlands</option>
+                                        </select>
+                                    </form>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </nav>
+        <!-- eof navbar-->
+        <div id="main">
+            <c:if test="${course.owner.userId == loggedInUserId}">
+                <button type="button" class="btn btn-default" id="btnShowModalUpload" onClick="$('#modalUpload').modal('show')">Upload File(s)</button>
+            </c:if>
+            <table class="table" id="tblDocuments" name="tblDocuments">
+                <tr><th>Name</th><th>Last Modified</th><th>Size</th><c:if test="${course.owner.userId == loggedInUserId}"><th>Manage</th></c:if></tr>
+                <c:forEach var="file" items="${files}">
+                    <c:if test="${file.visible || (file.owner.userId == loggedInUserId)}">
+                    <tr>
+                        <td><a href="#">${file.name}</a></td>
+                        <td><script>document.write(moment('${file.lastEdited}').fromNow());</script></td>
+                        <td><script>document.write(Math.round(${file.fileSize/1024}));</script> kb</td>
+                        <td>
+                            <c:if test="${file.owner.userId == loggedInUserId}">
+                        <form id="formVisibilityFile" action="changeFileVisibility" method="post">
+                            <input type="hidden" id="fileToChangeVisibility" name="fileToChangeVisibility" value="${file.fileId}"/>
+                            <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
+                            
+                            <button type="submit" class="btn btn-default btn-xs <c:if test="${file.visible}">active</c:if>" id="btnChangeVisibility">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </button>
+                        </form>
+                        <form id="formDeleteFile" action="deleteFile" method="post">
+                            <input type="hidden" id="fileToDelete" name="fileToDelete"/>
+                            <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
+                            <button type="button" class="btn btn-default btn-xs" id="btnDelete" onclick="$('#confirmDelete').modal('show');document.getElementById('fileToDelete').value='${file.fileId}';">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </form>
+                            </c:if>
+                        </td>
+                    </tr>
+                    </c:if>
+                </c:forEach>
+            </table>
+            
+            
+            
+        </div>
+        <!-- Modal Dialog for uploading documents -->
+        <div class="modal fade" id="modalUpload">
+            <div class="modal-dialog">
+                <form id="formFileUpload" action="uploadFiles" method="post" enctype="multipart/form-data">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">File Upload</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Select one or more files to upload.</p>
+                            <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
+                            <input type="file" id="file" name="file" multiple/>
+                        
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" id="btnSubmit" class="btn btn-primary" onclick="uploadFiles()">Upload</button>
+                    </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <script>
+            //block the upload button and show that the upload is in progress
+            function uploadFiles(){
+                document.getElementById('btnSubmit').value = 'Uploading';
+                document.getElementById('btnSubmit').disabled = true;
+                document.getElementById('btnClose').disabled = true;
+                
+                document.getElementById('formFileUpload').submit();
+            }
+            //deleting a document
+            function deleteFile(){
+                document.getElementById('formDeleteFile').submit();
+            }
+        </script>
+                <!-- Modal Dialog for Deleting -->
+        <div class="modal fade" id="confirmDelete">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Confirm Delete</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this document? It cannot be undone.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="deleteFile()"><fmt:message key="edit.popup.yes"/></button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </body>
+    </body>
+</html>

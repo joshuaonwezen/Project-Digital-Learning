@@ -77,7 +77,7 @@
                 </th>
                 </tr>
                 <tr>
-                    <td><a href=""><img src="../resources/images/documents_icon.png"></a></td>
+                    <td><a href="../documents?courseId=${courseId}"><img src="../resources/images/documents_icon.png"></a></td>
                     <td><a href=""><img src="../resources/images/users_icon.png"></a></td>
                 </tr>
                 <tr>

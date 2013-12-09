@@ -23,5 +23,6 @@
     <mapping class="models.Course"/>
     <mapping class="models.NewsItem"/>
     <mapping class="models.Chat"/>
+    <mapping class="models.File"/>
   </session-factory>
 </hibernate-configuration>

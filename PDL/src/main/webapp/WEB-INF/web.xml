@@ -105,6 +105,34 @@
         <servlet-name>ManageCourseController</servlet-name>
         <url-pattern>/searchCourse</url-pattern>
     </servlet-mapping>
+    <!-- Document Management -->
+    <servlet>
+        <servlet-name>ManageDocumentController</servlet-name>
+        <servlet-class>controllers.ManageDocumentController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManageDocumentController</servlet-name>
+        <url-pattern>/documents</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageDocumentController</servlet-name>
+        <url-pattern>/uploadFiles</url-pattern>
+    </servlet-mapping>
+        <servlet-mapping>
+        <servlet-name>ManageDocumentController</servlet-name>
+        <url-pattern>/deleteFile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageDocumentController</servlet-name>
+        <url-pattern>/changeFileVisibility</url-pattern>
+    </servlet-mapping>
+    <context-param> 
+    <description>Location to store uploaded file</description> 
+    <param-name>file-upload</param-name> 
+    <param-value>
+         /Users/wesley/NetBeansProjects/Project-Digital-Learning/PDL/data/
+     </param-value> 
+    </context-param>
     <!-- Course -->
     <servlet>
         <servlet-name>CourseController</servlet-name>
