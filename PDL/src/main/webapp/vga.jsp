@@ -29,7 +29,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home - Info Support</title>
     </head>
-    <body onload=>
+    <body>
         
         <c:if test="${empty userVGAStatuses}">
             <script>$('#modalStartSweep').modal('show')</script>
