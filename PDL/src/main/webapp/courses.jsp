@@ -74,8 +74,6 @@
         </nav>
         <!-- eof navbar-->
 
-        </br></br></br></br>
-
 
         <div id="validationAlert" style="margin-left:20px;margin-right:20px"></div>
         <c:if test="${enrolledIn != null}">

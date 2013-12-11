@@ -170,5 +170,4 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
     </body>
-    </body>
 </html>
