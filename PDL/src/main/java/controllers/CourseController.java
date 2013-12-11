@@ -36,12 +36,14 @@ public class CourseController extends HttpServlet {
         String action = uri.substring(uri.lastIndexOf("/") + 1);
 
         String queryString = request.getQueryString();
-     
+            
                     
             int courseId = Integer.parseInt(queryString.substring(queryString.indexOf("=")+1));
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
             Course course = (Course)session.load(Course.class, courseId);
+            int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
+            User user = (User) session.load(User.class, userId);
         
         //go to the selected course
         if (action.equals("course")){            
@@ -53,12 +55,22 @@ public class CourseController extends HttpServlet {
         }
             
         if (action.equals("virtualclassroom")){     
+            request.setAttribute("loggedInUsername", user.getUsername());
             request.setAttribute("courseName", course.getName());
             request.setAttribute("courseOwner", course.getOwner());
             request.setAttribute("courseDescription", course.getDescription());
             request.setAttribute("courseId", course.getCourseId());
             request.setAttribute("courseKey", course.getCourseKey());
             redirect(request, response, "/virtualclassroom.jsp");
+        }   
+        if (action.equals("tutorial")){  
+            request.setAttribute("loggedInUsername", user.getUsername());
+            request.setAttribute("courseName", course.getName());
+            request.setAttribute("courseOwner", course.getOwner());
+            request.setAttribute("courseDescription", course.getDescription());
+            request.setAttribute("courseId", course.getCourseId());
+            request.setAttribute("courseKey", course.getCourseKey());
+            redirect(request, response, "/virtualclassroom_tutorial.jsp");
         }   
         session.close();
     }

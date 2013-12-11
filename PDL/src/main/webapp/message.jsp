@@ -108,7 +108,7 @@
                             <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" placeholder="Enter a message">
                         </div>
                         <div class="chatSend">
-                            <button style="width: 190px;" class="btn btn-default" disabled id="buttonSent" name="buttonSent" onClick="sentMessage()">Send</button>
+                            <button style="width: 190px;" type="button" class="btn btn-default" disabled id="buttonSent" name="buttonSent" onClick="sentMessage()">Send</button>
                         </div>
                     </div>
                 </form>
@@ -136,30 +136,12 @@
             });
             
              //receiving userlist
-            var users = new Array; // this variable holds all the users that are currently connected to this room
-            socket.on('userList', function(data) {
-                console.log('users ' + data);
+             socket.on('userList', function(data) {
                 
-                //first make sure that we don't add duplicate users to the list
+                //add users to the userlist
                 for (var i=0;i<data.length;i++){
-                    var found = false;
-                    for (var j=0;j<users.length;j++){
-                        if (data[i] === users[j]){
-                            found = true;
-                            console.log('found duplicate');
-                        }
-                    }
-                    if (!found){    // if not found it means that this user is not already in our userslist
-                        users.push(data[i]);
-                        found=false;
-                        console.log('found no duplicate');
-                    }
+                    addRowUserList(data[i], i);
                 }
-                for (var i=0;i<users.length;i++){
-                    addRowUserList(users[i]);
-                }
-                
-                
                 console.log('userList received: ');
             });
 
@@ -223,25 +205,21 @@
             }
 
             // add a row to the table which contains the users
-            function addRowUserList(data) {
+            function addRowUserList(data, i) {
                 var table = document.getElementById('userList');
-
                 var rowCount = table.rows.length;
-                
-                //prevent duplicate entries
-                var found = false;
-                for (var i=0;i<rowCount;i++){
-                    var rowData = table.rows[i].cells[0].innerHTML;
-                    if (data === rowData){
-                        found = true;
+                //reset the userlist if we received a new one
+                if (i === 0){
+                    for (var j=0;j<rowCount;j++){
+                       table.deleteRow(0);
                     }
+                    rowCount = 0;
                 }
-                if (!found){
-                    var row = table.insertRow(rowCount);
-                    row.className = "success"; // make the row green
-                    var cell1 = row.insertCell(0);
-                    cell1.innerHTML = data;
-                }
+                
+                var row = table.insertRow(rowCount);
+                row.className = "success"; // make the row green
+                var cell1 = row.insertCell(0);
+                cell1.innerHTML = data;
             }
             // block the sent button if there is no input in the chatInput box
             function toggleSentButton() {

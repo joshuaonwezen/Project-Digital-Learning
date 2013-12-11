@@ -97,6 +97,27 @@ io.sockets.on('connection', function (socket) {
                         socket.broadcast.to(room).emit('message', data) //emit to 'room' except this socket
                 })
         })
+        
+                //when user left the chatroom
+        socket.on('disconnect', function(data) {
+        console.log('dataisssss: ' + data);
+                //lookup room and broadcast to that room
+                socket.get('room', function(err, room){
+                socket.leave(room);
+                        console.log('user disconnected; resending userlist');
+                        //send list with all connected clients in this room
+                        var clients = io.sockets.clients(room);
+                        //because of a circular structure we need to push every client on an array and sent that out
+                        var temp = new Array();
+                        clients.forEach(function(client) {
+                                temp.push(client.nickname);
+                        });
+                        socket.broadcast.to(room).emit('userList', temp);
+                        socket.to(room).emit('userList', temp);
+                        console.log('active clients: ' + clients);
+
+})
+                       })
 
         //when latest message is requested
         socket.on('getLatestMessage', function(data) {
@@ -107,5 +128,5 @@ io.sockets.on('connection', function (socket) {
                         console.log('sending latest message: ' + data);
 
                  });
-                 })
+       })
 });

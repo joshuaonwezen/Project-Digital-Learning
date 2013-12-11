@@ -235,6 +235,7 @@ public class ManageCourseController extends HttpServlet {
                 user.getFirstname();
                 
                 course.setName(request.getParameter("name"));
+                course.setCourseKey();
                 course.setLevel(Course.Level.valueOf(getSelectedOption(request, "levelValues")));
                 course.setOwner(user);
                 course.setDescription(request.getParameter("description"));
