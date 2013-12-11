@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app 
-    version="3.1" 
-    xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <!-- Login -->
     <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controllers.LoginController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VgaController</servlet-name>
+        <servlet-class>controllers.VgaController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -17,23 +17,23 @@
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/messages</url-pattern>
     </servlet-mapping>
-        <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/message</url-pattern>
     </servlet-mapping>
-            <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/createMessage</url-pattern>
     </servlet-mapping>
-            <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/manageMessage</url-pattern>
     </servlet-mapping>
-            <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/deleteMessage</url-pattern>
     </servlet-mapping>
-                <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/removeUserFromMessage</url-pattern>
     </servlet-mapping>
@@ -234,7 +234,7 @@
         <servlet-name>ManageSearch</servlet-name>
         <url-pattern>/search</url-pattern>
     </servlet-mapping>
-        <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ManageSearch</servlet-name>
         <url-pattern>/searchUser</url-pattern>
     </servlet-mapping>
@@ -257,11 +257,15 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Debug</servlet-name>
-        <url-pattern>/createAdminUser</url-pattern> 
+        <url-pattern>/createAdminUser</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Debug</servlet-name>
-        <url-pattern>/createActivity</url-pattern>        
+        <url-pattern>/createActivity</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VgaController</servlet-name>
+        <url-pattern>/VgaController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
