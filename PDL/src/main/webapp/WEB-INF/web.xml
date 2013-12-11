@@ -118,7 +118,7 @@
         <servlet-name>ManageDocumentController</servlet-name>
         <url-pattern>/uploadFiles</url-pattern>
     </servlet-mapping>
-        <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ManageDocumentController</servlet-name>
         <url-pattern>/deleteFile</url-pattern>
     </servlet-mapping>
@@ -127,11 +127,11 @@
         <url-pattern>/changeFileVisibility</url-pattern>
     </servlet-mapping>
     <context-param> 
-    <description>Location to store uploaded file</description> 
-    <param-name>file-upload</param-name> 
-    <param-value>
-         /Users/wesley/NetBeansProjects/Project-Digital-Learning/PDL/data/
-     </param-value> 
+        <description>Location to store uploaded file</description> 
+        <param-name>file-upload</param-name> 
+        <param-value>
+            /Users/wesley/NetBeansProjects/Project-Digital-Learning/PDL/data/
+        </param-value> 
     </context-param>
     <!-- Course -->
     <servlet>
@@ -295,9 +295,22 @@
         <servlet-name>Debug</servlet-name>
         <url-pattern>/createActivity</url-pattern>
     </servlet-mapping>
+    <!-- VGA -->
+    <servlet>
+        <servlet-name>VgaController</servlet-name>
+        <servlet-class>controllers.VGAController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>VgaController</servlet-name>
         <url-pattern>/VgaController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VgaController</servlet-name>
+        <url-pattern>/vga</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VgaController</servlet-name>
+        <url-pattern>/doSweep</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
