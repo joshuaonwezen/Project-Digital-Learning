@@ -111,7 +111,7 @@
                                                <h4><small><fmt:message key="course.teacher"/> ${course.owner.firstname} ${course.owner.lastname}</small></h4>
                                                <p>${course.description}</p>
                                                <button id="buttonCourseEnroll${course.courseId}" type="submit" class="btn btn-primary"><fmt:message key="course.enroll"/></buton>
-                                                   <button id="buttonCourseOpen${course.courseId}" type="button" class="btn btn-success" onClick="openCourse(${course.courseId})"><fmt:message key="course.go"/></buton>
+                                                   <button id="buttonCourseOpen${course.courseId}" type="button" class="btn btn-success" style="display:none" onClick="openCourse(${course.courseId})"><fmt:message key="course.go"/></buton>
                                                        <c:choose>
                                                            <c:when test="${userEnrolledCoursesSize != 0}">
                                                                <script>var found = false;</script>
@@ -126,6 +126,7 @@
                                                                <script>
                                                                    if (found) {
                                                                        document.getElementById('buttonCourseEnroll${course.courseId}').style.display = 'none';
+                                                                       document.getElementById('buttonCourseOpen${course.courseId}').style.display = 'block';
                                                                    }
                                                                    else {
                                                                        document.getElementById('buttonCourseOpen${course.courseId}').style.display = 'none';
