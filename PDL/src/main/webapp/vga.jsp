@@ -29,11 +29,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home - Info Support</title>
     </head>
-    <body>
-        
-        <c:if test="${empty userVGAStatuses}">
-            <script>$('#modalStartSweep').modal('show')</script>
+    <body
+                <c:if test="${empty userVGAStatuses}">
+            onload="$('#modalStartSweep').modal('show')"
         </c:if>
+        
+        >
+
         <!--Start nav bar-->
         <nav class="navbar navbar-inverse" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -87,7 +89,7 @@
                 <table class="table" id="messagesOverview" name="messagesOverview">
                     <tr><th>User</th><th>Status</th><th>Description</th></tr>
                     <c:forEach var="output" items="${userVGAStatuses}">
-                        <tr id="${output.user.username}"><td>${output.user.username}</td><td>${output.status}</td><td>${output.statusDescription}</td></tr>
+                        <tr id="${output.user.username}"><td>${output.user.firstname} ${output.user.lastname}</td><td>${output.status}</td><td>${output.statusDescription}</td></tr>
                         <script>
                             //set color on row
                             if ('${output.status}' === 'Skill Owner'){
@@ -166,9 +168,6 @@
                 
                 document.getElementById('formVGASweep').submit();
             }
-            
-            
-            
         </script>
     </body>
 </html>

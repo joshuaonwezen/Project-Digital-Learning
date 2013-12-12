@@ -19,7 +19,7 @@ public class Activity implements Serializable{
     private int activityId;
     private String title;
     private String message;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date sent;
     @ManyToOne
     private User user;

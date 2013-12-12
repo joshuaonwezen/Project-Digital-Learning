@@ -21,7 +21,7 @@ public class NewsItem implements Serializable {
     @GeneratedValue
     private int newsId;
     private String title, description;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date updated;
     @ManyToOne
     private User editedBy;

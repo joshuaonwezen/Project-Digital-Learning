@@ -78,12 +78,6 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="navbar-form navbar-right" role="search" id="searchUser" action="searchUser">
-                    <div class="form-group">
-                        <input type="text" name="searchQuery" id="searchQuery" class="form-control" placeholder="<fmt:message key="searchbar.search.user"/>">
-                    </div>
-                    <button type="submit" class="btn btn-default"><fmt:message key="navbar.search"/></button>
-                </form>
             </div><!-- /.navbar-collapse -->
         </nav>
         <!-- eof navbar-->
@@ -113,7 +107,7 @@
                                 </td>
                                 <td>
                                     <c:if test="${chat.created.userId == loggedInUserId}">
-                                        <form id="deleteMessage" action="deleteMessage" method="post">
+                                        <form id="deleteMessage" action="deleteMessage" method="post" style="margin: 0; padding: 0;display:inline">
                                             <input type="hidden" id="chatToDelete" name="chatToDelete"/>
                                             <button type="button" class="btn btn-default btn-xs" id="btnDelete" onclick="$('#confirmDelete').modal('show');
                                                     document.getElementById('chatToDelete').value =${chat.chatId}">
@@ -125,7 +119,7 @@
                                         </button>
                                     </c:if>
                                     <c:if test="${chat.created.userId != loggedInUserId}">
-                                        <form id="removeUserFromMessage" action="removeUserFromMessage" method="post">
+                                        <form id="removeUserFromMessage" action="removeUserFromMessage" method="post" style="margin: 0; padding: 0;display:inline">
                                             <input type="hidden" id="chatToRemoveUser" name="chatToRemoveUser"/>
                                             <button type="button" class="btn btn-default btn-xs" id="btnRemove" onclick="$('#confirmRemove').modal('show');
                                                     document.getElementById('chatToRemoveUser').value =${chat.chatId}">

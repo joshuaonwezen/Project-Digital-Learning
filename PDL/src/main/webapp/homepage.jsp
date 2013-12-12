@@ -22,6 +22,8 @@
         <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
         <script src="resources/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="resources/bootstrap/dist/js/alert.js"></script>
+        <!-- Moment JS-->
+        <script src="resources/moment/moment-m.js" type="text/javascript"></script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home - Info Support</title>
@@ -109,7 +111,9 @@
                         </tr>
                         <c:forEach var="tempActivity" items="${activityList}" begin="0" end="4">   
                             <tr>
-                                <td><fmt:formatDate value="${tempActivity.sent}" pattern="dd-MM-yyyy" /></td>
+                                <td>
+                                    <script>document.write(moment('${tempActivity.sent}').fromNow());</script>
+                                </td>
                                 <td>${tempActivity.title}</td>
                                 <td class="Message">${tempActivity.message}</td>
                             </tr>
@@ -129,7 +133,9 @@
                         </tr>
                         <c:forEach var="tempNewsItem" items="${newsitemList}" begin="0" end="4"> 
                             <tr>
-                                <td><fmt:formatDate value="${tempNewsItem.updated}" pattern="dd-MM-yyyy" /></td>
+                                <td>
+                                    <script>document.write(moment('${tempNewsItem.updated}').fromNow());</script>
+                                </td>
                                 <td>${tempNewsItem.title}</td>
                                 <td class="Message">${tempNewsItem.description}</td>
                             </tr>

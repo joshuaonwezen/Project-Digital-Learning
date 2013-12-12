@@ -88,7 +88,7 @@
                         <td><script>document.write(Math.round(${file.fileSize/1024}));</script> kb</td>
                         <td>
                             <c:if test="${file.owner.userId == loggedInUserId}">
-                        <form id="formVisibilityFile" action="changeFileVisibility" method="post">
+                        <form id="formVisibilityFile" action="changeFileVisibility" method="post" style="margin: 0; padding: 0;display:inline">
                             <input type="hidden" id="fileToChangeVisibility" name="fileToChangeVisibility" value="${file.fileId}"/>
                             <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
                             
@@ -96,7 +96,7 @@
                                 <span class="glyphicon glyphicon-eye-open"></span>
                             </button>
                         </form>
-                        <form id="formDeleteFile" action="deleteFile" method="post">
+                        <form id="formDeleteFile" action="deleteFile" method="post" style="margin: 0; padding: 0;display:inline">
                             <input type="hidden" id="fileToDelete" name="fileToDelete"/>
                             <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
                             <button type="button" class="btn btn-default btn-xs" id="btnDelete" onclick="$('#confirmDelete').modal('show');document.getElementById('fileToDelete').value='${file.fileId}';">
@@ -120,29 +120,37 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">File Upload</h4>
+                        <h4 class="modal-title" id="modalTitle">File Upload</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Select one or more files to upload.</p>
+                        <p id="modalBodyText">Select one or more files to upload.</p>
                             <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
                             <input type="file" id="file" name="file" multiple/>
-                        
-                        
+                        <div class="progress progress-striped active" id="progress" style="display:none">
+                                    <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">Cancel</button>
                         <button type="button" id="btnSubmit" class="btn btn-primary" onclick="uploadFiles()">Upload</button>
                     </div>
                     </form>
+                            
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
         <script>
             //block the upload button and show that the upload is in progress
             function uploadFiles(){
-                document.getElementById('btnSubmit').value = 'Uploading';
+                 //block the button and show a loader
+                document.getElementById('progress').style.display = 'block';
+                document.getElementById('modalBodyText').style.display = 'none';
+                document.getElementById('file').style.display = 'none';
                 document.getElementById('btnSubmit').disabled = true;
                 document.getElementById('btnClose').disabled = true;
+                document.getElementById('modalTitle').innerHTML = 'Upload In Progress';
                 
                 document.getElementById('formFileUpload').submit();
             }
