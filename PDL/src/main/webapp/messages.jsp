@@ -115,7 +115,8 @@
                                     <c:if test="${chat.created.userId == loggedInUserId}">
                                         <form id="deleteMessage" action="deleteMessage" method="post">
                                             <input type="hidden" id="chatToDelete" name="chatToDelete"/>
-                                            <button type="button" class="btn btn-default btn-xs" id="btnDelete" onclick="$('#confirmDelete').modal('show');document.getElementById('chatToDelete').value=${chat.chatId}">
+                                            <button type="button" class="btn btn-default btn-xs" id="btnDelete" onclick="$('#confirmDelete').modal('show');
+                                                    document.getElementById('chatToDelete').value =${chat.chatId}">
                                                 <span class="glyphicon glyphicon-trash"></span>
                                             </button>
                                         </form>
@@ -126,7 +127,8 @@
                                     <c:if test="${chat.created.userId != loggedInUserId}">
                                         <form id="removeUserFromMessage" action="removeUserFromMessage" method="post">
                                             <input type="hidden" id="chatToRemoveUser" name="chatToRemoveUser"/>
-                                            <button type="button" class="btn btn-default btn-xs" id="btnRemove" onclick="$('#confirmRemove').modal('show');document.getElementById('chatToRemoveUser').value=${chat.chatId}">
+                                            <button type="button" class="btn btn-default btn-xs" id="btnRemove" onclick="$('#confirmRemove').modal('show');
+                                                    document.getElementById('chatToRemoveUser').value =${chat.chatId}">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </button>
                                         </form>

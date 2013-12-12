@@ -84,13 +84,11 @@
                 <ul class="nav nav-pills nav-stacked" style="width:150px">
                     <li class="active">
                         <a href="#">
-                            <span class="badge pull-right">42</span>
                             Home
                         </a>
                     </li>
                     <li>
                         <a href="messages">
-                            <span class="badge pull-right">42</span>
                             Messages
                         </a>
                     </li>
