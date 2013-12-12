@@ -70,6 +70,8 @@ public class ManageUserController extends HttpServlet {
                 request.setAttribute("emailAddress", managedUser.getEmailAddress());
                 request.setAttribute("position", managedUser.getPosition());
                 request.setAttribute("isAdmin", managedUser.isIsAdmin());
+                request.setAttribute("isManager", managedUser.isIsManager());
+                request.setAttribute("isTeacher", managedUser.isIsTeacher());
                 request.setAttribute("password", managedUser.getPassword());
                 
                 session.close();
@@ -171,6 +173,8 @@ public class ManageUserController extends HttpServlet {
                 request.setAttribute("emailAddress", request.getParameter("emailAddress"));
                 request.setAttribute("position", request.getParameter("position"));
                 request.setAttribute("isAdmin", request.getParameter("isAdmin"));
+                request.setAttribute("isManager", request.getParameter("isManager"));
+                request.setAttribute("isTeacher", request.getParameter("isTeacher"));
                 request.setAttribute("password", request.getParameter("password"));
 
                 //vergeet de errors niet op de request te zetten
@@ -198,6 +202,8 @@ public class ManageUserController extends HttpServlet {
                 user.setEmailAddress(request.getParameter("emailAddress"));
                 user.setPosition(request.getParameter("position"));
                 user.setIsAdmin((request.getParameter("isAdmin") != null ? true : false));
+                user.setIsManager((request.getParameter("isManager") != null ? true : false));
+                user.setIsTeacher((request.getParameter("isTeacher") != null ? true : false));
 
                 if (isUpdate) {
                     //check if password is changed
@@ -228,6 +234,8 @@ public class ManageUserController extends HttpServlet {
                 request.setAttribute("emailAddress", user.getEmailAddress());
                 request.setAttribute("position", user.getPosition());
                 request.setAttribute("isAdmin", user.isIsAdmin());
+                request.setAttribute("isManager", user.isIsManager());
+                request.setAttribute("isTeacher", user.isIsTeacher());
                 request.setAttribute("password", user.getPassword());
                 
                 //we are now editing

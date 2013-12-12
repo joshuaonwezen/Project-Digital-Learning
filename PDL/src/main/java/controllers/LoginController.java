@@ -154,7 +154,9 @@ public class LoginController extends HttpServlet {
                     else {
                         request.getSession().setAttribute("loggedInUsername", user.getUsername());
                         request.getSession().setAttribute("loggedInUserId", user.getUserId());
-                        request.getSession().setAttribute("loggedInIsAdmin", user.isIsAdmin());
+                        request.getSession().setAttribute("loggedInIsAdmin", user.isIsAdmin());                       
+                        request.getSession().setAttribute("loggedInIsManager", user.isIsManager());
+                        request.getSession().setAttribute("loggedInIsTeacher", user.isIsTeacher());
                         request.getSession().setAttribute("loggedInFirstname", user.getFirstname());
                         request.getSession().setAttribute("loggedInLastname", user.getLastname());
 

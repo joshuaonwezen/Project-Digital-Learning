@@ -22,6 +22,9 @@ public class User implements Serializable{
     private String username, firstname, lastname, emailAddress, position, password;
     private String fullName;
     private boolean isAdmin;
+    private boolean isTeacher;
+    private boolean isManager;
+    
     
     @ManyToMany
     private List<Skill> skills;
@@ -30,7 +33,7 @@ public class User implements Serializable{
         
     }
     
-    public User(String username, String firstname, String lastname, String emailAddress, String position, String password, boolean isAdmin){
+    public User(String username, String firstname, String lastname, String emailAddress, String position, String password, boolean isAdmin, boolean isTeacher, boolean isManager){
         this.username=username;
         this.firstname=firstname;
         this.lastname=lastname;
@@ -38,6 +41,8 @@ public class User implements Serializable{
         this.position=position;
         this.password=password;
         this.isAdmin=isAdmin;
+        this.isManager=isManager;
+        this.isTeacher=isTeacher;
         fullName = firstname + " " + lastname;
     }
     
@@ -96,6 +101,22 @@ public class User implements Serializable{
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
+    public boolean isIsTeacher() {
+        return isAdmin;
+    }
+
+    public void setIsTeacher(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public boolean isIsManager() {
+        return isAdmin;
+    }
+
+    public void setIsManager(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
 
     public String getPassword() {
         return password;

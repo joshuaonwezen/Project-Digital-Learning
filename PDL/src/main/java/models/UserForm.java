@@ -5,14 +5,14 @@ package models;
  * @author wesley
  */
 public class UserForm {
-    private String userId, username, firstname, lastname, emailAddress, position, isAdmin, password;
+    private String userId, username, firstname, lastname, emailAddress, position, isAdmin, isTeacher, isManager, password;
     
     public UserForm(){
         
     }
     
     public UserForm(String userId, String username, String firstname, String lastname, 
-            String emailAddress, String position, String isAdmin, String password){
+            String emailAddress, String position, String isAdmin, String isTeacher, String isManager, String password){
         this.userId=userId;
         this.username=username;
         this.firstname=firstname;
@@ -20,6 +20,8 @@ public class UserForm {
         this.emailAddress=emailAddress;
         this.position=position;
         this.isAdmin=isAdmin;
+        this.isTeacher=isTeacher;
+        this.isManager=isManager;
         this.password=password;
     }
 
@@ -77,6 +79,22 @@ public class UserForm {
 
     public void setIsAdmin(String isAdmin) {
         this.isAdmin = isAdmin;
+    }
+
+    public String getIsTeacher() {
+        return isTeacher;
+    }
+
+    public void setIsTeacher(String isTeacher) {
+        this.isTeacher = isTeacher;
+    }
+
+    public String getIsManager() {
+        return isManager;
+    }
+
+    public void setIsManager(String isManager) {
+        this.isManager = isManager;
     }
     public String getPassword() {
         return password;
