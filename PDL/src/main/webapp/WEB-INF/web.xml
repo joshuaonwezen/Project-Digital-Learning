@@ -5,10 +5,6 @@
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controllers.LoginController</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>VgaController</servlet-name>
-        <servlet-class>controllers.VgaController</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -297,19 +293,15 @@
     </servlet-mapping>
     <!-- VGA -->
     <servlet>
-        <servlet-name>VgaController</servlet-name>
+        <servlet-name>VGAController</servlet-name>
         <servlet-class>controllers.VGAController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>VgaController</servlet-name>
-        <url-pattern>/VgaController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>VgaController</servlet-name>
+        <servlet-name>VGAController</servlet-name>
         <url-pattern>/vga</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>VgaController</servlet-name>
+        <servlet-name>VGAController</servlet-name>
         <url-pattern>/doSweep</url-pattern>
     </servlet-mapping>
     <session-config>
