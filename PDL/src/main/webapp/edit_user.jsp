@@ -115,6 +115,18 @@
                                 <input type="checkbox" id="isAdmin" name="isAdmin"> Administrator
                             </div>
                         </c:if>
+                        <c:if test="${loggedInIsAdmin == true}">
+                            <div class="form-group" id="formGroupUserRights" style="width:100%">
+                                <label for="userRights"><fmt:message key="user.userrights"/></label><br/>
+                                <input type="checkbox" id="isManager" name="isManager"> Manager
+                            </div>
+                        </c:if>
+                        <c:if test="${loggedInIsAdmin == true}">
+                            <div class="form-group" id="formGroupUserRights" style="width:100%">
+                                <label for="userRights"><fmt:message key="user.userrights"/></label><br/>
+                                <input type="checkbox" id="isTeacher" name="isTeacher"> Manager
+                            </div>
+                        </c:if>
                     </div>
             </form>
         </div>
@@ -128,6 +140,12 @@
             document.getElementById('position').value = '${position}';
             <c:if test="${loggedInIsAdmin == true}">
             document.getElementById('isAdmin').checked = ${isAdmin == true ? true : false};
+            </c:if>
+            <c:if test="${loggedInIsAdmin == true}">
+            document.getElementById('isManager').checked = ${isManager == true ? true : false};
+            </c:if>
+            <c:if test="${loggedInIsAdmin == true}">
+            document.getElementById('isTeacher').checked = ${isTeacher == true ? true : false};
             </c:if>
             document.getElementById('password').value = '${password}';
 

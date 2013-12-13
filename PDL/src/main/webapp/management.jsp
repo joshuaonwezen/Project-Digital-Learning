@@ -115,8 +115,7 @@
                 }
             }
         </script>
-        
-        <!-- User Management -->
+        <c:if test="${loggedInIsAdmin == true}">        <!-- User Management -->
         <script>
             //contextual menu settings for grid
             usersMenu = new dhtmlXMenuObject();
@@ -221,6 +220,8 @@
             }
 
         </script>    
+        </c:if>
+         <c:if test="${loggedInIsAdmin == true || loggedInIsTeacher == true || loggedInIsManager == true}">
         <!-- Courses Management -->
         <script>
             //contextual menu settings for grid
@@ -310,6 +311,8 @@
             }
 
         </script>
+         </c:if>
+         <c:if test="${loggedInIsAdmin == true || loggedInIsManager == true}">
         <!-- News Item Management -->
         <script>
             //contextual menu settings for grid
@@ -398,7 +401,9 @@
                     window.location = 'news/delete?newsId=' + newsItemId;
             }
 
-        </script>        
+         
+        </script>      
+         </c:if>
         <div id="tabbar" style="height:700px;"></div>
         <script>
             tabbar = new dhtmlXTabBar("tabbar", "top");
