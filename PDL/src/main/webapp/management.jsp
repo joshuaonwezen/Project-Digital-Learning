@@ -103,19 +103,26 @@
             
             function cmenuOnButtonClick(){
                 switch (tabbar.getActiveTab()){
+                    <c:if test="${loggedInIsAdmin == true}"> 
                     case "t1":
                         openUserWindow(null);
                         break;
+                    </c:if>
+                    <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}"> 
                     case "t2":
                         openCourseWindow(null);
                         break;
+                    </c:if>
+                    <c:if test="${loggedInIsAdmin || loggedInIsManager == true}"> 
                     case "t3":
                         openNewsItemWindow(null);
                         break;
+                    </c:if>
                 }
             }
         </script>
-        <c:if test="${loggedInIsAdmin == true}">        <!-- User Management -->
+        <c:if test="${loggedInIsAdmin == true}">   
+            <!-- User Management -->
         <script>
             //contextual menu settings for grid
             usersMenu = new dhtmlXMenuObject();
@@ -291,7 +298,7 @@
             var popupLeft = (screen.width / 2) - (popupWidth / 2);
             var popupTop = (screen.height / 2) - (popupHeight / 2);
 
-            <c:if test="${courseOwner.username == loggedInUsername}">
+            <c:if test="${loggedInIsTeacher == true}">
             //window for creating/editing a course
             function openCourseWindow(courseId) {
                 var uri = "courses/edit?courseId=";

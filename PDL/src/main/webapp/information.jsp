@@ -36,7 +36,7 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="homepage.jsp">Home</a></li>
                     <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
-                     <c:if test="${loggedInIsAdmin == true}">
+                        <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
                         <li><a href="/PDL/management">Management</a></li>
                     </c:if>
                     <li class="dropdown">

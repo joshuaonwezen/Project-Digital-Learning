@@ -102,19 +102,19 @@ public class User implements Serializable{
         this.isAdmin = isAdmin;
     }
     public boolean isIsTeacher() {
-        return isAdmin;
+        return isTeacher;
     }
 
-    public void setIsTeacher(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setIsTeacher(boolean isTeacher) {
+        this.isTeacher = isTeacher;
     }
 
     public boolean isIsManager() {
-        return isAdmin;
+        return isManager;
     }
 
-    public void setIsManager(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setIsManager(boolean isManager) {
+        this.isManager = isManager;
     }
 
 

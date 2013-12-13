@@ -124,7 +124,7 @@
                         <c:if test="${loggedInIsAdmin == true}">
                             <div class="form-group" id="formGroupUserRights" style="width:100%">
                                 <label for="userRights"><fmt:message key="user.userrights"/></label><br/>
-                                <input type="checkbox" id="isTeacher" name="isTeacher"> Manager
+                                <input type="checkbox" id="isTeacher" name="isTeacher"> Teacher
                             </div>
                         </c:if>
                     </div>
