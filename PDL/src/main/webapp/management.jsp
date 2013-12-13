@@ -291,6 +291,7 @@
             var popupLeft = (screen.width / 2) - (popupWidth / 2);
             var popupTop = (screen.height / 2) - (popupHeight / 2);
 
+            <c:if test="${courseOwner.username == loggedInUsername}">
             //window for creating/editing a course
             function openCourseWindow(courseId) {
                 var uri = "courses/edit?courseId=";
@@ -304,6 +305,7 @@
                         ",width=" + popupWidth + ",height=" + popupHeight +
                         ",top=" + popupTop + ",left=" + popupLeft);
             }
+           </c:if>
 
             function deleteCourse(courseId) {
                 if (confirm('Are you sure you want to delete this course?'))
