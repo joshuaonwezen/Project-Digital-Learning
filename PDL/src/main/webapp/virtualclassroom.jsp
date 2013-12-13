@@ -57,7 +57,7 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="/PDL/homepage">Home</a></li>
                     <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
-                        <c:if test="${loggedInIsAdmin == true}">
+                        <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
                         <li><a href="/PDL/management">Management</a></li>
                         </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>

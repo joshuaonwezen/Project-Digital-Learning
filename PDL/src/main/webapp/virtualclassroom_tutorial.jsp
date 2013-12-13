@@ -34,7 +34,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/PDL/homepage">Home</a></li>
                     <li class="active"><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
-                        <c:if test="${loggedInIsAdmin == true}">
+                        <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
                         <li><a href="/PDL/management">Management</a></li>
                         </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
@@ -83,6 +83,9 @@
         - Video Capture Device:   Captures your webcam.<br>
         You can preview your stream by pressing "Preview Stream"<br><br>
         <h1> Step 3</h1><br>
+        You can edit your captured windows by pressing "Edit Scene".
+        <img src="../resources/images/tutorial3.png"><br><br>
+        <h1> Step 4</h1><br>
         Now that you've setup your stream, it's time to connect to our server and start your lesson!<br>
         Press the "Settings" button and go to "Broadcast Settings"<br>
         <img src="../resources/images/tutorial2.png"><br>
