@@ -38,6 +38,9 @@
                         <li><a href="/PDL/management">Management</a></li>
                         </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
+                    <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
+                    <li><a href="/PDL/vga">VGA</a></li>
+                    </c:if>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.settings"/> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -67,20 +70,20 @@
             </div>
         </nav>
 
-        <div class="CoursePage" align="center">
+        <div class="CoursePage" style='width: 800px; margin-left: 300px; margin-top: 60px;'>
             <table class="table table-hover table-bordered" end="2">
                 <tr>
-                    <th colspan="4" class="TableHeader">
+                    <th colspan="4" class="TableHeader" style="text-align: center">
                 <h1>Course: ${courseName}<br></h1>
                 <h1>Teacher: ${courseOwner.firstname} ${courseOwner.lastname}<br></h1>
                 <h6>Description:<br>${courseDescription}<br></h6><br>
                 </th>
                 </tr>
-                <tr>
+                <tr style="margin-left: 200px; width:500px;">
                     <td><a href="../documents?courseId=${courseId}"><img src="../resources/images/documents_icon.png"></a></td>
                     <td><a href=""><img src="../resources/images/users_icon.png"></a></td>
                 </tr>
-                <tr>
+                <tr style="margin-left: 200px; width:500px; ">
                     <td><a href="/PDL/courses/virtualclassroom?courseId=${courseId}"><img src="../resources/images/virtualclassroom_icon.png"></a></td>
                     <td><a href=""><img src="../resources/images/unenroll_icon.png"></a></td>
                 </tr>

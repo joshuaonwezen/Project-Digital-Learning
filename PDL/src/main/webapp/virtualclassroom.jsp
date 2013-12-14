@@ -35,7 +35,7 @@
             .vjs-default-skin .vjs-slider { background: rgba(8,7,7,0.2333333333333333) }
         </style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Home - Info Support</title>
+        <title>Virtual Classroom - Info Support</title>
 
     </head>
     <body>
@@ -55,14 +55,17 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:12px">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/PDL/homepage">Home</a></li>
-                    <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
+                    <li><a href="/PDL/homepage">Home</a></li>
+                    <li class="active"><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
                         <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
                         <li><a href="/PDL/management">Management</a></li>
                         </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
                     <c:if test="${courseOwner.username == loggedInUsername}">
-                    <li><a href="/PDL/courses/tutorial?courseId=${courseId}">Tutorial</a></li>
+                    <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
+                    <li><a href="/PDL/vga">VGA</a></li>
+                    </c:if>
+                    <li><a href="/PDL/courses/tutorial?courseId=${courseId}">Help</a></li>
                     </c:if>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.settings"/> <b class="caret"></b></a>
@@ -94,16 +97,13 @@
         </nav>
         <c:if test="${courseOwner.username == loggedInUsername}">
         <p style="text-align: center;">
-        Press the "Tutorial" button for a detailed tutorial on how to start your lesson.
+        Press the "Help" button for a detailed tutorial on how to start your lesson.
         </p>
         </c:if>
         <div id="main">
             <div id="main_top">
                 <div id="stream">
-                    <video id="my_video_1" class="video-js vjs-default-skin"  flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file=${courseKey}.flv&streamer=rtmp://31.186.175.82/live" controls
-                    preload="auto" width="1000" height="480" poster="../resources/images/Logo.png"
-                    data-setup="{}">
-                    </video>
+                          <embed width="100%" height="500px" src="http://www.focusonthefamily.com/family/JWPlayer/mediaplayer.swf" flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file=${courseKey}.flv&streamer=rtmp://31.186.175.82/live" />
                 </div>
             </div>
             <div id="main_left">

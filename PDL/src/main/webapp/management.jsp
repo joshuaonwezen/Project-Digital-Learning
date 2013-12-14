@@ -58,10 +58,13 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/PDL/homepage">Home</a></li>
                     <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
-                     <c:if test="${loggedInIsAdmin == true}">
+                    <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
                         <li class="active"><a href="/PDL/management">Management</a></li>
                     </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
+                    <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
+                    <li><a href="/PDL/vga">VGA</a></li>
+                    </c:if>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -85,9 +88,15 @@
             </div><!-- /.navbar-collapse -->
         </nav>
         <!-- eof navbar-->
+        <c:if test="${loggedInIsAdmin == true}">   
         <div id="usersGrid" style="height:650px;"></div>
+        </c:if>
+        <c:if test="${loggedInIsAdmin || loggedInIsManager || loggedInIsTeacher == true}">   
         <div id="coursesGrid" style="height:650px;"></div>
+        </c:if>
+        <c:if test="${loggedInIsAdmin || loggedInIsManager == true}">   
         <div id="newsItemsGrid" style="height:650px;"></div>
+        </c:if>
         </br>
         <!-- General -->
         <script>
@@ -101,25 +110,42 @@
             //add as default menu for the body
             cmenu.addContextZone(document.body);
             
+            <c:if test="${loggedInIsAdmin == true}">   
             function cmenuOnButtonClick(){
                 switch (tabbar.getActiveTab()){
-                    <c:if test="${loggedInIsAdmin == true}"> 
+                    case "t1":
+                        openCoursesWindow(null);
+                        break;
+                    case "t2":
+                        openNewsItemWindow(null);
+                        break;
+                }
+            }
+            </c:if>
+            <c:if test="${loggedInIsManager == true}">   
+            function cmenuOnButtonClick(){
+                switch (tabbar.getActiveTab()){
                     case "t1":
                         openUserWindow(null);
                         break;
-                    </c:if>
-                    <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}"> 
                     case "t2":
                         openCourseWindow(null);
                         break;
-                    </c:if>
-                    <c:if test="${loggedInIsAdmin || loggedInIsManager == true}"> 
                     case "t3":
                         openNewsItemWindow(null);
                         break;
-                    </c:if>
                 }
             }
+            </c:if>
+            <c:if test="${loggedInIsTeacher == true}">   
+            function cmenuOnButtonClick(){
+                switch (tabbar.getActiveTab()){
+                    case "t1":
+                        openCourseWindow(null);
+                        break;
+                }
+            }
+            </c:if>
         </script>
         <c:if test="${loggedInIsAdmin == true}">   
             <!-- User Management -->
@@ -228,7 +254,7 @@
 
         </script>    
         </c:if>
-         <c:if test="${loggedInIsAdmin == true || loggedInIsTeacher == true || loggedInIsManager == true}">
+              <c:if test="${loggedInIsAdmin == true || loggedInIsManager == true}">
         <!-- Courses Management -->
         <script>
             //contextual menu settings for grid
@@ -265,7 +291,6 @@
 
             //now lets build a javascript array with our courses for the grid
             var courses = new Array();
-
             <c:forEach var='course' items='${courses}'>
             var row = ['${course.courseId}', '${course.name}', '${course.level}', '${course.description}', '${course.owner.firstname}' + ' ${course.owner.lastname}'];
             courses.push(row);
@@ -298,7 +323,7 @@
             var popupLeft = (screen.width / 2) - (popupWidth / 2);
             var popupTop = (screen.height / 2) - (popupHeight / 2);
 
-            <c:if test="${loggedInIsTeacher == true}">
+   
             //window for creating/editing a course
             function openCourseWindow(courseId) {
                 var uri = "courses/edit?courseId=";
@@ -312,7 +337,7 @@
                         ",width=" + popupWidth + ",height=" + popupHeight +
                         ",top=" + popupTop + ",left=" + popupLeft);
             }
-           </c:if>
+      
 
             function deleteCourse(courseId) {
                 if (confirm('Are you sure you want to delete this course?'))
@@ -321,6 +346,102 @@
 
         </script>
          </c:if>
+        
+         <c:if test="${loggedInIsTeacher == true}">
+        <!-- Courses Management -->
+        <script>
+            //contextual menu settings for grid
+            coursesMenu = new dhtmlXMenuObject();
+            coursesMenu.setIconsPath("resources/dhtmlx/dhtmlxMenu/samples/common/images/");
+            coursesMenu.setSkin('dhx_terrace');
+            coursesMenu.renderAsContextMenu();
+            coursesMenu.attachEvent('onClick', coursesGridOnButtonClick);
+            coursesMenu.loadXML("resources/dhtmlx/dhtmlxMenu/structures/news.xml");
+
+            //grid settings
+            coursesGrid = new dhtmlXGridObject('coursesGrid');
+            coursesGrid.setImagePath("resources/dhtmlx/dhtmlxGrid/codebase/imgs/");
+            coursesGrid.setSkin('dhx_terrace');
+            coursesGrid.enableContextMenu(coursesMenu);
+            //white space between columns
+            coursesGrid.enableMultiline(true); 
+            coursesGrid.setHeader("ID, Name, Level, Description, Owner");
+            //column width in percentage
+            coursesGrid.setInitWidthsP('10, 15, 15, 40, 20');
+            //way in which text has to be aligned
+            coursesGrid.setColAlign("right,left,left,left,left");
+            //int=integer, str=string, date=datum
+            coursesGrid.setColSorting("int,str,str,str,str");
+            //ro=readonly
+            coursesGrid.setColTypes("ro,ro,ro,ro,ro");
+            //disable cell editing
+            coursesGrid.enableEditEvents(false, false, false);
+            //disable checkbox editing
+            coursesGrid.attachEvent("onEditCell", function(stage, rId, cInd, nValue, oValue) {
+                return false;
+            });
+            coursesGrid.init();
+
+            //now lets build a javascript array with our courses for the grid
+            var courses = new Array();
+            <c:forEach var='course' items='${courses}'>
+            <c:if test="${loggedInUsername == course.owner.username}">
+            var row = ['${course.courseId}', '${course.name}', '${course.level}', '${course.description}', '${course.owner.firstname}' + ' ${course.owner.lastname}'];
+            courses.push(row);
+            </c:if>
+            </c:forEach>
+ 
+            //set data in grid
+            coursesGrid.parse(courses, "jsarray");
+
+            //event handling for contextual menu
+            function coursesGridOnButtonClick(menuitemId) {
+                var data = coursesGrid.contextID.split("_");
+                var rowIndex = data[0];
+                var columnIndex = data[1];
+
+                switch (menuitemId) {
+                    case "new":
+                        openCourseWindow(null);
+                        break;
+                    case "edit":
+                        openCourseWindow(coursesGrid.cells(rowIndex, 0).getValue());
+                        break;
+                    case "delete":
+                        deleteCourse(coursesGrid.cells(rowIndex, 0).getValue());
+                        break;
+                }
+            }
+            //variables for the sizes and location (center) of a popup
+            var popupWidth = 800;
+            var popupHeight = 500;
+            var popupLeft = (screen.width / 2) - (popupWidth / 2);
+            var popupTop = (screen.height / 2) - (popupHeight / 2);
+
+   
+            //window for creating/editing a course
+            function openCourseWindow(courseId) {
+                var uri = "courses/edit?courseId=";
+                //edit a course
+                if (courseId !== null) {
+                    uri += courseId;
+                }
+
+                //now open a new window for creating/editing a course
+                window.open(uri, "_blank", "menubar=no" +
+                        ",width=" + popupWidth + ",height=" + popupHeight +
+                        ",top=" + popupTop + ",left=" + popupLeft);
+            }
+      
+
+            function deleteCourse(courseId) {
+                if (confirm('Are you sure you want to delete this course?'))
+                    window.location = 'courses/delete?courseId=' + courseId;
+            }
+
+        </script>
+         </c:if>
+        
          <c:if test="${loggedInIsAdmin == true || loggedInIsManager == true}">
         <!-- News Item Management -->
         <script>
@@ -358,7 +479,7 @@
 
             //now lets build a javascript array with our newsItems for the grid
             var newsItems = new Array();
-
+            
             <c:forEach var='newsItem' items='${newsItems}'>
                 var row = ['${newsItem.newsId}', '${newsItem.title}', '${newsItem.description}', '${newsItem.updated}', '${newsItem.editedBy.firstname}' + ' ${newsItem.editedBy.lastname}'];
                 newsItems.push(row);
@@ -414,6 +535,7 @@
         </script>      
          </c:if>
         <div id="tabbar" style="height:700px;"></div>
+        <c:if test="${loggedInIsAdmin == true}">
         <script>
             tabbar = new dhtmlXTabBar("tabbar", "top");
             tabbar.setSkin('dhx_terrace');
@@ -427,5 +549,33 @@
                 tabbar.setContent('t3', 'newsItemsGrid');
             });
         </script>
+        </c:if>
+        <c:if test="${loggedInIsTeacher == true}">
+        <script>
+            tabbar = new dhtmlXTabBar("tabbar", "top");
+            tabbar.setSkin('dhx_terrace');
+            tabbar.setImagePath("resources/dhtmlx/dhtmlxTabbar/codebase/imgs/");
+
+            //we load our tabbar from an xml file (because it works best)
+            tabbar.loadXML("resources/dhtmlx/dhtmlxTabbar/structures/teacher.xml", function() {
+                tabbar.setTabActive("t1");
+                tabbar.setContent('t1', 'coursesGrid');
+            });
+        </script>
+        </c:if>
+        <c:if test="${loggedInIsManager == true}">
+        <script>
+            tabbar = new dhtmlXTabBar("tabbar", "top");
+            tabbar.setSkin('dhx_terrace');
+            tabbar.setImagePath("resources/dhtmlx/dhtmlxTabbar/codebase/imgs/");
+
+            //we load our tabbar from an xml file (because it works best)
+            tabbar.loadXML("resources/dhtmlx/dhtmlxTabbar/structures/manager.xml", function() {
+                tabbar.setTabActive("t1");
+                tabbar.setContent('t1', 'coursesGrid');
+                tabbar.setContent('t2', 'newsItemsGrid');
+            });
+        </script>
+        </c:if>
     </body>
 </html>

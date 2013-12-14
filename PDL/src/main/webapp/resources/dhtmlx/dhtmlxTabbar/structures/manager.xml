@@ -1,0 +1,6 @@
+<tabbar>
+    <row>
+        <tab id="t1">Courses</tab>
+        <tab id="t2">News items</tab>
+    </row>
+</tabbar>

@@ -33,11 +33,17 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:12px">
                 <ul class="nav navbar-nav">
                     <li><a href="/PDL/homepage">Home</a></li>
-                    <li class="active"><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
+                    <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
                         <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
                         <li><a href="/PDL/management">Management</a></li>
                         </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
+                    <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
+                    <li><a href="/PDL/vga">VGA</a></li>
+                    </c:if>
+                    <c:if test="${courseOwner.username == loggedInUsername}">
+                    <li class="active"><a href="/PDL/courses/tutorial?courseId=${courseId}">Help</a></li>
+                    </c:if>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.settings"/> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -83,7 +89,7 @@
         - Video Capture Device:   Captures your webcam.<br>
         You can preview your stream by pressing "Preview Stream"<br><br>
         <h1> Step 3</h1><br>
-        You can edit your captured windows by pressing "Edit Scene".
+        You can edit your captured windows by pressing "Edit Scene".<br>
         <img src="../resources/images/tutorial3.png"><br><br>
         <h1> Step 4</h1><br>
         Now that you've setup your stream, it's time to connect to our server and start your lesson!<br>
