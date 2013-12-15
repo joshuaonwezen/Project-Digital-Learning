@@ -109,9 +109,8 @@
             cmenu.loadXML("resources/dhtmlx/dhtmlxMenu/structures/general.xml");
             //add as default menu for the body
             cmenu.addContextZone(document.body);
-                   
-           <c:if test="${loggedInIsAdmin == true}">   
            function cmenuOnButtonClick(){
+           <c:if test="${loggedInIsAdmin == true}">   
                 switch (tabbar.getActiveTab()){
                     case "t1":
                         openUsersWindow(null);
@@ -124,10 +123,8 @@
                         break;
 
                 }
-            }
             </c:if>
             <c:if test="${loggedInIsManager == true}">   
-             function cmenuOnButtonClick(){
                  switch (tabbar.getActiveTab()){
                     case "t1":
                         openCoursesWindow(null);
@@ -136,19 +133,15 @@
                         openNewsItemWindow(null);
                         break;
                  }
-             }
             </c:if>
             <c:if test="${loggedInIsTeacher == true}">   
-            function cmenuOnButtonClick(){
                 switch (tabbar.getActiveTab()){
                     case "t1":
                        openCourseWindow(null);
                       break;
                }
-            }
            </c:if>
-
-            
+           }
         </script>
   
             <!-- User Management -->
