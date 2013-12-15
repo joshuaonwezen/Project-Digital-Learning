@@ -116,7 +116,7 @@
                     <div id="chatLeft">
                         <div class="panel panel-default chatOutputStyle">
                             <div class="panel-body">
-                                <table class="table table-striped" id="chatOutput" name="chatOutput" style="width:1000px;margin-left:-15px;margin-top:-16px;">
+                                <table class="table table-striped" id="chatOutput" name="chatOutput" style="width:1920px;margin-left:-15px;margin-top:-16px;">
                                 </table>
                             </div>
                         </div>
