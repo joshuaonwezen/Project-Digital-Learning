@@ -54,15 +54,15 @@
                         <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
                         <li><a href="/PDL/management">Management</a></li>
                         </c:if>
-                    <c:if test="${loggedInIsAdmin || loggedInIsManager == true}">
-                    <li><a href="/PDL/vga">VGA</a></li>
-                    </c:if>
                     <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.profile"/> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="cv?id=${userId}" target="_blank"><fmt:message key="navbar.cv"/></a></li>
                         </ul>
                     </li>
+                    <c:if test="${loggedInIsAdmin || loggedInIsManager == true}">
+                        <li><a href="/PDL/vga">VGA</a></li>
+                        </c:if>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.settings"/> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
