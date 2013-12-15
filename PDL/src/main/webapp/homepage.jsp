@@ -110,8 +110,8 @@
                         </tr>
                         <tr>
                             <td class="Date"><fmt:message key="activity.date"/></td>
-                            <td><fmt:message key="activity.title"/></td>
-                            <td><fmt:message key="activity.message"/></td>
+                            <td class="Title"><fmt:message key="activity.title"/></td>
+                            <td class="Message"><fmt:message key="activity.message"/></td>
                         </tr>
                         <c:forEach var="tempActivity" items="${activityList}" begin="0" end="4">   
                             <tr>
@@ -119,7 +119,7 @@
                                     <script>document.write(moment('${tempActivity.sent}').fromNow());</script>
                                 </td>
                                 <td>${tempActivity.title}</td>
-                                <td class="Message">${tempActivity.message}</td>
+                                <td>${tempActivity.message}</td>
                             </tr>
                         </c:forEach>
                     </table>
@@ -132,8 +132,8 @@
                         </tr>
                         <tr>
                             <td class="Date"><fmt:message key="activity.date"/></td>
-                            <td><fmt:message key="news.title"/></td>
-                            <td><fmt:message key="activity.message"/></td>
+                            <td class="Title"><fmt:message key="news.title"/></td>
+                            <td class="Message"><fmt:message key="activity.message"/></td>
                         </tr>
                         <c:forEach var="tempNewsItem" items="${newsitemList}" begin="0" end="4"> 
                             <tr>
@@ -141,7 +141,7 @@
                                     <script>document.write(moment('${tempNewsItem.updated}').fromNow());</script>
                                 </td>
                                 <td>${tempNewsItem.title}</td>
-                                <td class="Message">${tempNewsItem.description}</td>
+                                <td>${tempNewsItem.description}</td>
                             </tr>
                         </c:forEach>
                     </table>

@@ -13,11 +13,16 @@
     width:850px;
 }
 .Date{
-    width:100px;
     text-align:center;
+    width:10%;
+}
+.Title{
+    text-align:center;
+    width:20%;
 }
 .Message{
-    width: 600px;
+    text-align:center;
+    width:70%;
 }
 .ProfileInformation{
     background-color:rgb(34,34,34);
