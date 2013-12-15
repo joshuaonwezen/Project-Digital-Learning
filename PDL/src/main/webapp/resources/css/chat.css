@@ -1,44 +1,61 @@
 #main {
     width: 100%;
     height: auto;
-    margin-left: auto;
-    margin-right: auto;
-}
-#main_left {
-    width: 5%;
-    margin-left: 2%;
-    height: auto;
-    float: left;
-}
-#main_right {
-    width: 82%;
-    margin-right: 2%;
-    float: right;
-    margin-left: 10px;
-}
-.users {
-    width:100%;
-    height:300px; 
-    overflow: scroll;
     overflow-x: hidden;
 }
-.chatOutputStyle {
-    width:50%;
-    height:400px;
-    overflow: scroll;overflow-x: hidden;
+#main_left {
+    width: 180px;
+    height: auto;
+    margin-left: 25px;
+    float: left;
+    overflow-x: hidden;
 }
-.chatInput {
-    width: 800px;
+#main_right {
+    width: 80%;
+    height: auto;
+    float: right;
+    margin-right: 25px;
+    overflow-x: hidden;
+}
+#chatLeft {
+    width: 80%;
     height: auto;
     float: left;
+    overflow: hidden;
 }
-.chatSend {
-    width: 190px;
+#userRight {
+    width: 18%;
+    height: auto;
     float: right;
-    margin-left: 10px;
+    overflow: hidden;
 }
 #main_bot {
     width: 100%;
     height: auto;
     overflow:hidden;
+}
+
+.users {
+    width:100%;
+    height:700px; 
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.chatOutputStyle {
+    width:100%;
+    height:700px;
+    overflow: scroll;overflow-x: hidden;
+}
+.chatInput {
+    width: 80%;
+    height: auto;
+    float: left;
+}
+.chatSend {
+    width: 18%;
+    float: right;
+    margin-right: 0px;
+}
+.buttonStyle {
+    width: 100%;
 }

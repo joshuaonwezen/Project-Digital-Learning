@@ -56,9 +56,9 @@
                         <li><a href="/PDL/management">Management</a></li>
                         </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
-                    <c:if test="${loggedInIsAdmin || loggedInIsManager == true}">
-                    <li><a href="/PDL/vga">VGA</a></li>
-                    </c:if>
+                        <c:if test="${loggedInIsAdmin || loggedInIsManager == true}">
+                        <li><a href="/PDL/vga">VGA</a></li>
+                        </c:if>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.settings"/> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -88,9 +88,11 @@
             </div><!-- /.navbar-collapse -->
         </nav>
         <!-- eof navbar-->
-        
-        <div id="main_left">
-                <ul class="nav nav-pills nav-stacked" style="width:150px">
+
+        <div id="main">
+
+            <div id="main_left">
+                <ul class="nav nav-pills nav-stacked">
                     <li>
                         <a href="/PDL/homepage">
                             Home
@@ -101,36 +103,41 @@
                             Messages<span class="badge pull-right" id="notifications"></span>
                         </a>
                     </li>
-                </ul><br/>
+                </ul>
             </div>
-        <div id="chat">
+
             <div id="main_right">
-                <div class="panel panel-default chatOutputStyle">
-                    <div class="panel-body" style="width:106%;margin-left:-15px;margin-top:-16px;">
-                        <table class="table table-striped" id="chatOutput" name="chatOutput">
-                        </table>
-                    </div>
-                </div>
-            
-                <div class="panel panel-default users">
-                    <table class="table table-condensed" id="userList" style="width:100%;margin-top:-2px;">
-                    </table>
-                </div>
-           
-            <div id="maint_bot">
-                <form class="form-inline" role="form">
-                    <div class="" id="formGroupChatInput">
-                        <div class="chatInput">
-                            <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" placeholder="Enter a message">
-                        </div>
-                        <div class="chatSend">
-                            <button style="width: 190px;" type="button" class="btn btn-default" disabled id="buttonSent" name="buttonSent" onClick="sentMessage()">Send</button>
+                <div id="chat">
+                    <div id="chatLeft">
+                        <div class="panel panel-default chatOutputStyle">
+                            <div class="panel-body">
+                                <table class="table table-striped" id="chatOutput" name="chatOutput">
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </form>
+                    <div id="userRight">
+                        <div class="panel panel-default users">
+                            <table class="table table-condensed" id="userList">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div id="maint_bot">
+                    <form class="form-inline" role="form">
+                        <div class="" id="formGroupChatInput">
+                            <div class="chatInput">
+                                <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" placeholder="Enter a message">
+                            </div>
+                            <div class="chatSend">
+                                <button type="button" class="btn btn-default buttonStyle" disabled id="buttonSent" name="buttonSent" onClick="sentMessage()">Send</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
+
         </div>
-             </div>
         <script>
             try {
                 var socket = io.connect('http://31.186.175.82:5001');
@@ -151,12 +158,12 @@
                 socket.emit('join room', 'privateRoom ' + chatId);
                 socket.emit('userJoined', '${loggedInUsername}');
             });
-            
-             //receiving userlist
-             socket.on('userList', function(data) {
-                
+
+            //receiving userlist
+            socket.on('userList', function(data) {
+
                 //add users to the userlist
-                for (var i=0;i<data.length;i++){
+                for (var i = 0; i < data.length; i++) {
                     addRowUserList(data[i], i);
                 }
                 console.log('userList received: ');
@@ -166,7 +173,7 @@
             socket.on('userJoined', function(data) {
                 //update the output box
                 //$("#chatOutput").append(data + ' joined the chat\n');
-                
+
                 //play a sound
                 var userJoinedSound = new Audio('resources/sounds/01_-_Warm_Interface_Sound_1.wav');
                 userJoinedSound.play();
@@ -179,24 +186,24 @@
                 //play a sound
                 var userJoinedSound = new Audio('resources/sounds/Interface Alert Sound 3.wav');
                 userJoinedSound.play();
-                
+
                 console.log('message received');
             });
-            
+
             //receiving the offline messages
-            socket.on('offline_messages', function(docs){
+            socket.on('offline_messages', function(docs) {
                 console.log('received offline message');
-                for (var i=0; i<docs.length;i++){
+                for (var i = 0; i < docs.length; i++) {
                     //update the output box
                     addRowChatOutput(docs[i].msg);
                 }
-                if (docs.length === 0){
+                if (docs.length === 0) {
                     //alway emit a first message in the room so we can display the latest message
-                var message = 'Chat created on ' + moment().format('MMMM Do YYYY, HH:mm');
-                socket.emit('message', message);
-                addRowChatOutput(message);
-                console.log('room joined');
-            }
+                    var message = 'Chat created on ' + moment().format('MMMM Do YYYY, HH:mm');
+                    socket.emit('message', message);
+                    addRowChatOutput(message);
+                    console.log('room joined');
+                }
             });
 
             function sentMessage() {
@@ -226,13 +233,13 @@
                 var table = document.getElementById('userList');
                 var rowCount = table.rows.length;
                 //reset the userlist if we received a new one
-                if (i === 0){
-                    for (var j=0;j<rowCount;j++){
-                       table.deleteRow(0);
+                if (i === 0) {
+                    for (var j = 0; j < rowCount; j++) {
+                        table.deleteRow(0);
                     }
                     rowCount = 0;
                 }
-                
+
                 var row = table.insertRow(rowCount);
                 row.className = "success"; // make the row green
                 var cell1 = row.insertCell(0);
