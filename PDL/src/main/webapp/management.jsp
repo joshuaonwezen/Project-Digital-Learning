@@ -113,10 +113,10 @@
            <c:if test="${loggedInIsAdmin == true}">   
                 switch (tabbar.getActiveTab()){
                     case "t1":
-                        openUsersWindow(null);
+                        openUserWindow(null);
                         break;
                     case "t2":
-                        openCoursesWindow(null);
+                        openCourseWindow(null);
                         break;
                     case "t3":
                         openNewsItemWindow(null);
@@ -127,7 +127,7 @@
             <c:if test="${loggedInIsManager == true}">   
                  switch (tabbar.getActiveTab()){
                     case "t1":
-                        openCoursesWindow(null);
+                        openCourseWindow(null);
                         break;
                     case "t2":
                         openNewsItemWindow(null);

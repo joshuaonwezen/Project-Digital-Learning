@@ -78,7 +78,7 @@
         </c:if>
             
         <h1> Step 1</h1><br>
-        Download the following program: <a href="http://sourceforge.net/projects/obsproject/files/OBS_0_584b_Installer.exe/download">Open Broadcast Software</a><br>
+        Download the following program: <a href="http://sourceforge.net/projects/obsproject/files/OBS_0_584b_Installer.exe/download">Open Broadcaster Software.</a><br>
         This program will allow you to setup your videostream and start a lesson.<br><br>
         <h1> Step 2</h1><br>
         Right click on the "Sources" tab and press "Add".<br>
