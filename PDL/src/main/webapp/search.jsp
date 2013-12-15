@@ -110,7 +110,7 @@
                         <td><a href="/PDL/profile?id=${user.userId}">${user.lastname}</a></td>
                         <td><a href="/PDL/profile?id=${user.userId}">${user.username}</a></td>
                         <td><a href="/PDL/profile?id=${user.userId}">${user.emailAddress}</a></td>
-                        <td><a href="/PDL/cv?id=${user.userId}">CV</a></td>
+                        <td><a href="/PDL/cv?id=${user.userId}" target="_blank">CV</a></td>
                     </tr>
                 </c:forEach>
             </table>

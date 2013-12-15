@@ -53,7 +53,7 @@
                                         <div class="job">
                                             <h2>${tempWork.name} </h2>
                                             <h3>${tempWork.profession}</h3>
-                                            <h4>${tempWork.dateFrom} - ${tempWork.dateTill}</h4>
+                                            <h4><fmt:formatDate value="${tempWork.dateFrom}" pattern="dd-MM-yyyy" /> - <fmt:formatDate value="${tempWork.dateTill}" pattern="dd-MM-yyyy" /></h4>
                                             <p>${tempWork.description}</p>
                                         </div>
                                     </c:forEach>
@@ -73,7 +73,7 @@
                                         <div class="job">
                                             <h2>${tempProject.name}</h2>
                                             <h3>${tempProject.profession}</h3>
-                                            <h4>${tempProject.dateFrom} - ${tempProject.dateTill}</h4>
+                                            <h4><fmt:formatDate value="${tempProject.dateFrom}" pattern="dd-MM-yyyy" /> - <fmt:formatDate value="${tempProject.dateTill}" pattern="dd-MM-yyyy" /></h4>
                                             <p>${tempProject.description}</p>
                                         </div>
                                     </c:forEach>
@@ -93,7 +93,7 @@
                                         <div class="job">
                                             <h2>${tempEducation.name}</h2>
                                             <h3>${tempEducation.profession}</h3>
-                                            <h4>${tempEducation.dateFrom} - ${tempEducation.dateTill}</h4>
+                                            <h4><fmt:formatDate value="${tempEducation.dateFrom}" pattern="dd-MM-yyyy" /> - <fmt:formatDate value="${tempEducation.dateTill}" pattern="dd-MM-yyyy" /></h4>
                                             <p>${tempEducation.description}</p>
                                         </div>
                                     </c:forEach>
@@ -121,7 +121,7 @@
             </div>
 
             <div id="ft">
-                <p>${firstname} ${lastname} &mdash; <a href="mailto:${emailAddress}">${emailAddress}</a> &mdash;</p>
+                <p>${firstname} ${lastname} &mdash; <a href="mailto:${emailAddress}">${emailAddress}</a></p>
             </div>
 
         </div>
