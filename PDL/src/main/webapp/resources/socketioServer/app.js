@@ -26,12 +26,13 @@ var chatSchema = mongoose.Schema({
 var lastSeenSchema = mongoose.Schema({
    user: String,
    room: String,
-   timeLastSeen: Data
+   timeLastSeen: {type: Date, default: Date.now}
 });
 
 //our model
 var Chat = mongoose.model('Message', chatSchema);
 var lastSeen = mongoose.model('LastSeen', lastSeenSchema);
+
 //-- END MONGODB --
 
 function handler(req, res) {
@@ -98,7 +99,7 @@ io.sockets.on('connection', function(socket) {
             console.log('dispatching message');
             //first save the message to the db
             var newMsg = new Chat({msg: data, room: room, from: socket.nickname});
-            newMsg.save(function(error) {
+            newMsg.save(function(err) {
                 if (err)
                     throw err;
             });
@@ -109,11 +110,27 @@ io.sockets.on('connection', function(socket) {
     //when user left the chatroom
     socket.on('disconnect', function(data) {
         
-        
         //lookup room and broadcast to that room
         socket.get('room', function(err, room) {
-            console.log('==================room: ' + room);
-            console.log('==================from: ' + data.from);
+        if (room !== null){
+        //update the lastseen object for this user and room
+        lastSeen.find({room: room, user: socket.nickname}, function(err, docs){
+        console.log('updating lastseen');
+	        if (err)
+	        	throw err;
+		    //create new object if there is'nt an already
+		    lastSeen.update(
+				{ user : socket.nickname, room: room },
+				{ timeLastSeen: new Date() },
+				{ upsert: true, multi: false } //upsert creates new if not exist, multiple updates only 1
+				, function(erro, updated){
+					if (erro)throw erro;	
+				});
+		    console.log('lastseen should be updated');
+		    
+        });
+        
+        
             socket.leave(room);
             console.log('user disconnected; resending userlist');
             //send list with all connected clients in this room
@@ -126,7 +143,7 @@ io.sockets.on('connection', function(socket) {
             socket.broadcast.to(room).emit('userList', temp);
             socket.to(room).emit('userList', temp);
             console.log('active clients: ' + clients);
-
+}
         });
     });
 
@@ -139,6 +156,20 @@ io.sockets.on('connection', function(socket) {
             socket.emit('latestMessage', docs);
             console.log('sending latest message: ' + data);
 
-        });
+        });  
     });
+    
+        //when request for unread messages is done
+    socket.on('getUnreadNotifications', function(data) {
+    console.log('===================unread notifications===========================' + data);
+        lastSeen.find({user: data}, function(err, docs) {
+            if (err)
+                throw err;
+            console.log('sending unread notifications');
+            socket.emit('unreadNotifications', docs);
+
+        });  
+    });
+    
+    
 });

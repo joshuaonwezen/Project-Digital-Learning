@@ -71,7 +71,7 @@
         </nav>
 
         <div class="CoursePage" style='width: 800px; margin-left: 300px; margin-top: 60px;'>
-            <table class="table table-hover table-bordered" end="2">
+            <table class="table table-bordered" end="2">
                 <tr>
                     <th colspan="4" class="TableHeader" style="text-align: center">
                 <h1>Course: ${courseName}<br></h1>
