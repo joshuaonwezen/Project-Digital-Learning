@@ -98,9 +98,14 @@
                             Home
                         </a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="messages">
-                            Messages<span class="badge pull-right" id="notifications"></span>
+                            Back to Messages
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="#">
+                            ${chat.subject}
                         </a>
                     </li>
                 </ul>
@@ -111,7 +116,7 @@
                     <div id="chatLeft">
                         <div class="panel panel-default chatOutputStyle">
                             <div class="panel-body">
-                                <table class="table table-striped" id="chatOutput" name="chatOutput">
+                                <table class="table table-striped" id="chatOutput" name="chatOutput" style="width:1000px;margin-left:-15px;margin-top:-16px;">
                                 </table>
                             </div>
                         </div>
@@ -130,7 +135,7 @@
                                 <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" placeholder="Enter a message">
                             </div>
                             <div class="chatSend">
-                                <button type="button" class="btn btn-default buttonStyle" disabled id="buttonSent" name="buttonSent" onClick="sentMessage()">Send</button>
+                                <button type="button" class="btn btn-primary buttonStyle" disabled id="buttonSent" name="buttonSent" onClick="sentMessage()">Send</button>
                             </div>
                         </div>
                     </form>
