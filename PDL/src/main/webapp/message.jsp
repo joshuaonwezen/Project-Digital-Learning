@@ -15,7 +15,7 @@
 <html  lang="${language}">
     <head>
         <!--Company Style-->
-        <link rel="stylesheet" type="text/css" href="resources/css/virtualclassroom.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/chat.css">
         <link rel="icon" href="resources/images/favicon.ico" type="image/x-icon"></link>
         <!-- Bootstrap-->
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
@@ -88,22 +88,35 @@
             </div><!-- /.navbar-collapse -->
         </nav>
         <!-- eof navbar-->
+        
+        <div id="main_left">
+                <ul class="nav nav-pills nav-stacked" style="width:150px">
+                    <li>
+                        <a href="/PDL/homepage">
+                            Home
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="messages">
+                            Messages<span class="badge pull-right" id="notifications"></span>
+                        </a>
+                    </li>
+                </ul><br/>
+            </div>
         <div id="chat">
-            <h2>${chat.subject}</h2>
-            <div id="main_left">
+            <div id="main_right">
                 <div class="panel panel-default chatOutputStyle">
                     <div class="panel-body" style="width:106%;margin-left:-15px;margin-top:-16px;">
                         <table class="table table-striped" id="chatOutput" name="chatOutput">
                         </table>
                     </div>
                 </div>
-            </div>
-            <div id="main_right">
+            
                 <div class="panel panel-default users">
                     <table class="table table-condensed" id="userList" style="width:100%;margin-top:-2px;">
                     </table>
                 </div>
-            </div>
+           
             <div id="maint_bot">
                 <form class="form-inline" role="form">
                     <div class="" id="formGroupChatInput">
@@ -117,6 +130,7 @@
                 </form>
             </div>
         </div>
+             </div>
         <script>
             try {
                 var socket = io.connect('http://31.186.175.82:5001');
