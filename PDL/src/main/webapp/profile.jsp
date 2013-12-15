@@ -54,7 +54,7 @@
                         <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
                         <li><a href="/PDL/management">Management</a></li>
                         </c:if>
-                        <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
+                    <c:if test="${loggedInIsAdmin || loggedInIsManager == true}">
                     <li><a href="/PDL/vga">VGA</a></li>
                     </c:if>
                     <li class="dropdown active">

@@ -47,7 +47,7 @@
                         <li><a href="/PDL/management">Management</a></li>
                         </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
-                    <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
+                    <c:if test="${loggedInIsAdmin || loggedInIsManager == true}">
                     <li><a href="/PDL/vga">VGA</a></li>
                     </c:if>
                     <li class="dropdown">
