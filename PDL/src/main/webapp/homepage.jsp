@@ -24,6 +24,8 @@
         <script src="resources/bootstrap/dist/js/alert.js"></script>
         <!-- Moment JS-->
         <script src="resources/moment/moment-m.js" type="text/javascript"></script>
+        <!-- Chat -->
+        <script src="http://31.186.175.82:5001/socket.io/socket.io.js"></script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home - Info Support</title>
@@ -87,13 +89,13 @@
             <div id="main_left">
                 <ul class="nav nav-pills nav-stacked" style="width:150px">
                     <li class="active">
-                        <a href="#">
+                        <a href="/PDL/homepage">
                             Home
                         </a>
                     </li>
                     <li>
                         <a href="messages">
-                            Messages
+                            Messages<span class="badge pull-right" id="notifications"></span>
                         </a>
                     </li>
                 </ul>
@@ -145,6 +147,99 @@
                     </table>
                 </div>
             </div>
+                        <table class="table" id="messagesOverview" name="messagesOverview" style="display:none">
+                                <c:forEach var="chat" items="${userChats}">
+                            <tr id="${chat.chatId}">
+                            </tr>
+                                </c:forEach>
+                        </table>
         </div>
+                        <script>
+                            var messagesUnread=0;
+            try {
+                var socket = io.connect('http://31.186.175.82:5001');
+            }
+            catch (error) {
+                console.log(error);
+            }
+            // join the room on connect
+            socket.on('connect', function(data) {
+                //get for each chat the latest message
+            <c:forEach var="chat" items="${userChats}">
+                socket.emit('getLatestMessage', 'privateRoom ' + ${chat.chatId});
+            </c:forEach>
+                socket.emit('getUnreadNotifications', '${loggedInUsername}');
+            });
+
+            //receiving the latest messages
+            socket.on('latestMessage', function(docs) {
+                addMessage(docs[docs.length - 1]);
+            });
+
+            //receiving the notifications that are unread
+            socket.on('unreadNotifications', function(docs) {
+                appendUnreadStyle(docs);
+            });
+
+            function addMessage(data) {
+                var table = document.getElementById('messagesOverview');
+                var row = document.getElementById(data.room.replace('privateRoom ', ''));
+                var cellLastSent = row.insertCell(0);
+
+                cellLastSent.innerHTML = data.timeSent;
+                //cellLastSent.style.display = 'none'; // we only need the date from this cell
+            }
+
+            //set row as unread
+            function appendUnreadStyle(docs) {
+                var table = document.getElementById('messagesOverview');
+                var rowsCount = table.rows.length;
+                // 1. if there are no docs for any row yet
+                if (rowsCount > 0 && docs.length === 0){
+                    for (var i=0;i<rowsCount;i++){
+                        var rowId = table.rows[i].id;
+                        messagesUnread++;
+                    }
+                }
+                // if table has rows, then check for every row if it's unread
+                
+                //2. set the lastseen for every row
+                else if (rowsCount > 0){
+                    console.log('rowscount');
+                    for (var i=0;i<rowsCount;i++){ // iterate over every row in the table
+                        var rowId = table.rows[i].id;
+                        var lastReceived = document.getElementById(rowId).cells[0].innerHTML;
+                        var dateLastReceived = new Date(lastReceived);
+                        var docFound = false;
+                        for (var j=0;j<docs.length;j++){
+                            var docsRoomId = docs[j].room.replace('privateRoom ', '');
+                            if (rowId === docsRoomId){
+                                docFound = true;
+                               
+                                //make sure that  lastseen is later than  last received
+                                var lastSeen = docs[j].timeLastSeen;
+                                var dateLastSeen = new Date(lastSeen);
+                                if (dateLastSeen < dateLastReceived){
+                                    //last message is not seen yet; make row unread
+                                    messagesUnread++;
+                                }
+                           }
+                        }
+                        if (!docFound){
+                            //this means that the row is definentely unread
+                            messagesUnread++;
+                        }
+                    }
+                }
+                if (messagesUnread === 0){
+                    document.getElementById('notifications').style.display = 'none';
+                }
+                else{
+                    document.getElementById('notifications').innerHTML = messagesUnread;
+                }
+                
+            }
+            
+        </script>
     </body>
 </html>
