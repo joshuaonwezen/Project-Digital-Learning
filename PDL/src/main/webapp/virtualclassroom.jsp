@@ -101,9 +101,27 @@
         </p>
         </c:if>
         <div id="main">
+            <script>
+            function hideStream()
+            {
+            document.getElementById("hide").style.display="none";
+            document.getElementById("showButton").style.display="inline";
+            }
+            function showStream()
+            {
+            document.getElementById("hide").style.display="inline";
+            document.getElementById("showButton").style.display="none";
+            }
+            </script>
+            </head>
+            <body>
             <div id="main_top">
+                <input id="showButton" class="btn btn-default" type="button" onclick="showStream()" value="Show" style="display:none;">
+                <div id="hide">
+                <input type="button" class="btn btn-default" onclick="hideStream()" value="Hide">
                 <div id="stream">
                           <embed width="100%" height="500px" src="http://www.focusonthefamily.com/family/JWPlayer/mediaplayer.swf" flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file=${courseKey}.flv&streamer=rtmp://31.186.175.82/live" />
+                </div>
                 </div>
             </div>
             <div id="main_left">
