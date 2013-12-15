@@ -92,6 +92,10 @@
         You can edit your captured windows by pressing "Edit Scene".<br>
         <img src="../resources/images/tutorial3.png"><br><br>
         <h1> Step 4</h1><br>
+        You might want to save your lesson, so that you can upload later to the for students to review.<br>
+        You can do this by checking the "Save to file" box and setting up a path where you want to save it.<br>
+        <img src="../resources/images/tutorial4.png"><br><br>
+        <h1> Step 5</h1><br>
         Now that you've setup your stream, it's time to connect to our server and start your lesson!<br>
         Press the "Settings" button and go to "Broadcast Settings"<br>
         <img src="../resources/images/tutorial2.png"><br>
