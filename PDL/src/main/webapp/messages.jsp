@@ -93,11 +93,11 @@
                     </li>
                     <li class="active">
                         <a href="messages">
-                            Messages<span class="badge pull-right" id="notifications"></span>
+                            <fmt:message key="message.messages"/><span class="badge pull-right" id="notifications"></span>
                         </a>
                     </li>
                 </ul><br/>
-             <button type="button" class="btn btn-default" id="createMessage" onClick="$('#createChat').modal('show')" style="width:150px">New Message</button>
+             <button type="button" class="btn btn-default" id="createMessage" onClick="$('#createChat').modal('show')" style="width:150px"><fmt:message key="message.new"/></button>
 
             
             </div>
@@ -110,12 +110,12 @@
                 <c:when test="${chatsSize == 0}">
                     <div class="alert alert-warning" style="margin-left:20px;margin-right:20px">
                         <a class="close" data-dismiss="alert">×</a>
-                        <strong>Nothing available</strong> Press the create button to start a new Message.
+                        <strong><fmt:message key="message.nothing"/></strong> <fmt:message key="message.nothing.new"/>
                     </div>
                 </c:when>
                 <c:otherwise>
                     <table class="table" id="messagesOverview" name="messagesOverview">
-                        <tr><th>Subject</th><th>Users</th><th>Last Message</th><th>Last Received</th><th>Manage</th></tr>
+                        <tr><th><fmt:message key="message.subject"/></th><th><fmt:message key="message.users"/></th><th><fmt:message key="message.lastmessage"/></th><th><fmt:message key="message.lastreceived"/></th><th>Manage</th></tr>
                                 <c:forEach var="chat" items="${userChats}">
                             <tr id="${chat.chatId}">
                                 <td><a href="message?chatId=${chat.chatId}">${chat.subject}</a>
@@ -161,19 +161,19 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Compose New Message</h4>
+                            <h4 class="modal-title"><fmt:message key="message.compose"/></h4>
                         </div>
                         <div class="modal-body">
                             <form class="form-horizontal" role="form" id="newMessage" action="createMessage" method="post">
 
                                 <div class="form-group">
-                                    <label for="subject" class="col-sm-2 control-label">Subject</label>
+                                    <label for="subject" class="col-sm-2 control-label"><fmt:message key="message.subject"/></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="subject" name="subject" onkeyup="toggleCreateButton()" placeholder="Enter a subject">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="users" class="col-sm-2 control-label">Users</label>
+                                    <label for="users" class="col-sm-2 control-label"><fmt:message key="message.users"/></label>
                                     <div class="col-sm-10">
                                         <input type="hidden" id="tagUsers" name="tagUsers" placeholder="&nbsp;Enter Users" style="width:100%">
                                         <script>
@@ -188,8 +188,8 @@
                                 </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary" id="create" name="create" disabled>Create</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="documents.cancel"/></button>
+                            <button type="submit" class="btn btn-primary" id="create" name="create" disabled><fmt:message key="message.create"/></button>
                         </div>
                         </form>
                     </div><!-- /.modal-content -->
@@ -202,19 +202,19 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Manage Message</h4>
+                            <h4 class="modal-title">Manage <fmt:message key="message.messages"/></h4>
                         </div>
                         <div class="modal-body">
                             <form class="form-horizontal" role="form" id="manageMessage" action="manageMessage" method="post">
                                 <input type="hidden" id="chatToManage" name="chatToManage"/>
                                 <div class="form-group">
-                                    <label for="subjectUpdate" class="col-sm-2 control-label">Subject</label>
+                                    <label for="subjectUpdate" class="col-sm-2 control-label"><fmt:message key="message.subject"/></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="subjectUpdate" name="subjectUpdate" onkeyup="toggleUpdateButton()" placeholder="Enter a subject">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="users" class="col-sm-2 control-label">Users</label>
+                                    <label for="users" class="col-sm-2 control-label"><fmt:message key="message.users"/></label>
                                     <div class="col-sm-10">
                                         <input type="hidden" id="tagManageUsers" name="tagManageUsers" placeholder="&nbsp;Enter Users" style="width:100%">
                                         <script>
@@ -229,8 +229,8 @@
                                 </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary" id="update" name="update" disabled>Update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="documents.cancel"/></button>
+                            <button type="submit" class="btn btn-primary" id="update" name="update" disabled><fmt:message key="message.update"/></button>
                         </div>
                         </form>
                     </div><!-- /.modal-content -->
@@ -394,13 +394,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Confirm Delete</h4>
+                        <h4 class="modal-title"><fmt:message key="messages.confirm.delete"/></h4>
                     </div>
                     <div class="modal-body">
-                        <p>All Users will be removed from this message. Are you sure you want to delete this message?</p>
+                        <p><fmt:message key="message.delete"/></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="documents.cancel"/></button>
                         <button type="button" class="btn btn-primary" onclick="deleteChat()"><fmt:message key="edit.popup.yes"/></button>
                     </div>
                 </div><!-- /.modal-content -->
@@ -413,13 +413,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Confirm Leave</h4>
+                    <h4 class="modal-title"><fmt:message key="messages.confirm.leave"/></h4>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to leave this message?</p>
+                    <p><fmt:message key="message.leave"/></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="documents.cancel"/></button>
                     <button type="button" class="btn btn-primary" onclick="removeUserFromChat()"><fmt:message key="edit.popup.yes"/></button>
                 </div>
             </div><!-- /.modal-content -->

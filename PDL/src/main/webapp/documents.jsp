@@ -79,10 +79,10 @@
         <!-- eof navbar-->
         <div id="main">
             <c:if test="${course.owner.userId == loggedInUserId}">
-                <button type="button" class="btn btn-default" id="btnShowModalUpload" onClick="$('#modalUpload').modal('show')">Upload File(s)</button>
+                <button type="button" class="btn btn-default" id="btnShowModalUpload" onClick="$('#modalUpload').modal('show')"><fmt:message key="documents.upload.files"/></button>
             </c:if>
             <table class="table" id="tblDocuments" name="tblDocuments">
-                <tr><th>Name</th><th>Last Modified</th><th>Size</th><c:if test="${course.owner.userId == loggedInUserId}"><th>Manage</th></c:if></tr>
+                <tr><th><fmt:message key="documents.name"/></th><th><fmt:message key="documents.modefied"/></th><th><fmt:message key="documents.size"/></th><c:if test="${course.owner.userId == loggedInUserId}"><th>Manage</th></c:if></tr>
                 <c:forEach var="file" items="${files}">
                     <c:if test="${file.visible || (file.owner.userId == loggedInUserId)}">
                     <tr>
@@ -123,10 +123,10 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="modalTitle">File Upload</h4>
+                        <h4 class="modal-title" id="modalTitle"><fmt:message key="documents.upload"/></h4>
                     </div>
                     <div class="modal-body">
-                        <p id="modalBodyText">Select one or more files to upload.</p>
+                        <p id="modalBodyText"><fmt:message key="documents.upload.select"/></p>
                             <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
                             <input type="file" id="file" name="file" multiple/>
                         <div class="progress progress-striped active" id="progress" style="display:none">
@@ -136,7 +136,7 @@
                                 </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal"><fmt:message key="documents.cancel"/></button>
                         <button type="button" id="btnSubmit" class="btn btn-primary" onclick="uploadFiles()">Upload</button>
                     </div>
                     </form>
@@ -168,13 +168,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Confirm Delete</h4>
+                        <h4 class="modal-title"><fmt:message key="documents.delete"/></h4>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure you want to delete this document? It cannot be undone.</p>
+                        <p><fmt:message key="documents.delete.confirm"/></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="documents.cancel"/></button>
                         <button type="button" class="btn btn-primary" onclick="deleteFile()"><fmt:message key="edit.popup.yes"/></button>
                     </div>
                 </div><!-- /.modal-content -->

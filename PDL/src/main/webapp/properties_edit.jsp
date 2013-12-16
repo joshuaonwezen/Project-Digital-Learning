@@ -1,19 +1,26 @@
+<%-- 
+    Document   : properties_edit
+    Created on : 8-dec-2013, 21:13:55
+    Author     : Martijn
+--%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="java.io.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="index" />
 <!DOCTYPE html>
-<html  lang="${language}">
+<html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- Bootstrap-->
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="../resources/bootstrap/dist/css/bootstrap.min.css">
-        <script src="../resources/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="../resources/bootstrap/dist/js/alert.js"></script>
-        <title>${courseName} - Info Support</title>
+        <link rel="stylesheet" href="resources/bootstrap/dist/css/bootstrap.min.css">
+        <script src="resources/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="resources/bootstrap/dist/js/alert.js"></script>
+        <title>Courses - Info Support</title>
     </head>
     <body>
         <!--Start nav bar-->
@@ -26,16 +33,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/PDL/homepage"><img src="../resources/images/Logo.png"></a>
+                <a class="navbar-brand" href="/PDL/homepage"><img src="resources/images/Logo.png"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:12px">
                 <ul class="nav navbar-nav">
                     <li><a href="/PDL/homepage">Home</a></li>
-                    <li class="active"><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
+                    <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
                         <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
-                        <li><a href="/PDL/management">Management</a></li>
+                        <li  class="active"><a href="/PDL/management">Management</a></li>
                         </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
                     <c:if test="${loggedInIsAdmin || loggedInIsManager == true}">
@@ -67,27 +74,68 @@
                     </div>
                     <button type="submit" class="btn btn-default"><fmt:message key="navbar.search"/></button>
                 </form>
-            </div>
+            </div><!-- /.navbar-collapse -->
         </nav>
-
-        <div class="CoursePage" style='width: 800px; margin-left: 300px; margin-top: 60px;'>
-            <table class="table table-bordered" end="2">
+        <title>JSP Page</title>
+   
+    
+        <h1>Properties</h1>
+        <table>
+            <c:forEach items="${prop}" var="properties">
                 <tr>
-                    <th colspan="4" class="TableHeader" style="text-align: center">
-                <h1><fmt:message key="course.course"/>: ${courseName}<br></h1>
-                <h1><fmt:message key="course.select.teacher"/>: ${courseOwner.firstname} ${courseOwner.lastname}<br></h1>
-                <h6><fmt:message key="course.description"/>:<br>${courseDescription}<br></h6><br>
-                </th>
+                    <td>${prop.key}</td>
+                    <td>${prop.value}</td>
                 </tr>
-                <tr style="margin-left: 200px; width:500px;">
-                    <td><a href="../documents?courseId=${courseId}"><img src="../resources/images/documents_icon.png"></a></td>
-                    <td><a href=""><img src="../resources/images/users_icon.png"></a></td>
-                </tr>
-                <tr style="margin-left: 200px; width:500px; ">
-                    <td><a href="/PDL/courses/virtualclassroom?courseId=${courseId}"><img src="../resources/images/virtualclassroom_icon.png"></a></td>
-                    <td><a href=""><img src="../resources/images/unenroll_icon.png"></a></td>
-                </tr>
-            </table>
-        </div>
+            </c:forEach>
+        </table>   
+        
+    
+    <script type="text/javascript">
+function update(){
+    try{
+        Properties p = new Properties();
+        File file=new File("/WEB-INF/classes/tempindex_nl_NL.properties");
+        p.store(new FileOutputStream(file),null);
+        Enumeration en = p.keys();
+        while (en.hasMoreElements()) {
+            String key = (String) en.nextElement();
+            String val = request.getParameter(pr.get(key))
+            p.setProperty(key, val);
+            p.store(new FileOutputStream(file),null);
+        }
+        
+        System.out.println("Operation completly successfuly!");
+        }
+
+    catch(IOException e){
+    System.out.println(e.getMessage());
+
+}
+
+    </script>
+    <table border="1" style="margin-left: 10px">
+        <tr>
+            <th align=left>Property Key</th>
+            <th align=left>Property Value</th>
+        </tr>
+        <%
+            ServletContext context = getServletContext();
+            InputStream inStream = context.getResourceAsStream("/WEB-INF/classes/index_nl_NL.properties");
+            Properties pr = new Properties();
+            pr.load(inStream);
+            Enumeration en = pr.keys();
+            while (en.hasMoreElements()) {%>
+        <tr>
+            <%String key = (String) en.nextElement();%>
+            <td><%=key%></td>
+            <td><input type="input" name="PROPERTY VALUE" value="<%=pr.get(key)%>" onclick="editRecord(<%=pr.get(key)%>);" ></td>
+            
+        </tr>
+        <%}
+        %>
+    </table>
+    <br/>
+    <input type=submit value="Update" onClick="update()" href="/PDL/properties_edit" style="margin-left: 10px">
+    <input type="button" value="Back" onclick="history.back()"> 
     </body>
 </html>

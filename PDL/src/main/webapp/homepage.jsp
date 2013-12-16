@@ -95,7 +95,7 @@
                     </li>
                     <li>
                         <a href="messages">
-                            Messages<span class="badge pull-right" id="notifications"></span>
+                            <fmt:message key="message.messages"/><span class="badge pull-right" id="notifications"></span>
                         </a>
                     </li>
                 </ul>

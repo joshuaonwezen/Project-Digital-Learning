@@ -97,7 +97,7 @@
         </nav>
         <c:if test="${courseOwner.username == loggedInUsername}">
         <p style="text-align: center;">
-        Press the "Help" button for a detailed tutorial on how to start your lesson.
+        <fmt:message key="virtual.help.tut"/>
         </p>
         </c:if>
         <div id="main">

@@ -22,8 +22,8 @@
         <link rel="Icon" href="../resources/images/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" type="text/css" href="../resources/css/editmode.css">
 
-        <title><c:if test="${isUpdate == true}"><fmt:message key="edit.popup.edit"/><fmt:message key="education.educatio"/> - Info Support</c:if>
-            <c:if test="${isUpdate == false}"><fmt:message key="edit.popup.create"/><fmt:message key="education.educatio"/> - Info Support</c:if></title>
+        <title><c:if test="${isUpdate == true}"><fmt:message key="edit.popup.edit"/><fmt:message key="education.education"/> - Info Support</c:if>
+            <c:if test="${isUpdate == false}"><fmt:message key="edit.popup.create"/><fmt:message key="education.education"/> - Info Support</c:if></title>
         <style type="text/css">
             textarea {
             }

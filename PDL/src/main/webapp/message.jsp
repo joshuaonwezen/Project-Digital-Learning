@@ -100,7 +100,7 @@
                     </li>
                     <li>
                         <a href="messages">
-                            Back to Messages
+                            <fmt:message key="message.messages.message"/>
                         </a>
                     </li>
                     <li class="active">

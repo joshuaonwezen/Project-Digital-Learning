@@ -121,7 +121,7 @@
         <description>Location to store uploaded file</description>
         <param-name>file-upload</param-name>
         <param-value>
-            /Users/F4LLCON/Documents/GitHub/PDL/PDL/data/
+            C:\Users\Martijn\Documents\
         </param-value>
     </context-param>
     <!-- Course -->
@@ -298,6 +298,15 @@
     <servlet-mapping>
         <servlet-name>VGAController</servlet-name>
         <url-pattern>/doSweep</url-pattern>
+    </servlet-mapping>
+    <!-- Properties -->
+    <servlet>
+        <servlet-name>PropertiesController</servlet-name>
+        <servlet-class>controllers.PropertiesController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PropertiesController</servlet-name>
+        <url-pattern>/properties_edit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

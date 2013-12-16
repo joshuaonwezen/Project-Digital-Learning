@@ -86,11 +86,11 @@
         <!-- eof navbar-->
 
         <div id="main">
-            <button type="button" class="btn btn-default" id="btnShowModalStartSweep" onClick="$('#modalStartSweep').modal('show')">Start new sweep</button>
+            <button type="button" class="btn btn-default" id="btnShowModalStartSweep" onClick="$('#modalStartSweep').modal('show')"><fmt:message key="vga.start.sweep"/></button>
             
             <c:if test="${!empty userVGAStatuses}">
                 <table class="table" id="messagesOverview" name="messagesOverview">
-                    <tr><th>User</th><th>Status</th><th>Description</th></tr>
+                    <tr><th><fmt:message key="user.user"/></th><th>Status</th><th><fmt:message key="course.description"/></th></tr>
                     <c:forEach var="output" items="${userVGAStatuses}">
                         <tr id="${output.user.username}"><td>${output.user.firstname} ${output.user.lastname}</td><td>${output.status}</td><td>${output.statusDescription}</td></tr>
                         <script>
@@ -113,13 +113,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="modalTitle">Initiate new VGA sweep</h4>
+                        <h4 class="modal-title" id="modalTitle"><fmt:message key="vga.initiate"/></h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal" role="form" id="formVGASweep" action="doSweep" method="post">
-                        <p id="modalBodyText">Please select a Skill to start a new search for. </p>
+                        <p id="modalBodyText"><fmt:message key="vga.initiate.msg"/> </p>
                         <div class="form-group">
-                            <label id="skillsLabel" for="skills" class="col-sm-2 control-label">Skill</label>
+                            <label id="skillsLabel" for="skills" class="col-sm-2 control-label"><fmt:message key="skill.skill"/></label>
                             <div class="col-sm-10" id="divSkills">
                                 <input type="hidden" id="tagSkills" onkeyup="toggleStartButton()" onchange="toggleStartButton()" name="tagSkills" placeholder="&nbsp;Enter a Skill" style="width:100%">
                                 <script>
@@ -141,8 +141,8 @@
                                 </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" id="btnCancel" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" id="btnStartSweep" onclick="doSweep();" disabled>Start</button>
+                        <button type="button" class="btn btn-default" id="btnCancel" data-dismiss="modal"><fmt:message key="documents.cancel"/></button>
+                        <button type="button" class="btn btn-primary" id="btnStartSweep" onclick="doSweep();" disabled><fmt:message key="vga.start"/></button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
