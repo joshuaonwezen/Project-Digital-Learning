@@ -80,7 +80,7 @@ public class ManageDocumentController extends HttpServlet {
             System.out.println("file upload");
 
             File file;
-            int maxFileSize = 5000 * 1024;
+            int maxFileSize = 1500000 * 1024;
             int maxMemSize = 5000 * 1024;
             String filePath = request.getServletContext().getInitParameter("file-upload"); //gets the path from web.xml
 
@@ -148,7 +148,11 @@ public class ManageDocumentController extends HttpServlet {
                     }
 
                 } catch (Exception ex) {
-                    System.out.println(ex);
+                    System.out.println("exception: " + ex);
+                    
+                    if (ex.toString().contains("SizeLimitExceededException")){
+                        request.setAttribute("uploadSizeError", true);
+                    }
                 }
             } else {
                 System.out.println("FORM CONTENT TYPE ERROR");

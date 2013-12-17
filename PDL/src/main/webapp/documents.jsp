@@ -88,7 +88,21 @@
                     <tr>
                         <td><a href="#">${file.name}</a></td>
                         <td><script>document.write(moment('${file.lastEdited}').fromNow());</script></td>
-                        <td><script>document.write(Math.round(${file.fileSize/1024}));</script> kb</td>
+                        <td>
+                            <script>
+                            var fileSize = ${file.fileSize/1024};
+                            var metric = ' KB';
+                            if (fileSize > 1024){
+                                metric = ' MB';
+                                fileSize = fileSize/1024;
+                            }
+                            if (fileSize > 1024){
+                                metric = ' GB';
+                                fileSize = fileSize/1024;
+                            }
+                            document.write(Math.round(fileSize) + metric);
+                            </script>
+                        </td>
                         <td>
                             <c:if test="${file.owner.userId == loggedInUserId}">
                         <form id="formVisibilityFile" action="changeFileVisibility" method="post" style="margin: 0; padding: 0;display:inline">
@@ -112,9 +126,6 @@
                     </c:if>
                 </c:forEach>
             </table>
-            
-            
-            
         </div>
         <!-- Modal Dialog for uploading documents -->
         <div class="modal fade" id="modalUpload">
@@ -126,8 +137,13 @@
                         <h4 class="modal-title" id="modalTitle"><fmt:message key="documents.upload"/></h4>
                     </div>
                     <div class="modal-body">
+                        <div class="alert alert-danger" id="uploadSizeError" style="display:none">
+                        <a class="close" data-dismiss="alert">×</a>
+                        Your upload exceeds the maximum file size of 1.5 GB.
+                    </div>
                         <p id="modalBodyText"><fmt:message key="documents.upload.select"/></p>
                             <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
+                            
                             <input type="file" id="file" name="file" multiple/>
                         <div class="progress progress-striped active" id="progress" style="display:none">
                                     <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
@@ -160,6 +176,19 @@
             //deleting a document
             function deleteFile(){
                 document.getElementById('formDeleteFile').submit();
+            }
+            
+            var uploadError;
+            if ('${uploadSizeError}' !== ''){
+                uploadError = true;
+            }
+            else{
+                uploadError = false;
+            }
+            
+            if (uploadError){
+                document.getElementById('uploadSizeError').style.display = 'block';
+                $('#modalUpload').modal('show');
             }
         </script>
                 <!-- Modal Dialog for Deleting -->
