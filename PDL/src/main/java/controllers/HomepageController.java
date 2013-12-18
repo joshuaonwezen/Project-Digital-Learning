@@ -331,6 +331,7 @@ public class HomepageController extends HttpServlet {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         Criteria criteria = session.createCriteria(Chat.class);
+         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//prevent duplicates
         List<Chat> chats = criteria.list();
 
         //now filter on the user that is logged in

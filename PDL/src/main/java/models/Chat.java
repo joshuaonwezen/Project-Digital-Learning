@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -20,7 +21,7 @@ public class Chat implements Serializable{
     @GeneratedValue
     private int chatId;
     private String subject;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<User> users;
     @ManyToOne
     private User created;

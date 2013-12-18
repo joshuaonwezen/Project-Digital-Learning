@@ -116,7 +116,7 @@
                     <div id="chatLeft">
                         <div class="panel panel-default chatOutputStyle">
                             <div class="panel-body">
-                                <table class="table table-striped" id="chatOutput" name="chatOutput" style="width:1920px;margin-left:-15px;margin-top:-16px;">
+                                <table class="table table-condensed" id="chatOutput" name="chatOutput" style="width:1920px;margin-left:-15px;margin-top:-16px;">
                                 </table>
                             </div>
                         </div>
@@ -124,6 +124,9 @@
                     <div id="userRight">
                         <div class="panel panel-default users">
                             <table class="table table-condensed" id="userList">
+                                <c:forEach var="user" items="${chat.users}">
+                                    <tr class="warning" id="${user.username}"><td>${user.username}</td></tr> 
+                                        </c:forEach>
                             </table>
                         </div>
                     </div>
@@ -166,11 +169,7 @@
 
             //receiving userlist
             socket.on('userList', function(data) {
-
-                //add users to the userlist
-                for (var i = 0; i < data.length; i++) {
-                    addRowUserList(data[i], i);
-                }
+                refreshUserList(data);
                 console.log('userList received: ');
             });
 
@@ -189,8 +188,8 @@
                 //update the output box
                 addRowChatOutput(data);
                 //play a sound
-                var userJoinedSound = new Audio('resources/sounds/Interface Alert Sound 3.wav');
-                userJoinedSound.play();
+                var messageReceivedSound = new Audio('resources/sounds/Interface Alert Sound 3.wav');
+                messageReceivedSound.play();
 
                 console.log('message received');
             });
@@ -228,27 +227,36 @@
                 var table = document.getElementById('chatOutput');
 
                 var rowCount = table.rows.length;
+                //set row colours
+                var rowPreceding = 0;
+                var userPreceding = table.rows[rowPreceding];
+                //console.log('preceding ruser: ' + userPreceding);
+                
                 var row = table.insertRow(rowCount);
                 var cell1 = row.insertCell(0);
                 cell1.innerHTML = data;
+                
+                //
             }
 
-            // add a row to the table which contains the users
-            function addRowUserList(data, i) {
-                var table = document.getElementById('userList');
-                var rowCount = table.rows.length;
-                //reset the userlist if we received a new one
-                if (i === 0) {
-                    for (var j = 0; j < rowCount; j++) {
-                        table.deleteRow(0);
-                    }
-                    rowCount = 0;
-                }
+            // update the list with user
+            function refreshUserList(data) {
 
-                var row = table.insertRow(rowCount);
-                row.className = "success"; // make the row green
-                var cell1 = row.insertCell(0);
-                cell1.innerHTML = data;
+                //set which users are online and offline
+            <c:forEach var="user" items="${chat.users}">
+                var userOnline = false;
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i] === '${user.username}') {
+                        userOnline = true;
+                    }
+                }
+                if (!userOnline) {
+                    document.getElementById('${user.username}').className = 'warning';
+                }
+                else {
+                    document.getElementById('${user.username}').className = 'success';
+                }
+            </c:forEach>
             }
             // block the sent button if there is no input in the chatInput box
             function toggleSentButton() {
