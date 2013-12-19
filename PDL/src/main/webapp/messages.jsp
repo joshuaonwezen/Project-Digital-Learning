@@ -274,7 +274,9 @@
                 var cellData = row.insertCell(3);
                 var cellLastSent = row.insertCell(5);
 
-                cellMessage.innerHTML = data.msg;
+                var message = data.msg.substring(data.msg.indexOf('||') + 2, data.msg.length); //first substring
+                message = message.substring(message.indexOf('||') + 2, message.length); //first substring
+                cellMessage.innerHTML = message;
                 cellData.innerHTML = moment(data.timeSent).fromNow();
                 cellLastSent.innerHTML = data.timeSent;
                 cellLastSent.style.display = 'none'; // we only need the date from this cell
