@@ -71,7 +71,6 @@
                             <li><a href="index.jsp">Logout</a></li>
                             <li class="divider"></li>
                             <li><a href="/PDL/properties_edit">Internationalisation</a></li>
-                            <li><a href="#">Report a Problem</a></li>
                             <li>
                                 <a >
                                     <form>

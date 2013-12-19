@@ -62,6 +62,8 @@
             </div>
         </c:if>
 
+            
+
         <div id="validationAlert" style="margin-left:20px;margin-right:20px"></div>
         <form id="login" action="login" method="post">
 

@@ -61,8 +61,6 @@
                         <ul class="dropdown-menu">
                             <li><a href="index.jsp"><fmt:message key="navbar.logout"/></a></li>
                             <li class="divider"></li>
-                            <li><a href="#">Help</a></li>
-                            <li><a href="#"><fmt:message key="navbar.problem"/></a></li>
                             <li>
                                 <a >
                                     <form>

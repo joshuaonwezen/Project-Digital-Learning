@@ -71,8 +71,6 @@
                                 <li><a id="toggle"><fmt:message key="profile.edit"/></a></li>
                                 </c:if>
                             <li class="divider"></li>
-                            <li><a href="#">Help</a></li>
-                            <li><a href="#"><fmt:message key="navbar.problem"/></a></li>
                             <li>
                                 <a >
                                     <form>

@@ -52,8 +52,6 @@
                         <ul class="dropdown-menu">
                             <li><a href="index.jsp"><fmt:message key="navbar.logout"/></a></li>
                             <li class="divider"></li>
-                            <li><a href="#">Help</a></li>
-                            <li><a href="#"><fmt:message key="navbar.problem"/></a></li>
                             <li>
                                 <a >
                                     <form>
@@ -76,8 +74,7 @@
             </div><!-- /.navbar-collapse -->
         </nav>
         <!-- eof navbar-->
-
-
+ 
         <div id="validationAlert" style="margin-left:20px;margin-right:20px"></div>
         <c:if test="${enrolledIn != null}">
             <div class="alert alert-success" style="margin-left:20px;margin-right:20px">
@@ -173,6 +170,5 @@
                                            }
                                            
                                        </script>
-
                                        </body>
                                        </html>

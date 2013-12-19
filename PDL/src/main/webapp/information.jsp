@@ -52,8 +52,6 @@
                         <ul class="dropdown-menu">
                             <li><a href="index.jsp">Logout</a></li>
                             <li class="divider"></li>
-                            <li><a href="#">Help</a></li>
-                            <li><a href="#">Report a Problem</a></li>
                             <li>
                                 <a >
                                     <form>
