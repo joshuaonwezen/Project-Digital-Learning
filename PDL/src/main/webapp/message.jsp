@@ -31,6 +31,10 @@
         <script src="resources/moment/moment-m.js" type="text/javascript"></script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                <!-- scripts used for video-conferencing -->
+        <script src="js/socket.io.js"></script>
+        <script src="js/RTCPeerConnection-v1.5.js"></script>
+        <script src="js/conference.js"></script>
         <title>Home - Info Support</title>
     </head>
     <body>
@@ -111,6 +115,22 @@
 
             <div id="main_right">
                 <div id="chat">
+                      <!-- just copy this <section> and next script -->
+                <section class="experiment">                
+                    <section>
+                    <span>
+                         <a href="/video-conferencing/" target="_blank" title="Open this link in new tab. Then your conference room will be private!"></a>
+                    </span>
+                    <section>
+                        <button id="setup-new-room" class="setup">Join</button>
+                    </section>
+
+                    <!-- list of all available conferencing rooms -->
+                    <table style="width: 100%;" id="rooms-list"></table>
+
+                     <!-- local/remote videos container -->
+                     <div id="videos-container"></div>
+                     </section>
                     <div id="chatLeft">
                         <div class="panel panel-default chatOutputStyle">
                             <div class="panel-body">
@@ -144,6 +164,193 @@
             </div>
 
         </div>
+           <script>
+            var config = {
+                openSocket: function(config) {
+                    var SIGNALING_SERVER = 'http://webrtc-signaling.jit.su:80/',
+                            defaultChannel = location.hash.substr(1) || 'video-conferencing-hangout';
+
+                    var channel = config.channel || defaultChannel;
+                    var sender = Math.round(Math.random() * 999999999) + 999999999;
+
+                    io.connect(SIGNALING_SERVER).emit('new-channel', {
+                        channel: channel,
+                        sender: sender
+                    });
+
+                    var socket = io.connect(SIGNALING_SERVER + channel);
+                    socket.channel = channel;
+                    socket.on('connect', function() {
+                        if (config.callback)
+                            config.callback(socket);
+                    });
+
+                    socket.send = function(message) {
+                        socket.emit('message', {
+                            sender: sender,
+                            data: message
+                        });
+                    };
+
+                    socket.on('message', config.onmessage);
+                },
+                onRemoteStream: function(media) {
+                    var video = media.video;
+
+                    video.setAttribute('width', 600);
+                    video.setAttribute('controls', true);
+                    video.setAttribute('id', media.stream.id);
+
+                    videosContainer.insertBefore(video, videosContainer.firstChild);
+
+                    video.play();
+                    rotateVideo(video);
+
+                    setTimeout(function() {
+                        // unmute audio stream for echo-cancellation
+                        // config.attachStream.getAudioTracks()[0].enabled = true;
+                    }, 2000);
+                    scaleVideos();
+                },
+                onRemoteStreamEnded: function(stream) {
+                    var video = document.getElementById(stream.id);
+                    if (video) {
+                        video.style.opacity = 0;
+                        rotateVideo(video);
+                        setTimeout(function() {
+                            video.parentNode.removeChild(video);
+                            scaleVideos();
+                        }, 1000);
+                    }
+                },
+                onRoomFound: function(room) {
+                    var alreadyExist = document.querySelector('button[data-broadcaster="' + room.broadcaster + '"]');
+                    if (alreadyExist)
+                        return;
+
+                    if (typeof roomsList === 'undefined')
+                        roomsList = document.body;
+
+                    var tr = document.createElement('tr');
+                    if(room.roomName === '${chat.subject}'){
+                    tr.innerHTML = '<td>The chatroom <strong>' + room.roomName + '</strong> has started a videoconference, click here to join:</td>' +
+                            '<td><button class="join">Join</button></td>';
+                    roomsList.insertBefore(tr, roomsList.firstChild);
+                }
+
+                    var joinRoomButton = tr.querySelector('.join');
+                    joinRoomButton.setAttribute('data-broadcaster', room.broadcaster);
+                    joinRoomButton.setAttribute('data-roomToken', room.roomToken);
+                    joinRoomButton.onclick = function() {
+                        this.disabled = true;
+
+                        var broadcaster = this.getAttribute('data-broadcaster');
+                        var roomToken = this.getAttribute('data-roomToken');
+                        captureUserMedia(function() {
+                            conferenceUI.joinRoom({
+                                roomToken: roomToken,
+                                joinUser: broadcaster
+                            });
+                        });
+                    };
+                },
+                onRoomClosed: function(room) {
+                    var joinButton = document.querySelector('button[data-roomToken="' + room.roomToken + '"]');
+                    if (joinButton) {
+                        // joinButton.parentNode === <li>
+                        // joinButton.parentNode.parentNode === <td>
+                        // joinButton.parentNode.parentNode.parentNode === <tr>
+                        // joinButton.parentNode.parentNode.parentNode.parentNode === <table>
+                        joinButton.parentNode.parentNode.parentNode.parentNode.removeChild(joinButton.parentNode.parentNode.parentNode);
+                    }
+                }
+            };
+            
+            function setupNewRoomButtonClickHandler() {
+                btnSetupNewRoom.disabled = true;
+                captureUserMedia(function() {
+                    var roomId = '${chat.subject}';
+                    conferenceUI.createRoom({
+                        roomName: ({}).value || '${chat.subject}'                      
+                    });
+                });
+            }
+
+            function captureUserMedia(callback) {
+                var video = document.createElement('video');
+                video.setAttribute('width', 300);
+                video.setAttribute('autoplay', true);
+                video.setAttribute('controls', true);
+                videosContainer.insertBefore(video, videosContainer.firstChild);
+
+                getUserMedia({
+                    video: video,
+                    onsuccess: function(stream) {
+                        config.attachStream = stream;
+                        callback && callback();
+
+                        video.setAttribute('muted', true);
+                        rotateVideo(video);
+                        scaleVideos();
+                    },
+                    onerror: function() {
+                        alert('unable to get access to your webcam');
+                        callback && callback();
+                    }
+                });
+            }
+
+            var conferenceUI = conference(config);
+
+            /* UI specific */
+            var videosContainer = document.getElementById('videos-container') || document.body;
+            var btnSetupNewRoom = document.getElementById('setup-new-room');
+            var roomsList = document.getElementById('rooms-list');
+
+            if (btnSetupNewRoom)
+                btnSetupNewRoom.onclick = setupNewRoomButtonClickHandler;
+
+            function rotateVideo(video) {
+                video.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(0deg)';
+                setTimeout(function() {
+                    video.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(360deg)';
+                }, 1000);
+            }
+
+
+            function scaleVideos() {
+                var videos = document.querySelectorAll('video'),
+                        length = videos.length, video;
+
+                var minus = 130;
+                var windowHeight = 700;
+                var windowWidth = 600;
+                var windowAspectRatio = windowWidth / windowHeight;
+                var videoAspectRatio = 4 / 3;
+                var blockAspectRatio;
+                var tempVideoWidth = 0;
+                var maxVideoWidth = 0;
+
+                for (var i = length; i > 0; i--) {
+                    blockAspectRatio = i * videoAspectRatio / Math.ceil(length / i);
+                    if (blockAspectRatio <= windowAspectRatio) {
+                        tempVideoWidth = videoAspectRatio * windowHeight / Math.ceil(length / i);
+                    } else {
+                        tempVideoWidth = windowWidth / i;
+                    }
+                    if (tempVideoWidth > maxVideoWidth)
+                        maxVideoWidth = tempVideoWidth;
+                }
+                for (var i = 0; i < length; i++) {
+                    video = videos[i];
+                    if (video)
+                        video.width = maxVideoWidth - minus;
+                }
+            }
+
+            window.onresize = scaleVideos;
+
+        </script>
         <script>
             try {
                 var socket = io.connect('http://31.186.175.82:5001');
