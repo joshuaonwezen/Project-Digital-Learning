@@ -24,6 +24,8 @@
         <script src="../resources/bootstrap/dist/js/alert.js"></script>
         <!-- Chat -->
         <script src="http://31.186.175.82:5001/socket.io/socket.io.js"></script>
+        <!-- Moment JS-->
+        <script src="../resources/moment/moment-m.js" type="text/javascript"></script>
         <!-- Player -->
         <link href="http://vjs.zencdn.net/4.3/video-js.css" rel="stylesheet">
         <script src="http://vjs.zencdn.net/4.3/video.js"></script>
@@ -125,7 +127,7 @@
             <div id="main_left">
                 <div class="panel panel-default chatOutputStyle">
                     <div class="panel-body" style="width:106%;margin-left:-15px;margin-top:-16px;">
-                        <table class="table table-striped" id="chatOutput" name="chatOutput">
+                        <table class="table" id="chatOutput" name="chatOutput">
                         </table>
                     </div>
                 </div>
@@ -212,7 +214,8 @@
             });
 
             function sentMessage() {
-                var message = '${loggedInUsername}' + ':' + document.getElementById('chatInput').value;
+                var date = new Date();
+                var message = '${loggedInUsername}' + '||' + date + '||' + document.getElementById('chatInput').value;
                 // emit the message
                 socket.emit('message', message);
 
@@ -223,14 +226,106 @@
                 console.log('message sent');
             }
 
-            // add a row to the table which contains the messages
+// add a row to the table which contains the messages
             function addRowChatOutput(data) {
                 var table = document.getElementById('chatOutput');
-
+                var row;
                 var rowCount = table.rows.length;
-                var row = table.insertRow(rowCount);
-                var cell1 = row.insertCell(0);
-                cell1.innerHTML = data;
+                var rowPrecedingCount = rowCount - 1;
+                var rowPreceding = table.rows[rowPrecedingCount];
+                var rowPrecedingClass;
+                //data
+                var from = '<b>' + data.substring(0, data.indexOf('||')) + '</b>';
+                var date;
+
+                //first message doesnt have a user from which its sent
+                var message = '';
+                if (rowCount === 0) {
+                    message = data;
+                }
+                else {
+                    data = data.substring(data.indexOf('||') + 2, data.length);
+                    date = new Date(data.substring(0, data.indexOf('||')));
+                    message = data.substring(data.indexOf('||') + 2, data.length);
+                }
+
+                //add newlines to large messages so they will fit in the row
+                if (message.length > 60) {
+                    var result = '';
+                    while (message.length > 0) {
+                        result += message.substring(0, 60) + '\n';
+                        message = message.substring(60);
+                    }
+                    message = result;
+                }
+
+                //create row blocks
+                var newRowBlock = false;
+                if (rowPrecedingCount !== -1) {
+                    var precedingUser = rowPreceding.getAttribute('name');
+                    var precedingDate = new Date(rowPreceding.getAttribute('received'));
+                    var currentDate = new Date();
+
+                    //add to existing block if was sent within on hour by the same user
+                    if ((precedingUser === from) && (moment(precedingDate).add('hours', 1) > date)) {
+                        console.log('samedate');
+                        row = rowPreceding;
+                        row.cells[0].innerHTML = row.cells[0].innerHTML + '</br>' + message;
+                    }
+                    //message from other user then preceding user or time sent is larger than one hour
+                    //create new 'block'
+                    else {
+                        row = table.insertRow(rowCount);
+                        row.setAttribute('name', from);
+                        row.setAttribute('received', date);
+                        var cell1 = row.insertCell(0);
+                        cell1.innerHTML = from + '</br>' + message;
+                        cell1.style.width='93%';
+                        newRowBlock = true;
+                        var cell2 = row.insertCell(1);
+                        cell2.innerHTML = '<small class="text-muted">' + moment(date).format('HH:mm') + '</small>';
+                        cell2.style.width='7%';
+                    }
+                }
+                //first occurence
+                else {
+                    //create new block if it's the first row
+                    row = table.insertRow(rowCount);
+                    var cell1 = row.insertCell(0);
+                    cell1.innerHTML = message;
+                }
+
+                //create new date block
+                var dateBlockAdded = false;
+                if (rowCount > 1 && (moment(precedingDate).add('days', 1) < date)) {//check if it's a new day since a message was sent
+                    console.log('should create new block');
+                    //create new tr with date of today
+                    var row2 = table.insertRow(rowCount);
+                    var cell1 = row2.insertCell(0);
+                    cell1.setAttribute('align', 'center');
+                    cell1.setAttribute('colSpan', '2');
+                    row2.setAttribute('received', date);
+                    cell1.innerHTML = '<div class="text-info">' + moment(date).format('ll') + '</div>';
+                    dateBlockAdded = true;
+                }
+
+                //set row styling
+                if (newRowBlock) {
+                    if (rowCount === 0) {//base case
+                        row.className = 'active';
+                    }
+                    else {
+
+                        rowPrecedingClass = rowPreceding.className;
+                        if (rowPrecedingClass === 'active') {
+                            row.className = '';
+                        }
+                        else {
+                            row.className = 'active';
+                        }
+                    }
+                }
+                $('div').scrollTop(1000000); // scroll to end of table
             }
 
             // add a row to the table which contains the users

@@ -134,7 +134,7 @@
                     <div id="chatLeft">
                         <div class="panel panel-default chatOutputStyle">
                             <div class="panel-body">
-                                <table class="table" id="chatOutput" name="chatOutput" style="width:725px;margin-left:-15px;margin-top:-16px;">
+                                <table class="table" id="chatOutput" name="chatOutput" style="width:820px;margin-left:-15px;margin-top:-16px;">
                                 </table>
                             </div>
                         </div>
