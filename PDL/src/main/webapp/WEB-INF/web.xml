@@ -23,6 +23,10 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>HomepageController</servlet-name>
+        <url-pattern>/chatroom</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomepageController</servlet-name>
         <url-pattern>/createMessage</url-pattern>
     </servlet-mapping>
     <servlet-mapping>

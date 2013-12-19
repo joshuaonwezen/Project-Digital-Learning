@@ -135,6 +135,9 @@
                                         <button type="button" class="btn btn-default btn-xs" id ="btnManage" onclick="showManageMessage(${chat.chatId}, '${chat.subject}');">
                                             <span class="glyphicon glyphicon-cog"></span>
                                         </button>
+                                        <button type="button" class="btn btn-default btn-xs" id ="btnManage" href="chatroom?chatId=${chat.chatId}">
+                                            <span class="glyphicon glyphicon-video"></span>
+                                        </button>
                                     </c:if>
                                     <c:if test="${chat.created.userId != loggedInUserId}">
                                         <form id="removeUserFromMessage" action="removeUserFromMessage" method="post" style="margin: 0; padding: 0;display:inline">
