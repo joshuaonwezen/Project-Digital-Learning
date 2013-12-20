@@ -308,6 +308,19 @@
         <servlet-name>PropertiesController</servlet-name>
         <url-pattern>/properties_edit</url-pattern>
     </servlet-mapping>
+    <!-- i18n -->
+    <servlet>
+        <servlet-name>i18nController</servlet-name>
+        <servlet-class>controllers.I18nController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>i18nController</servlet-name>
+        <url-pattern>/i18n</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>i18nController</servlet-name>
+        <url-pattern>/update</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

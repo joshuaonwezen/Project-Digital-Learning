@@ -153,7 +153,7 @@
                     <form class="form-inline" role="form">
                         <div class="" id="formGroupChatInput">
                             <div class="chatInput">
-                                <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" placeholder="Enter a message">
+                                <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()"  onkeypress="handleKeyPress(evt)" placeholder="Enter a message">
                             </div>
                             <div class="chatSend">
                                 <button type="button" class="btn btn-primary buttonStyle" disabled id="buttonSent" name="buttonSent" onClick="sentMessage()">Send</button>
@@ -414,6 +414,13 @@
                     console.log('room joined');
                 }
             });
+            
+            $(document).keypress(function(event) {
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if(keycode == '13') {
+        document.getElementById("buttonSent").click();   
+    }
+});
 
             function sentMessage() {
                 var date = new Date();

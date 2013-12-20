@@ -107,7 +107,10 @@
                             <input type="hidden" id="fileToChangeVisibility" name="fileToChangeVisibility" value="${file.fileId}"/>
                             <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
                             
-                            <button type="submit" class="btn btn-default btn-xs <c:if test="${file.visible}">active</c:if>" id="btnChangeVisibility">
+                            <button type="submit" class="btn btn-default btn-xs <c:if test="${file.visible}">active </c:if>" 
+                                    <c:if test="${file.visible}">title="Visable" data-placement="bottom" data-toggle="tooltip"</c:if>
+                                    <c:if test="${!file.visible}">title="Invisable" data-placement="bottom" data-toggle="tooltip"</c:if>
+                                    id="btnChangeVisibility">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                             </button>
                         </form>

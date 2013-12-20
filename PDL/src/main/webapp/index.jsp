@@ -62,7 +62,7 @@
             </div>
         </c:if>
 
-            
+
 
         <div id="validationAlert" style="margin-left:20px;margin-right:20px"></div>
         <form id="login" action="login" method="post">
@@ -81,8 +81,8 @@
                     <label for="password">Password</label>
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
-                </div>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+                    </div>
                 </div>
 
             </div>
@@ -91,7 +91,7 @@
                 <button type="button" class="btn btn-primary" style="width:100%;" onclick="login()">Login</button>
             </div>
             <div class="well" style="margin-top:150px"><center>You can only login with an InfoSupport account.<br/> No account yet?</br>Contact the InfoSupport Admin.</center></div>
-            
+
             <script>
                 //use the same validations that are used on the server side
                 function validateForm() {
@@ -115,6 +115,14 @@
                         return false;
                     }
                 }
+
+
+                $(document).keypress(function(event) {
+                    var keycode = (event.keyCode ? event.keyCode : event.which);
+                    if (keycode == '13') {
+                        login();
+                    }
+                });
                 //login button press
                 function login() {
                     if (validateForm()) {

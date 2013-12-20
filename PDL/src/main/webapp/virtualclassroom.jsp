@@ -63,12 +63,12 @@
                         <li><a href="/PDL/management">Management</a></li>
                         </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
-                    <c:if test="${loggedInIsAdmin || loggedInIsManager == true}">
-                    <li><a href="/PDL/vga">VGA</a></li>
-                    </c:if>
-                    <c:if test="${courseOwner.username == loggedInUsername}">
-                    <li><a href="/PDL/courses/tutorial?courseId=${courseId}">Help</a></li>
-                    </c:if>
+                        <c:if test="${loggedInIsAdmin || loggedInIsManager == true}">
+                        <li><a href="/PDL/vga">VGA</a></li>
+                        </c:if>
+                        <c:if test="${courseOwner.username == loggedInUsername}">
+                        <li><a href="/PDL/courses/tutorial?courseId=${courseId}">Help</a></li>
+                        </c:if>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.settings"/> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -96,32 +96,32 @@
             </div>
         </nav>
         <c:if test="${courseOwner.username == loggedInUsername}">
-        <p style="text-align: center;">
-        <fmt:message key="virtual.help.tut"/>
-        </p>
+            <p style="text-align: center;">
+                <fmt:message key="virtual.help.tut"/>
+            </p>
         </c:if>
         <div id="main">
             <script>
-            function hideStream()
-            {
-            document.getElementById("hide").style.display="none";
-            document.getElementById("showButton").style.display="inline";
-            }
-            function showStream()
-            {
-            document.getElementById("hide").style.display="inline";
-            document.getElementById("showButton").style.display="none";
-            }
+                function hideStream()
+                {
+                    document.getElementById("hide").style.display = "none";
+                    document.getElementById("showButton").style.display = "inline";
+                }
+                function showStream()
+                {
+                    document.getElementById("hide").style.display = "inline";
+                    document.getElementById("showButton").style.display = "none";
+                }
             </script>
-            </head>
-            <body>
+        </head>
+        <body>
             <div id="main_top">
                 <input id="showButton" class="btn btn-default" type="button" onclick="showStream()" value="Show" style="display:none;">
                 <div id="hide">
-                <input type="button" class="btn btn-default" onclick="hideStream()" value="Hide">
-                <div id="stream">
-                          <embed width="100%" height="500px" src="http://www.focusonthefamily.com/family/JWPlayer/mediaplayer.swf" flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file=${courseKey}.flv&streamer=rtmp://31.186.175.82/live" />
-                </div>
+                    <input type="button" class="btn btn-default" onclick="hideStream()" value="Hide">
+                    <div id="stream">
+                        <embed width="100%" height="500px" src="http://www.focusonthefamily.com/family/JWPlayer/mediaplayer.swf" flashvars="allowfullscreen=true&allowscriptaccess=always&autostart=true&shownavigation=true&enablejs=true&volume=50&file=${courseKey}.flv&streamer=rtmp://31.186.175.82/live" />
+                    </div>
                 </div>
             </div>
             <div id="main_left">
@@ -142,7 +142,7 @@
                 <form class="form-inline" role="form">
                     <div class="" id="formGroupChatInput">
                         <div class="chatInput">
-                            <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" placeholder="Enter a message">
+                            <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" onkeydown="handleKeyPress" placeholder="Enter a message">
                         </div>
                         <div class="chatSend">
                             <button type="button" style="width: 190px;" class="btn btn-default" disabled id="buttonSent" name="buttonSent" onClick="sentMessage()">Send</button>
@@ -150,210 +150,216 @@
                     </div>
                 </form>
             </div>
-        </div>
-         <script>
-            try {
-                var socket = io.connect('http://31.186.175.82:5001');
+    </div>
+    <script>
+        try {
+            var socket = io.connect('http://31.186.175.82:5001');
+        }
+        catch (error) {
+            // this error states that a connection cannot be established
+            // disable the chatInput to show this
+            if (error.toString() === 'ReferenceError: io is not defined') {
+                document.getElementById('chatInput').disabled = true;
+                document.getElementById('chatInput').placeholder = 'Cannot establish connection to the chat server';
             }
-            catch (error) {
-                // this error states that a connection cannot be established
-                // disable the chatInput to show this
-                if (error.toString() === 'ReferenceError: io is not defined') {
-                    document.getElementById('chatInput').disabled = true;
-                    document.getElementById('chatInput').placeholder = 'Cannot establish connection to the chat server';
-                }
+        }
+        // join the room on connect
+        socket.on('connect', function(data) {
+            var courseId = ${courseId};
+            console.log('welcome to chatroom: ' + courseId);
+
+            socket.emit('join room', 'room ' + courseId);
+            socket.emit('userJoined', '${loggedInUsername}');
+
+            console.log('room joined');
+        });
+
+        socket.on('userList', function(data) {
+            console.log('users ' + data);
+
+            //add users to the userlist
+            for (var i = 0; i < data.length; i++) {
+                addRowUserList(data[i], i);
             }
-            // join the room on connect
-            socket.on('connect', function(data) {
-                var courseId = ${courseId};
-                console.log('welcome to chatroom: ' + courseId);
 
-                socket.emit('join room', 'room ' + courseId);
-                socket.emit('userJoined', '${loggedInUsername}');
-                
-                console.log('room joined');
-            });
-            
-            socket.on('userList', function(data) {
-                console.log('users ' + data);
-                
-                //add users to the userlist
-                for (var i=0;i<data.length;i++){
-                    addRowUserList(data[i], i);
-                }
-                
-                
-                console.log('userList received: ');
-            });
 
-            // receiving a join
-            socket.on('userJoined', function(data) {
+            console.log('userList received: ');
+        });
+
+        // receiving a join
+        socket.on('userJoined', function(data) {
+            //update the output box
+            //$("#chatOutput").append(data + ' joined the chat\n');
+
+            //play a sound
+            var userJoinedSound = new Audio('../resources/sounds/01_-_Warm_Interface_Sound_1.wav');
+            userJoinedSound.play();
+        });
+
+        // receiving a message
+        socket.on('message', function(data) {
+            //update the output box
+            addRowChatOutput(data);
+
+            console.log('message received');
+        });
+
+        //receiving the offline messages
+        socket.on('offline_messages', function(docs) {
+            console.log('received offline message');
+            for (var i = 0; i < docs.length; i++) {
                 //update the output box
-                //$("#chatOutput").append(data + ' joined the chat\n');
-                
-                //play a sound
-                var userJoinedSound = new Audio('../resources/sounds/01_-_Warm_Interface_Sound_1.wav');
-                userJoinedSound.play();
-            });
-
-            // receiving a message
-            socket.on('message', function(data) {
-                //update the output box
-                addRowChatOutput(data);
-
-                console.log('message received');
-            });
-            
-            //receiving the offline messages
-            socket.on('offline_messages', function(docs){
-                console.log('received offline message');
-                for (var i=0; i<docs.length;i++){
-                    //update the output box
-                    addRowChatOutput(docs[i].msg);
-                }
-            });
-
-            function sentMessage() {
-                var date = new Date();
-                var message = '${loggedInUsername}' + '||' + date + '||' + document.getElementById('chatInput').value;
-                // emit the message
-                socket.emit('message', message);
-
-                // update the output and input boxes
-                addRowChatOutput(message);
-                document.getElementById('chatInput').value = '';
-                toggleSentButton();
-                console.log('message sent');
+                addRowChatOutput(docs[i].msg);
             }
+        });
 
+        function sentMessage() {            
+            var date = new Date();
+            var message = '${loggedInUsername}' + '||' + date + '||' + document.getElementById('chatInput').value;
+            // emit the message
+            socket.emit('message', message);
+
+            // update the output and input boxes
+            addRowChatOutput(message);
+            document.getElementById('chatInput').value = '';
+            toggleSentButton();
+            console.log('message sent');
+        }
+        function handleKeyPress(evt) {
+                    var key = (window.event) ? event.keyCode : evt.which;
+                    if (key == 13) {
+                        sentMessage();
+                    }
+                }
+                document.onkeyPress = handleKeyPress;
 // add a row to the table which contains the messages
-            function addRowChatOutput(data) {
-                var table = document.getElementById('chatOutput');
-                var row;
-                var rowCount = table.rows.length;
-                var rowPrecedingCount = rowCount - 1;
-                var rowPreceding = table.rows[rowPrecedingCount];
-                var rowPrecedingClass;
-                //data
-                var from = '<b>' + data.substring(0, data.indexOf('||')) + '</b>';
-                var date;
+        function addRowChatOutput(data) {
+            var table = document.getElementById('chatOutput');
+            var row;
+            var rowCount = table.rows.length;
+            var rowPrecedingCount = rowCount - 1;
+            var rowPreceding = table.rows[rowPrecedingCount];
+            var rowPrecedingClass;
+            //data
+            var from = '<b>' + data.substring(0, data.indexOf('||')) + '</b>';
+            var date;
 
-                //first message doesnt have a user from which its sent
-                var message = '';
-                if (rowCount === 0) {
-                    message = data;
+            //first message doesnt have a user from which its sent
+            var message = '';
+            if (rowCount === 0) {
+                message = data;
+            }
+            else {
+                data = data.substring(data.indexOf('||') + 2, data.length);
+                date = new Date(data.substring(0, data.indexOf('||')));
+                message = data.substring(data.indexOf('||') + 2, data.length);
+            }
+
+            //add newlines to large messages so they will fit in the row
+            if (message.length > 60) {
+                var result = '';
+                while (message.length > 0) {
+                    result += message.substring(0, 60) + '\n';
+                    message = message.substring(60);
                 }
+                message = result;
+            }
+
+            //create row blocks
+            var newRowBlock = false;
+            if (rowPrecedingCount !== -1) {
+                var precedingUser = rowPreceding.getAttribute('name');
+                var precedingDate = new Date(rowPreceding.getAttribute('received'));
+                var currentDate = new Date();
+
+                //add to existing block if was sent within on hour by the same user
+                if ((precedingUser === from) && (moment(precedingDate).add('hours', 1) > date)) {
+                    console.log('samedate');
+                    row = rowPreceding;
+                    row.cells[0].innerHTML = row.cells[0].innerHTML + '</br>' + message;
+                }
+                //message from other user then preceding user or time sent is larger than one hour
+                //create new 'block'
                 else {
-                    data = data.substring(data.indexOf('||') + 2, data.length);
-                    date = new Date(data.substring(0, data.indexOf('||')));
-                    message = data.substring(data.indexOf('||') + 2, data.length);
-                }
-
-                //add newlines to large messages so they will fit in the row
-                if (message.length > 60) {
-                    var result = '';
-                    while (message.length > 0) {
-                        result += message.substring(0, 60) + '\n';
-                        message = message.substring(60);
-                    }
-                    message = result;
-                }
-
-                //create row blocks
-                var newRowBlock = false;
-                if (rowPrecedingCount !== -1) {
-                    var precedingUser = rowPreceding.getAttribute('name');
-                    var precedingDate = new Date(rowPreceding.getAttribute('received'));
-                    var currentDate = new Date();
-
-                    //add to existing block if was sent within on hour by the same user
-                    if ((precedingUser === from) && (moment(precedingDate).add('hours', 1) > date)) {
-                        console.log('samedate');
-                        row = rowPreceding;
-                        row.cells[0].innerHTML = row.cells[0].innerHTML + '</br>' + message;
-                    }
-                    //message from other user then preceding user or time sent is larger than one hour
-                    //create new 'block'
-                    else {
-                        row = table.insertRow(rowCount);
-                        row.setAttribute('name', from);
-                        row.setAttribute('received', date);
-                        var cell1 = row.insertCell(0);
-                        cell1.innerHTML = from + '</br>' + message;
-                        cell1.style.width='93%';
-                        newRowBlock = true;
-                        var cell2 = row.insertCell(1);
-                        cell2.innerHTML = '<small class="text-muted">' + moment(date).format('HH:mm') + '</small>';
-                        cell2.style.width='7%';
-                    }
-                }
-                //first occurence
-                else {
-                    //create new block if it's the first row
                     row = table.insertRow(rowCount);
+                    row.setAttribute('name', from);
+                    row.setAttribute('received', date);
                     var cell1 = row.insertCell(0);
-                    cell1.innerHTML = message;
+                    cell1.innerHTML = from + '</br>' + message;
+                    cell1.style.width = '93%';
+                    newRowBlock = true;
+                    var cell2 = row.insertCell(1);
+                    cell2.innerHTML = '<small class="text-muted">' + moment(date).format('HH:mm') + '</small>';
+                    cell2.style.width = '7%';
                 }
+            }
+            //first occurence
+            else {
+                //create new block if it's the first row
+                row = table.insertRow(rowCount);
+                var cell1 = row.insertCell(0);
+                cell1.innerHTML = message;
+            }
 
-                //create new date block
-                var dateBlockAdded = false;
-                if (rowCount > 1 && (moment(precedingDate).add('days', 1) < date)) {//check if it's a new day since a message was sent
-                    console.log('should create new block');
-                    //create new tr with date of today
-                    var row2 = table.insertRow(rowCount);
-                    var cell1 = row2.insertCell(0);
-                    cell1.setAttribute('align', 'center');
-                    cell1.setAttribute('colSpan', '2');
-                    row2.setAttribute('received', date);
-                    cell1.innerHTML = '<div class="text-info">' + moment(date).format('ll') + '</div>';
-                    dateBlockAdded = true;
+            //create new date block
+            var dateBlockAdded = false;
+            if (rowCount > 1 && (moment(precedingDate).add('days', 1) < date)) {//check if it's a new day since a message was sent
+                console.log('should create new block');
+                //create new tr with date of today
+                var row2 = table.insertRow(rowCount);
+                var cell1 = row2.insertCell(0);
+                cell1.setAttribute('align', 'center');
+                cell1.setAttribute('colSpan', '2');
+                row2.setAttribute('received', date);
+                cell1.innerHTML = '<div class="text-info">' + moment(date).format('ll') + '</div>';
+                dateBlockAdded = true;
+            }
+
+            //set row styling
+            if (newRowBlock) {
+                if (rowCount === 0) {//base case
+                    row.className = 'active';
                 }
+                else {
 
-                //set row styling
-                if (newRowBlock) {
-                    if (rowCount === 0) {//base case
+                    rowPrecedingClass = rowPreceding.className;
+                    if (rowPrecedingClass === 'active') {
+                        row.className = '';
+                    }
+                    else {
                         row.className = 'active';
                     }
-                    else {
+                }
+            }
+            $('div').scrollTop(1000000); // scroll to end of table
+        }
 
-                        rowPrecedingClass = rowPreceding.className;
-                        if (rowPrecedingClass === 'active') {
-                            row.className = '';
-                        }
-                        else {
-                            row.className = 'active';
-                        }
-                    }
+        // add a row to the table which contains the users
+        function addRowUserList(data, i) {
+            var table = document.getElementById('userList');
+            var rowCount = table.rows.length;
+            //reset the userlist if we received a new one
+            if (i === 0) {
+                for (var j = 0; j < rowCount; j++) {
+                    table.deleteRow(0);
                 }
-                $('div').scrollTop(1000000); // scroll to end of table
+                rowCount = 0;
             }
 
-            // add a row to the table which contains the users
-            function addRowUserList(data, i) {
-                var table = document.getElementById('userList');
-                var rowCount = table.rows.length;
-                //reset the userlist if we received a new one
-                if (i === 0){
-                    for (var j=0;j<rowCount;j++){
-                       table.deleteRow(0);
-                    }
-                    rowCount = 0;
-                }
-                
-                var row = table.insertRow(rowCount);
-                row.className = "success"; // make the row green
-                var cell1 = row.insertCell(0);
-                cell1.innerHTML = data;
+            var row = table.insertRow(rowCount);
+            row.className = "success"; // make the row green
+            var cell1 = row.insertCell(0);
+            cell1.innerHTML = data;
+        }
+        // block the sent button if there is no input in the chatInput box
+        function toggleSentButton() {
+            if (document.getElementById('chatInput').value.length > 0) {
+                document.getElementById('buttonSent').disabled = false;
             }
-            // block the sent button if there is no input in the chatInput box
-            function toggleSentButton() {
-                if (document.getElementById('chatInput').value.length > 0) {
-                    document.getElementById('buttonSent').disabled = false;
-                }
-                else {
-                    document.getElementById('buttonSent').disabled = true;
-                }
+            else {
+                document.getElementById('buttonSent').disabled = true;
             }
-        </script>
-    </body>
+            }            
+    </script>
+</body>
 </html>
