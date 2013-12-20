@@ -122,7 +122,7 @@
                          <a href="/video-conferencing/" target="_blank" title="Open this link in new tab. Then your conference room will be private!"></a>
                     </span>
                     <section>
-                        Want to start a videoconference?  <button id="setup-new-room" class="setup">Switch to video!</button><br>
+                        Want to start a videoconference?  <button id="setup-new-room" class="setup">Start conference</button><br>
                     </section>
 
                     <!-- list of all available conferencing rooms -->

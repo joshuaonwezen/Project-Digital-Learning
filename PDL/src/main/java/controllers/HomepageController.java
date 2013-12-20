@@ -55,12 +55,6 @@ public class HomepageController extends HttpServlet {
         /**
          * Show all the messages that a User is currently linked to
          */
-         if (action.equals("chatroom")) {
-
-            setUserChatsOnRequest(request);
-            setUsersOnRequest(request); //users for selecting in a new chat
-            redirect(request, response, "/chatroom.jsp");
-        } 
         if (action.equals("messages")) {
 
             setUserChatsOnRequest(request);
