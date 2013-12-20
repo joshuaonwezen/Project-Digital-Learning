@@ -122,7 +122,7 @@
                          <a href="/video-conferencing/" target="_blank" title="Open this link in new tab. Then your conference room will be private!"></a>
                     </span>
                     <section>
-                        Want to start a videoconference?  <button id="setup-new-room" class="setup">Switch to video!</button><br>
+                        Want to start a videoconference?  <button id="setup-new-room" class="setup">Start conference</button><br>
                     </section>
 
                     <!-- list of all available conferencing rooms -->
@@ -539,8 +539,10 @@
 
             // update the list with user
             function refreshUserList(data) {
-
-                //set which users are online and offline
+                var onlineUsers = new Array();
+                var offlineUsers = new Array();
+                
+                //get online and offline users
             <c:forEach var="user" items="${chat.users}">
                 var userOnline = false;
                 for (var i = 0; i < data.length; i++) {
@@ -549,13 +551,33 @@
                     }
                 }
                 if (!userOnline) {
-                    document.getElementById('${user.username}').className = 'warning';
+                    onlineUsers.push('${user.username}');
                 }
                 else {
-                    document.getElementById('${user.username}').className = 'success';
+                    offlineUsers.push('${user.username}');
                 }
             </c:forEach>
+            
+            //now set the online users above the offline users in the row
+            var table = document.getElementById('userList');
+            var rowCount = table.rows;
+            
+            table.innerHTML = '';//reset row
+            for (var i=0;i<onlineUsers.length;i++){
+                var row = table.insertRow(rowCount);
+                var cell = row.insertCell(0);
+                cell.innerHTML = onlineUsers[i];
+                cell.className = 'warning';
+                rowCount = table.rows;
             }
+            for (var i=0;i<offlineUsers.length;i++){
+                var row = table.insertRow(rowCount);
+                var cell = row.insertCell(0);
+                cell.innerHTML = offlineUsers[i];
+                cell.className = 'success';
+                rowCount = table.rows;
+            }
+        }
             // block the sent button if there is no input in the chatInput box
             function toggleSentButton() {
                 if (document.getElementById('chatInput').value.length > 0) {
