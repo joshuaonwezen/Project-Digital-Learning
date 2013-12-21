@@ -133,15 +133,15 @@
                      </section>
                     <div id="chatLeft">
                         <div class="panel panel-default chatOutputStyle">
-                            <div class="panel-body">
-                                <table class="table" id="chatOutput" name="chatOutput" style="width:820px;margin-left:-15px;margin-top:-16px;">
+                            
+                                <table class="table" id="chatOutput" name="chatOutput" style="margin-top:-2px;">
                                 </table>
-                            </div>
+                            
                         </div>
                     </div>
                     <div id="userRight">
-                        <div class="panel panel-default users">
-                            <table class="table table-condensed" id="userList">
+                        <div class="panel panel-default">
+                            <table class="table table-condensed" id="userList" style="margin-top:-1px;">
                                 <c:forEach var="user" items="${chat.users}">
                                     <tr class="warning" id="${user.username}"><td>${user.username}</td></tr> 
                                         </c:forEach>
