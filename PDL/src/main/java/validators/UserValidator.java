@@ -34,7 +34,7 @@ public class UserValidator {
         if (GenericValidator.isEmpty(userForm.getEmailAddress())) {
             errors.add("Email address may not be empty ");
         } else if (!GenericValidator.isValid(userForm.getEmailAddress(), Regex.EMAIL_ADDRESS)) {
-            errors.add("Email address iskanker not valid.  ");
+            errors.add("Email address is not valid.  ");
         }
 
         if (GenericValidator.isEmpty(userForm.getPosition())) {

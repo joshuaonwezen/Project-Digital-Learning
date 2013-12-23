@@ -139,8 +139,51 @@
                                 </div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-link" id="btnEditPeriodicSweep" style="float:left;" onClick="$('#modalEditPeriodicSweep').modal('show');$('#modalStartSweep').modal('hide')">Set Periodic Sweeps</button>
                         <button type="button" class="btn btn-default" id="btnCancel" data-dismiss="modal"><fmt:message key="documents.cancel"/></button>
                         <button type="button" class="btn btn-primary" id="btnStartSweep" onclick="doSweep();" disabled><fmt:message key="vga.start"/></button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        
+         <!-- Modal Dialog for Editing Period Sweep -->
+        <div class="modal fade" id="modalEditPeriodicSweep">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="modalTitle">Set Skills for Periodic Sweep</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form" id="formVGASweep" action="doSweep" method="post">
+                        <p id="modalBodyText">The Skills you provide in this window are prerequisites for all employees.</p>
+                        <div class="form-group">
+                            <label id="skillsLabel" for="skills" class="col-sm-2 control-label"><fmt:message key="skill.skill"/></label>
+                            <div class="col-sm-10" id="divSkills">
+                                <input type="hidden" id="tagSkills" onkeyup="toggleStartButton()" onchange="toggleStartButton()" name="tagSkills" placeholder="&nbsp;Enter a Skill" style="width:100%">
+                                <script>
+                                    //set all available skills from the database in the multiselect
+                                    var arrSkills = new Array();
+                                    <c:forEach var='skill' items='${skills}'>
+                                    arrSkills.push('${skill.name}');
+                                    </c:forEach>
+                                    $('#tagSkills').select2({tags: arrSkills, tokenSeparators: [",", " "], createSearchChoice: false, maximumSelectionSize: 1});
+                                </script>
+                                
+                            </div>
+                        </div>
+                        </form>
+                        <div class="progress progress-striped active" id="progress" style="display:none">
+                                    <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" id="btnCreateSweep" style="float:left;" onclick="$('#modalStartSweep').modal('show');$('#modalEditPeriodicSweep').modal('hide')">Initiate new VGA sweep</button>
+                        <button type="button" class="btn btn-default" id="btnCancel" data-dismiss="modal"><fmt:message key="documents.cancel"/></button>
+                        <button type="button" class="btn btn-primary" id="btnUpdatePeriodicSweeps" onclick="doSweep();" disabled><fmt:message key="vga.start"/></button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->

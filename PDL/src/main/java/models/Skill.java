@@ -24,15 +24,19 @@ public class Skill implements Serializable {
     private String level;
     @Column(columnDefinition = "varchar(250)")
     private String description;
+    private boolean checkByVGA;
+    
 
     public Skill() {
     }
 
-    public Skill(long skillId, String name, String level) {
+    public Skill(long skillId, String name, String level, boolean checkByVGA) {
         this.setSkillId(skillId);
         this.setName(name);
         this.setLevel(level);
+        this.checkByVGA = checkByVGA;
     }
+    
     public Skill(String name) {
         this.setName(name);
     }
@@ -91,4 +95,13 @@ public class Skill implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public boolean isCheckByVGA() {
+        return checkByVGA;
+    }
+
+    public void setCheckByVGA(boolean checkByVGA) {
+        this.checkByVGA = checkByVGA;
+    }
+    
 }
