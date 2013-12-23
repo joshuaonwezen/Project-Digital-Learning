@@ -100,12 +100,60 @@
                         </tr>
                     </c:forEach>
                 </table>
-                <button type="submit" class="btn btn-primary"><fmt:message key="edit.popup.save"/></button>
+                <button type="submit" class="btn btn-primary" ><fmt:message key="edit.popup.save"/></button>
             </form>
             
             
         </div>
 
-
+        <!-- Modal Dialog for Updating Translations -->
+        <div class="modal fade" id="modalUpdateI18N">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="modalTitle">Apply I18N Translations</h4>
+                    </div>
+                    <form role="form" id="applyTranslations" action="applyTranslations" method="post">
+                    <div class="modal-body">
+                        <p id="modalBodyText1">To apply the new translations the server needs to be restarted. This means that all users are disconnected and will be unable to login for at least five minutes. It is recommended to do this as least as possible at times where as minimal users are online. Inform your employees if necessary.</p>
+                        <p id="modalBodyText2">Please enter your password to continue.</p>
+                        <p id="modalBodyText3" style="display:none">The server is restarting. The updates should be applied within five minutes. You will need to login manually again.</p>
+                        <br/>
+                        <div class="form-group" id="formGroupPassword" style="width:100%">
+                            <label for="password"><fmt:message key="user.password"/></label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="<fmt:message key="placeholder.password"/>">
+                        </div>
+                        <div class="progress progress-striped active" id="progress" style="display:none">
+                                    <div class="progress-bar progress-bar-danger"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnCancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" id="btnUpdate" class="btn btn-danger" onclick="applyTranslations()">Apply</button>
+                    </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <script>
+            function applyTranslations(){
+                //block the button and show a loader
+                document.getElementById('progress').style.display = 'block';
+                document.getElementById('modalBodyText1').style.display = 'none';
+                document.getElementById('modalBodyText2').style.display = 'none';
+                document.getElementById('modalBodyText3').style.display = 'block';
+                document.getElementById('btnUpdate').disabled = true;
+                document.getElementById('btnCancel').disabled = true;
+                document.getElementById('formGroupPassword').style.display = 'none';
+                document.getElementById('modalTitle').innerHTML = 'Server Restarted';
+                
+                //submit form
+               document.getElementById('applyTranslations').submit();
+            }
+            
+        </script>
     </body>
 </html>

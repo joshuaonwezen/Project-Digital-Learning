@@ -75,9 +75,9 @@
         </nav>
         <!-- eof navbar-->
  
-        <div id="validationAlert" style="margin-left:20px;margin-right:20px"></div>
+        <div id="validationAlert" style=margin-left:200px;margin-right:200px;"></div>
         <c:if test="${enrolledIn != null}">
-            <div class="alert alert-success" style="margin-left:20px;margin-right:20px">
+            <div class="alert alert-success" style="margin-left:200px;margin-right:200px;">
                 <a class="close" data-dismiss="alert">×</a>
                 <strong><fmt:message key="popup.done"/></strong> <fmt:message key="course.enroll.succes"/> "${enrolledIn}"
             </div>
