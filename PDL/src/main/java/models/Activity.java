@@ -27,6 +27,13 @@ public class Activity implements Serializable{
     public Activity() {
     }
     
+    public Activity(String title, String message, Date sent, User user){
+      this.title=title;
+      this.message=message;
+      this.sent=sent;
+      this.user=user;
+    }
+        
     public Activity(int activityId, String title, String message, Date sent){
       this.activityId=activityId;
       this.title=title;

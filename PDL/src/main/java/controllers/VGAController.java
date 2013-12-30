@@ -50,6 +50,7 @@ public class VGAController extends HttpServlet {
         if (action.equals("vga")){
             
             setSkillsOnRequest(request);
+            setSkillsToCheckByVGAOnRequest(request);
             redirect(request, response, "/vga.jsp");
             
         }
@@ -78,12 +79,13 @@ public class VGAController extends HttpServlet {
          * b. check if there is another user that does own this skill, if yes let him know someone needs his help. DONE
          */
         if (action.equals("doSweep")){
-            System.out.println("=====================");
-            //1a. get all users
+            
+        //1a. get all users
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         Criteria criteria = session.createCriteria(User.class);
         List<User> users = criteria.list();
+        
         //1b. get all the courses
         criteria = session.createCriteria(Course.class);
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//prevent duplicate courses
@@ -96,118 +98,100 @@ public class VGAController extends HttpServlet {
         query.setParameter("name", skillsFromRequest.get(0));
         List list = query.list();
         Skill skill = (Skill)list.get(0);
-        System.out.println("skill we are looking for: " + skill.getName());
         
-        //1d. create a list which hols our ouput from below
+        //1d. create a list which holds our ouput from below
         List<UserVGAStatus> userVGAStatuses = new ArrayList();
         
-        //2a. check for every user:
-        for (int i = 0; i < users.size(); i++) {
-            System.out.println("================checking user: " + users.get(i).getUsername());
-            //2b. get the skills from the user
-            List<Skill> userSkills = users.get(i).getSkills();
-            //2c. check if the user has the skill we are looking for
-            boolean found = false;
-            for(int j = 0; j < userSkills.size(); j++) {
-                System.out.println("userSkills.get" + userSkills.get(j).getName());
-                if(userSkills.get(j).equals(skill)) {
-                    System.out.println("user " + users.get(i).getUsername() + " owns skill");
-                    found = true;
-                    userVGAStatuses.add(new UserVGAStatus(users.get(i), "Skill Owner", "No action required"));
-                    break;
+        System.out.println();
+        System.out.println("1. skill to look for: " + skill.getName());
+            
+            //2b. create a list with users that own this skill and that don't own the skill
+            List<User> usersWithSkill = new ArrayList();
+            List<User> usersWithoutSkill = new ArrayList();
+            for(int t = 0; t < users.size(); t++) {
+                List<Skill> userSkills = users.get(t).getSkills();
+                boolean foundSkill = false;
+                for(int u = 0; u < userSkills.size(); u++) {
+                    //2c. user owns the skill: add it to the found list
+                    if(userSkills.get(u).getSkillId() == skill.getSkillId()) {
+                        userVGAStatuses.add(new UserVGAStatus(users.get(t), "Skill Owner", "No action required"));
+                        usersWithSkill.add(users.get(t)); // user owns the skill
+                        foundSkill = true;
+                    }
+                }
+                //2d. user doesn't own the skill: add it to the not found list
+                if (!foundSkill){
+                    usersWithoutSkill.add(users.get(t));
                 }
             }
-            //this for loop from 2c. will ofcourse only run when we have at least one skill, so make an extra check
-            if (userSkills.isEmpty()){
-                found = false;
-            }
-                if (!found){
-                    System.out.println("user " + users.get(i).getUsername() + " doesnt own the skill - checking for course");
-                    //3a. check the courses that provide this skill
-                    List<Course> coursesWithSkill = new ArrayList(); // this list holds our courses that provide the skill
+            
+            List<Course> coursesWithSkill = new ArrayList(); // this list holds our courses that provide the skill
+            //3a. create a list with courses that provide this skill
+            if (!usersWithoutSkill.isEmpty()){ // check only if their are users that needs to be checked
                     for (int a=0;a<courses.size();a++){
-                        System.out.println("CHECKING COURSE: " + courses.get(a).getName());
+                        System.out.print("2-" + a + ". checking course: " + courses.get(a).getName());
                         if (courses.get(a).isIsVisible()){//only iterate over courses that are visible
-                        List<Skill> temp = courses.get(a).getSkills(); // this list holds all the skills from the course
-                        for (Skill skillI: temp){
-                            if (skillI.equals(skill)){
-                                //we found it
-                                coursesWithSkill.add(courses.get(a));
-                                break;
-                            }
-                        }
+                            List<Skill> temp = courses.get(a).getSkills(); // this list holds all the skills from the course
+                            for (Skill skillI: temp){
+                                if (skillI.getSkillId() == skill.getSkillId()){
+                                    //we found it
+                                    System.out.println(" - SUGGESTABLE");
+                                    coursesWithSkill.add(courses.get(a));
+                                    break;
+                                } // end if 
+                            } // end for
+                        } // end if
+                    } // end for
+            } // end if
+            System.out.println();
+            
+            //4a. check for every user that doesnt own the skill
+            for (int u=0; u < usersWithoutSkill.size(); u++){
+                System.out.println("3-" + u + ". user to look for: " + usersWithoutSkill.get(u).getUsername());
+                
+                //4b. check if their is a course which provides the skill
+                if (!coursesWithSkill.isEmpty()){
+                    //4c. now sum the courses and suggest it to the user
+                    String coursesSummed = "";
+                    for (Course c : coursesWithSkill){
+                        coursesSummed+= c.getName() + ", ";
                     }
-                    }
-                    //3b. check if their is a course with the provided skill
-                    if (!coursesWithSkill.isEmpty()){
-                        System.out.println("we found a course to suggest!!");
-                        //suggest it in the activity feed
-                        String coursesSummed = "";
-                        for (Course c : coursesWithSkill){ //sum all the courses
-                            coursesSummed+= c.getName() + ", ";
-                        }
-                        coursesSummed = coursesSummed.substring(0, coursesSummed.length()-2);//remove the last comma of the sum up
+                    coursesSummed = coursesSummed.substring(0, coursesSummed.length()-2);//remove the last comma of the sum up
                     
-                        tx = session.beginTransaction();
-                        //now create an activity feed for this user
-                        Activity activityCourseFound = new Activity();
-                        activityCourseFound.setTitle("Course Suggestion");
-                        activityCourseFound.setMessage("The course(s) " + coursesSummed + " could probably contribute to the missing skill: " + skill.getName());
-                        activityCourseFound.setSent(new Date());
-                        activityCourseFound.setUser(users.get(i));
-                        session.save(activityCourseFound);
-                        tx.commit();
-                        userVGAStatuses.add(new UserVGAStatus(users.get(i), "Missing Skill", "Course(s) " + coursesSummed + " suggested"));
-                    }
-                    else{
-                        System.out.println("we found no course to sggest");
-                       //4a. find other users that do own this skill
-                    List<User> usersWithSkill = new ArrayList();
-                    for(int t = 0; t < users.size(); t++) {
-                        List<Skill> userSkillWithSkill = users.get(t).getSkills();
-                        for(int u = 0; u < userSkillWithSkill.size(); u++) {
-                            if(userSkillWithSkill.get(u).equals(skill)) {
-                                //4b. add the user to a list of users who own the skill
-                                usersWithSkill.add(users.get(t));
-                            }
-                        }
-                    } 
-                    //4c. if we found a user who does own the skill we can create some activity
-                    if(!usersWithSkill.isEmpty()) {
+                    System.out.println("3b. Suggesting course");
+                    userVGAStatuses.add(new UserVGAStatus(usersWithoutSkill.get(u), "Missing Skill", "Course(s) " + coursesSummed + " suggested"));
+                    //create an activity feed for this user (suggest it)
+                    String title = "Course Suggestion";
+                    String message = "The course(s) " + coursesSummed + " could probably contribute to the missing skill: " + skill.getName();
+                    insertActivity(title, message, new Date(), usersWithoutSkill.get(u));
+                }
+                //5a. there are no courses which provide the skill: check if their are other users who can help
+                else{
+                    if (!usersWithSkill.isEmpty()){
                         //pick a random user who can help the user that doesnt own the skill
                         Random randomNr = new Random();
                         User helper = usersWithSkill.get(randomNr.nextInt(usersWithSkill.size()));
-                       System.out.println("user " + users.get(i).getUsername() + " misses the skill, helper: " + helper.getUsername());
+                        System.out.println("4. user " + usersWithoutSkill.get(u).getUsername() + " misses the skill, helper: " + helper.getUsername());
+
+                        userVGAStatuses.add(new UserVGAStatus(usersWithoutSkill.get(u), "Missing Skill", helper.getFirstname() + " " + helper.getLastname() + " recommended to help"));
                         
-                        tx = session.beginTransaction();
-                        //let the user that misses the skill know this
-                        Activity activityMissSkill = new Activity();
-                        activityMissSkill.setTitle("Missing Skill");
-                        activityMissSkill.setMessage(helper.getFirstname() + " " + helper.getLastname() + " could help you acquire the Skill " + skill.getName() + ".");
-                        activityMissSkill.setSent(new Date());
-                        activityMissSkill.setUser(users.get(i));
-                        
-                        userVGAStatuses.add(new UserVGAStatus(users.get(i), "Missing Skill", helper.getFirstname() + " " + helper.getLastname() + " recommended to help"));
+                        //suggest the helper to the user that misses the skill
+                        String title = "Missing Skill";
+                        String message = helper.getFirstname() + " " + helper.getLastname() + " could help you acquire the Skill " + skill.getName() + ".";
+                        insertActivity(title, message, new Date(), usersWithoutSkill.get(u));
                         
                         //let the user that owns the skill know that someone needs his help
-                        Activity activityOwnsSkill = new Activity();
-                        activityOwnsSkill.setTitle("Someone needs your help");
-                        activityOwnsSkill.setMessage(users.get(i).getFirstname() + " " + users.get(i).getLastname() + " could need your help acquiring the Skill " + skill.getName() + ".");
-                        activityOwnsSkill.setSent(new Date());
-                        activityOwnsSkill.setUser(helper);
-                        
-                        //save to the database
-                        session.save(activityMissSkill);
-                        session.save(activityOwnsSkill);
-                        tx.commit();
+                        title = "Someone needs your help";
+                        message = usersWithoutSkill.get(u).getFirstname() + " " + usersWithoutSkill.get(u).getLastname() + " could need your help acquiring the Skill " + skill.getName() + ".";
+                        insertActivity(title, message, new Date(), helper);
                     }
+                    //at this else-point we know for sure that a new course needs to be created
                     else{
                         userVGAStatuses.add(new UserVGAStatus(null, "New Course Required", "There are no existing courses or users with this skill."));
-                        break;//at this point we know for sure that a new course needs to be created
+                        System.out.println("END: a new course should be created.");
+                        break;
                     }
                 }
-                    
-            }
         }
         session.close();
         
@@ -216,11 +200,61 @@ public class VGAController extends HttpServlet {
         request.setAttribute("userVGAStatuses", userVGAStatuses);
         
         setSkillsOnRequest(request);//set skills on the request where we can choose from in the sweep
+        setSkillsToCheckByVGAOnRequest(request);
         redirect(request, response, "/vga.jsp");
         
         }
+        else if (action.equals("updatePeriodic")){
+            //match the skills from the request agains the database and set the flag for checkByVGA = 1
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            
+            Criteria criteria = session.createCriteria(Skill.class);
+            List<Skill> skills = criteria.list(); // all the skills
+            System.out.println("TEST: " + request.getParameter("tagSkillsPeriodic"));
+            List<String> skillsFromRequest = Arrays.asList(request.getParameter("tagSkillsPeriodic").split(","));
+            
+            for (int i=0;i<skills.size();i++){
+                boolean found = false;
+                for (String temp : skillsFromRequest){
+                    if (skills.get(i).getName().equals(temp)){ // we found it: set check = 1
+                        skills.get(i).setCheckByVGA(true);
+                        found = true;
+                    }
+                }
+                if (!found){
+                    skills.get(i).setCheckByVGA(false); // no need to check for (any more)
+                }
+            }
+            //update the skills
+            for (Skill skill : skills){
+                session.update(skill);
+            }
+            tx.commit();
+            session.close();
+            
+            //redirect
+            request.setAttribute("editedPSkills", true);
+            setSkillsToCheckByVGAOnRequest(request);
+            setSkillsOnRequest(request);//set skills on the request where we can choose from in the sweep
+            redirect(request, response, "/vga.jsp");
+        }
     }
     
+    private void insertActivity(String title, String message, Date sent, User user){
+        //create new activity item
+        Activity a = new Activity(title, message, sent, user);
+        
+        //insert it in the db
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+
+        session.save(a);
+        tx.commit();
+        session.close();
+        System.out.println("ACTIVITY SAVED");
+    }
+
     private void setSkillsOnRequest(HttpServletRequest request){
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
@@ -230,6 +264,25 @@ public class VGAController extends HttpServlet {
         
         request.setAttribute("skills", skills);
         request.setAttribute("skillsSize", skills.size());
+    }
+    
+    private void setSkillsToCheckByVGAOnRequest(HttpServletRequest request){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        Criteria criteria = session.createCriteria(Skill.class);
+        List<Skill> skillsTemp = criteria.list();
+        session.close();
+        
+        //filter on checkByVGA
+        List<String> skills = new ArrayList<String>();
+        for (Skill skill : skillsTemp){
+            if (skill.isCheckByVGA()){
+                skills.add(skill.getName());
+            }
+        }
+        
+        request.setAttribute("skillsToCheckByVGA", skills);
+        request.setAttribute("skillsToCheckByVGASize", skills.size());
     }
     
     private void redirect(HttpServletRequest request, HttpServletResponse response, String address)

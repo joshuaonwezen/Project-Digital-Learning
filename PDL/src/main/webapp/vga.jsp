@@ -30,10 +30,14 @@
         <title>Home - Info Support</title>
     </head>
     <body
-                <c:if test="${empty userVGAStatuses}">
-            onload="$('#modalStartSweep').modal('show')"
-        </c:if>
-        
+            <c:if test="${empty userVGAStatuses && !editedPSkills}">
+                onload="$('#modalStartSweep').modal('show');"
+            </c:if>
+            <c:if test="${empty userVGAStatuses && editedPSkills}">
+                onload="document.getElementById('alertUpdateSuccessfull').style.display = 'block';
+                $('#modalEditPeriodicSweep').modal('show');
+                $('#modalStartSweep').modal('hide');"
+            </c:if>
         >
 
         <!--Start nav bar-->
@@ -139,7 +143,7 @@
                                 </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-link" id="btnEditPeriodicSweep" style="float:left;" onClick="$('#modalEditPeriodicSweep').modal('show');$('#modalStartSweep').modal('hide')">Set Periodic Sweeps</button>
+                        <button type="button" class="btn btn-link" id="btnEditPeriodicSweep" style="float:left;" onClick="$('#modalEditPeriodicSweep').modal('show');$('#modalStartSweep').modal('hide')">Set Skills for Periodic Sweep</button>
                         <button type="button" class="btn btn-default" id="btnCancel" data-dismiss="modal"><fmt:message key="documents.cancel"/></button>
                         <button type="button" class="btn btn-primary" id="btnStartSweep" onclick="doSweep();" disabled><fmt:message key="vga.start"/></button>
                     </div>
@@ -156,39 +160,46 @@
                         <h4 class="modal-title" id="modalTitle">Set Skills for Periodic Sweep</h4>
                     </div>
                     <div class="modal-body">
-                        <form class="form-horizontal" role="form" id="formVGASweep" action="doSweep" method="post">
-                        <p id="modalBodyText">The Skills you provide in this window are prerequisites for all employees.</p>
+                        <form class="form-horizontal" role="form" id="formVGAPeriodic" action="updatePeriodic" method="post">
+                        <div class="alert alert-success" style="display:none" id="alertUpdateSuccessfull">
+                <a class="close" data-dismiss="alert">×</a>
+                <strong>Success!</strong> The VGA has updated Skills to check for.
+            </div>
+                            <p id="modalBodyText">The Skills you provide in this window are prerequisites for all employees. They will be checked for every first day of the month until an employee acquired it. </p>
+                        
                         <div class="form-group">
                             <label id="skillsLabel" for="skills" class="col-sm-2 control-label"><fmt:message key="skill.skill"/></label>
                             <div class="col-sm-10" id="divSkills">
-                                <input type="hidden" id="tagSkills" onkeyup="toggleStartButton()" onchange="toggleStartButton()" name="tagSkills" placeholder="&nbsp;Enter a Skill" style="width:100%">
+                                <input type="hidden" id="tagSkillsPeriodic" name="tagSkillsPeriodic" placeholder="&nbsp;Enter Skills" style="width:100%">
                                 <script>
                                     //set all available skills from the database in the multiselect
                                     var arrSkills = new Array();
                                     <c:forEach var='skill' items='${skills}'>
                                     arrSkills.push('${skill.name}');
                                     </c:forEach>
-                                    $('#tagSkills').select2({tags: arrSkills, tokenSeparators: [",", " "], createSearchChoice: false, maximumSelectionSize: 1});
+                                    $('#tagSkillsPeriodic').select2({tags: arrSkills, tokenSeparators: [",", " "], createSearchChoice: false});
                                 </script>
                                 
                             </div>
                         </div>
                         </form>
-                        <div class="progress progress-striped active" id="progress" style="display:none">
-                                    <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                                </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-link" id="btnCreateSweep" style="float:left;" onclick="$('#modalStartSweep').modal('show');$('#modalEditPeriodicSweep').modal('hide')">Initiate new VGA sweep</button>
-                        <button type="button" class="btn btn-default" id="btnCancel" data-dismiss="modal"><fmt:message key="documents.cancel"/></button>
-                        <button type="button" class="btn btn-primary" id="btnUpdatePeriodicSweeps" onclick="doSweep();" disabled><fmt:message key="vga.start"/></button>
+                        <button type="button" class="btn btn-default" id="btnCancelP" data-dismiss="modal"><fmt:message key="documents.cancel"/></button>
+                        <button type="button" class="btn btn-primary" id="btnUpdatePeriodicSweep" onclick="doPeriodic();">Update</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
         <script>
+            //set the skills in the multiselect that need to be checked for periodically
+            var arraySkills = new Array();
+                    <c:forEach var="test" items="${skillsToCheckByVGA}">
+                        arraySkills.push('${test}');
+                    </c:forEach>
+            $('#tagSkillsPeriodic').select2('val', [arraySkills]);
+            
             // block the start button if there is no input in the skills feld
             function toggleStartButton() {
                 var skills = $('#tagSkills').val();
@@ -199,6 +210,7 @@
                     document.getElementById('btnStartSweep').disabled = false;
                 }
             }
+            
             //submit button is clicked
             function doSweep(){
                 //block the button and show a loader
@@ -208,9 +220,19 @@
                 document.getElementById('divSkills').style.display = 'none';
                 document.getElementById('btnStartSweep').disabled = true;
                 document.getElementById('btnCancel').disabled = true;
+                document.getElementById('btnEditPeriodicSweep').disabled = true;
                 document.getElementById('modalTitle').innerHTML = 'VGA In Progress';
                 
                 document.getElementById('formVGASweep').submit();
+            }
+            
+            //submit button for updating skills is clicked
+            function doPeriodic(){
+                document.getElementById('btnUpdatePeriodicSweep').disabled = true;
+                document.getElementById('btnCancelP').disabled = true;
+                document.getElementById('btnCreateSweep').disabled = true;
+                
+                document.getElementById('formVGAPeriodic').submit();
             }
         </script>
     </body>

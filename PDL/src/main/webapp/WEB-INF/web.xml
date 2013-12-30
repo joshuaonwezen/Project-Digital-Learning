@@ -299,6 +299,10 @@
         <servlet-name>VGAController</servlet-name>
         <url-pattern>/doSweep</url-pattern>
     </servlet-mapping>
+        <servlet-mapping>
+        <servlet-name>VGAController</servlet-name>
+        <url-pattern>/updatePeriodic</url-pattern>
+    </servlet-mapping>
     <!-- Properties -->
     <servlet>
         <servlet-name>PropertiesController</servlet-name>
@@ -320,6 +324,10 @@
     <servlet-mapping>
         <servlet-name>i18nController</servlet-name>
         <url-pattern>/update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>i18nController</servlet-name>
+        <url-pattern>/applyTranslations</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

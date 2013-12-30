@@ -37,18 +37,8 @@ public class CourseDAO  {
                 tempCourseData.setIsVisible(((rs.getByte("isVisible") == 1)? true:false));
                 
                 //add the skills that are linked to the course
-                List<Skill> courseSkills = new ArrayList<Skill>();
-                String subQuery = "SELECT skills_skillId FROM Course_Skill WHERE Course_userId = " + tempCourseData.getCourseId();
-
-                PreparedStatement subPstmt = connection.getConnection().prepareStatement(query);
-                ResultSet subRs = connection.performSelect(pstmt);
-                
-                while (subRs.next()){
-                    Skill tempSkillData = new Skill();
-                    tempSkillData.setSkillId(rs.getLong("skills_skillId"));
-                    courseSkills.add(tempSkillData);
-                }
-                tempCourseData.setSkills(courseSkills);
+               SkillDAO skillDAO = new SkillDAO();
+               tempCourseData.setSkills(skillDAO.findAllByCourse(tempCourseData));
                 
                 list.add(tempCourseData);
             }

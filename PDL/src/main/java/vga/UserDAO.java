@@ -32,11 +32,14 @@ public class UserDAO  {
             while (rs.next()) {
                 User tempUserData = new User();
                 tempUserData.setUserId(rs.getInt("userId"));
-                tempUserData.setUsername(rs.getString("firstname"));
-                tempUserData.setUsername(rs.getString("lastname"));
+                tempUserData.setFirstname(rs.getString("firstname"));
+                tempUserData.setLastname(rs.getString("lastname"));
                 tempUserData.setUsername(rs.getString("username"));
                 
-                findAllT();
+                //add skills that are linked to a user
+                SkillDAO skillDAO = new SkillDAO();
+                tempUserData.setSkills(skillDAO.findAllByUser(tempUserData));
+                
                 list.add(tempUserData);
             }
 
@@ -48,33 +51,6 @@ public class UserDAO  {
         return list;
     }
     
-    public List<User> findAllT() {
-        List<User> list = new LinkedList<User>();
-        try {
-            connection.startConnection();
-
-            String query = "SELECT * FROM User";
-
-            PreparedStatement pstmt = connection.getConnection().prepareStatement(query);
-            ResultSet rs = connection.performSelect(pstmt);
-
-            while (rs.next()) {
-                User tempUserData = new User();
-                tempUserData.setUserId(rs.getInt("userId"));
-                tempUserData.setUsername(rs.getString("firstname"));
-                tempUserData.setUsername(rs.getString("lastname"));
-                tempUserData.setUsername(rs.getString("username"));
-                
-                list.add(tempUserData);
-            }
-
-            connection.closeConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return list;
-    }
     
     
     
