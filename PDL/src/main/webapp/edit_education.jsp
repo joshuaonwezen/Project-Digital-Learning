@@ -141,9 +141,12 @@
                 $('#myModal').modal('show')
             }
 
-            //function to refresh the parent window on save/close to reflect the updated data in the grid
+            //function to refresh the parent window to reflect the updated data in the grid
+            var isModified = false; // true when the form was submitted
             window.onunload = function() {
-                window.opener.location.reload();
+                if (isModified){ // only on save/edit
+                    window.opener.location.reload();
+                }
             };
 
             //set input color for validations
@@ -232,6 +235,7 @@
                     document.getElementById('validationAlert').innerHTML = '<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>Oh snap!</strong> ' + errors + '</div>';
                 }
                 else {
+                    isModified = true; // set true so we have to refresh the parent when closing
                     document.getElementById('validationAlert').innerHTML = '';
                     //check to see which form we need to submit (edit or new)
                     if (!document.getElementById('educationId').value) {
@@ -244,7 +248,7 @@
             }
         </script>
         <hr style="width:100%;margin-top:370px"/>
-        <div style="float:right;margin-right:20px;margin-top:-10px">
+        <div style="float:right;margin-right:20px;margin-top:-10px;margin-bottom:10px">
 
             <button type="button" class="btn btn-default" onclick="closeWindow()"><fmt:message key="edit.popup.cancel"/></button>
             <button type="button" class="btn btn-primary" onclick="saveForm()"><fmt:message key="edit.popup.save"/></button>

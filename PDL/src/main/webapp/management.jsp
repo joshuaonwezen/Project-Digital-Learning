@@ -160,15 +160,15 @@
             usersGrid.enableContextMenu(usersMenu);
             //white space between columns
             usersGrid.enableMultiline(true); 
-            usersGrid.setHeader("ID, Username, First Name, Last Name, E-mail address, Position, Admin");
+            usersGrid.setHeader("ID, Username, First Name, Last Name, E-mail address, Position, Admin, Manager, Teacher");
             //column width in percentage
-            usersGrid.setInitWidthsP('10, 15, 15, 15, 20, 15, 10');
+            usersGrid.setInitWidthsP('10, 10, 10, 10, 20, 19, 7, 7, 7');
             //way in which text has to be aligned
-            usersGrid.setColAlign("right,left,left,left,left,left,center");
+            usersGrid.setColAlign("right,left,left,left,left,left,center,center,center");
             //int=integer, str=string
-            usersGrid.setColSorting("int,str,str,str,str,str,str");
+            usersGrid.setColSorting("int,str,str,str,str,str,str,str,str");
             //ro=readonly, ch=checkbox
-            usersGrid.setColTypes("ro,ro,ro,ro,ro,ro,ch");
+            usersGrid.setColTypes("ro,ro,ro,ro,ro,ro,ch,ch,ch");
             //disable cell editing
             usersGrid.enableEditEvents(false, false, false);
             //disable checkbox editing
@@ -181,7 +181,7 @@
             var users = new Array();
 
             <c:forEach var='user' items='${users}'>
-                var row = ['${user.userId}', '${user.username}', '${user.firstname}', '${user.lastname}', '${user.emailAddress}', '${user.position}', '${user.isAdmin}'];
+                var row = ['${user.userId}', '${user.username}', '${user.firstname}', '${user.lastname}', '${user.emailAddress}', '${user.position}', '${user.isAdmin}', '${user.isManager}', '${user.isTeacher}'];
                 users.push(row);
             </c:forEach>
 
@@ -267,15 +267,15 @@
             coursesGrid.enableContextMenu(coursesMenu);
             //white space between columns
             coursesGrid.enableMultiline(true); 
-            coursesGrid.setHeader("ID, Name, Level, Description, Owner");
+            coursesGrid.setHeader("ID, Name, Level, Description, Owner, Visible");
             //column width in percentage
-            coursesGrid.setInitWidthsP('10, 15, 15, 40, 20');
+            coursesGrid.setInitWidthsP('10, 15, 15, 30, 20, 10');
             //way in which text has to be aligned
-            coursesGrid.setColAlign("right,left,left,left,left");
+            coursesGrid.setColAlign("right,left,left,left,left,center");
             //int=integer, str=string, date=datum
-            coursesGrid.setColSorting("int,str,str,str,str");
-            //ro=readonly
-            coursesGrid.setColTypes("ro,ro,ro,ro,ro");
+            coursesGrid.setColSorting("int,str,str,str,str,str");
+            //ro=readonly, ch=checkbox
+            coursesGrid.setColTypes("ro,ro,ro,ro,ro,ch");
             //disable cell editing
             coursesGrid.enableEditEvents(false, false, false);
             //disable checkbox editing
@@ -288,7 +288,7 @@
             var courses = new Array();
             <c:if test="${loggedInIsAdmin || loggedInIsManager == true}">
             <c:forEach var='course' items='${courses}'>
-            var row = ['${course.courseId}', '${course.name}', '${course.level}', '${course.description}', '${course.owner.firstname}' + ' ${course.owner.lastname}'];
+            var row = ['${course.courseId}', '${course.name}', '${course.level}', '${course.description}', '${course.owner.firstname}' + ' ${course.owner.lastname}', ' ${course.isVisible}'];
             courses.push(row);
             </c:forEach>
             </c:if>
@@ -296,7 +296,7 @@
             <c:if test="${loggedInIsTeacher == true}">
             <c:forEach var='course' items='${courses}'>
             <c:if test="${loggedInUsername == course.owner.username}">
-            var row = ['${course.courseId}', '${course.name}', '${course.level}', '${course.description}', '${course.owner.firstname}' + ' ${course.owner.lastname}'];
+            var row = ['${course.courseId}', '${course.name}', '${course.level}', '${course.description}', '${course.owner.firstname}' + ' ${course.owner.lastname}', ' ${course.isVisible}'];
             courses.push(row);
             </c:if>
             </c:forEach>
