@@ -92,6 +92,10 @@
         <servlet-name>ManageCourseController</servlet-name>
         <url-pattern>/enroll</url-pattern>
     </servlet-mapping>
+        <servlet-mapping>
+        <servlet-name>ManageCourseController</servlet-name>
+        <url-pattern>/withdraw</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ManageCourseController</servlet-name>
         <url-pattern>/searchCourse</url-pattern>

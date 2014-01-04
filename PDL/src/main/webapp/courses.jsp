@@ -82,6 +82,12 @@
                 <strong><fmt:message key="popup.done"/></strong> <fmt:message key="course.enroll.succes"/> "${enrolledIn}"
             </div>
         </c:if>
+        <c:if test="${withdrawedFrom != null}">
+            <div class="alert alert-success" style="margin-left:200px;margin-right:200px;">
+                <a class="close" data-dismiss="alert">×</a>
+                <strong><fmt:message key="popup.done"/></strong> You are sucessfully removed from the Course "${withdrawedFrom}"
+            </div>
+        </c:if>
 
         <script>
             var coursesSize = '${coursesSize}';
@@ -91,10 +97,8 @@
             </c:when>
             <c:otherwise>
                 <c:forEach var="course" items="${courses}">
-                    <form action="enroll" id="enroll">
-                        <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"
                                <c:if test="${course.isVisible}">
-                                   <div class="row">
+                                   
                                    <div class=".col-md-6 .col-md-offset-3" style="margin-left:200px;margin-right:200px">
                                        <div class="thumbnail" >
                                            <div class="caption">
@@ -110,8 +114,27 @@
                                                <h3 style="margin-left:0px">${course.name} ${course.level}</h3>
                                                <h4><small><fmt:message key="course.teacher"/> ${course.owner.firstname} ${course.owner.lastname}</small></h4>
                                                <p>${course.description}</p>
-                                               <button id="buttonCourseEnroll${course.courseId}" type="submit" class="btn btn-primary"><fmt:message key="course.enroll"/></buton>
-                                                   <button id="buttonCourseOpen${course.courseId}" type="button" class="btn btn-success" style="display:none" onClick="openCourse(${course.courseId})"><fmt:message key="course.go"/></buton>
+                                               <form action="enroll" id="enroll">
+                                                    <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
+                                                    <button id="buttonCourseEnroll${course.courseId}" type="submit" class="btn btn-primary"><fmt:message key="course.enroll"/></button>
+                                                </form>
+                                                <form action="withdraw" id="withdraw">
+                                                    <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
+                                                <button id="buttonCourseWithdraw${course.courseId}" type="submit" class="btn btn-warning" style="display:none">Withdraw</button>
+                                               </form>
+                                               <div id="courseActions${course.courseId}" style="float:right;margin-top:-63px;margin-right:-20px;display:none">
+                                                        <div class="row">
+                                                            <div class="col-xs-6 col-s-3">
+                                                        <a href="/PDL/documents?courseId=${course.courseId}" class="thumbnail" style="width:85px;height:64px;">
+                                                            <img src="resources/images/folder_full.png" data-src="holder.js/100%x180" alt="...">
+                                                        </a>
+                                                    </div>
+                                                             <div class="col-xs-6 col-s-3">
+                                                       <a href="/PDL/courses/virtualclassroom?courseId=${course.courseId}" class="thumbnail" style="width:64px;height:64px;margin-left:-20px">
+                                                            <img src="resources/images/chalk_board.png" data-src="holder.js/100%x180" alt="...">
+                                                        </a>
+                                               </div>   </div>
+                                               </div>
                                                        <c:choose>
                                                            <c:when test="${userEnrolledCoursesSize != 0}">
                                                                <script>var found = false;</script>
@@ -125,11 +148,9 @@
                                                                </c:forEach>
                                                                <script>
                                                                    if (found) {
+                                                                       document.getElementById('buttonCourseWithdraw${course.courseId}').style.display = 'block';
+                                                                       document.getElementById('courseActions${course.courseId}').style.display = 'block';
                                                                        document.getElementById('buttonCourseEnroll${course.courseId}').style.display = 'none';
-                                                                       document.getElementById('buttonCourseOpen${course.courseId}').style.display = 'block';
-                                                                   }
-                                                                   else {
-                                                                       document.getElementById('buttonCourseOpen${course.courseId}').style.display = 'none';
                                                                    }
                                                                </script>
                                                            </c:when>
@@ -137,12 +158,11 @@
                                                        </div>
                                                        </div>
                                                        </div>
-                                                       </div>
                                                        </br>
 
                                                    </c:if>
 
-                                                   </form>
+                                                   
                                                    <script>
                                                        console.log('the cours ei siil');
                                                        if (${!course.isVisible}) {
@@ -156,7 +176,7 @@
                                        <script>
                                            //give feedback to the user about the results
                                            console.log('coursesSize: ' + coursesSize);
-                                           if (coursesSize == 0) {
+                                           if (coursesSize === 0) {
                                                console.log('showing melding');
                                                document.getElementById('validationAlert').innerHTML = '<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>Oh snap!</strong> Your search did not match any Course.</div>';
                                            }

@@ -152,6 +152,29 @@ public class ManageCourseController extends HttpServlet {
             setUserEnrolledCoursesOnRequest(request, userId);
             redirect(request, response, "/courses.jsp");
             }
+                else if (action.equals("withdraw")){
+            //extract the courseId
+            int courseId = Integer.parseInt(request.getParameter("courseId"));
+            int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
+            
+            //remove the course from the user
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            Course managedCourse = (Course) session.load(Course.class, courseId);
+            User managedUser = (User) session.load(User.class, userId);
+            
+            managedCourse.getEnrolledUsers().remove(managedUser);
+            session.update(managedCourse);
+            tx.commit();
+            session.close();
+            
+            
+            //redirect the user back and let it now he was removed
+            request.setAttribute("withdrawedFrom", managedCourse.getName());
+            setCoursesOnRequest(request);
+            setUserEnrolledCoursesOnRequest(request, userId);
+            redirect(request, response, "/courses.jsp");
+            }
     }
 
     /**
