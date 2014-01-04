@@ -97,7 +97,17 @@ public class ManageCourseController extends HttpServlet {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
             Course managedCourse = (Course) session.load(Course.class, courseId);
-            session.delete(managedCourse);
+            
+            for (int i=0;i<managedCourse.getEnrolledUsers().size();i++){ // delete all associations of users that are enrolled
+                managedCourse.getEnrolledUsers().remove(managedCourse.getEnrolledUsers().get(i));
+            }
+            for (int i=0;i<managedCourse.getSkills().size();i++){ // delete all associated skills
+                managedCourse.getSkills().remove(managedCourse.getSkills().get(i));
+            }
+            managedCourse.setOwner(null); // set the owner to null
+            
+            session.update(managedCourse); // update the course
+            session.delete(managedCourse); // and delete it
             tx.commit();
             session.close();
 
