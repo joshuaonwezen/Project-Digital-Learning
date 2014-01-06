@@ -52,7 +52,14 @@
                     <li><a href="/PDL/homepage">Home</a></li>
                     <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
                         <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
-                        <li><a href="/PDL/management">Management</a></li>
+                        <li class="dropdown" class="active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Management <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/PDL/management">Management</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/PDL/i18n">Internationalisation</a></li>
+                            </ul>
+                        </li> 
                         </c:if>
                     <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.profile"/> <b class="caret"></b></a>
