@@ -146,6 +146,27 @@ public class VGAController extends HttpServlet {
             } // end if
             System.out.println();
             
+            //3b. filter the users that doesnt own the skill but are enrolled to a course which offers it
+            if (!coursesWithSkill.isEmpty()){
+                for (int t=0;t<usersWithoutSkill.size();t++){
+                    for (int c=0;c<coursesWithSkill.size();c++){
+                        List<User> usersEnrolledToCourse = coursesWithSkill.get(c).getEnrolledUsers(); // users that are enrolled to this course
+                        
+                        boolean found = false;
+                        for (User tempUser : usersEnrolledToCourse){
+                            if (tempUser.equals(usersWithoutSkill.get(t))){
+                                found = true;
+                            }
+                        }
+                        if (found){ // if we found a user that is enrolled to a course with the skill: delete it from the users we need to check for
+                            userVGAStatuses.add(new UserVGAStatus(users.get(t), "Busy acquiring Skill", "No action required"));
+                            usersWithoutSkill.remove(usersWithoutSkill.get(t));
+                        }
+                    }
+                }
+            }
+            
+            
             //4a. check for every user that doesnt own the skill
             for (int u=0; u < usersWithoutSkill.size(); u++){
                 System.out.println("3-" + u + ". user to look for: " + usersWithoutSkill.get(u).getUsername());
@@ -156,11 +177,9 @@ public class VGAController extends HttpServlet {
                     String coursesSummed = "";
                     for (Course c : coursesWithSkill){
                         coursesSummed+= c.getName() + ", ";
-                        
-                        
                           //new course suggestion
                         CourseSuggestion coursesuggestion = new CourseSuggestion(c,usersWithoutSkill.get(u));
-                        insertCourseSuggestion(coursesuggestion);
+                        //insertCourseSuggestion(coursesuggestion);
                         
                     }
                     coursesSummed = coursesSummed.substring(0, coursesSummed.length()-2);//remove the last comma of the sum up
@@ -248,16 +267,15 @@ public class VGAController extends HttpServlet {
         }
     }
     
-          private void insertCourseSuggestion(CourseSuggestion coursesuggestion){         
+    private void insertCourseSuggestion(CourseSuggestion coursesuggestion){         
         //insert it in the db
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         
-        session.saveOrUpdate(coursesuggestion);      
+        session.save(coursesuggestion);      
         tx.commit();
         session.close();
        
-            
         System.out.println("COURSE SUGGESTED");
     }
         

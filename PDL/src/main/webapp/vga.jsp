@@ -88,7 +88,7 @@
         <!-- eof navbar-->
 
                 <div id="main_left">
-             <button type="button" class="btn btn-default" id="btnShowModalStartSweep" onClick="$('#modalStartSweep').modal('show')"><fmt:message key="vga.start.new.sweep"/></button>
+             <button type="button" class="btn btn-default" id="btnShowModalStartSweep" onClick="$('#modalStartSweep').modal('show')" style="width:150px"><fmt:message key="vga.start.new.sweep"/></button>
            
             
             </div>
@@ -113,9 +113,6 @@
                 </c:if>
             
             
-            
-                
-            
             <c:if test="${!empty userVGAStatuses}">
                 <table class="table" id="messagesOverview" name="messagesOverview">
                     <tr><th><fmt:message key="user.user"/></th><th>Status</th><th><fmt:message key="course.description"/></th></tr>
@@ -125,6 +122,9 @@
                             //set color on row
                             if ('${output.status}' === 'Skill Owner') {
                                 document.getElementById('${output.user.username}').className = 'success';
+                            }
+                            else if ('${output.status}' === 'Busy acquiring Skill') {
+                                document.getElementById('${output.user.username}').className = 'active';
                             }
                             else {
                                 document.getElementById('${output.user.username}').className = 'warning';

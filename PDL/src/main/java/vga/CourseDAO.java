@@ -40,6 +40,9 @@ public class CourseDAO  {
                SkillDAO skillDAO = new SkillDAO();
                tempCourseData.setSkills(skillDAO.findAllByCourse(tempCourseData));
                 
+               //add the users that are enrolled in the course
+               UserDAO userDAO = new UserDAO();
+               tempCourseData.setEnrolledUsers(userDAO.findAllByCourse(tempCourseData));
                 list.add(tempCourseData);
             }
 

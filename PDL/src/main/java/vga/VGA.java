@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.Random;
 import models.Activity;
 import models.Course;
+import models.CourseSuggestion;
 import models.Skill;
 import models.User;
 import models.UserVGAStatus;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import services.HibernateUtil;
 
 /**
  *
@@ -83,6 +87,28 @@ public class VGA implements Job{
             } // end if
             System.out.println();
             
+            //3b. filter the users that doesnt own the skill but are enrolled to a course which offers it
+            if (!coursesWithSkill.isEmpty()){
+                for (int t=0;t<usersWithoutSkill.size();t++){
+                    for (int c=0;c<coursesWithSkill.size();c++){
+                        List<User> usersEnrolledToCourse = coursesWithSkill.get(c).getEnrolledUsers(); // users that are enrolled to this course
+                        System.out.println("WITHSKILL: " + usersEnrolledToCourse.size());
+                        boolean found = false;
+                        for (User tempUser : usersEnrolledToCourse){
+                            if (tempUser.getUserId() == usersWithoutSkill.get(t).getUserId()){
+                                System.out.println("FONUD!!!");
+                                found = true;
+                            }
+                        }
+                        if (found){ // if we found a user that is enrolled to a course with the skill: delete it from the users we need to check for
+                            usersWithoutSkill.remove(usersWithoutSkill.get(t));
+                            System.out.println("REMOVING: " + usersWithoutSkill.get(t));
+                        }
+                    }
+                }
+            }
+            
+            
             //4a. check for every user that doesnt own the skill
             for (int u=0; u < usersWithoutSkill.size(); u++){
                 System.out.println("3-" + u + ". user to look for: " + usersWithoutSkill.get(u).getUsername());
@@ -128,6 +154,18 @@ public class VGA implements Job{
                 }
             }
         }
+    }
+    
+    private void insertCourseSuggestion(CourseSuggestion coursesuggestion){         
+        //insert it in the db
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        
+        session.save(coursesuggestion);      
+        tx.commit();
+        session.close();
+       
+        System.out.println("COURSE SUGGESTED");
     }
     
     private void insertActivity(String title, String message, Date sent, User user){
