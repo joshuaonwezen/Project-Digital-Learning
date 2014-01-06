@@ -327,11 +327,19 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>i18nController</servlet-name>
-        <url-pattern>/i18n</url-pattern>
+        <url-pattern>/i18n_nl</url-pattern>
+    </servlet-mapping>
+        <servlet-mapping>
+        <servlet-name>i18nController</servlet-name>
+        <url-pattern>/i18n_en</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>i18nController</servlet-name>
-        <url-pattern>/update</url-pattern>
+        <url-pattern>/updateDutch</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>i18nController</servlet-name>
+        <url-pattern>/updateEnglish</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>i18nController</servlet-name>

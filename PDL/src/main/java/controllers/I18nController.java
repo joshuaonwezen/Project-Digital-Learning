@@ -7,6 +7,7 @@ package controllers;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,9 +43,18 @@ public class I18nController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String uri = request.getRequestURI();
+        
         setMetadataOnRequest(request);
-        setPropertiesOnRequest(request);
-        redirect(request, response, "./i18n.jsp");
+        
+        if (uri.contains("i18n_nl")){
+            setPropertiesOnRequest(request, "nl_NL");
+            redirect(request, response, "./i18n_nl.jsp");
+        }
+        else if (uri.contains("i18n_en")){
+            setPropertiesOnRequest(request, "en_US");
+            redirect(request, response, "./i18n_en.jsp");
+        }
     }
 
     @Override
@@ -54,57 +64,22 @@ public class I18nController extends HttpServlet {
         String uri = request.getRequestURI();
         String action = uri.substring(uri.lastIndexOf("/") + 1);
         
-        if (action.equals("update")) {
-            ServletContext context = getServletContext();
-            InputStream inStream1 = context.getResourceAsStream("/WEB-INF/classes/index_nl_NL.properties");            
-            Properties oldPr1 = new Properties();            
-            oldPr1.load(inStream1);            
-            Properties newPr1 = new Properties();                  
-            Enumeration en1 = oldPr1.keys();            
-            while (en1.hasMoreElements()) {
-                String key1 = (String) en1.nextElement();
-                String value1 = request.getParameter(key1);
-                System.out.println("KEY:" + key1 +" VALUE:" + value1);
-                newPr1.setProperty(key1, value1);
-            }
-            File file = new File("C:\\Users\\Martijn\\Documents\\GitHub\\Project-Digital-Learning\\PDL\\src\\main\\webapp\\WEB-INF\\classes\\index_nl_NL.properties");
-            newPr1.store(new FileOutputStream(file), null);
+        if (action.equals("updateDutch")) {
+            updateFile(request, "nl_NL");
+            updateMetadata(request);
             
-            /*ServletContext context2 = getServletContext();
-            InputStream inStream2 = context2.getResourceAsStream("/WEB-INF/classes/index_en_US.properties");
-            Properties oldPr2 = new Properties();
-            oldPr2.load(inStream2);
-            Properties newPr2 = new Properties();
-            Enumeration en2 = oldPr2.keys();
-            while (en2.hasMoreElements()) {
-                String key2 = (String) en2.nextElement();
-                String value2 = request.getParameter(key2);
-                newPr2.setProperty(key2, value2);
-            }
-            File file2 = new File("C:\\Users\\Martijn\\Documents\\GitHub\\Project-Digital-Learning\\PDL\\src\\main\\webapp\\WEB-INF\\classes\\index_en_US.properties");
-            File file3 = new File("C:\\Users\\Martijn\\Documents\\GitHub\\Project-Digital-Learning\\PDL\\src\\main\\webapp\\WEB-INF\\classes\\index.properties");
-            newPr2.store(new FileOutputStream(file2), null);
-            newPr2.store(new FileOutputStream(file3), null);*/
-            
-            //update the metadata
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            Transaction tx = session.beginTransaction();
-            
-            //get the user that is currently logged in
-            int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
-            User user = (User) session.load(User.class, userId);
-            
-            Internationalization i18n = (Internationalization) session.load(Internationalization.class, 1);
-            i18n.setUpdatedBy(user);
-            i18n.setLastUpdated(new Date());
-            i18n.setNeedsUpdate(true);
-            
-            session.saveOrUpdate(i18n);
-            tx.commit();
-            session.close();
-                
+            setPropertiesOnRequest(request, "nl_NL");
             setMetadataOnRequest(request);
-            redirect(request, response, "/i18n");
+            redirect(request, response, "/i18n_nl.jsp");
+        }
+        else if (action.equals("updateEnglish")) {
+            
+            updateFile(request, "en_US");
+            updateMetadata(request);
+            
+            setPropertiesOnRequest(request, "en_US");
+            setMetadataOnRequest(request);
+            redirect(request, response, "/i18n_en.jsp");
         }
         else if (action.equals("applyTranslations")){
             // check if the password was correct
@@ -139,8 +114,8 @@ public class I18nController extends HttpServlet {
                 //incorrect password, redirect back
                 request.setAttribute("verificationFailed", true);
                 
-                setPropertiesOnRequest(request);
-                redirect(request, response, "/i18n.jsp");
+                setPropertiesOnRequest(request, "nl_NL");
+                redirect(request, response, "/i18n_nl.jsp");
             }
             session.close();
             setMetadataOnRequest(request);
@@ -153,16 +128,48 @@ public class I18nController extends HttpServlet {
         dispatcher.forward(request, response);
     }
     
-    private void setPropertiesOnRequest(HttpServletRequest request) throws IOException{
+    private void setPropertiesOnRequest(HttpServletRequest request, String language) throws IOException{
         ServletContext context = getServletContext();
-        InputStream inStream1 = context.getResourceAsStream("/WEB-INF/classes/index_nl_NL.properties");
-        InputStream inStream2 = context.getResourceAsStream("/WEB-INF/classes/index_en_US.properties");
+        InputStream inStream1 = new FileInputStream("/Users/wesley/NetBeansProjects/Project-Digital-Learning/PDL/src/main/webapp/WEB-INF/classes/index_" + language + ".properties");
         Properties pr = new Properties();
-        Properties pr2 = new Properties();
         pr.load(inStream1);
-        pr2.load(inStream2);
-        request.setAttribute("i18nPropertiesNL", pr);
-        request.setAttribute("i18nPropertiesEN", pr2);
+        request.setAttribute("i18nProperties", pr);
+    }
+    
+    private void updateFile(HttpServletRequest request, String language) throws IOException{
+        ServletContext context = getServletContext();
+        InputStream inStream1 = context.getResourceAsStream("/WEB-INF/classes/index_" + language + ".properties");            
+        Properties oldPr1 = new Properties();            
+        oldPr1.load(inStream1);            
+        Properties newPr1 = new Properties();                  
+        Enumeration en1 = oldPr1.keys();            
+        while (en1.hasMoreElements()) {
+            String key1 = (String) en1.nextElement();
+            String value1 = request.getParameter(key1);
+            System.out.println("KEY:" + key1 +" VALUE:" + value1);
+            newPr1.setProperty(key1, value1);
+        }
+        File file = new File("/Users/wesley/NetBeansProjects/Project-Digital-Learning/PDL/src/main/webapp/WEB-INF/classes/index_" + language + ".properties");
+        newPr1.store(new FileOutputStream(file), null);
+    }
+    
+    private void updateMetadata(HttpServletRequest request){
+            //update the metadata
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            
+            //get the user that is currently logged in
+            int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
+            User user = (User) session.load(User.class, userId);
+            
+            Internationalization i18n = (Internationalization) session.load(Internationalization.class, 1);
+            i18n.setUpdatedBy(user);
+            i18n.setLastUpdated(new Date());
+            i18n.setNeedsUpdate(true);
+            
+            session.saveOrUpdate(i18n);
+            tx.commit();
+            session.close();
     }
     
     /**

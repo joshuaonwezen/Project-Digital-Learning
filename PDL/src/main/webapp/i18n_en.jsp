@@ -86,9 +86,26 @@
         <!-- eof navbar-->
 
         <div class="main">
+            <div id="main_left">
+                <ul class="nav nav-pills nav-stacked" style="width:150px">
+      <li>
+                        <a href="/PDL/i18n_nl">
+                            Dutch <span class="pull-right"><img src="resources/images/dutch_flag.png"/></span>
+                        </a>
+                    </li>
+                    <li  class="active">
+                        <a href="/PDL/i18n_en">
+                            English <span class="pull-right"><img src="resources/images/uk_flag.png"/></span>
+                        </a>
+                    </li>
+                </ul><br/>
+             <button type="submit" class="btn btn-default" onclick="document.getElementById('updateI18n').submit();" style="width:150px"><fmt:message key="edit.popup.save"/></button>
+            </div>
+
+            <div id="main_right">
             <c:choose>
                 <c:when test="${needsUpdate}">
-                    <div class="alert alert-warning" style="margin-left:20px;margin-right:20px;" id="alertNeedsUpdate">
+                    <div class="alert alert-warning" id="alertNeedsUpdate">
                         <a class="close" data-dismiss="alert">×</a>
                         <h4>New Translations!</h4> Translations where last updated <script>document.write(moment('${lastUpdatedOn}').fromNow());</script> by 
                         <c:choose>
@@ -102,10 +119,10 @@
                     </div>
                 </c:when>
                 <c:otherwise>
-                    <div class="alert alert-info" style="margin-left:20px;margin-right:20px;" id="alertNoUpdateNeeded">
+                    <div class="alert alert-info" id="alertNoUpdateNeeded">
                         <a class="close" data-dismiss="alert">×</a>
                         <c:choose>
-                            <c:when test="${lastUpdatedOn != null}">
+                            <c:when test="${lastUpdatedOn == null && lastAppliedOn != null}">
                                 <strong>No action required!</strong> Translations where last applied to the system <script>document.write(moment('${lastAppliedOn}').fromNow());</script> by 
                                 <c:choose>
                                     <c:when test="${loggedInUsername == lastAppliedBy.username}">you</c:when>
@@ -119,38 +136,19 @@
                     </div>
                 </c:otherwise>
             </c:choose>
-            <form id="updateI18n" action="update" method="post">
-                <table>
-                    <td>
-                        <table border="1" style="margin-left: 10px">
-                            <h4 style="margin-left: 10px"> </h4>
-                            <th>Key</th><th>Value English</th>
-                                <c:forEach var="property" items="${i18nPropertiesEN}">
+            <form id="updateI18n" action="updateEnglish" method="post">
+                        <table class="table table-bordered table-condensed">
+                            <th>Key</th><th>English Translation</th>
+                                <c:forEach var="property" items="${i18nProperties}">
                                 <tr>
-                                    <td>${property.key}</td>
-                                    <td><input type="input" id="${property.key}" name="${property.key}" value="${property.value}" onclick="editRecord(${property.value});" ></td>
+                                    <td width="25%">${property.key}</td>
+                                    <td width="75%"><input type="input"  id="${property.key}" name="${property.key}" value="${property.value}" style="border:none;width:100%;"></td>
                                 </tr>
                             </c:forEach>
                         </table>
-                    </td>
-                    
-                    <td>
-                        <table border="1" >
-                            <h4 style="margin-left: 10px"> </h4>
-                            <th>Value Nederlands</th>
-                                <c:forEach var="property2" items="${i18nPropertiesNL}">
-                                <tr>
-                                    
-                                    <td><input type="input" id="${property2.key}" name="${property2.key}" value="${property2.value}" onclick="editRecord(${property2.value});" ></td>
-                                </tr>
-                            </c:forEach>
-                        </table>
-                    </td>
-                </table>
-                <button type="submit" class="btn btn-primary"><fmt:message key="edit.popup.save"/></button>
             </form>
 
-
+            </div>
         </div>
 
         <!-- Modal Dialog for Updating Translations -->
