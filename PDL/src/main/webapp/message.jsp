@@ -163,7 +163,7 @@
                     
                         <div class="" id="formGroupChatInput">
                             <div class="chatInput">
-                                <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" placeholder="Enter a message">
+                                <input type="text" class="form-control" id="chatInput" name="chatInput" autocomplete="off" onkeyup="toggleSentButton()" placeholder="Enter a message">
                             </div>
                             <div class="chatSend">
                                 <button type="button" class="btn btn-primary buttonStyle" disabled id="buttonSent" name="buttonSent" onClick="sentMessage()">Send</button>

@@ -149,7 +149,7 @@
                 
                     <div class="" id="formGroupChatInput">
                         <div class="chatInput">
-                            <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" placeholder="Enter a message">
+                            <input type="text" class="form-control" id="chatInput" name="chatInput" autocomplete="off" onkeyup="toggleSentButton()" placeholder="Enter a message">
                         </div>
                         <div class="chatSend">
                             <button type="button" style="width: 190px;" class="btn btn-default" disabled id="buttonSent" name="buttonSent" onClick="sentMessage()">Send</button>
@@ -218,6 +218,13 @@
                 //update the output box
                 addRowChatOutput(docs[i].msg);
             }
+            if (docs.length === 0) {
+                    //alway emit a first message in the room so we can display the latest message
+                    var message = 'Chat created on ' + moment().format('MMMM Do YYYY, HH:mm');
+                    socket.emit('message', message);
+                    addRowChatOutput(message);
+                    console.log('room joined');
+                }
         });
 
         $("#chatInput").keypress(function(event) {                
