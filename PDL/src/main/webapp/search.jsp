@@ -49,7 +49,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="/PDL/management">Management</a></li>
                                 <li class="divider"></li>
-                                <li><a href="/PDL/i18n">Internationalisation</a></li>
+                                <li><a href="/PDL/i18n_nl">Internationalisation</a></li>
                             </ul>
                         </li> 
                         </c:if>

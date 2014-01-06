@@ -46,7 +46,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="/PDL/management">Management</a></li>
                                 <li class="divider"></li>
-                                <li><a href="/PDL/i18n">Internationalisation</a></li>
+                                <li><a href="/PDL/i18n_nl">Internationalisation</a></li>
                             </ul>
                         </li> 
                     </c:if>
@@ -189,9 +189,9 @@
         <script>
             //give feedback to the user about the results
             console.log('coursesSize: ' + coursesSize);
-            if (coursesSize === 0) {
-                console.log('showing melding');
-                document.getElementById('validationAlert').innerHTML = '<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>Oh snap!</strong> Your search did not match any Course.</div>';
+            if (coursesSize == 0) {
+                console.log('showing melding no courses found');
+                document.getElementById('validationAlert').innerHTML = '<div class="alert alert-info"><a class="close" data-dismiss="alert">×</a><strong>Results:</strong> Your search did not match any Course.</div>';
             }
             else if ('${coursesSizeResults}' > 0) {
                 document.getElementById('validationAlert').innerHTML = '<div class="alert alert-info"><a class="close" data-dismiss="alert">×</a><strong>Results:</strong> <u>' + coursesSize + '</u> Course(s) match your search.</div>';

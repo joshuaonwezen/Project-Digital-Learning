@@ -45,10 +45,17 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:12px">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/PDL/homepage">Home</a></li>
-                    <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
+                    <li><a href="/PDL/homepage">Home</a></li>
+                    <li class="active"><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
                         <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
-                        <li><a href="/PDL/management">Management</a></li>
+                        <li class="dropdown" class="active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Management <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/PDL/management">Management</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/PDL/i18n_nl">Internationalisation</a></li>
+                            </ul>
+                        </li>
                         </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
                         <c:if test="${loggedInIsAdmin || loggedInIsManager == true}">

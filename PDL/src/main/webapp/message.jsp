@@ -54,7 +54,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:12px">
                 <ul class="nav navbar-nav">
-                    <li><a href="/PDL/homepage">Home</a></li>
+                    <li class="active"><a href="/PDL/homepage">Home</a></li>
                     <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
                         <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
                         <li class="dropdown" class="active">
@@ -62,7 +62,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="/PDL/management">Management</a></li>
                                 <li class="divider"></li>
-                                <li><a href="/PDL/i18n">Internationalisation</a></li>
+                                <li><a href="/PDL/i18n_nl">Internationalisation</a></li>
                             </ul>
                         </li> 
                         </c:if>
@@ -119,7 +119,8 @@
                     </li>
                     <br>
                     <li>
-                       <button id="setup-new-room" class="btn btn-default buttonStyle">Start conference</button><br>
+                       <button id="setup-new-room" class="btn btn-default buttonStyle">Start conference</button>
+                       <button id="join-room" class="btn btn-warning buttonStyle" style="display:none">Join conference</button><br>
                     </li>
                 </ul>
             </div>
@@ -242,12 +243,14 @@
 
                     var tr = document.createElement('tr');
                     if (room.roomName === '${chat.subject}') {
-                        tr.innerHTML = '<td>The chatroom <strong>' + room.roomName + '</strong> has started a videoconference, click here to join:</td>' +
-                                '<td><button class="btn-danger">Join</button></td>';
+                        
+                        document.getElementById('join-room').style.display = 'block';
+                        document.getElementById('setup-new-room').style.display = 'none';
+                        
                         roomsList.insertBefore(tr, roomsList.firstChild);
                     }
 
-                    var joinRoomButton = tr.querySelector('.btn-danger');
+                    var joinRoomButton = document.getElementById('join-room');
                     joinRoomButton.setAttribute('data-broadcaster', room.broadcaster);
                     joinRoomButton.setAttribute('data-roomToken', room.roomToken);
                     joinRoomButton.onclick = function() {
