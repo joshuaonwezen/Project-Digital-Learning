@@ -23,7 +23,7 @@
     <mapping class="models.Course"/>
     <mapping class="models.NewsItem"/>
     <mapping class="models.Chat"/>
-    <mapping class="CourseSuggestion"/>
+    <mapping class="models.CourseSuggestion"/>
     <mapping class="models.File"/>
     <mapping class="models.Internationalization"/>
   </session-factory>
