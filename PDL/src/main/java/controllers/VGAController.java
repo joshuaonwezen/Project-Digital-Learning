@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Activity;
 import models.Course;
+import models.CourseSuggestion;
 import models.Skill;
 import models.User;
 import models.UserVGAStatus;
@@ -155,6 +156,12 @@ public class VGAController extends HttpServlet {
                     String coursesSummed = "";
                     for (Course c : coursesWithSkill){
                         coursesSummed+= c.getName() + ", ";
+                        
+                        
+                          //new course suggestion
+                        CourseSuggestion coursesuggestion = new CourseSuggestion(c,usersWithoutSkill.get(u));
+                        insertCourseSuggestion(coursesuggestion);
+                        
                     }
                     coursesSummed = coursesSummed.substring(0, coursesSummed.length()-2);//remove the last comma of the sum up
                     
@@ -241,6 +248,19 @@ public class VGAController extends HttpServlet {
         }
     }
     
+          private void insertCourseSuggestion(CourseSuggestion coursesuggestion){         
+        //insert it in the db
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        
+        session.saveOrUpdate(coursesuggestion);      
+        tx.commit();
+        session.close();
+       
+            
+        System.out.println("COURSE SUGGESTED");
+    }
+        
     private void insertActivity(String title, String message, Date sent, User user){
         //create new activity item
         Activity a = new Activity(title, message, sent, user);
@@ -249,7 +269,7 @@ public class VGAController extends HttpServlet {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
 
-        session.save(a);
+        session.saveOrUpdate(a);
         tx.commit();
         session.close();
         System.out.println("ACTIVITY SAVED");

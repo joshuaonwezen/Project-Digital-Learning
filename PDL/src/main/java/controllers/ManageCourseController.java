@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Course;
 import models.CourseForm;
+import models.CourseSuggestion;
 import models.Skill;
 import models.User;
 import org.hibernate.Criteria;
@@ -120,6 +121,7 @@ public class ManageCourseController extends HttpServlet {
             //and the courses that a user is enrolled to
             int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
             setUserEnrolledCoursesOnRequest(request, userId);
+            setCoursesSuggestionOnRequest(request, userId);
             redirect(request, response, "/courses.jsp");
         }
         //search course on the course page
@@ -135,7 +137,7 @@ public class ManageCourseController extends HttpServlet {
             request.setAttribute("coursesSizeResults", result.size());
             int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
             setUserEnrolledCoursesOnRequest(request, userId);
-            
+            setCoursesSuggestionOnRequest(request, userId);
             redirect(request, response, "/courses.jsp");
             session.close();
         }
@@ -160,6 +162,7 @@ public class ManageCourseController extends HttpServlet {
             request.setAttribute("enrolledIn", managedCourse.getName());
             setCoursesOnRequest(request);
             setUserEnrolledCoursesOnRequest(request, userId);
+            setCoursesSuggestionOnRequest(request, userId);
             redirect(request, response, "/courses.jsp");
             }
                 else if (action.equals("withdraw")){
@@ -396,6 +399,25 @@ public class ManageCourseController extends HttpServlet {
         request.setAttribute("courses", courses);
         request.setAttribute("coursesSize", courses.size());
     }
+      private void setCoursesSuggestionOnRequest(HttpServletRequest request, int userId){
+        //1: get all courses
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        Criteria criteria = session.createCriteria(CourseSuggestion.class);
+        List<CourseSuggestion> tempSuggestion = criteria.list();
+        
+        List<CourseSuggestion> courseSuggestion = new ArrayList<CourseSuggestion>();
+            //filter on logged in user
+            for (int i = 0; i < tempSuggestion.size(); i++){
+                if(tempSuggestion.get(i).getUser().getUserId() == userId){
+                    courseSuggestion.add(tempSuggestion.get(i));
+                }
+            }
+                        
+        session.close();        
+        request.setAttribute("suggestedCourses", courseSuggestion);
+        request.setAttribute("suggestedCoursesSize", courseSuggestion.size());
+    } 
     
     private void setUsersOnRequest(HttpServletRequest request){
         Session session = HibernateUtil.getSessionFactory().openSession();
