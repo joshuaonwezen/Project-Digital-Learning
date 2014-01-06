@@ -97,7 +97,17 @@ public class ManageCourseController extends HttpServlet {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
             Course managedCourse = (Course) session.load(Course.class, courseId);
-            session.delete(managedCourse);
+            
+            for (int i=0;i<managedCourse.getEnrolledUsers().size();i++){ // delete all associations of users that are enrolled
+                managedCourse.getEnrolledUsers().remove(managedCourse.getEnrolledUsers().get(i));
+            }
+            for (int i=0;i<managedCourse.getSkills().size();i++){ // delete all associated skills
+                managedCourse.getSkills().remove(managedCourse.getSkills().get(i));
+            }
+            managedCourse.setOwner(null); // set the owner to null
+            
+            session.update(managedCourse); // update the course
+            session.delete(managedCourse); // and delete it
             tx.commit();
             session.close();
 
@@ -392,10 +402,20 @@ public class ManageCourseController extends HttpServlet {
         Transaction tx = session.beginTransaction();
         Criteria criteria = session.createCriteria(User.class);
         List<User> users = criteria.list();
+        
+        //filter on admins, teachers and managers
+        List<User> usersWithRights = new ArrayList<User>();
+        
+        for (User user : users){
+            if (user.isIsAdmin() || user.isIsManager() || user.isIsTeacher()){
+                usersWithRights.add(user);
+            }
+        }
+        
         session.close();
         
-        request.setAttribute("users", users);
-        request.setAttribute("usersSize", users.size());
+        request.setAttribute("users", usersWithRights);
+        request.setAttribute("usersSize", usersWithRights.size());
     }
     
     private String getSelectedOption(HttpServletRequest request, String selectElement){
