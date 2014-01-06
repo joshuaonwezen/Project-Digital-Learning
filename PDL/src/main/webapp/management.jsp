@@ -12,7 +12,7 @@
 <fmt:setBundle basename="index" />
 <html  lang="${language}">
     <head>
-        <title>Management</title>
+        <title>Management - Info Support</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
 

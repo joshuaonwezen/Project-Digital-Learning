@@ -33,7 +33,7 @@
         <script src="resources/moment/moment-m.js" type="text/javascript"></script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Home - Info Support</title>
+        <title>Messages - Info Support</title>
     </head>
     <body>
         <!--Start nav bar-->

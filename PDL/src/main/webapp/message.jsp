@@ -31,11 +31,11 @@
         <script src="resources/moment/moment-m.js" type="text/javascript"></script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-                <!-- scripts used for video-conferencing -->
+        <!-- scripts used for video-conferencing -->
         <script src="js/socket.io.js"></script>
         <script src="js/RTCPeerConnection-v1.5.js"></script>
         <script src="js/conference.js"></script>
-        <title>Home - Info Support</title>
+        <title>Chat - Info Support</title>
     </head>
     <body>
         <!--Start nav bar-->
@@ -115,39 +115,39 @@
 
             <div id="main_right">
                 <div id="chat">
-                      <!-- just copy this <section> and next script -->
-                <section class="experiment">                
-                    <section>
-                    <span>
-                         <a href="/video-conferencing/" target="_blank" title="Open this link in new tab. Then your conference room will be private!"></a>
-                    </span>
-                    <section>
-                        Want to start a videoconference?  <button id="setup-new-room" class="setup">Start conference</button><br>
-                    </section>
+                    <!-- just copy this <section> and next script -->
+                    <section class="experiment">                
+                        <section>
+                            <span>
+                                <a href="/video-conferencing/" target="_blank" title="Open this link in new tab. Then your conference room will be private!"></a>
+                            </span>
+                            <section>
+                                Want to start a videoconference?  <button id="setup-new-room" class="setup">Start conference</button><br>
+                            </section>
 
-                    <!-- list of all available conferencing rooms -->
-                    <table style="width: 100%;" id="rooms-list"></table>
+                            <!-- list of all available conferencing rooms -->
+                            <table style="width: 100%;" id="rooms-list"></table>
 
-                     <!-- local/remote videos container -->
-                     <div id="videos-container"></div>
-                     </section>
-                    <div id="chatLeft">
-                        <div class="panel panel-default chatOutputStyle">
-                            
+                            <!-- local/remote videos container -->
+                            <div id="videos-container"></div>
+                        </section>
+                        <div id="chatLeft">
+                            <div class="panel panel-default chatOutputStyle">
+
                                 <table class="table" id="chatOutput" name="chatOutput" style="margin-top:-2px;">
                                 </table>
-                            
+
+                            </div>
                         </div>
-                    </div>
-                    <div id="userRight">
-                        <div class="panel panel-default">
-                            <table class="table table-condensed" id="userList" style="margin-top:-1px;">
-                                <c:forEach var="user" items="${chat.users}">
-                                    <tr class="warning" id="${user.username}"><td>${user.username}</td></tr> 
-                                        </c:forEach>
-                            </table>
+                        <div id="userRight">
+                            <div class="panel panel-default">
+                                <table class="table table-condensed" id="userList" style="margin-top:-1px;">
+                                    <c:forEach var="user" items="${chat.users}">
+                                        <tr class="warning" id="${user.username}"><td>${user.username}</td></tr> 
+                                            </c:forEach>
+                                </table>
+                            </div>
                         </div>
-                    </div>
                 </div>
                 <div id="maint_bot">
                     <form class="form-inline" role="form">
@@ -164,7 +164,7 @@
             </div>
 
         </div>
-           <script>
+        <script>
             var config = {
                 openSocket: function(config) {
                     var SIGNALING_SERVER = 'http://webrtc-signaling.jit.su:80/',
@@ -232,11 +232,11 @@
                         roomsList = document.body;
 
                     var tr = document.createElement('tr');
-                    if(room.roomName === '${chat.subject}'){
-                    tr.innerHTML = '<td>The chatroom <strong>' + room.roomName + '</strong> has started a videoconference, click here to join:</td>' +
-                            '<td><button class="join">Join</button></td>';
-                    roomsList.insertBefore(tr, roomsList.firstChild);
-                }
+                    if (room.roomName === '${chat.subject}') {
+                        tr.innerHTML = '<td>The chatroom <strong>' + room.roomName + '</strong> has started a videoconference, click here to join:</td>' +
+                                '<td><button class="join">Join</button></td>';
+                        roomsList.insertBefore(tr, roomsList.firstChild);
+                    }
 
                     var joinRoomButton = tr.querySelector('.join');
                     joinRoomButton.setAttribute('data-broadcaster', room.broadcaster);
@@ -265,13 +265,13 @@
                     }
                 }
             };
-            
+
             function setupNewRoomButtonClickHandler() {
                 btnSetupNewRoom.disabled = true;
                 captureUserMedia(function() {
                     var roomId = '${chat.subject}';
                     conferenceUI.createRoom({
-                        roomName: ({}).value || '${chat.subject}'                      
+                        roomName: ({}).value || '${chat.subject}'
                     });
                 });
             }
@@ -414,13 +414,13 @@
                     console.log('room joined');
                 }
             });
-            
+
             $(document).keypress(function(event) {
-    var keycode = (event.keyCode ? event.keyCode : event.which);
-    if(keycode == '13' && document.getElementById('chatInput').value.length > 0) {
-        sentMessage();    
-    }
-});
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode == 13 && document.getElementById('chatInput').value.replace(/^\s\s*/, '').replace(/\s\s*$/, '').length > 0) {
+                    sentMessage();
+                }
+            });
 
             function sentMessage() {
                 var date = new Date();
@@ -489,11 +489,11 @@
                         row.setAttribute('received', date);
                         var cell1 = row.insertCell(0);
                         cell1.innerHTML = from + '</br>' + message;
-                        cell1.style.width='93%';
+                        cell1.style.width = '93%';
                         newRowBlock = true;
                         var cell2 = row.insertCell(1);
                         cell2.innerHTML = '<small class="text-muted">' + moment(date).format('HH:mm') + '</small>';
-                        cell2.style.width='7%';
+                        cell2.style.width = '7%';
                     }
                 }
                 //first occurence
@@ -541,7 +541,7 @@
             function refreshUserList(data) {
                 var onlineUsers = new Array();
                 var offlineUsers = new Array();
-                
+
                 //get online and offline users
             <c:forEach var="user" items="${chat.users}">
                 var userOnline = false;
@@ -557,27 +557,27 @@
                     offlineUsers.push('${user.username}');
                 }
             </c:forEach>
-            
-            //now set the online users above the offline users in the row
-            var table = document.getElementById('userList');
-            var rowCount = table.rows;
-            
-            table.innerHTML = '';//reset row
-            for (var i=0;i<onlineUsers.length;i++){
-                var row = table.insertRow(rowCount);
-                var cell = row.insertCell(0);
-                cell.innerHTML = onlineUsers[i];
-                cell.className = 'warning';
-                rowCount = table.rows;
+
+                //now set the online users above the offline users in the row
+                var table = document.getElementById('userList');
+                var rowCount = table.rows;
+
+                table.innerHTML = '';//reset row
+                for (var i = 0; i < onlineUsers.length; i++) {
+                    var row = table.insertRow(rowCount);
+                    var cell = row.insertCell(0);
+                    cell.innerHTML = onlineUsers[i];
+                    cell.className = 'warning';
+                    rowCount = table.rows;
+                }
+                for (var i = 0; i < offlineUsers.length; i++) {
+                    var row = table.insertRow(rowCount);
+                    var cell = row.insertCell(0);
+                    cell.innerHTML = offlineUsers[i];
+                    cell.className = 'success';
+                    rowCount = table.rows;
+                }
             }
-            for (var i=0;i<offlineUsers.length;i++){
-                var row = table.insertRow(rowCount);
-                var cell = row.insertCell(0);
-                cell.innerHTML = offlineUsers[i];
-                cell.className = 'success';
-                rowCount = table.rows;
-            }
-        }
             // block the sent button if there is no input in the chatInput box
             function toggleSentButton() {
                 if (document.getElementById('chatInput').value.length > 0) {

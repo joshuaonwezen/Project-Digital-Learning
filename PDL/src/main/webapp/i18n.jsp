@@ -26,7 +26,7 @@
         <script src="resources/moment/moment-m.js" type="text/javascript"></script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>i18n</title>
+        <title>Internationalisation - Info Support</title>
     </head>
     <body>
         <!--Start nav bar-->
@@ -80,69 +80,70 @@
 
         <div class="main">
             <c:choose>
-            <c:when test="${needsUpdate}">
-             <div class="alert alert-warning" style="margin-left:20px;margin-right:20px;" id="alertNeedsUpdate">
-                <a class="close" data-dismiss="alert">×</a>
-                <h4>New Translations!</h4> Translations where last updated <script>document.write(moment('${lastUpdatedOn}').fromNow());</script> by 
-                <c:choose>
-                        <c:when test="${loggedInUsername == lastUpdatedBy.username}">you.</c:when>
-                        <c:otherwise>${lastUpdatedBy.firstname} ${lastUpdatedBy.lastname}.</c:otherwise>
-                </c:choose>
-                They are ready to be applied to the system.        
-                <p>
-                    <button type="button" class="btn btn-warning" onclick="$('#modalUpdateI18N').modal('show')">Apply</button>
-                </p>
-             </div>
-             </c:when>
-            <c:otherwise>
-             <div class="alert alert-info" style="margin-left:20px;margin-right:20px;" id="alertNoUpdateNeeded">
-                <a class="close" data-dismiss="alert">×</a>
-                <c:choose>
-                <c:when test="${lastUpdatedOn != null}">
-                    <strong>No action required!</strong> Translations where last applied to the system <script>document.write(moment('${lastAppliedOn}').fromNow());</script> by 
-                    <c:choose>
-                        <c:when test="${loggedInUsername == lastAppliedBy.username}">you</c:when>
-                        <c:otherwise>${lastAppliedBy.firstname} ${lastAppliedBy.lastname}</c:otherwise>
-                    </c:choose>
+                <c:when test="${needsUpdate}">
+                    <div class="alert alert-warning" style="margin-left:20px;margin-right:20px;" id="alertNeedsUpdate">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <h4>New Translations!</h4> Translations where last updated <script>document.write(moment('${lastUpdatedOn}').fromNow());</script> by 
+                        <c:choose>
+                            <c:when test="${loggedInUsername == lastUpdatedBy.username}">you.</c:when>
+                            <c:otherwise>${lastUpdatedBy.firstname} ${lastUpdatedBy.lastname}.</c:otherwise>
+                        </c:choose>
+                        They are ready to be applied to the system.        
+                        <p>
+                            <button type="button" class="btn btn-warning" onclick="$('#modalUpdateI18N').modal('show')">Apply</button>
+                        </p>
+                    </div>
                 </c:when>
                 <c:otherwise>
-                    <strong>No action required!</strong> All translations are applied to the system
+                    <div class="alert alert-info" style="margin-left:20px;margin-right:20px;" id="alertNoUpdateNeeded">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <c:choose>
+                            <c:when test="${lastUpdatedOn != null}">
+                                <strong>No action required!</strong> Translations where last applied to the system <script>document.write(moment('${lastAppliedOn}').fromNow());</script> by 
+                                <c:choose>
+                                    <c:when test="${loggedInUsername == lastAppliedBy.username}">you</c:when>
+                                    <c:otherwise>${lastAppliedBy.firstname} ${lastAppliedBy.lastname}</c:otherwise>
+                                </c:choose>
+                            </c:when>
+                            <c:otherwise>
+                                <strong>No action required!</strong> All translations are applied to the system
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
                 </c:otherwise>
-                </c:choose>
-             </div>
-             </c:otherwise>
             </c:choose>
             <form id="updateI18n" action="update" method="post">
                 <table>
                     <td>
-                <table border="1" style="margin-left: 10px">
-                    <h4 style="margin-left: 10px">English</h4>
-                    <th>Key</th><th>Value</th>
-                        <c:forEach var="property" items="${i18nPropertiesEN}">
-                        <tr>
-                            <td>${property.key}</td>
-                            <td><input type="input" id="${property.key}" name="${property.key}" value="${property.value}" onclick="editRecord(${property.value});" ></td>
-                        </tr>
-                    </c:forEach>
-                </table>
+                        <table border="1" style="margin-left: 10px">
+                            <h4 style="margin-left: 10px"> </h4>
+                            <th>Key</th><th>Value English</th>
+                                <c:forEach var="property" items="${i18nPropertiesEN}">
+                                <tr>
+                                    <td>${property.key}</td>
+                                    <td><input type="input" id="${property.key}" name="${property.key}" value="${property.value}" onclick="editRecord(${property.value});" ></td>
+                                </tr>
+                            </c:forEach>
+                        </table>
                     </td>
+                    
                     <td>
-                <table border="1" style="margin-left: 10px">
-                    <h4 style="margin-left: 10px">Nederlands</h4>
-                    <th>Key</th><th>Value</th>
-                        <c:forEach var="property2" items="${i18nPropertiesNL}">
-                        <tr>
-                            <td>${property2.key}</td>
-                            <td><input type="input" id="${property2.key}" name="${property2.key}" value="${property2.value}" onclick="editRecord(${property2.value});" ></td>
-                        </tr>
-                    </c:forEach>
-                </table>
+                        <table border="1" >
+                            <h4 style="margin-left: 10px"> </h4>
+                            <th>Value Nederlands</th>
+                                <c:forEach var="property2" items="${i18nPropertiesNL}">
+                                <tr>
+                                    
+                                    <td><input type="input" id="${property2.key}" name="${property2.key}" value="${property2.value}" onclick="editRecord(${property2.value});" ></td>
+                                </tr>
+                            </c:forEach>
+                        </table>
                     </td>
                 </table>
                 <button type="submit" class="btn btn-primary"><fmt:message key="edit.popup.save"/></button>
             </form>
-            
-            
+
+
         </div>
 
         <!-- Modal Dialog for Updating Translations -->
@@ -154,42 +155,42 @@
                         <h4 class="modal-title" id="modalTitle">Apply I18N Translations</h4>
                     </div>
                     <form role="form" id="applyTranslations" action="applyTranslations" method="post">
-                    <div class="modal-body">
-                        <p id="modalBodyText1">To apply the new translations the server needs to be restarted. This means that all users are disconnected and will be unable to login for at least five minutes. It is recommended to do this as least as possible at times where as minimal users are online. Inform your employees if necessary.</p>
-                        <p id="modalBodyText2">Please enter your password to continue.</p>
-                        <div class="alert alert-danger" style="display:none" id="alertIncorrectPassword">
-                <a class="close" data-dismiss="alert">×</a>
-                <strong>Oh snap!</strong> Your password is incorrect.
-            </div>
-                        <p id="modalBodyText3" style="display:none">The server is restarting. The updates should be applied within five minutes. You will need to login manually again.</p>
-                        <br/>
-                        <div class="form-group" id="formGroupPassword" style="width:100%">
-                            <label for="password"><fmt:message key="user.password"/></label>
-                            <input type="password" class="form-control" id="password" name="password" onkeyup="toggleApplyButton()" placeholder="<fmt:message key="placeholder.password"/>">
-                        </div>
-                        <div class="progress progress-striped active" id="progress" style="display:none">
-                                    <div class="progress-bar progress-bar-danger"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        <div class="modal-body">
+                            <p id="modalBodyText1">To apply the new translations the server needs to be restarted. This means that all users are disconnected and will be unable to login for at least five minutes. It is recommended to do this as least as possible at times where as minimal users are online. Inform your employees if necessary.</p>
+                            <p id="modalBodyText2">Please enter your password to continue.</p>
+                            <div class="alert alert-danger" style="display:none" id="alertIncorrectPassword">
+                                <a class="close" data-dismiss="alert">×</a>
+                                <strong>Oh snap!</strong> Your password is incorrect.
+                            </div>
+                            <p id="modalBodyText3" style="display:none">The server is restarting. The updates should be applied within five minutes. You will need to login manually again.</p>
+                            <br/>
+                            <div class="form-group" id="formGroupPassword" style="width:100%">
+                                <label for="password"><fmt:message key="user.password"/></label>
+                                <input type="password" class="form-control" id="password" name="password" onkeyup="toggleApplyButton()" placeholder="<fmt:message key="placeholder.password"/>">
+                            </div>
+                            <div class="progress progress-striped active" id="progress" style="display:none">
+                                <div class="progress-bar progress-bar-danger"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
                                     <span class="sr-only">Loading...</span>
                                 </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" id="btnCancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" id="btnUpdate" class="btn btn-danger" onclick="applyTranslations()" disabled>Apply</button>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="button" id="btnCancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" id="btnUpdate" class="btn btn-danger" onclick="applyTranslations()" disabled>Apply</button>
+                        </div>
                     </form>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
         <script>
-            if ('${verificationFailed}'){
+            if ('${verificationFailed}') {
                 console.log('password incorrect');
                 document.getElementById('alertIncorrectPassword').style.display = 'block';
                 $('#modalUpdateI18N').modal('show')
             }
-            
-            
-            function applyTranslations(){
+
+
+            function applyTranslations() {
                 //block the button and show a loader
                 document.getElementById('progress').style.display = 'block';
                 document.getElementById('modalBodyText1').style.display = 'none';
@@ -200,11 +201,11 @@
                 document.getElementById('formGroupPassword').style.display = 'none';
                 document.getElementById('alertIncorrectPassword').style.display = 'none';
                 document.getElementById('modalTitle').innerHTML = 'Server Restarted';
-                
+
                 //submit form
-               document.getElementById('applyTranslations').submit();
+                document.getElementById('applyTranslations').submit();
             }
-            
+
             // block the apply button if there is no input in the password feld
             function toggleApplyButton() {
                 if (document.getElementById('password').value.length > 0) {
@@ -216,7 +217,7 @@
                     document.getElementById('btnUpdate').disabled = true;
                 }
             }
-            
+
         </script>
     </body>
 </html>
