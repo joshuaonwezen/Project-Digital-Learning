@@ -1,14 +1,20 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.hibernate.criterion.Restrictions;
+import models.Activity;
+import models.Chat;
+import models.Skill;
 import models.User;
 import models.UserForm;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import services.HibernateUtil;
@@ -86,19 +92,44 @@ public class ManageUserController extends HttpServlet {
         } 
         //deleten van een user
         else if (action.equals("delete")) {
-            //extract userId
-            String queryString = request.getQueryString();
-            int userId = Integer.parseInt(queryString.substring(queryString.indexOf("=") + 1));
-
-            //do the delete operation
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            Transaction tx = session.beginTransaction();
-            User managedUser = (User) session.load(User.class, userId);
-            session.delete(managedUser);
-            tx.commit();
-            session.close();
-
-            response.sendRedirect("../management");
+//            //extract userId
+//            String queryString = request.getQueryString();
+//            int userId = Integer.parseInt(queryString.substring(queryString.indexOf("=") + 1));
+//
+//            System.out.println("deleting user: " + userId);
+//            
+//            
+//            //do the delete operation
+//            Session session = HibernateUtil.getSessionFactory().openSession();
+//            Transaction tx = session.beginTransaction();
+//            User managedUser = (User) session.load(User.class, userId);
+//            
+//            // delete all activity linked to the user
+//            String hql = "delete from Activity where user_userId= :userId";
+//            session.createQuery(hql).setInteger("userId", managedUser.getUserId()).executeUpdate();
+//            
+//            // delete all chats linked to the user
+//            Criteria criteria = session.createCriteria(Chat.class);
+//            List<Chat> chats = criteria.list();
+//            for (int i=0;i<chats.size();i++){
+//                for (int u=0;u<chats.get(i).getUsers().size();u++){ // remove from join table
+//                    if (chats.get(i).getUsers().get(u).equals(managedUser)){
+//                        chats.get(i).getUsers().remove(chats.get(i).getUsers().get(u));
+//                        session.update(chats.get(i));
+//                    }
+//                }
+//                if (chats.get(i).getCreated().equals(managedUser)){
+//                    session.delete(chats.get(i)); // remove the chat as chatowner
+//                }
+//            }
+//            
+//            // 
+//            
+//            //session.delete(managedUser);
+//            tx.commit();
+//            session.close();
+//
+//            response.sendRedirect("../management");
         }
     }
 
