@@ -268,14 +268,14 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"><fmt:message key="edit.popup.unsaved"/></h4>
+                        <h4 class="modal-title"><fmt:message key="management.delete"/></h4>
                     </div>
                     <div class="modal-body">
-                        <p><fmt:message key="edit.popup.confirmation.message"/></p>
+                        <p><fmt:message key="management.delete.user"/></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="edit.popup.continue"/></button>
-                        <button type="button" class="btn btn-danger" onclick="deleteUser()"><fmt:message key="edit.popup.yes"/></button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="edit.popup.cancel"/></button>
+                        <button type="button" class="btn btn-danger" onclick="deleteUser()"><fmt:message key="edit.popup.delete"/></button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -395,14 +395,14 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"><fmt:message key="edit.popup.unsaved"/></h4>
+                        <h4 class="modal-title"><fmt:message key="management.delete"/></h4>
                     </div>
                     <div class="modal-body">
-                        <p><fmt:message key="edit.popup.confirmation.message"/></p>
+                        <p><fmt:message key="management.delete.course"/></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="edit.popup.continue"/></button>
-                        <button type="button" class="btn btn-danger" onclick="deleteCourse()"><fmt:message key="edit.popup.yes"/></button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="edit.popup.cancel"/></button>
+                        <button type="button" class="btn btn-danger" onclick="deleteCourse()"><fmt:message key="edit.popup.delete"/></button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -510,14 +510,14 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"><fmt:message key="edit.popup.unsaved"/></h4>
+                        <h4 class="modal-title"><fmt:message key="management.delete"/></h4>
                     </div>
                     <div class="modal-body">
-                        <p><fmt:message key="edit.popup.confirmation.message"/></p>
+                        <p><fmt:message key="management.delete.news"/></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="edit.popup.continue"/></button>
-                        <button type="button" class="btn btn-danger" onclick="deleteNewsItem()"><fmt:message key="edit.popup.yes"/></button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="edit.popup.cancel"/></button>
+                        <button type="button" class="btn btn-danger" onclick="deleteNewsItem()"><fmt:message key="edit.popup.delete"/></button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
