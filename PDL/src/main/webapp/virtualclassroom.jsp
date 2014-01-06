@@ -142,7 +142,7 @@
                 <form class="form-inline" role="form">
                     <div class="" id="formGroupChatInput">
                         <div class="chatInput">
-                            <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" onkeydown="handleKeyPress" placeholder="Enter a message">
+                            <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" onkeydown="keypress(function(event)" placeholder="Enter a message">
                         </div>
                         <div class="chatSend">
                             <button type="button" style="width: 190px;" class="btn btn-default" disabled id="buttonSent" name="buttonSent" onClick="sentMessage()">Send</button>
@@ -213,7 +213,14 @@
             }
         });
 
-        function sentMessage() {            
+        $(document).keypress(function(event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13' && document.getElementById('chatInput').value.length > 0) {
+                sentMessage();
+            }
+        });
+
+        function sentMessage() {
             var date = new Date();
             var message = '${loggedInUsername}' + '||' + date + '||' + document.getElementById('chatInput').value;
             // emit the message
@@ -225,13 +232,7 @@
             toggleSentButton();
             console.log('message sent');
         }
-        function handleKeyPress(evt) {
-                    var key = (window.event) ? event.keyCode : evt.which;
-                    if (key == 13) {
-                        sentMessage();
-                    }
-                }
-                document.onkeyPress = handleKeyPress;
+        
 // add a row to the table which contains the messages
         function addRowChatOutput(data) {
             var table = document.getElementById('chatOutput');
@@ -359,7 +360,7 @@
             else {
                 document.getElementById('buttonSent').disabled = true;
             }
-            }            
+        }
     </script>
 </body>
 </html>

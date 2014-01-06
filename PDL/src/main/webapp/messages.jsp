@@ -127,19 +127,19 @@
                                     <c:if test="${chat.created.userId == loggedInUserId}">
                                         <form id="deleteMessage" action="deleteMessage" method="post" style="margin: 0; padding: 0;display:inline">
                                             <input type="hidden" id="chatToDelete" name="chatToDelete"/>
-                                            <button type="button" class="btn btn-default btn-xs" id="btnDelete" onclick="$('#confirmDelete').modal('show');
+                                            <button type="button" class="btn btn-default btn-xs" id="btnDelete" title="Delete" data-placement="bottom" data-toggle="tooltip" onclick="$('#confirmDelete').modal('show');
                                                     document.getElementById('chatToDelete').value =${chat.chatId}">
                                                 <span class="glyphicon glyphicon-trash"></span>
                                             </button>
                                         </form>
-                                        <button type="button" class="btn btn-default btn-xs" id ="btnManage" onclick="showManageMessage(${chat.chatId}, '${chat.subject}');">
+                                        <button type="button" class="btn btn-default btn-xs" id ="btnManage" title="Manage Chat" data-placement="bottom" data-toggle="tooltip" onclick="showManageMessage(${chat.chatId}, '${chat.subject}');">
                                             <span class="glyphicon glyphicon-cog"></span>
                                         </button>
                                     </c:if>
                                     <c:if test="${chat.created.userId != loggedInUserId}">
                                         <form id="removeUserFromMessage" action="removeUserFromMessage" method="post" style="margin: 0; padding: 0;display:inline">
                                             <input type="hidden" id="chatToRemoveUser" name="chatToRemoveUser"/>
-                                            <button type="button" class="btn btn-default btn-xs" id="btnRemove" onclick="$('#confirmRemove').modal('show');
+                                            <button type="button" class="btn btn-default btn-xs" id="btnRemove" title="Leave Chat" data-placement="bottom" data-toggle="tooltip" onclick="$('#confirmRemove').modal('show');
                                                     document.getElementById('chatToRemoveUser').value =${chat.chatId}">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </button>

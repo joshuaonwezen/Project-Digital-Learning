@@ -70,7 +70,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="index.jsp">Logout</a></li>
                             <li class="divider"></li>
-                            <li><a href="/PDL/properties_edit">Internationalisation</a></li>
+                            <li><a href="/PDL/i18n">Internationalisation</a></li>
                             <li>
                                 <a >
                                     <form>

@@ -56,27 +56,29 @@ public class I18nController extends HttpServlet {
         
         if (action.equals("update")) {
             ServletContext context = getServletContext();
-            InputStream inStream = context.getResourceAsStream("/WEB-INF/classes/index_nl_NL.properties");
-            InputStream inStream2 = context.getResourceAsStream("/WEB-INF/classes/index_en_US.properties");
-            Properties oldPr1 = new Properties();
-            Properties oldPr2 = new Properties();
-            oldPr1.load(inStream);
-            oldPr2.load(inStream2);
-            Properties newPr1 = new Properties();      
-            Properties newPr2 = new Properties(); 
-            Enumeration en = oldPr1.keys();
-            Enumeration en2 = oldPr2.keys();
-            while (en.hasMoreElements()) {
-                String key = (String) en.nextElement();
-                String value = request.getParameter(key);
-                newPr1.setProperty(key, value);
+            InputStream inStream1 = context.getResourceAsStream("/WEB-INF/classes/index_nl_NL.properties");            
+            Properties oldPr1 = new Properties();            
+            oldPr1.load(inStream1);            
+            Properties newPr1 = new Properties();                  
+            Enumeration en1 = oldPr1.keys();            
+            while (en1.hasMoreElements()) {
+                String key1 = (String) en1.nextElement();
+                String value1 = request.getParameter(key1);
+                newPr1.setProperty(key1, value1);
             }
             File file = new File("C:\\Users\\Martijn\\Documents\\GitHub\\Project-Digital-Learning\\PDL\\src\\main\\webapp\\WEB-INF\\classes\\index_nl_NL.properties");
             newPr1.store(new FileOutputStream(file), null);
+            
+            ServletContext context2 = getServletContext();
+            InputStream inStream2 = context2.getResourceAsStream("/WEB-INF/classes/index_en_US.properties");
+            Properties oldPr2 = new Properties();
+            oldPr2.load(inStream2);
+            Properties newPr2 = new Properties();
+            Enumeration en2 = oldPr2.keys();
             while (en2.hasMoreElements()) {
-                String key = (String) en2.nextElement();
-                String value = request.getParameter(key);
-                newPr2.setProperty(key, value);
+                String key2 = (String) en2.nextElement();
+                String value2 = request.getParameter(key2);
+                newPr2.setProperty(key2, value2);
             }
             File file2 = new File("C:\\Users\\Martijn\\Documents\\GitHub\\Project-Digital-Learning\\PDL\\src\\main\\webapp\\WEB-INF\\classes\\index_en_US.properties");
             File file3 = new File("C:\\Users\\Martijn\\Documents\\GitHub\\Project-Digital-Learning\\PDL\\src\\main\\webapp\\WEB-INF\\classes\\index.properties");
@@ -155,10 +157,11 @@ public class I18nController extends HttpServlet {
         InputStream inStream1 = context.getResourceAsStream("/WEB-INF/classes/index_nl_NL.properties");
         InputStream inStream2 = context.getResourceAsStream("/WEB-INF/classes/index_en_US.properties");
         Properties pr = new Properties();
+        Properties pr2 = new Properties();
         pr.load(inStream1);
-        pr.load(inStream2);
+        pr2.load(inStream2);
         request.setAttribute("i18nPropertiesNL", pr);
-        request.setAttribute("i18nPropertiesEN", pr);
+        request.setAttribute("i18nPropertiesEN", pr2);
     }
     
     /**

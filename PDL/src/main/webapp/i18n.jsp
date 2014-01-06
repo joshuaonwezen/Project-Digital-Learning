@@ -113,17 +113,8 @@
              </c:otherwise>
             </c:choose>
             <form id="updateI18n" action="update" method="post">
-                <table border="1" style="margin-left: 10px">
-                    <h4 style="margin-left: 10px">Nederlands</h4>
-                    <th>Key</th><th>Value</th>
-                        <c:forEach var="property" items="${i18nPropertiesNL}">
-                        <tr>
-                            <td>${property.key}</td>
-                            <td><input type="input" id="${property.key}" name="${property.key}" value="${property.value}" onclick="editRecord(${property.value});" ></td>
-                        </tr>
-                    </c:forEach>
-                </table>
-                <br>
+                <table>
+                    <td>
                 <table border="1" style="margin-left: 10px">
                     <h4 style="margin-left: 10px">English</h4>
                     <th>Key</th><th>Value</th>
@@ -134,7 +125,21 @@
                         </tr>
                     </c:forEach>
                 </table>
-                <button type="button" class="btn btn-primary"><fmt:message key="edit.popup.save"/></button>
+                    </td>
+                    <td>
+                <table border="1" style="margin-left: 10px">
+                    <h4 style="margin-left: 10px">Nederlands</h4>
+                    <th>Key</th><th>Value</th>
+                        <c:forEach var="property2" items="${i18nPropertiesNL}">
+                        <tr>
+                            <td>${property2.key}</td>
+                            <td><input type="input" id="${property2.key}" name="${property2.key}" value="${property2.value}" onclick="editRecord(${property2.value});" ></td>
+                        </tr>
+                    </c:forEach>
+                </table>
+                    </td>
+                </table>
+                <button type="submit" class="btn btn-primary"><fmt:message key="edit.popup.save"/></button>
             </form>
             
             

@@ -108,8 +108,9 @@
                             <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
                             
                             <button type="submit" class="btn btn-default btn-xs <c:if test="${file.visible}">active </c:if>" 
-                                    <c:if test="${file.visible}">title="Visable" data-placement="bottom" data-toggle="tooltip"</c:if>
-                                    <c:if test="${!file.visible}">title="Invisable" data-placement="bottom" data-toggle="tooltip"</c:if>
+                                    <button type="submit" class="btn btn-default btn-xs <c:if test="${file.visible}">active </c:if>" 
+                                    <c:if test="${file.visible}">title="Visible" data-placement="bottom" data-toggle="tooltip"</c:if>
+                                    <c:if test="${!file.visible}">title="Invisible" data-placement="bottom" data-toggle="tooltip"</c:if>
                                     id="btnChangeVisibility">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                             </button>
@@ -117,7 +118,7 @@
                         <form id="formDeleteFile" action="deleteFile" method="post" style="margin: 0; padding: 0;display:inline">
                             <input type="hidden" id="fileToDelete" name="fileToDelete"/>
                             <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
-                            <button type="button" class="btn btn-default btn-xs" id="btnDelete" onclick="$('#confirmDelete').modal('show');document.getElementById('fileToDelete').value='${file.fileId}';">
+                            <button type="button" class="btn btn-default btn-xs" id="btnDelete" title="Delete" data-placement="bottom" data-toggle="tooltip" onclick="$('#confirmDelete').modal('show');document.getElementById('fileToDelete').value='${file.fileId}';">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </button>
                         </form>
