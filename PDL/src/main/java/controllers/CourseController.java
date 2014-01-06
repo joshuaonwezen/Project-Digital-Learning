@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Course;
+import models.CourseSuggestion;
 import models.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
