@@ -78,7 +78,7 @@
         <div id="main">
             <div id="main_left">
                 <c:if test="${course.owner.userId == loggedInUserId}">
-                    <button type="button" class="btn btn-default" id="btnShowModalUpload" onClick="$('#modalUpload').modal('show')"><fmt:message key="documents.upload.files"/></button>
+                    <button type="button" class="btn btn-default" id="btnShowModalUpload" onClick="$('#modalUpload').modal('show')" style="width:150px"><fmt:message key="documents.upload.files"/></button>
                 </c:if>
             </div>
 
