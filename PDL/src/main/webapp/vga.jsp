@@ -100,7 +100,7 @@
                 <h4>Ready to Apply!</h4> You can choose to suggest the output to the Users or just watch this output.
                 <p>
                      <form id="applySweep" action="applySweep" method="post">
-                    <button type="submit" class="btn btn-info" id="btnApplySweep"><fmt:message key="vga.start.sweep"/></button>
+                    <button type="submit" class="btn btn-info" id="btnApplySweep">Apply Sweep</button>
                      </form>
                 </p>
              </div>

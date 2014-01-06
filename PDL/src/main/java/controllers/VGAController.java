@@ -92,6 +92,9 @@ public class VGAController extends HttpServlet {
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//prevent duplicate courses
         List<Course> courses = criteria.list();
         
+        List<Activity> activities = new ArrayList<Activity>(); // this list holds our suggestions
+        List<CourseSuggestion> courseSuggestions = new ArrayList<CourseSuggestion>();
+        
         //1c. get the skill from the request where we need to search for
         List<String> skillsFromRequest = Arrays.asList(request.getParameter("tagSkills").split(","));
         
@@ -179,7 +182,7 @@ public class VGAController extends HttpServlet {
                         coursesSummed+= c.getName() + ", ";
                           //new course suggestion
                         CourseSuggestion coursesuggestion = new CourseSuggestion(c,usersWithoutSkill.get(u));
-                        //insertCourseSuggestion(coursesuggestion);
+                        courseSuggestions.add(coursesuggestion);
                         
                     }
                     coursesSummed = coursesSummed.substring(0, coursesSummed.length()-2);//remove the last comma of the sum up
@@ -189,7 +192,7 @@ public class VGAController extends HttpServlet {
                     //create an activity feed for this user (suggest it)
                     String title = "Course Suggestion";
                     String message = "The course(s) " + coursesSummed + " could probably contribute to the missing skill: " + skill.getName();
-                    insertActivity(title, message, new Date(), usersWithoutSkill.get(u));
+                    activities.add(new Activity(title, message, new Date(), usersWithoutSkill.get(u)));
                 }
                 //5a. there are no courses which provide the skill: check if their are other users who can help
                 else{
@@ -204,12 +207,12 @@ public class VGAController extends HttpServlet {
                         //suggest the helper to the user that misses the skill
                         String title = "Missing Skill";
                         String message = helper.getFirstname() + " " + helper.getLastname() + " could help you acquire the Skill " + skill.getName() + ".";
-                        insertActivity(title, message, new Date(), usersWithoutSkill.get(u));
+                        activities.add(new Activity(title, message, new Date(), usersWithoutSkill.get(u)));
                         
                         //let the user that owns the skill know that someone needs his help
                         title = "Someone needs your help";
                         message = usersWithoutSkill.get(u).getFirstname() + " " + usersWithoutSkill.get(u).getLastname() + " could need your help acquiring the Skill " + skill.getName() + ".";
-                        insertActivity(title, message, new Date(), helper);
+                        activities.add(new Activity(title, message, new Date(), helper));
                     }
                     //at this else-point we know for sure that a new course needs to be created
                     else{
@@ -222,6 +225,9 @@ public class VGAController extends HttpServlet {
         session.close();
         
         //set output on the request
+        request.getSession().setAttribute("activities", activities); // set the activities temporary on the session
+        request.getSession().setAttribute("courseSuggestions", courseSuggestions); // set the coursesuggestions temporary on the session
+        request.setAttribute("readyToSuggest", true);
         request.setAttribute("userVGAStatusesSize", userVGAStatuses.size());
         request.setAttribute("userVGAStatuses", userVGAStatuses);
         
@@ -229,6 +235,45 @@ public class VGAController extends HttpServlet {
         setSkillsToCheckByVGAOnRequest(request);
         redirect(request, response, "/vga.jsp");
         
+        }
+        else if (action.equals("applySweep")) {
+            
+            //get the activities back from the session
+            List<Activity> activities = (List)request.getSession().getAttribute("activities");
+            
+            for (Activity activity : activities){
+                insertActivity(activity); // save to the db
+            }
+            
+            //we need to make sure we don't add duplicate courseuggestions to the db
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            Criteria criteria = session.createCriteria(CourseSuggestion.class);
+            List<CourseSuggestion> courseSuggestionsFromDb = criteria.list();
+            
+            //get the coursesuggestions back from the session
+            List<CourseSuggestion> courseSuggestions = (List)request.getSession().getAttribute("courseSuggestions");
+            
+            //match them against the db
+            for (CourseSuggestion courseSuggestion : courseSuggestions){
+                boolean found = false;
+                for (CourseSuggestion csFromDb : courseSuggestionsFromDb){
+                    if (courseSuggestion.getCourse().getCourseId() == csFromDb.getCourse().getCourseId() &&
+                            courseSuggestion.getUser().getUserId() == csFromDb.getUser().getUserId()){
+                        found = true;
+                    }
+                }
+                if (!found){
+                    insertCourseSuggestion(courseSuggestion); // add it to the db if we didnt find a duplicate
+                }
+            }
+            session.close();
+            
+            //set output on request
+            request.setAttribute("suggested", true);
+            setSkillsOnRequest(request);//set skills on the request where we can choose from in the sweep
+            setSkillsToCheckByVGAOnRequest(request);
+            redirect(request, response, "/vga.jsp");
         }
         else if (action.equals("updatePeriodic")){
             //match the skills from the request agains the database and set the flag for checkByVGA = 1
@@ -267,7 +312,11 @@ public class VGAController extends HttpServlet {
         }
     }
     
-    private void insertCourseSuggestion(CourseSuggestion coursesuggestion){         
+    private void insertCourseSuggestion(CourseSuggestion coursesuggestion){        
+        
+        
+        
+        
         //insert it in the db
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
@@ -279,10 +328,7 @@ public class VGAController extends HttpServlet {
         System.out.println("COURSE SUGGESTED");
     }
         
-    private void insertActivity(String title, String message, Date sent, User user){
-        //create new activity item
-        Activity a = new Activity(title, message, sent, user);
-        
+    private void insertActivity(Activity a){
         //insert it in the db
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();

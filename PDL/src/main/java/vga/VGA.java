@@ -119,6 +119,10 @@ public class VGA implements Job{
                     String coursesSummed = "";
                     for (Course c : coursesWithSkill){
                         coursesSummed+= c.getName() + ", ";
+                        
+                        //new course suggestion
+                        CourseSuggestion coursesuggestion = new CourseSuggestion(c,usersWithoutSkill.get(u));
+                        insertCourseSuggestion(coursesuggestion);
                     }
                     coursesSummed = coursesSummed.substring(0, coursesSummed.length()-2);//remove the last comma of the sum up
                     
@@ -158,13 +162,12 @@ public class VGA implements Job{
     
     private void insertCourseSuggestion(CourseSuggestion coursesuggestion){         
         //insert it in the db
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = session.beginTransaction();
+        CourseSuggestionDAO courseSuggestionDAO = new CourseSuggestionDAO();
         
-        session.save(coursesuggestion);      
-        tx.commit();
-        session.close();
-       
+        if (!courseSuggestionDAO.existInDb(coursesuggestion)){ // prevent duplicates
+            courseSuggestionDAO.insert(coursesuggestion);
+        }
+        
         System.out.println("COURSE SUGGESTED");
     }
     

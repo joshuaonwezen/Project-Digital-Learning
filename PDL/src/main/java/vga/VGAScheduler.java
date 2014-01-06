@@ -32,8 +32,9 @@ public class VGAScheduler {
 
             // Trigger the job to run now, and then repeat every 40 seconds
             Trigger trigger = newTrigger()
+                    .startNow()
                 .withIdentity("trigger1", "group1")
-                .withSchedule(cronSchedule("0 1 02 00 * ?")) // first day of the month at 02:00
+                .withSchedule(cronSchedule("0 0 2 1 1/1 ? *")) // first day of the month at 02:00
                 .forJob("job1", "group1")
                 .build();
 

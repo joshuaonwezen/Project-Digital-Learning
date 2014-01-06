@@ -181,11 +181,11 @@ public class ManageCourseController extends HttpServlet {
             tx.commit();
             session.close();
             
-            
             //redirect the user back and let it now he was removed
             request.setAttribute("withdrawedFrom", managedCourse.getName());
             setCoursesOnRequest(request);
             setUserEnrolledCoursesOnRequest(request, userId);
+            setCoursesSuggestionOnRequest(request, userId);
             redirect(request, response, "/courses.jsp");
             }
     }
