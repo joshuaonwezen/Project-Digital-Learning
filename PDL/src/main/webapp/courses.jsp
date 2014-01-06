@@ -119,6 +119,13 @@
                                         </small>
                                     </div>
                                     <h3 style="margin-left:0px">${course.name} ${course.level}</h3>
+                                     <c:forEach var="courseSuggestion" items="${suggestedCourses}">
+                                                   <c:if test="${courseSuggestion.course.courseId == course.courseId}">
+                                                       <img src="resources/images/starfull.png">
+                                                       
+                                                   </c:if>
+                                                   
+                                               </c:forEach>
                                     <h4><small><fmt:message key="course.teacher"/> ${course.owner.firstname} ${course.owner.lastname}</small></h4>
                                     <p>${course.description}</p>
                                     <form action="enroll" id="enroll">
