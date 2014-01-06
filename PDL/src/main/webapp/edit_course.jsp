@@ -54,7 +54,7 @@
                 <c:if test="${courseCreated == true}">
                     <div class="alert alert-success" style="margin-left:20px;margin-right:20px">
                         <a class="close" data-dismiss="alert">×</a>
-                        <strong><fmt:message key="popup.done"/></strong> <fmt:message key="course.edit.popup.new"/>
+                        <strong><fmt:message key="popup.done"/></strong> <fmt:message key="course.edit.popup.new.create"/>
                     </div>
                 </c:if>
                 <c:if test="${courseUpdated == true}">

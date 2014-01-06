@@ -145,6 +145,7 @@
   
             <!-- User Management -->
         <script>
+            var toDelete;
             //contextual menu settings for grid
             usersMenu = new dhtmlXMenuObject();
             usersMenu.setIconsPath("resources/dhtmlx/dhtmlxMenu/samples/common/images/");
@@ -205,7 +206,8 @@
                         openUserWindow(usersGrid.cells(rowIndex, 0).getValue());
                         break;
                     case "delete":
-                        deleteUser(usersGrid.cells(rowIndex, 0).getValue());
+                        toDelete = usersGrid.cells(rowIndex, 0).getValue();
+                        deleteDialog();
                         break;
                 }
             }
@@ -242,16 +244,40 @@
                         ",top=" + popupTop + ",left=" + popupLeft);
             }
 
-            function deleteUser(userId) {
-                if (confirm('Are you sure you want to delete this user?'))
-                    window.location = 'users/delete?userId=' + userId;
+            function deleteDialog() {
+                $('#myModal').modal('show')  
+                
             }
+            
+            function deleteUser() {
+                window.location = 'users/delete?userId=' + toDelete;
+            }
+            
 
-        </script>    
+        </script>
+        <!-- Modal Dialog for Canceling -->
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><fmt:message key="edit.popup.unsaved"/></h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><fmt:message key="edit.popup.confirmation.message"/></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="edit.popup.continue"/></button>
+                        <button type="button" class="btn btn-danger" onclick="deleteUser()"><fmt:message key="edit.popup.yes"/></button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
        
         
         <!-- Courses Management -->
         <script>
+            var toDeleteCourse;
             //contextual menu settings for grid
             coursesMenu = new dhtmlXMenuObject();
             coursesMenu.setIconsPath("resources/dhtmlx/dhtmlxMenu/samples/common/images/");
@@ -319,7 +345,8 @@
                         openCourseWindow(coursesGrid.cells(rowIndex, 0).getValue());
                         break;
                     case "delete":
-                        deleteCourse(coursesGrid.cells(rowIndex, 0).getValue());
+                        toDeleteCourse = coursesGrid.cells(rowIndex, 0).getValue();
+                        deleteDialogCourse();
                         break;
                 }
             }
@@ -345,15 +372,38 @@
             }
       
 
-            function deleteCourse(courseId) {
-                if (confirm('Are you sure you want to delete this course?'))
-                    window.location = 'courses/delete?courseId=' + courseId;
+            function deleteDialogCourse() {
+                $('#myModalCourse').modal('show')  
+                
+            }
+            
+            function deleteCourse() {
+                window.location = 'courses/delete?courseId=' + toDeleteCourse;
             }
 
         </script>
+        <!-- Modal Dialog for Canceling -->
+        <div class="modal fade" id="myModalCourse">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><fmt:message key="edit.popup.unsaved"/></h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><fmt:message key="edit.popup.confirmation.message"/></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="edit.popup.continue"/></button>
+                        <button type="button" class="btn btn-danger" onclick="deleteCourse()"><fmt:message key="edit.popup.yes"/></button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
         
         <!-- News Item Management -->
         <script>
+            var toDeleteNews;
             //contextual menu settings for grid
             newsItemsMenu = new dhtmlXMenuObject();
             newsItemsMenu.setIconsPath("resources/dhtmlx/dhtmlxMenu/samples/common/images/");
@@ -411,7 +461,8 @@
                         openNewsItemWindow(newsItemsGrid.cells(rowIndex, 0).getValue());
                         break;
                     case "delete":
-                        deleteNewsItem(newsItemsGrid.cells(rowIndex, 0).getValue());
+                        toDeleteNews = newsItemsGrid.cells(rowIndex, 0).getValue();
+                        deleteDialogNews();
                         break;
                 }
             }
@@ -435,13 +486,36 @@
                         ",top=" + popupTop + ",left=" + popupLeft);
             }
 
-            function deleteNewsItem(newsItemId) {
-                if (confirm('Are you sure you want to delete this news item?'))
-                    window.location = 'news/delete?newsId=' + newsItemId;
+            function deleteDialogNews() {
+                $('#myModalNews').modal('show')  
+                
+            }
+            
+            function deleteNewsItem() {
+                window.location = 'news/delete?newsId=' + toDeleteNews;
             }
 
          
-        </script>      
+        </script>
+        <!-- Modal Dialog for Canceling -->
+        <div class="modal fade" id="myModalNews">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><fmt:message key="edit.popup.unsaved"/></h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><fmt:message key="edit.popup.confirmation.message"/></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="edit.popup.continue"/></button>
+                        <button type="button" class="btn btn-danger" onclick="deleteNewsItem()"><fmt:message key="edit.popup.yes"/></button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        
         <div id="tabbar" style="height:700px;"></div>
         <c:if test="${loggedInIsAdmin == true}">
         <script>
