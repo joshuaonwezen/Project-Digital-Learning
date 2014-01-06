@@ -27,7 +27,7 @@
         <script src="resources/select2/select2.js"></script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Home - Info Support</title>
+        <title>Virtual Guardian Angel - Info Support</title>
     </head>
     <body
             <c:if test="${empty userVGAStatuses && !editedPSkills}">

@@ -11,7 +11,7 @@
 <html  lang="${language}">
     <head>
         <meta charset="UTF-8">
-        <title>Profile - Info Support</title>
+        <title>Search - Info Support</title>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
         <!-- Bootstrap-->
         <!-- Company Style-->
