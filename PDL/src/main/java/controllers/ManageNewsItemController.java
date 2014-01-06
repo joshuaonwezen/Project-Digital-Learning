@@ -3,6 +3,7 @@ package controllers;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -227,10 +228,20 @@ public class ManageNewsItemController extends HttpServlet {
         Transaction tx = session.beginTransaction();
         Criteria criteria = session.createCriteria(User.class);
         List<User> users = criteria.list();
+        
+        //filter on admins and managers
+        List<User> usersWithRights = new ArrayList<User>();
+        
+        for (User user : users){
+            if (user.isIsAdmin() || user.isIsManager() || user.isIsTeacher()){
+                usersWithRights.add(user);
+            }
+        }
+        
         session.close();
-
-        request.setAttribute("users", users);
-        request.setAttribute("usersSize", users.size());
+        
+        request.setAttribute("users", usersWithRights);
+        request.setAttribute("usersSize", usersWithRights.size());
     }
 
     private void redirect(HttpServletRequest request, HttpServletResponse response, String address)
