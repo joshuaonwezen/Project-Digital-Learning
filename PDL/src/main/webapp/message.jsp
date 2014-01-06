@@ -117,6 +117,10 @@
                             ${chat.subject}
                         </a>
                     </li>
+                    <br>
+                    <li>
+                       <button id="setup-new-room" class="btn btn-default buttonStyle">Start conference</button><br>
+                    </li>
                 </ul>
             </div>
 
@@ -128,9 +132,7 @@
                             <span>
                                 <a href="/video-conferencing/" target="_blank" title="Open this link in new tab. Then your conference room will be private!"></a>
                             </span>
-                            <section>
-                                Want to start a videoconference?  <button id="setup-new-room" class="setup">Start conference</button><br>
-                            </section>
+                
 
                             <!-- list of all available conferencing rooms -->
                             <table style="width: 100%;" id="rooms-list"></table>
@@ -241,11 +243,11 @@
                     var tr = document.createElement('tr');
                     if (room.roomName === '${chat.subject}') {
                         tr.innerHTML = '<td>The chatroom <strong>' + room.roomName + '</strong> has started a videoconference, click here to join:</td>' +
-                                '<td><button class="join">Join</button></td>';
+                                '<td><button class="btn-danger">Join</button></td>';
                         roomsList.insertBefore(tr, roomsList.firstChild);
                     }
 
-                    var joinRoomButton = tr.querySelector('.join');
+                    var joinRoomButton = tr.querySelector('.btn-danger');
                     joinRoomButton.setAttribute('data-broadcaster', room.broadcaster);
                     joinRoomButton.setAttribute('data-roomToken', room.roomToken);
                     joinRoomButton.onclick = function() {
