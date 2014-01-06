@@ -64,12 +64,13 @@ public class I18nController extends HttpServlet {
             while (en1.hasMoreElements()) {
                 String key1 = (String) en1.nextElement();
                 String value1 = request.getParameter(key1);
+                System.out.println("KEY:" + key1 +" VALUE:" + value1);
                 newPr1.setProperty(key1, value1);
             }
             File file = new File("C:\\Users\\Martijn\\Documents\\GitHub\\Project-Digital-Learning\\PDL\\src\\main\\webapp\\WEB-INF\\classes\\index_nl_NL.properties");
             newPr1.store(new FileOutputStream(file), null);
             
-            ServletContext context2 = getServletContext();
+            /*ServletContext context2 = getServletContext();
             InputStream inStream2 = context2.getResourceAsStream("/WEB-INF/classes/index_en_US.properties");
             Properties oldPr2 = new Properties();
             oldPr2.load(inStream2);
@@ -83,7 +84,7 @@ public class I18nController extends HttpServlet {
             File file2 = new File("C:\\Users\\Martijn\\Documents\\GitHub\\Project-Digital-Learning\\PDL\\src\\main\\webapp\\WEB-INF\\classes\\index_en_US.properties");
             File file3 = new File("C:\\Users\\Martijn\\Documents\\GitHub\\Project-Digital-Learning\\PDL\\src\\main\\webapp\\WEB-INF\\classes\\index.properties");
             newPr2.store(new FileOutputStream(file2), null);
-            newPr2.store(new FileOutputStream(file3), null);
+            newPr2.store(new FileOutputStream(file3), null);*/
             
             //update the metadata
             Session session = HibernateUtil.getSessionFactory().openSession();

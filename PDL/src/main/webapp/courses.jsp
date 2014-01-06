@@ -49,11 +49,11 @@
                                 <li><a href="/PDL/i18n">Internationalisation</a></li>
                             </ul>
                         </li> 
-                        </c:if>
-                    <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
-                    <c:if test="${loggedInIsAdmin || loggedInIsManager == true}">
-                    <li><a href="/PDL/vga">VGA</a></li>
                     </c:if>
+                    <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
+                        <c:if test="${loggedInIsAdmin || loggedInIsManager == true}">
+                        <li><a href="/PDL/vga">VGA</a></li>
+                        </c:if>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.settings"/> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -81,7 +81,7 @@
             </div><!-- /.navbar-collapse -->
         </nav>
         <!-- eof navbar-->
- 
+
         <div id="validationAlert" style=margin-left:200px;margin-right:200px;"></div>
         <c:if test="${enrolledIn != null}">
             <div class="alert alert-success" style="margin-left:200px;margin-right:200px;">
@@ -92,7 +92,7 @@
         <c:if test="${withdrawedFrom != null}">
             <div class="alert alert-success" style="margin-left:200px;margin-right:200px;">
                 <a class="close" data-dismiss="alert">×</a>
-                <strong><fmt:message key="popup.done"/></strong> You are sucessfully removed from the Course "${withdrawedFrom}"
+                <strong><fmt:message key="popup.done"/></strong> <fmt:message key="course.remove"/> "${withdrawedFrom}"
             </div>
         </c:if>
 
@@ -104,98 +104,98 @@
             </c:when>
             <c:otherwise>
                 <c:forEach var="course" items="${courses}">
-                               <c:if test="${course.isVisible}">
-                                   
-                                   <div class=".col-md-6 .col-md-offset-3" style="margin-left:200px;margin-right:200px">
-                                       <div class="thumbnail" >
-                                           <div class="caption">
-                                               <div style="float:right">
-                                                   <small>
-                                                       <script>var skills='';</script>
-                                                       <c:forEach var="skill" items="${course.skills}">
-                                                           <script>skills += '${skill.name}, ';</script>
-                                                       </c:forEach>
-                                                           <script>document.write(skills.substring(0, skills.length-2));</script>
-                                                   </small>
-                                               </div>
-                                               <h3 style="margin-left:0px">${course.name} ${course.level}</h3>
-                                               <h4><small><fmt:message key="course.teacher"/> ${course.owner.firstname} ${course.owner.lastname}</small></h4>
-                                               <p>${course.description}</p>
-                                               <form action="enroll" id="enroll">
-                                                    <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
-                                                    <button id="buttonCourseEnroll${course.courseId}" type="submit" class="btn btn-primary"><fmt:message key="course.enroll"/></button>
-                                                </form>
-                                                <form action="withdraw" id="withdraw">
-                                                    <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
-                                                <button id="buttonCourseWithdraw${course.courseId}" type="submit" class="btn btn-warning" style="display:none">Withdraw</button>
-                                               </form>
-                                               <div id="courseActions${course.courseId}" style="float:right;margin-top:-63px;margin-right:-20px;display:none">
-                                                        <div class="row">
-                                                            <div class="col-xs-6 col-s-3">
-                                                        <a href="/PDL/documents?courseId=${course.courseId}" class="thumbnail" style="width:85px;height:64px;">
-                                                            <img src="resources/images/folder_full.png" data-src="holder.js/100%x180" alt="...">
-                                                        </a>
-                                                    </div>
-                                                             <div class="col-xs-6 col-s-3">
-                                                       <a href="/PDL/courses/virtualclassroom?courseId=${course.courseId}" class="thumbnail" style="width:64px;height:64px;margin-left:-20px">
-                                                            <img src="resources/images/chalk_board.png" data-src="holder.js/100%x180" alt="...">
-                                                        </a>
-                                               </div>   </div>
-                                               </div>
-                                                       <c:choose>
-                                                           <c:when test="${userEnrolledCoursesSize != 0}">
-                                                               <script>var found = false;</script>
-                                                               <c:forEach var="temp" items="${userEnrolledCourses}">
-                                                                   <c:if test="${temp == course.courseId}">
-                                                                       <script>
-                                                                           found = true;
-                                                                       </script>
-                                                                   </c:if>
+                    <c:if test="${course.isVisible}">
 
-                                                               </c:forEach>
-                                                               <script>
-                                                                   if (found) {
-                                                                       document.getElementById('buttonCourseWithdraw${course.courseId}').style.display = 'block';
-                                                                       document.getElementById('courseActions${course.courseId}').style.display = 'block';
-                                                                       document.getElementById('buttonCourseEnroll${course.courseId}').style.display = 'none';
-                                                                   }
-                                                               </script>
-                                                           </c:when>
-                                                       </c:choose>
-                                                       </div>
-                                                       </div>
-                                                       </div>
-                                                       </br>
+                        <div class=".col-md-6 .col-md-offset-3" style="margin-left:200px;margin-right:200px">
+                            <div class="thumbnail" >
+                                <div class="caption">
+                                    <div style="float:right">
+                                        <small>
+                                            <script>var skills = '';</script>
+                                            <c:forEach var="skill" items="${course.skills}">
+                                                <script>skills += '${skill.name}, ';</script>
+                                            </c:forEach>
+                                            <script>document.write(skills.substring(0, skills.length - 2));</script>
+                                        </small>
+                                    </div>
+                                    <h3 style="margin-left:0px">${course.name} ${course.level}</h3>
+                                    <h4><small><fmt:message key="course.teacher"/> ${course.owner.firstname} ${course.owner.lastname}</small></h4>
+                                    <p>${course.description}</p>
+                                    <form action="enroll" id="enroll">
+                                        <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
+                                        <button id="buttonCourseEnroll${course.courseId}" type="submit" class="btn btn-primary"><fmt:message key="course.enroll"/></button>
+                                    </form>
+                                    <form action="withdraw" id="withdraw">
+                                        <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
+                                        <button id="buttonCourseWithdraw${course.courseId}" type="submit" class="btn btn-warning" style="display:none"><fmt:message key="course.withdraw"/></button>
+                                    </form>
+                                    <div id="courseActions${course.courseId}" style="float:right;margin-top:-63px;margin-right:-20px;display:none">
+                                        <div class="row">
+                                            <div class="col-xs-6 col-s-3">
+                                                <a href="/PDL/documents?courseId=${course.courseId}" class="thumbnail" style="width:85px;height:64px;">
+                                                    <img src="resources/images/folder_full.png" data-src="holder.js/100%x180" alt="...">
+                                                </a>
+                                            </div>
+                                            <div class="col-xs-6 col-s-3">
+                                                <a href="/PDL/courses/virtualclassroom?courseId=${course.courseId}" class="thumbnail" style="width:64px;height:64px;margin-left:-20px">
+                                                    <img src="resources/images/chalk_board.png" data-src="holder.js/100%x180" alt="...">
+                                                </a>
+                                            </div>   </div>
+                                    </div>
+                                    <c:choose>
+                                        <c:when test="${userEnrolledCoursesSize != 0}">
+                                            <script>var found = false;</script>
+                                            <c:forEach var="temp" items="${userEnrolledCourses}">
+                                                <c:if test="${temp == course.courseId}">
+                                                    <script>
+                                                        found = true;
+                                                    </script>
+                                                </c:if>
 
-                                                   </c:if>
+                                            </c:forEach>
+                                            <script>
+                                                if (found) {
+                                                    document.getElementById('buttonCourseWithdraw${course.courseId}').style.display = 'block';
+                                                    document.getElementById('courseActions${course.courseId}').style.display = 'block';
+                                                    document.getElementById('buttonCourseEnroll${course.courseId}').style.display = 'none';
+                                                }
+                                            </script>
+                                        </c:when>
+                                    </c:choose>
+                                </div>
+                            </div>
+                        </div>
+                        </br>
 
-                                                   
-                                                   <script>
-                                                       console.log('the cours ei siil');
-                                                       if (${!course.isVisible}) {
-                                                           coursesSize = coursesSize - 1;
-                                                       }
-                                                   </script>
-                                               </c:forEach>
+                    </c:if>
 
-                                           </c:otherwise>
-                                       </c:choose> 
-                                       <script>
-                                           //give feedback to the user about the results
-                                           console.log('coursesSize: ' + coursesSize);
-                                           if (coursesSize === 0) {
-                                               console.log('showing melding');
-                                               document.getElementById('validationAlert').innerHTML = '<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>Oh snap!</strong> Your search did not match any Course.</div>';
-                                           }
-                                           else if ('${coursesSizeResults}' > 0) {
-                                               document.getElementById('validationAlert').innerHTML = '<div class="alert alert-info"><a class="close" data-dismiss="alert">×</a><strong>Results:</strong> <u>' + coursesSize + '</u> Course(s) match your search.</div>';
-                                           }
-                                           
-                                           //function for opening the course page
-                                           function openCourse(courseId){
-                                               window.open('/PDL/courses/course?courseId=' + courseId,'_self',false);
-                                           }
-                                           
-                                       </script>
-                                       </body>
-                                       </html>
+
+                    <script>
+                        console.log('the cours ei siil');
+                        if (${!course.isVisible}) {
+                            coursesSize = coursesSize - 1;
+                        }
+                    </script>
+                </c:forEach>
+
+            </c:otherwise>
+        </c:choose> 
+        <script>
+            //give feedback to the user about the results
+            console.log('coursesSize: ' + coursesSize);
+            if (coursesSize === 0) {
+                console.log('showing melding');
+                document.getElementById('validationAlert').innerHTML = '<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>Oh snap!</strong> Your search did not match any Course.</div>';
+            }
+            else if ('${coursesSizeResults}' > 0) {
+                document.getElementById('validationAlert').innerHTML = '<div class="alert alert-info"><a class="close" data-dismiss="alert">×</a><strong>Results:</strong> <u>' + coursesSize + '</u> Course(s) match your search.</div>';
+            }
+
+            //function for opening the course page
+            function openCourse(courseId) {
+                window.open('/PDL/courses/course?courseId=' + courseId, '_self', false);
+            }
+
+        </script>
+    </body>
+</html>

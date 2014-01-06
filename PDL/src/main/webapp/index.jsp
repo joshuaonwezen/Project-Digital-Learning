@@ -117,9 +117,16 @@
                 }
 
 
-                $(document).keypress(function(event) {
+                $("#username").keypress(function(event) {
                     var keycode = (event.keyCode ? event.keyCode : event.which);
-                    if (keycode == '13') {
+                    if (keycode === 13) {
+                        login();
+                    }
+                });
+                
+                $("#password").keypress(function(event) {
+                    var keycode = (event.keyCode ? event.keyCode : event.which);
+                    if (keycode === 13) {
                         login();
                     }
                 });

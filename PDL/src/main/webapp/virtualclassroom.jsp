@@ -146,16 +146,16 @@
                 </div>
             </div>
             <div id="maint_bot">
-                <form class="form-inline" role="form">
+                
                     <div class="" id="formGroupChatInput">
                         <div class="chatInput">
-                            <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" onkeydown="keypress(function(event)" placeholder="Enter a message">
+                            <input type="text" class="form-control" id="chatInput" name="chatInput" onkeyup="toggleSentButton()" placeholder="Enter a message">
                         </div>
                         <div class="chatSend">
                             <button type="button" style="width: 190px;" class="btn btn-default" disabled id="buttonSent" name="buttonSent" onClick="sentMessage()">Send</button>
                         </div>
                     </div>
-                </form>
+                
             </div>
     </div>
     <script>
@@ -220,12 +220,12 @@
             }
         });
 
-        $(document).keypress(function(event) {
-            var keycode = (event.keyCode ? event.keyCode : event.which);
-            if (keycode == '13' && document.getElementById('chatInput').value.length > 0) {
-                sentMessage();
-            }
-        });
+        $("#chatInput").keypress(function(event) {                
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode === 13 && document.getElementById('chatInput').value.replace(/^\s\s*/, '').replace(/\s\s*$/, '').length > 0) {
+                    sentMessage();
+                }
+            });
 
         function sentMessage() {
             var date = new Date();

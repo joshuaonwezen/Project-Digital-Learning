@@ -148,7 +148,7 @@
                     <div class="modal-body">
                         <div class="alert alert-danger" id="uploadSizeError" style="display:none">
                         <a class="close" data-dismiss="alert">×</a>
-                        Your upload exceeds the maximum file size of 1.5 GB.
+                        <fmt:message key="documents.limit"/>
                     </div>
                         <p id="modalBodyText"><fmt:message key="documents.upload.select"/></p>
                             <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>
