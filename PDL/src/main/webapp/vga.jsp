@@ -27,17 +27,17 @@
         <script src="resources/select2/select2.js"></script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Virtual Guardian Angel - Info Support</title>
+        <title>Home - Info Support</title>
     </head>
     <body
-            <c:if test="${empty userVGAStatuses && !editedPSkills}">
-                onload="$('#modalStartSweep').modal('show');"
-            </c:if>
-            <c:if test="${empty userVGAStatuses && editedPSkills}">
-                onload="document.getElementById('alertUpdateSuccessfull').style.display = 'block';
-                $('#modalEditPeriodicSweep').modal('show');
-                $('#modalStartSweep').modal('hide');"
-            </c:if>
+        <c:if test="${empty userVGAStatuses && !editedPSkills && !suggested}">
+            onload="$('#modalStartSweep').modal('show');"
+        </c:if>
+        <c:if test="${empty userVGAStatuses && editedPSkills}">
+            onload="document.getElementById('alertUpdateSuccessfull').style.display = 'block';
+                        $('#modalEditPeriodicSweep').modal('show');
+                        $('#modalStartSweep').modal('hide');"
+        </c:if>
         >
 
         <!--Start nav bar-->
@@ -59,19 +59,12 @@
                     <li><a href="/PDL/homepage">Home</a></li>
                     <li><a href="/PDL/courses"><fmt:message key="navbar.course"/></a></li>
                         <c:if test="${loggedInIsAdmin || loggedInIsTeacher || loggedInIsManager == true}">
-                        <li class="dropdown" class="active">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Management <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/PDL/management">Management</a></li>
-                                <li class="divider"></li>
-                                <li><a href="/PDL/i18n">Internationalisation</a></li>
-                            </ul>
-                        </li> 
+                        <li><a href="/PDL/management">Management</a></li>
                         </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
-                    <c:if test="${loggedInIsAdmin || loggedInIsManager == true}">
-                    <li class="active"><a href="/PDL/vga">VGA</a></li>
-                    </c:if>
+                        <c:if test="${loggedInIsAdmin || loggedInIsManager == true}">
+                        <li class="active"><a href="/PDL/vga">VGA</a></li>
+                        </c:if>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.settings"/> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -94,27 +87,53 @@
         </nav>
         <!-- eof navbar-->
 
+                <div id="main_left">
+             <button type="button" class="btn btn-default" id="btnShowModalStartSweep" onClick="$('#modalStartSweep').modal('show')"><fmt:message key="vga.start.new.sweep"/></button>
+           
+            
+            </div>
+        <div id="main_right">
+        <c:if test="${readyToSuggest == true}">
         <div id="main">
-            <button type="button" class="btn btn-default" id="btnShowModalStartSweep" onClick="$('#modalStartSweep').modal('show')"><fmt:message key="vga.start.sweep"/></button>
+            <div class="alert alert-info" id="alertCanBeApplied">
+                <a class="close" data-dismiss="alert">×</a>
+                <h4>Ready to Apply!</h4> You can choose to suggest the output to the Users or just watch this output.
+                <p>
+                     <form id="applySweep" action="applySweep" method="post">
+                    <button type="submit" class="btn btn-info" id="btnApplySweep"><fmt:message key="vga.start.sweep"/></button>
+                     </form>
+                </p>
+             </div>
+        </c:if>
+            <c:if test="${suggested == true}">
+                    <div class="alert alert-success">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong><fmt:message key="popup.done"/></strong> Users Activity Feed succesfully updated with the suggestions.
+                    </div>
+                </c:if>
+            
+            
+            
+                
             
             <c:if test="${!empty userVGAStatuses}">
                 <table class="table" id="messagesOverview" name="messagesOverview">
                     <tr><th><fmt:message key="user.user"/></th><th>Status</th><th><fmt:message key="course.description"/></th></tr>
-                    <c:forEach var="output" items="${userVGAStatuses}">
+                            <c:forEach var="output" items="${userVGAStatuses}">
                         <tr id="${output.user.username}"><td>${output.user.firstname} ${output.user.lastname}</td><td>${output.status}</td><td>${output.statusDescription}</td></tr>
                         <script>
                             //set color on row
-                            if ('${output.status}' === 'Skill Owner'){
+                            if ('${output.status}' === 'Skill Owner') {
                                 document.getElementById('${output.user.username}').className = 'success';
                             }
-                            else{
+                            else {
                                 document.getElementById('${output.user.username}').className = 'warning';
                             }
                         </script>
                     </c:forEach>
                 </table>
             </c:if>
-            
+        </div>
         </div>
         <!-- Modal Dialog for Starting a New Sweep -->
         <div class="modal fade" id="modalStartSweep">
@@ -126,39 +145,40 @@
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal" role="form" id="formVGASweep" action="doSweep" method="post">
-                        <p id="modalBodyText"><fmt:message key="vga.initiate.msg"/> </p>
-                        <div class="form-group">
-                            <label id="skillsLabel" for="skills" class="col-sm-2 control-label"><fmt:message key="skill.skill"/></label>
-                            <div class="col-sm-10" id="divSkills">
-                                <input type="hidden" id="tagSkills" onkeyup="toggleStartButton()" onchange="toggleStartButton()" name="tagSkills" placeholder="&nbsp;Enter a Skill" style="width:100%">
-                                <script>
-                                    //set all available skills from the database in the multiselect
-                                    var arrSkills = new Array();
-                                    <c:forEach var='skill' items='${skills}'>
-                                    arrSkills.push('${skill.name}');
-                                    </c:forEach>
-                                    $('#tagSkills').select2({tags: arrSkills, tokenSeparators: [",", " "], createSearchChoice: false, maximumSelectionSize: 1});
-                                </script>
-                                
+                            <p id="modalBodyText"><fmt:message key="vga.initiate.msg"/> </p>
+                            <div class="form-group">
+                                <label id="skillsLabel" for="skills" class="col-sm-2 control-label"><fmt:message key="skill.skill"/></label>
+                                <div class="col-sm-10" id="divSkills">
+                                    <input type="hidden" id="tagSkills" onkeyup="toggleStartButton()" onchange="toggleStartButton()" name="tagSkills" placeholder="&nbsp;Enter a Skill" style="width:100%">
+                                    <script>
+                                        //set all available skills from the database in the multiselect
+                                        var arrSkills = new Array();
+                                        <c:forEach var='skill' items='${skills}'>
+                                        arrSkills.push('${skill.name}');
+                                        </c:forEach>
+                                        $('#tagSkills').select2({tags: arrSkills, tokenSeparators: [",", " "], createSearchChoice: false, maximumSelectionSize: 1});
+                                    </script>
+
+                                </div>
                             </div>
-                        </div>
                         </form>
                         <div class="progress progress-striped active" id="progress" style="display:none">
-                                    <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                                </div>
+                            <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-link" id="btnEditPeriodicSweep" style="float:left;" onClick="$('#modalEditPeriodicSweep').modal('show');$('#modalStartSweep').modal('hide')">Set Skills for Periodic Sweep</button>
+                        <button type="button" class="btn btn-link" id="btnEditPeriodicSweep" style="float:left;" onClick="$('#modalEditPeriodicSweep').modal('show');
+                                $('#modalStartSweep').modal('hide')">Set Skills for Periodic Sweep</button>
                         <button type="button" class="btn btn-default" id="btnCancel" data-dismiss="modal"><fmt:message key="documents.cancel"/></button>
                         <button type="button" class="btn btn-primary" id="btnStartSweep" onclick="doSweep();" disabled><fmt:message key="vga.start"/></button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-        
-         <!-- Modal Dialog for Editing Period Sweep -->
+
+        <!-- Modal Dialog for Editing Period Sweep -->
         <div class="modal fade" id="modalEditPeriodicSweep">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -168,31 +188,32 @@
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal" role="form" id="formVGAPeriodic" action="updatePeriodic" method="post">
-                        <div class="alert alert-success" style="display:none" id="alertUpdateSuccessfull">
-                <a class="close" data-dismiss="alert">×</a>
-                <strong>Success!</strong> The VGA has updated Skills to check for.
-            </div>
-                            <p id="modalBodyText">The Skills you provide in this window are prerequisites for all employees. They will be checked for every first day of the month until an employee acquired it. </p>
-                        
-                        <div class="form-group">
-                            <label id="skillsLabel" for="skills" class="col-sm-2 control-label"><fmt:message key="skill.skill"/></label>
-                            <div class="col-sm-10" id="divSkills">
-                                <input type="hidden" id="tagSkillsPeriodic" name="tagSkillsPeriodic" placeholder="&nbsp;Enter Skills" style="width:100%">
-                                <script>
-                                    //set all available skills from the database in the multiselect
-                                    var arrSkills = new Array();
-                                    <c:forEach var='skill' items='${skills}'>
-                                    arrSkills.push('${skill.name}');
-                                    </c:forEach>
-                                    $('#tagSkillsPeriodic').select2({tags: arrSkills, tokenSeparators: [",", " "], createSearchChoice: false});
-                                </script>
-                                
+                            <div class="alert alert-success" style="display:none" id="alertUpdateSuccessfull">
+                                <a class="close" data-dismiss="alert">×</a>
+                                <strong>Success!</strong> The VGA has updated Skills to check for.
                             </div>
-                        </div>
+                            <p id="modalBodyText">The Skills you provide in this window are prerequisites for all employees. They will be checked for every first day of the month until an employee acquired it. </p>
+
+                            <div class="form-group">
+                                <label id="skillsLabel" for="skills" class="col-sm-2 control-label"><fmt:message key="skill.skill"/></label>
+                                <div class="col-sm-10" id="divSkills">
+                                    <input type="hidden" id="tagSkillsPeriodic" name="tagSkillsPeriodic" placeholder="&nbsp;Enter Skills" style="width:100%">
+                                    <script>
+                                        //set all available skills from the database in the multiselect
+                                        var arrSkills = new Array();
+                                        <c:forEach var='skill' items='${skills}'>
+                                        arrSkills.push('${skill.name}');
+                                        </c:forEach>
+                                        $('#tagSkillsPeriodic').select2({tags: arrSkills, tokenSeparators: [",", " "], createSearchChoice: false});
+                                    </script>
+
+                                </div>
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-link" id="btnCreateSweep" style="float:left;" onclick="$('#modalStartSweep').modal('show');$('#modalEditPeriodicSweep').modal('hide')">Initiate new VGA sweep</button>
+                        <button type="button" class="btn btn-link" id="btnCreateSweep" style="float:left;" onclick="$('#modalStartSweep').modal('show');
+                                $('#modalEditPeriodicSweep').modal('hide')">Initiate new VGA sweep</button>
                         <button type="button" class="btn btn-default" id="btnCancelP" data-dismiss="modal"><fmt:message key="documents.cancel"/></button>
                         <button type="button" class="btn btn-primary" id="btnUpdatePeriodicSweep" onclick="doPeriodic();">Update</button>
                     </div>
@@ -202,24 +223,24 @@
         <script>
             //set the skills in the multiselect that need to be checked for periodically
             var arraySkills = new Array();
-                    <c:forEach var="test" items="${skillsToCheckByVGA}">
-                        arraySkills.push('${test}');
-                    </c:forEach>
+            <c:forEach var="test" items="${skillsToCheckByVGA}">
+            arraySkills.push('${test}');
+            </c:forEach>
             $('#tagSkillsPeriodic').select2('val', [arraySkills]);
-            
+
             // block the start button if there is no input in the skills feld
             function toggleStartButton() {
                 var skills = $('#tagSkills').val();
                 if (!skills) {
                     document.getElementById('btnStartSweep').disabled = true;
                 }
-                else{
+                else {
                     document.getElementById('btnStartSweep').disabled = false;
                 }
             }
-            
+
             //submit button is clicked
-            function doSweep(){
+            function doSweep() {
                 //block the button and show a loader
                 document.getElementById('progress').style.display = 'block';
                 document.getElementById('modalBodyText').style.display = 'none';
@@ -229,16 +250,16 @@
                 document.getElementById('btnCancel').disabled = true;
                 document.getElementById('btnEditPeriodicSweep').disabled = true;
                 document.getElementById('modalTitle').innerHTML = 'VGA In Progress';
-                
+
                 document.getElementById('formVGASweep').submit();
             }
-            
+
             //submit button for updating skills is clicked
-            function doPeriodic(){
+            function doPeriodic() {
                 document.getElementById('btnUpdatePeriodicSweep').disabled = true;
                 document.getElementById('btnCancelP').disabled = true;
                 document.getElementById('btnCreateSweep').disabled = true;
-                
+
                 document.getElementById('formVGAPeriodic').submit();
             }
         </script>

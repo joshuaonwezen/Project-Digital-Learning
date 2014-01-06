@@ -305,6 +305,10 @@
     </servlet-mapping>
         <servlet-mapping>
         <servlet-name>VGAController</servlet-name>
+        <url-pattern>/applySweep</url-pattern>
+    </servlet-mapping>
+        <servlet-mapping>
+        <servlet-name>VGAController</servlet-name>
         <url-pattern>/updatePeriodic</url-pattern>
     </servlet-mapping>
     <!-- Properties -->
