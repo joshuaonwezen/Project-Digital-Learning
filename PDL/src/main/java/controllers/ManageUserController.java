@@ -1,20 +1,14 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.hibernate.criterion.Restrictions;
-import models.Activity;
-import models.Chat;
-import models.Skill;
 import models.User;
 import models.UserForm;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import services.HibernateUtil;
@@ -79,6 +73,8 @@ public class ManageUserController extends HttpServlet {
                 request.setAttribute("isManager", managedUser.isIsManager());
                 request.setAttribute("isTeacher", managedUser.isIsTeacher());
                 request.setAttribute("password", managedUser.getPassword());
+                request.setAttribute("gender", managedUser.getGender());
+                request.setAttribute("profileUrl", managedUser.getProfileUrl());
                 
                 session.close();
                 request.setAttribute("isUpdate", true);
@@ -92,44 +88,19 @@ public class ManageUserController extends HttpServlet {
         } 
         //deleten van een user
         else if (action.equals("delete")) {
-//            //extract userId
-//            String queryString = request.getQueryString();
-//            int userId = Integer.parseInt(queryString.substring(queryString.indexOf("=") + 1));
-//
-//            System.out.println("deleting user: " + userId);
-//            
-//            
-//            //do the delete operation
-//            Session session = HibernateUtil.getSessionFactory().openSession();
-//            Transaction tx = session.beginTransaction();
-//            User managedUser = (User) session.load(User.class, userId);
-//            
-//            // delete all activity linked to the user
-//            String hql = "delete from Activity where user_userId= :userId";
-//            session.createQuery(hql).setInteger("userId", managedUser.getUserId()).executeUpdate();
-//            
-//            // delete all chats linked to the user
-//            Criteria criteria = session.createCriteria(Chat.class);
-//            List<Chat> chats = criteria.list();
-//            for (int i=0;i<chats.size();i++){
-//                for (int u=0;u<chats.get(i).getUsers().size();u++){ // remove from join table
-//                    if (chats.get(i).getUsers().get(u).equals(managedUser)){
-//                        chats.get(i).getUsers().remove(chats.get(i).getUsers().get(u));
-//                        session.update(chats.get(i));
-//                    }
-//                }
-//                if (chats.get(i).getCreated().equals(managedUser)){
-//                    session.delete(chats.get(i)); // remove the chat as chatowner
-//                }
-//            }
-//            
-//            // 
-//            
-//            //session.delete(managedUser);
-//            tx.commit();
-//            session.close();
-//
-//            response.sendRedirect("../management");
+            //extract userId
+            String queryString = request.getQueryString();
+            int userId = Integer.parseInt(queryString.substring(queryString.indexOf("=") + 1));
+
+            //do the delete operation
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            User managedUser = (User) session.load(User.class, userId);
+            session.delete(managedUser);
+            tx.commit();
+            session.close();
+
+            response.sendRedirect("../management");
         }
     }
 
@@ -207,6 +178,8 @@ public class ManageUserController extends HttpServlet {
                 request.setAttribute("isManager", request.getParameter("isManager"));
                 request.setAttribute("isTeacher", request.getParameter("isTeacher"));
                 request.setAttribute("password", request.getParameter("password"));
+                request.setAttribute("gender", request.getParameter("gender"));
+                request.setAttribute("profileUrl", request.getParameter("profileUrl"));
 
                 //vergeet de errors niet op de request te zetten
                 request.setAttribute("errorsSize", errors.size());
@@ -232,6 +205,8 @@ public class ManageUserController extends HttpServlet {
                 user.setLastname(request.getParameter("lastname"));
                 user.setEmailAddress(request.getParameter("emailAddress"));
                 user.setPosition(request.getParameter("position"));
+                user.setGender(request.getParameter("gender"));
+                user.setProfileUrl(request.getParameter("profileUrl"));
                 user.setIsAdmin((request.getParameter("isAdmin") != null ? true : false));
                 user.setIsManager((request.getParameter("isManager") != null ? true : false));
                 user.setIsTeacher((request.getParameter("isTeacher") != null ? true : false));
@@ -268,6 +243,8 @@ public class ManageUserController extends HttpServlet {
                 request.setAttribute("isManager", user.isIsManager());
                 request.setAttribute("isTeacher", user.isIsTeacher());
                 request.setAttribute("password", user.getPassword());
+                request.setAttribute("gender", user.getGender());
+                request.setAttribute("profileUrl", user.getProfileUrl());
                 
                 //we are now editing
                 request.setAttribute("isUpdate", true);
