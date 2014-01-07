@@ -257,14 +257,14 @@
                     document.getElementById('btnDeleteUser').style.display = 'none';
                     document.getElementById('btnDeleteUserCancel').style.display = 'none';
                     document.getElementById('btnDeleteUserOk').style.display = 'inline';
-                    document.getElementById('titleUserDelete').innerHTML = 'Delete Administrator Account';
-                    document.getElementById('bodyUserDelete').innerHTML = 'The Administrator Account cannot be deleted due to administration matters.';
+                    document.getElementById('titleUserDelete').innerHTML = '<fmt:message key="administrator.delete.title"/>';
+                    document.getElementById('bodyUserDelete').innerHTML = '<fmt:message key="administrator.delete.message"/>';
                 }
                 else{
                     document.getElementById('btnDeleteUser').style.display = 'inline';
                     document.getElementById('btnDeleteUserCancel').style.display = 'inline';
                     document.getElementById('btnDeleteUserOk').style.display = 'none';
-                    document.getElementById('titleUserDelete').innerHTML = '<fmt:message key="management.delete"/>';
+                    document.getElementById('titleUserDelete').innerHTML = '<fmt:message key="management.title.delete"/>';
                     document.getElementById('bodyUserDelete').innerHTML = '<fmt:message key="management.delete.user"/>';
                 }
                 $('#myModal').modal('show')
@@ -282,7 +282,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="titleUserDelete"><fmt:message key="management.delete"/></h4>
+                        <h4 class="modal-title" id="titleUserDelete"><fmt:message key="management.title.delete"/></h4>
                     </div>
                     <div class="modal-body">
                         <p id="bodyUserDelete"><fmt:message key="management.delete.user"/></p>
@@ -410,7 +410,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"><fmt:message key="management.delete"/></h4>
+                        <h4 class="modal-title"><fmt:message key="management.title.delete"/></h4>
                     </div>
                     <div class="modal-body">
                         <p><fmt:message key="management.delete.course"/></p>
@@ -525,7 +525,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"><fmt:message key="management.delete"/></h4>
+                        <h4 class="modal-title"><fmt:message key="management.title.delete"/></h4>
                     </div>
                     <div class="modal-body">
                         <p><fmt:message key="management.delete.news"/></p>
