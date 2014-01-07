@@ -127,19 +127,44 @@
                             </c:choose>
 
                         </div>
-                        <c:if test="${loggedInIsAdmin == true}">
+                          <c:if test="${loggedInIsAdmin == true}">
                             <div class="form-group" id="formGroupUserRights" style="width:100%">
                                 <label for="userRights"><fmt:message key="user.userrights"/></label><br/>
-                                <input type="radio" id="isAdmin" name="isAdmin"> Administrator&nbsp;&nbsp;&nbsp;
-                                <input type="radio" id="isManager" name="isManager"> Manager&nbsp;&nbsp;&nbsp;
-                                <input type="radio" id="isTeacher" name="isTeacher"> Teacher
+                                <form name="myform" action="" method="POST">
+                                <input type="radio" id="isAdmin" name="isAdmin" onclick="radiobuttons('1');"> Administrator&nbsp;&nbsp;&nbsp;
+                                <input type="radio" id="isManager" name="isManager" onclick="radiobuttons('2');"> Manager&nbsp;&nbsp;&nbsp;
+                                <input type="radio" id="isTeacher" name="isTeacher" onclick="radiobuttons('3');"> Teacher
+                                </form>    
                             </div>
                         </c:if>
                     </div>
             </form>
         </div>
         <script>
-            //initialize the form with variables if available
+            function radiobuttons(checked)
+            {
+                switch (checked)
+                {
+                    case '1':
+                        document.getElementById('isAdmin').checked = true;
+                        document.getElementById('isManager').checked = false;
+                        document.getElementById('isTeacher').checked = false;
+                        break;
+                    case '2':
+                        document.getElementById('isAdmin').checked = false;
+                        document.getElementById('isManager').checked = true;
+                        document.getElementById('isTeacher').checked = false;
+                        break;
+                    case '3':
+                        document.getElementById('isAdmin').checked = false;
+                        document.getElementById('isManager').checked = false;
+                        document.getElementById('isTeacher').checked = true;
+                        break;
+                    default:
+                        alert(checked);
+                        break;
+                }
+            }
             document.getElementById('userId').value = '${userId}';
             document.getElementById('username').value = '${username}';
             document.getElementById('firstname').value = '${firstname}';
