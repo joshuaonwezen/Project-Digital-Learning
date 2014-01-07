@@ -25,6 +25,7 @@ import validators.CourseValidator;
  *
  * @author wesley
  * @todo de user die is ingelogd moet ook default geselecteerd staan in edit_course onder owner (wanneer je een nieuwe course aanmaakt)
+ * @todo lot of redundancy (duplicate code)
  */
 public class ManageCourseController extends HttpServlet {
 
@@ -77,6 +78,7 @@ public class ManageCourseController extends HttpServlet {
                 request.setAttribute("isVisible", managedCourse.isIsVisible());
                 request.setAttribute("courseKey", managedCourse.getCourseKey());
                 
+                tx.commit();
                 session.close();
                 request.setAttribute("isUpdate", true);
             } 
@@ -137,10 +139,11 @@ public class ManageCourseController extends HttpServlet {
         }
         //course overview
         else if (action.equals("courses")) {
-            //set all courses on request
-            setCoursesOnRequest(request);    
-            //and the courses that a user is enrolled to
+            
             int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
+            //set all courses on request
+            setCoursesOnRequest(request, userId);    
+            //and the courses that a user is enrolled to
             setUserEnrolledCoursesOnRequest(request, userId);
             setCoursesSuggestionOnRequest(request, userId);
             redirect(request, response, "/courses.jsp");
@@ -148,18 +151,50 @@ public class ManageCourseController extends HttpServlet {
         //search course on the course page
         else if (action.equals("searchCourse")){
             Session session = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
             String searchQuery = request.getParameter("searchQuery");
             String hql = "FROM Course WHERE name LIKE '%" + searchQuery + "%' OR description LIKE '%" + searchQuery + "%'";
-            List<Course> result = session.createQuery(hql).list();
+            List<Course> courses = session.createQuery(hql).list();
+            
+            int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
+            //sort enrolled courses on top
+             List<Integer> enrolledCourses = new ArrayList<Integer>();
+                    for (Course course : courses){
+            for (User user : course.getEnrolledUsers()){
+                if (user.getUserId() == userId){
+                    //user is enrolled in this course
+                    enrolledCourses.add(course.getCourseId());
+                    break;
+                }
+            }
+        }
+        System.out.println("the user is enrolled in : " + enrolledCourses.size());
+        List<Course> sortedCourses = new ArrayList<Course>();
+        
+        for (int c=0;c<courses.size();c++){
+            for (int ec=0;ec<enrolledCourses.size();ec++){
+                if (courses.get(c).getCourseId() == enrolledCourses.get(ec)){
+                    sortedCourses.add(courses.get(c)); // add the entry to our sorted list
+                    courses.remove(c); // and remove it from the enrolledcourse list
+                }
+            }
+        }
+        System.out.println("weve fot: " + courses.size() + " left in our courses");
+        for (int c=0;c<courses.size();c++){ // add the remaining items to our list
+            sortedCourses.add(courses.get(c));
+            System.out.println("reamining course: " + courses.get(c).getCourseId());
+        }
+            
+            
             
             //set our results on the request and redirect back
-            request.setAttribute("courses", result);
-            request.setAttribute("coursesSize", result.size());
-            request.setAttribute("coursesSizeResults", result.size());
-            int userId = Integer.parseInt(request.getSession().getAttribute("loggedInUserId").toString());
+            request.setAttribute("courses", sortedCourses);
+            request.setAttribute("coursesSize", sortedCourses.size());
+            request.setAttribute("coursesSizeResults", sortedCourses.size());
             setUserEnrolledCoursesOnRequest(request, userId);
             setCoursesSuggestionOnRequest(request, userId);
             redirect(request, response, "/courses.jsp");
+            tx.commit();
             session.close();
         }
         else if (action.equals("enroll")){
@@ -179,12 +214,14 @@ public class ManageCourseController extends HttpServlet {
             session.update(managedCourse);
             tx.commit();
             
+            
             //redirect the user back and let it now he was enrolled
             request.setAttribute("enrolledIn", managedCourse.getName());
-            setCoursesOnRequest(request);
+            setCoursesOnRequest(request, userId);
             setUserEnrolledCoursesOnRequest(request, userId);
             setCoursesSuggestionOnRequest(request, userId);
             redirect(request, response, "/courses.jsp");
+            session.close();
             }
                 else if (action.equals("withdraw")){
             //extract the courseId
@@ -200,14 +237,15 @@ public class ManageCourseController extends HttpServlet {
             managedCourse.getEnrolledUsers().remove(managedUser);
             session.update(managedCourse);
             tx.commit();
-            session.close();
+            
             
             //redirect the user back and let it now he was removed
             request.setAttribute("withdrawedFrom", managedCourse.getName());
-            setCoursesOnRequest(request);
+            setCoursesOnRequest(request, managedUser.getUserId());
             setUserEnrolledCoursesOnRequest(request, userId);
             setCoursesSuggestionOnRequest(request, userId);
             redirect(request, response, "/courses.jsp");
+            session.close();
             }
     }
 
@@ -401,24 +439,55 @@ public class ManageCourseController extends HttpServlet {
             }
         }
         
-        session.close();
-        System.out.println("there are: " + enrolledCourses.size() + "enrolledcourses");
         
         //3: set the course id's of the courses that a user is enrolled to in the request
         request.setAttribute("userEnrolledCourses", enrolledCourses);
         request.setAttribute("userEnrolledCoursesSize", enrolledCourses.size());
+        tx.commit();
+        session.close();
     } 
     
-    private void setCoursesOnRequest(HttpServletRequest request){
+    private void setCoursesOnRequest(HttpServletRequest request, int userId){
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         Criteria criteria = session.createCriteria(Course.class);
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//prevent duplicate courses
         List<Course> courses = criteria.list();
-        session.close();
+        System.out.println("THER ARE COURSES: " + courses.size());
         
-        request.setAttribute("courses", courses);
-        request.setAttribute("coursesSize", courses.size());
+        //@todo find a better way of doing this as this operation also happens in the .jsp en setUsersEnrolled...
+        //sort courses where a user is enrolled on top
+        List<Integer> enrolledCourses = new ArrayList<Integer>();
+        //1: get the courses that a user is enrolled to
+        for (Course course : courses){
+            for (User user : course.getEnrolledUsers()){
+                if (user.getUserId() == userId){
+                    //user is enrolled in this course
+                    enrolledCourses.add(course.getCourseId());
+                    break;
+                }
+            }
+        }
+        System.out.println("the user is enrolled in : " + enrolledCourses.size());
+        List<Course> sortedCourses = new ArrayList<Course>();
+        
+        for (int c=0;c<courses.size();c++){
+            for (int ec=0;ec<enrolledCourses.size();ec++){
+                if (courses.get(c).getCourseId() == enrolledCourses.get(ec)){
+                    sortedCourses.add(courses.get(c)); // add the entry to our sorted list
+                    courses.remove(c); // and remove it from the enrolledcourse list
+                }
+            }
+        }
+        System.out.println("we have sorted: " + sortedCourses.size());
+        
+        for (int c=0;c<courses.size();c++){ // add the remaining items to our list
+            sortedCourses.add(courses.get(c));
+        }
+        request.setAttribute("courses", sortedCourses);
+        request.setAttribute("coursesSize", sortedCourses.size());
+        tx.commit();
+        session.close();
     }
       private void setCoursesSuggestionOnRequest(HttpServletRequest request, int userId){
         //1: get all courses
@@ -434,8 +503,9 @@ public class ManageCourseController extends HttpServlet {
                     courseSuggestion.add(tempSuggestion.get(i));
                 }
             }
-                        
+                    tx.commit();    
         session.close();        
+        
         request.setAttribute("suggestedCourses", courseSuggestion);
         request.setAttribute("suggestedCoursesSize", courseSuggestion.size());
     } 
