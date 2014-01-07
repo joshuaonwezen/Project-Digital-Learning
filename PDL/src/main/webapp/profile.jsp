@@ -60,7 +60,7 @@
                                 <li><a href="/PDL/i18n_nl">Internationalisation</a></li>
                             </ul>
                         </li> 
-                        </c:if>
+                    </c:if>
                     <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.profile"/> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -112,7 +112,15 @@
                         ${username}
                     </h2>
                     <div class="container_profile_left">
-                        <img id="profileImage" src="$tempGebruiker.imageURL}">
+                        <c:choose>
+                            <c:when test="${gender == 'M'}"><img id="profileImage" src="resources/images/profilePic/male.jpg"></c:when> 
+                            <c:when test="${gender == 'F'}"><img id="profileImage" src="resources/images/profilePic/female.jpg"></c:when>
+                            <c:otherwise><img id="profileImage" src="resources/images/profilePic/question.jpg"></c:otherwise>
+                        </c:choose>
+
+                        
+
+
                     </div>
                     <div class="container_profile_right" style="font-size: 19px;">
                         <table>

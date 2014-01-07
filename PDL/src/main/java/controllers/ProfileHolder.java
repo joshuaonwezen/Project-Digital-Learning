@@ -47,6 +47,7 @@ public class ProfileHolder extends HttpServlet {
             request.setAttribute("emailAddress", tempGebruiker.getEmailAddress());
             request.setAttribute("position", tempGebruiker.getPosition());
             request.setAttribute("userId", tempGebruiker.getUserId());
+            request.setAttribute("gender", tempGebruiker.getGender());
 
             /* Work experience */
             List<Work> tempWork = new LinkedList();
