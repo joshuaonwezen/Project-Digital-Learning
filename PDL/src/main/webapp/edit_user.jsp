@@ -111,8 +111,21 @@
                         </div>
                         <div class="form-group" id="formGroupUserGender" style="width:100%">
                             <label for="gender"><fmt:message key="user.gender"/></label><br/>
-                            <input type="radio" id="gender_male" name="gender" value="M"> Male&nbsp;&nbsp;&nbsp;
-                            <input type="radio" id="gender_female" name="gender" value="F"> Female
+                            <c:choose>
+                                <c:when test="${gender == 'M'}">
+                                    <input type="radio" id="gender_male" name="gender" value="M" checked="checked"> Male&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" id="gender_female" name="gender" value="F"> Female
+                                </c:when> 
+                                <c:when test="${gender == 'F'}">
+                                    <input type="radio" id="gender_male" name="gender" value="M"> Male&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" id="gender_female" name="gender" value="F" checked="checked"> Female
+                                </c:when>
+                                <c:otherwise>
+                                    <input type="radio" id="gender_male" name="gender" value="M"> Male&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" id="gender_female" name="gender" value="F"> Female
+                                </c:otherwise>
+                            </c:choose>
+
                         </div>
                         <c:if test="${loggedInIsAdmin == true}">
                             <div class="form-group" id="formGroupUserRights" style="width:100%">
