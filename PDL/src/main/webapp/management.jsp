@@ -252,8 +252,22 @@
             }
 
             function deleteDialog() {
+                if (toDelete == 1){
+                    //administrator cannot be deleted
+                    document.getElementById('btnDeleteUser').style.display = 'none';
+                    document.getElementById('btnDeleteUserCancel').style.display = 'none';
+                    document.getElementById('btnDeleteUserOk').style.display = 'inline';
+                    document.getElementById('titleUserDelete').innerHTML = 'Delete Administrator Account';
+                    document.getElementById('bodyUserDelete').innerHTML = 'The Administrator Account cannot be deleted due to administration matters.';
+                }
+                else{
+                    document.getElementById('btnDeleteUser').style.display = 'inline';
+                    document.getElementById('btnDeleteUserCancel').style.display = 'inline';
+                    document.getElementById('btnDeleteUserOk').style.display = 'none';
+                    document.getElementById('titleUserDelete').innerHTML = '<fmt:message key="management.delete"/>';
+                    document.getElementById('bodyUserDelete').innerHTML = '<fmt:message key="management.delete.user"/>';
+                }
                 $('#myModal').modal('show')
-
             }
 
             function deleteUser() {
@@ -268,14 +282,15 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"><fmt:message key="management.delete"/></h4>
+                        <h4 class="modal-title" id="titleUserDelete"><fmt:message key="management.delete"/></h4>
                     </div>
                     <div class="modal-body">
-                        <p><fmt:message key="management.delete.user"/></p>
+                        <p id="bodyUserDelete"><fmt:message key="management.delete.user"/></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="edit.popup.cancel"/></button>
-                        <button type="button" class="btn btn-danger" onclick="deleteUser()"><fmt:message key="edit.popup.delete"/></button>
+                        <button type="button" id="btnDeleteUserCancel" class="btn btn-default" data-dismiss="modal"><fmt:message key="edit.popup.cancel"/></button>
+                        <button type="button" id="btnDeleteUserOk" style="display:none" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                        <button type="button" id="btnDeleteUser" class="btn btn-danger" onclick="deleteUser()"><fmt:message key="edit.popup.delete"/></button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
