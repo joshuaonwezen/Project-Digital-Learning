@@ -162,7 +162,7 @@ public class VGAController extends HttpServlet {
                             }
                         }
                         if (found){ // if we found a user that is enrolled to a course with the skill: delete it from the users we need to check for
-                            userVGAStatuses.add(new UserVGAStatus(users.get(t), "Busy acquiring Skill", "No action required"));
+                            userVGAStatuses.add(new UserVGAStatus(usersWithoutSkill.get(t), "Busy acquiring Skill", "No action required"));
                             usersWithoutSkill.remove(usersWithoutSkill.get(t));
                         }
                     }
