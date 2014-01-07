@@ -109,6 +109,11 @@
                             <label for="position"><fmt:message key="user.position"/></label>
                             <input type="text" class="form-control" id="position" name="position" onchange="validateForm()" placeholder="<fmt:message key="placeholder.position"/>">
                         </div>
+                        <div class="form-group" id="formGroupUserGender" style="width:100%">
+                            <label for="gender"><fmt:message key="user.gender"/></label><br/>
+                            <input type="radio" id="gender_male" name="gender" value="M"> Male&nbsp;&nbsp;&nbsp;
+                            <input type="radio" id="gender_female" name="gender" value="F"> Female
+                        </div>
                         <c:if test="${loggedInIsAdmin == true}">
                             <div class="form-group" id="formGroupUserRights" style="width:100%">
                                 <label for="userRights"><fmt:message key="user.userrights"/></label><br/>
@@ -148,7 +153,7 @@
             //function to refresh the parent window to reflect the updated data in the grid
             var isModified = false; // true when the form was submitted
             window.onunload = function() {
-                if (isModified){ // only on save/edit
+                if (isModified) { // only on save/edit
                     window.opener.location.reload();
                 }
             };
@@ -220,6 +225,15 @@
                 }
                 else {
                     setValidated('formGroupPosition', true);
+                }
+                //gender
+                if (document.getElementById('gender_male').checked) {
+                    setValidated('formGroupUserGender', true);
+                } else if (document.getElementById('gender_female').checked) {
+                    setValidated('formGroupUserGender', true);
+                } else {
+                    setValidated('formGroupUserGender', false);
+                    errors += 'Gender must be selected';
                 }
                 //password
                 var password = document.getElementById('password').value;
