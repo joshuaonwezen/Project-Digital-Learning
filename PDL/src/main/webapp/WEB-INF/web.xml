@@ -125,7 +125,7 @@
         <description>Location to store uploaded file</description>
         <param-name>file-upload</param-name>
         <param-value>
-            C:\Users\Martijn\Documents\
+            /var/lib/tomcat7/webapps/PDL/
         </param-value>
     </context-param>
     <!-- Course -->

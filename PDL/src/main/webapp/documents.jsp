@@ -95,7 +95,7 @@
                             <c:forEach var="file" items="${files}">
                                 <c:if test="${file.visible || (file.owner.userId == loggedInUserId)}">
                             <tr>
-                                <td><a href="#">${file.name}</a></td>
+                                <td><a href="http://145.92.6.79:8080/PDL/${file.name}">${file.name}</a></td>
                                 <td><script>document.write(moment('${file.lastEdited}').fromNow());</script></td>
                                 <td>
                                     <script>

@@ -107,7 +107,7 @@
                 <c:when test="${needsUpdate}">
                     <div class="alert alert-warning" id="alertNeedsUpdate">
                         <a class="close" data-dismiss="alert">×</a>
-                        <h4><fmt:message key="i18n.trans.new"/>!</h4> <fmt:message key="i18n.trans.last"/> <script>document.write(moment('${lastUpdatedOn}').fromNow());</script> <fmt:message key="course.teacher"/>  
+                        <h4><fmt:message key="i18n.trans.new"/>!</h4> <fmt:message key="i18n.trans.last"/> <script>document.write(moment('${lastUpdatedOn}').fromNow());</script> <fmt:message key="i18n.by"/>  
                         <c:choose>
                             <c:when test="${loggedInUsername == lastUpdatedBy.username}"><fmt:message key="i18n.trans.you"/>.</c:when>
                             <c:otherwise>${lastUpdatedBy.firstname} ${lastUpdatedBy.lastname}.</c:otherwise>
@@ -123,7 +123,7 @@
                         <a class="close" data-dismiss="alert">×</a>
                         <c:choose>
                             <c:when test="${lastUpdatedOn == null && lastAppliedOn != null}">
-                                <strong><fmt:message key="i18n.trans.no"/>!</strong> <fmt:message key="i18n.trans.no.last"/> <script>document.write(moment('${lastAppliedOn}').fromNow());</script> <fmt:message key="course.teacher"/>  
+                                <strong><fmt:message key="i18n.trans.no"/>!</strong> <fmt:message key="i18n.trans.no.last"/> <script>document.write(moment('${lastAppliedOn}').fromNow());</script> <fmt:message key="i18n.by"/>  
                                 <c:choose>
                                     <c:when test="${loggedInUsername == lastAppliedBy.username}"><fmt:message key="i18n.trans.you"/>.</c:when>
                                     <c:otherwise>${lastAppliedBy.firstname} ${lastAppliedBy.lastname}.</c:otherwise>
