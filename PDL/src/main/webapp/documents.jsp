@@ -26,7 +26,7 @@
         <script src="resources/moment/moment-m.js" type="text/javascript"></script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Home - Info Support</title>
+        <title>Documents - Info Support</title>
     </head>
     <body>
         <!--Start nav bar-->
@@ -56,7 +56,7 @@
                                 <li><a href="/PDL/i18n_nl">Internationalisation</a></li>
                             </ul>
                         </li>
-                        </c:if>
+                    </c:if>
                     <li><a href="/PDL/profile?id=${loggedInUserId}"><fmt:message key="navbar.profile"/></a></li>
                         <c:if test="${loggedInIsAdmin || loggedInIsManager == true}">
                         <li><a href="/PDL/vga">VGA</a></li>
@@ -141,7 +141,7 @@
                     </c:forEach>
                 </table>
             </div>
-                            
+
             <!-- Modal Dialog for uploading documents -->
             <div class="modal fade" id="modalUpload">
                 <div class="modal-dialog">
@@ -154,7 +154,7 @@
                             <div class="modal-body">
                                 <div class="alert alert-danger" id="uploadSizeError" style="display:none">
                                     <a class="close" data-dismiss="alert">×</a>
-                                    Your upload exceeds the maximum file size of 1.5 GB.
+                                    <fmt:message key="documents.limit"/>
                                 </div>
                                 <p id="modalBodyText"><fmt:message key="documents.upload.select"/></p>
                                 <input type="hidden" id="courseId" name="courseId" value="${course.courseId}"/>

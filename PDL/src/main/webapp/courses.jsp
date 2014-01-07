@@ -191,10 +191,10 @@
             console.log('coursesSize: ' + coursesSize);
             if (coursesSize == 0) {
                 console.log('showing melding no courses found');
-                document.getElementById('validationAlert').innerHTML = '<div class="alert alert-info"><a class="close" data-dismiss="alert">×</a><strong>Results:</strong> Your search did not match any Course.</div>';
+                document.getElementById('validationAlert').innerHTML = '<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>Oh snap!</strong> <fmt:message key="search.course.none"/></div>';
             }
             else if ('${coursesSizeResults}' > 0) {
-                document.getElementById('validationAlert').innerHTML = '<div class="alert alert-info"><a class="close" data-dismiss="alert">×</a><strong>Results:</strong> <u>' + coursesSize + '</u> Course(s) match your search.</div>';
+                document.getElementById('validationAlert').innerHTML = '<div class="alert alert-info"><a class="close" data-dismiss="alert">×</a><strong>Results:</strong> <u>' + coursesSize + '</u> <fmt:message key="search.course.match"/></div>';
             }
 
             //function for opening the course page

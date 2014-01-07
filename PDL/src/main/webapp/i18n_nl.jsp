@@ -107,14 +107,14 @@
                 <c:when test="${needsUpdate}">
                     <div class="alert alert-warning" id="alertNeedsUpdate">
                         <a class="close" data-dismiss="alert">×</a>
-                        <h4>New Translations!</h4> Translations where last updated <script>document.write(moment('${lastUpdatedOn}').fromNow());</script> by 
+                        <h4><fmt:message key="i18n.trans.new"/>!</h4> <fmt:message key="i18n.trans.last"/> <script>document.write(moment('${lastUpdatedOn}').fromNow());</script> <fmt:message key="course.teacher"/>  
                         <c:choose>
-                            <c:when test="${loggedInUsername == lastUpdatedBy.username}">you.</c:when>
+                            <c:when test="${loggedInUsername == lastUpdatedBy.username}"><fmt:message key="i18n.trans.you"/>.</c:when>
                             <c:otherwise>${lastUpdatedBy.firstname} ${lastUpdatedBy.lastname}.</c:otherwise>
                         </c:choose>
-                        They are ready to be applied to the system.        
+                        <fmt:message key="i18n.trans.apply"/>      
                         <p>
-                            <button type="button" class="btn btn-warning" onclick="$('#modalUpdateI18N').modal('show')">Apply</button>
+                            <button type="button" class="btn btn-warning" onclick="$('#modalUpdateI18N').modal('show')"><fmt:message key="i18n.trans.apply.button"/></button>
                         </p>
                     </div>
                 </c:when>
@@ -123,14 +123,14 @@
                         <a class="close" data-dismiss="alert">×</a>
                         <c:choose>
                             <c:when test="${lastUpdatedOn == null && lastAppliedOn != null}">
-                                <strong>No action required!</strong> Translations where last applied to the system <script>document.write(moment('${lastAppliedOn}').fromNow());</script> by 
+                                <strong><fmt:message key="i18n.trans.no"/>!</strong> <fmt:message key="i18n.trans.no.last"/> <script>document.write(moment('${lastAppliedOn}').fromNow());</script> <fmt:message key="course.teacher"/>  
                                 <c:choose>
-                                    <c:when test="${loggedInUsername == lastAppliedBy.username}">you</c:when>
-                                    <c:otherwise>${lastAppliedBy.firstname} ${lastAppliedBy.lastname}</c:otherwise>
+                                    <c:when test="${loggedInUsername == lastAppliedBy.username}"><fmt:message key="i18n.trans.you"/>.</c:when>
+                                    <c:otherwise>${lastAppliedBy.firstname} ${lastAppliedBy.lastname}.</c:otherwise>
                                 </c:choose>
                             </c:when>
                             <c:otherwise>
-                                <strong>No action required!</strong> All translations are applied to the system
+                                <strong><fmt:message key="i18n.trans.no"/>!</strong> <fmt:message key="i18n.trans.no.done"/>.
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -157,17 +157,17 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="modalTitle">Apply I18N Translations</h4>
+                        <h4 class="modal-title" id="modalTitle"><fmt:message key="i18n.dialog.title"/></h4>
                     </div>
                     <form role="form" id="applyTranslations" action="applyTranslations" method="post">
                         <div class="modal-body">
-                            <p id="modalBodyText1">To apply the new translations the server needs to be restarted. This means that all users are disconnected and will be unable to login for at least five minutes. It is recommended to do this as least as possible at times where as minimal users are online. Inform your employees if necessary.</p>
-                            <p id="modalBodyText2">Please enter your password to continue.</p>
+                            <p id="modalBodyText1"><fmt:message key="i18n.dialog.text"/></p>
+                            <p id="modalBodyText2"><fmt:message key="i18n.dialog.password"/></p>
                             <div class="alert alert-danger" style="display:none" id="alertIncorrectPassword">
                                 <a class="close" data-dismiss="alert">×</a>
-                                <strong>Oh snap!</strong> Your password is incorrect.
+                                <strong>Oh snap!</strong> <fmt:message key="i18n.dialog.password.incorrect"/>
                             </div>
-                            <p id="modalBodyText3" style="display:none">The server is restarting. The updates should be applied within five minutes. You will need to login manually again.</p>
+                            <p id="modalBodyText3" style="display:none"><fmt:message key="i18n.dialog.password.restart"/></p>
                             <br/>
                             <div class="form-group" id="formGroupPassword" style="width:100%">
                                 <label for="password"><fmt:message key="user.password"/></label>
@@ -180,8 +180,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="btnCancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="button" id="btnUpdate" class="btn btn-danger" onclick="applyTranslations()" disabled>Apply</button>
+                            <button type="button" id="btnCancel" class="btn btn-default" data-dismiss="modal"><fmt:message key="edit.popup.cancel"/></button>
+                            <button type="button" id="btnUpdate" class="btn btn-danger" onclick="applyTranslations()" disabled><fmt:message key="i18n.trans.apply.button"/></button>
                         </div>
                     </form>
                 </div><!-- /.modal-content -->
