@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import models.Course;
 import models.CourseForm;
 import models.CourseSuggestion;
+import models.File;
 import models.Skill;
 import models.User;
 import org.hibernate.Criteria;
@@ -105,6 +106,26 @@ public class ManageCourseController extends HttpServlet {
             for (int i=0;i<managedCourse.getSkills().size();i++){ // delete all associated skills
                 managedCourse.getSkills().remove(managedCourse.getSkills().get(i));
             }
+            // delete the associated course suggestions
+            Criteria criteria = session.createCriteria(CourseSuggestion.class);
+            List<CourseSuggestion> courseSuggestions = criteria.list();
+            
+            for (int i=0;i<courseSuggestions.size();i++){
+                if (courseSuggestions.get(i).getCourse().getCourseId() == managedCourse.getCourseId()){
+                    session.delete(courseSuggestions.get(i));
+                }
+            }
+            
+            // delete all associated documents
+            criteria = session.createCriteria(File.class);
+            List<File> documents = criteria.list();
+            
+            for (int i=0;i<documents.size();i++){
+                if (documents.get(i).getCourse().getCourseId() == managedCourse.getCourseId()){
+                    session.delete(documents.get(i));
+                }
+            }
+            
             managedCourse.setOwner(null); // set the owner to null
             
             session.update(managedCourse); // update the course
