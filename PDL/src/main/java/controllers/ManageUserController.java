@@ -1,15 +1,22 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Chat;
+import models.Course;
+import models.CourseSuggestion;
+import models.File;
+import models.Internationalization;
 import models.User;
 import models.UserForm;
 import org.hibernate.Session;
+import org.hibernate.Criteria;
 import org.hibernate.Transaction;
 import services.HibernateUtil;
 import validators.GenericValidator;
@@ -87,20 +94,127 @@ public class ManageUserController extends HttpServlet {
             redirect(request, response, "/edit_user.jsp");
         } 
         //deleten van een user
+        //@todo could be fancier
         else if (action.equals("delete")) {
             //extract userId
             String queryString = request.getQueryString();
             int userId = Integer.parseInt(queryString.substring(queryString.indexOf("=") + 1));
 
+            System.out.println("deleting user: " + userId);
+            
             //do the delete operation
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
             User managedUser = (User) session.load(User.class, userId);
-            session.delete(managedUser);
-            tx.commit();
-            session.close();
-
-            response.sendRedirect("../management");
+            User administrator = (User) session.load(User.class, 1);
+            
+            // delete all activity linked to the user
+            String hql = "delete from Activity where user_userId= :userId";
+            session.createQuery(hql).setInteger("userId", managedUser.getUserId()).executeUpdate();
+            
+            Criteria criteria;
+            
+            // delete the associated course suggestions
+            criteria = session.createCriteria(CourseSuggestion.class);
+            List<CourseSuggestion> courseSuggestions = criteria.list();
+            
+            for (int i=0;i<courseSuggestions.size();i++){
+                if (courseSuggestions.get(i).getUser().getUserId() == managedUser.getUserId()){
+                    session.delete(courseSuggestions.get(i));
+                }
+            }
+            
+            // update all associated documents
+            criteria = session.createCriteria(File.class);
+            List<File> documents = criteria.list();
+            
+            for (int i=0;i<documents.size();i++){
+                if (documents.get(i).getOwner().getUserId() == managedUser.getUserId()){
+                    documents.get(i).setOwner(administrator);
+                    session.update(documents.get(i));
+                }
+            }
+            
+            // delete from jointable where user is enrolled
+            criteria = session.createCriteria(Course.class);
+            List<Course> courses = criteria.list();
+            //@todo expensive operation
+            for (int c=0;c<courses.size();c++){
+                List<User> enrolledUsers = courses.get(c).getEnrolledUsers();
+                
+                for (int u=0;u<enrolledUsers.size();u++){
+                    if (enrolledUsers.get(u).getUserId() == managedUser.getUserId()){
+                        enrolledUsers.remove(enrolledUsers.get(u));
+                        session.update(courses.get(c));
+                    }
+                }
+            }
+            
+            // update all courses where the user is owner
+            for (int i=0;i<courses.size();i++){
+                if (courses.get(i).getOwner().getUserId() == managedUser.getUserId()){
+                    courses.get(i).setOwner(administrator);
+                    session.update(courses.get(i));
+                }
+            }
+            
+            // delete chats where the user is involved or where he is owner
+            criteria = session.createCriteria(Chat.class);
+            List<Chat> chats = criteria.list();
+            
+            for (int c=0;c<chats.size();c++){
+                System.out.println("TEST");
+                List<User> chatUsers = chats.get(c).getUsers();
+                if (chatUsers != null){
+                
+                for (int cu=0;cu<chatUsers.size();cu++){ // delete all occurences of the user
+                    if (chatUsers.get(cu).getUserId() == managedUser.getUserId()){
+                        chats.get(c).getUsers().remove(cu);
+                        session.update(chats.get(c));
+                    }
+                }
+                
+                if (chats.get(c).getCreated().getUserId() == managedUser.getUserId()){
+                    chats.get(c).setUsers(null); // delete all OTHER USERS that are linked to the chat of the owner
+                    session.update(chats.get(c));
+                    
+                    session.delete(chats.get(c)); // delete the chat itself
+                }
+                }
+             }
+            
+            //update i18n
+            Internationalization i18n = (Internationalization) session.load(Internationalization.class, 1);
+            if (i18n.getAppliedBy() != null && i18n.getAppliedBy().getUserId() == managedUser.getUserId()){
+                i18n.setAppliedBy(null);
+            }
+            if (i18n.getUpdatedBy() != null && i18n.getUpdatedBy().getUserId() == managedUser.getUserId()){
+                i18n.setUpdatedBy(null);
+            }
+            session.save(i18n);
+            
+            // delete education
+            hql = "delete from Education where user_userId= :userId";
+            session.createQuery(hql).setInteger("userId", managedUser.getUserId()).executeUpdate();
+            
+            // delete project
+            hql = "delete from Project where user_userId= :userId";
+            session.createQuery(hql).setInteger("userId", managedUser.getUserId()).executeUpdate();
+            
+            // delete work
+            hql = "delete from Work where user_userId= :userId";
+            session.createQuery(hql).setInteger("userId", managedUser.getUserId()).executeUpdate();
+            
+            // delete education
+            hql = "delete from NewsItem where editedBy_userId= :userId";
+            session.createQuery(hql).setInteger("userId", managedUser.getUserId()).executeUpdate();
+            
+            
+             session.delete(managedUser);
+             tx.commit();
+             session.close();
+ 
+             response.sendRedirect("../management");
         }
     }
 
