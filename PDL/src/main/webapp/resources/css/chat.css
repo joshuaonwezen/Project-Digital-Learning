@@ -11,9 +11,10 @@
     overflow-x: hidden;
 }
 #main_right {
-    width: 80%;
+    width: 82%;
     height: auto;
     float: right;
+    margin-left:20px;
     margin-right: 25px;
     overflow-x: hidden;
 }

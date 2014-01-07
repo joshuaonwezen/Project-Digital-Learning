@@ -100,7 +100,7 @@
 
         <div id="main">
 
-            <div id="main_left">
+            <div id="main_left" style="width:150px">
                 <ul class="nav nav-pills nav-stacked">
                     <li>
                         <a href="/PDL/homepage">
@@ -119,8 +119,8 @@
                     </li>
                     <br>
                     <li>
-                       <button id="setup-new-room" class="btn btn-default buttonStyle">Start conference</button>
-                       <button id="join-room" class="btn btn-warning buttonStyle" style="display:none">Join conference</button><br>
+                       <button id="setup-new-room" class="btn btn-default buttonStyle" style="width:150px">Start conference</button>
+                       <button id="join-room" class="btn btn-warning buttonStyle" style="width:150px;display:none">Join conference</button><br>
                     </li>
                 </ul>
             </div>
