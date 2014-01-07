@@ -27,7 +27,7 @@
         <script src="resources/select2/select2.js"></script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Home - Info Support</title>
+        <title>Virtual Guardian Angel - Info Support</title>
     </head>
     <body
         <c:if test="${empty userVGAStatuses && !editedPSkills && !suggested}">
@@ -95,7 +95,7 @@
         <!-- eof navbar-->
 
                 <div id="main_left">
-             <button type="button" class="btn btn-default" id="btnShowModalStartSweep" onClick="$('#modalStartSweep').modal('show')" style="width:150px"><fmt:message key="vga.start.new.sweep"/></button>
+             <button type="button" class="btn btn-default" id="btnShowModalStartSweep" onClick="$('#modalStartSweep').modal('show')" style="width:150px"><fmt:message key="vga.start.sweep"/></button>
            
             
             </div>
@@ -104,10 +104,10 @@
         <div id="main">
             <div class="alert alert-info" id="alertCanBeApplied">
                 <a class="close" data-dismiss="alert">×</a>
- <h4><fmt:message key="vga.apply"/>!</h4> <fmt:message key="vga.apply.message"/>
+ <h4><fmt:message key="vga.ready"/>!</h4> <fmt:message key="vga.ready.message"/>
                 <p>
                      <form id="applySweep" action="applySweep" method="post">
-                    <button type="submit" class="btn btn-info" id="btnApplySweep">Apply Sweep</button>
+                    <button type="submit" class="btn btn-info" id="btnApplySweep"><fmt:message key="vga.ready.apply"/></button>
                      </form>
                 </p>
              </div>
