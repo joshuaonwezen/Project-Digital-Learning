@@ -18,6 +18,8 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -104,11 +106,12 @@ public class I18nController extends HttpServlet {
                 
                 //run the restart script
                 String s;
-                Process p = Runtime.getRuntime().exec("service tomcat restart"); // command to restart webserver                                                                                                                                                    
+               Process p = Runtime.getRuntime().exec("service tomcat restart"); // command to restart webserver  
                 BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
                 while ((s = stdInput.readLine()) != null) {
                     System.out.println(s);
                 }
+                System.out.println("DONE");
             }
             else{
                 //incorrect password, redirect back
@@ -130,7 +133,7 @@ public class I18nController extends HttpServlet {
     
     private void setPropertiesOnRequest(HttpServletRequest request, String language) throws IOException{
         ServletContext context = getServletContext();
-        InputStream inStream1 = new FileInputStream("/Users/wesley/NetBeansProjects/Project-Digital-Learning/PDL/src/main/webapp/WEB-INF/classes/index_" + language + ".properties");
+        InputStream inStream1 = new FileInputStream("/var/lib/tomcat7/webapps/PDL/WEB-INF/classes/index_" + language + ".properties");
         Properties pr = new Properties();
         pr.load(inStream1);
         request.setAttribute("i18nProperties", pr);
@@ -149,7 +152,7 @@ public class I18nController extends HttpServlet {
             System.out.println("KEY:" + key1 +" VALUE:" + value1);
             newPr1.setProperty(key1, value1);
         }
-        File file = new File("/Users/wesley/NetBeansProjects/Project-Digital-Learning/PDL/src/main/webapp/WEB-INF/classes/index_" + language + ".properties");
+        File file = new File("/var/lib/tomcat7/webapps/PDL/WEB-INF/classes/index_" + language + ".properties");
         newPr1.store(new FileOutputStream(file), null);
     }
     
